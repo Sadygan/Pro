@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  direction: MyString
+  cost: 1
+  execution_document: 1
+  check_factory: 1
+  bank_service: 1
+  bank_percent: 1
+
+two:
+  direction: MyString
+  cost: 1
+  execution_document: 1
+  check_factory: 1
+  bank_service: 1
+  bank_percent: 1

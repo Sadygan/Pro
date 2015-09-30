@@ -1,0 +1,97 @@
+<table class="table table-bordered table-striped" id="assets">
+    <thead>
+      <tr>
+        <th class="image"><%= t('table.image') %></th>
+        <th class="brand"><%= t('table.brand') %></th>
+        <th class="article"><%= t('table.article') %></th>
+        <th class="type_furniture"><%= t('table.type_furniture') %></th>
+        <th class="finishing"><%= t('table.finishing') %></th>
+        <th class="finishing_for_client"><%= t('table.finishing_for_client') %></th>
+        <th class="size"><%= t('table.size') %></th>
+        <th class="unit_price_factory"><%= t('table.unit_price_factory') %></th>
+        <th class="discount"><%= t('table.discount') %></th>
+        <th class="additional_delivery"><%= t('table.additional_delivery') %></th>
+        <th class="increment_discount"><%= t('table.increment_discount') %></th>
+        <th class="unit_price_netto"><%= t('table.unit_price_netto') %></th>
+        <th class="summ_netto"><%= t('table.summ_netto') %></th>
+        <th class="unit_v"><%= t('table.unit_v') %></th>
+        <th class="summ_v"><%= t('table.summ_v') %></th>
+        <th class="factor"><%= t('table.factor') %></th>
+        <th class="unit_price"><%= t('table.unit_price') %></th>
+        <th class="number_of"><%= t('table.number_of') %></th>
+        <th class="summ"><%= t('table.summ') %></th>
+        <th class="price_from_nil"><%= t('table.price_from_nil') %></th>
+        <th class="interest_percent"><%= t('table.interest_percent') %></th>
+        <th class="with_interest"><%= t('table.with_interest') %></th>
+        <th class="interest"><%= t('table.interest') %></th>
+        <th class="architector_percent"><%= t('table.architector_percent') %></th>
+        <th class="architector"><%= t('table.architector') %></th>
+        <th class="architector_percent_from_order"><%= t('table.architector_percent_from_order') %></th>
+        <th class="delivery"><%= t('table.delivery') %></th>
+        <th class="additional_delivery"><%= t('table.additional_delivery') %></th>
+
+        <th class="destroy"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @specification.table_specifications.each do |table_specification| %>
+        <tr>
+
+          <td class="image" id="image_<%= table_specification.id %>" ><%= image_tag table_specification.image.url %>
+          <%= link_to t('change_image'), project_specification_table_specification_edit_image_path(@project, @specification, table_specification), remote: true, :class => 'btn btn-sm btn-info' %></td>
+
+          <td class="brand" id="brand_<%= table_specification.id %>"><%= table_specification.factory_brand %></td>
+          <td class="article"><%= best_in_place [@project, @specification, table_specification], :article %></td>
+          <td class="type_furniture"><%= best_in_place [@project, @specification, table_specification], :type_fyrniture, type: :textarea %></td>
+          <td class="finishing"><%= best_in_place [@project, @specification, table_specification], :finishing %></td>
+          <td class="finishing_for_client"><%= best_in_place [@project, @specification, table_specification], :finishing_for_client, type: :textarea %></td>
+          <td class="size"><%= best_in_place [@project, @specification, table_specification], :size, type: :textarea %><%= image_tag table_specification.size_image.url %>
+
+          </td>
+          <td class="unit_price_factory" id="unit_price_factory_<%= table_specification.id %>" ><%= best_in_place [@project, @specification, table_specification], :unit_price_factory, :sanitize => false, inner_class: :upf %></td>
+         <!--  <td class="discount" id="discount_<%= table_specification.id %>" >
+            <select class="discount_select" id="discount_brand_<%= table_specification.id %>">
+              
+            </select>
+            <span class="factory_discount_hide" > </span>        
+          </td> -->
+          <td calss="discount"><%= select("table_specification", "discount_id", options_for_select(table_specification.factory.discounts.all.collect {|p| [p.percent, p.id]}, table_specification.discount_id))%></td>
+          
+
+
+          <td class="additional_discount"><%= %></td>
+          <td class="increment_discount"><%= best_in_place [@project, @specification, table_specification], :increment_discount %></td>
+          <td class="unit_price_netto" id="unit_price_netto_<%= table_specification.id %>" name="unit_price_netto_<%= table_specification.id %>" value="<%= table_specification.id %>"></td>
+          <td class="summ_netto" id="summ_netto_<%= table_specification.id %>"></td>
+          <td class="unit_v"><%= best_in_place [@project, @specification, table_specification], :unit_v %></td>
+          <td class="summ_v" id="summ_v_<%= table_specification.id %>"></td>
+          <td class="factor"><%= best_in_place [@project, @specification, table_specification], :factor %></td>
+          <td class="unit_price" id="unit_price_<%= table_specification.id %>"></td>
+          <td class="number_of"><%= best_in_place [@project, @specification, table_specification], :number_of %></td>
+          <td class="summ all" id="summ_<%= table_specification.id %>"></td>
+          <td class="price_from_nil" id=""></td>
+          <td class="interest_percent" id=""></td>
+          <td class="with_interest" id=""></td>
+          <td class="interest" id=""></td>
+          <td class="architector_percent" id=""></td>
+          <td class="architector" id=""></td>
+          <td class="architector_percent_from_order" id=""></td>
+          <td class="delivery" id=""></td>
+          <td class="additional_delivery" id=""></td>
+          
+          <td class="destroy"><%= link_to 'x', [@project, @specification, table_specification], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+
+      <% end %>
+    </tbody>
+  </table>
+<table class="table table-bordered table-striped">
+          <tr>
+          <td style="width: 1210px"> <%= t('table.total_sum') %>
+          </td>
+          <td><div class="specification_summ" id="specification_summ"><%= @total_sum %></div></td>
+        </tr>
+
+</table>
+<div class="specification_id" id="<%= @specification.id %>"><%= @specification.id %></div>

@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  article: MyString
+  type_fyrniture: MyString
+  finishing: MyString
+  finishing_for_client: MyText
+  size: MyText
+  unit_price_factory: 1.5
+  increment_discount: 1
+  unit_price_netto: 1.5
+  summ_netto: 1.5
+  unit_v: 1.5
+  factor: 1.5
+  unit_price: 1.5
+  number_of: 1
+  summ: 1.5
+  required: false
+  specific_id: 
+
+two:
+  article: MyString
+  type_fyrniture: MyString
+  finishing: MyString
+  finishing_for_client: MyText
+  size: MyText
+  unit_price_factory: 1.5
+  increment_discount: 1
+  unit_price_netto: 1.5
+  summ_netto: 1.5
+  unit_v: 1.5
+  factor: 1.5
+  unit_price: 1.5
+  number_of: 1
+  summ: 1.5
+  required: false
+  specific_id: 

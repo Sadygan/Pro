@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  brand: MyString
+  web: MyString
+  autorification: MyString
+  style: MyString
+  line_product: MyString
+  catalog: MyString
+  price: MyString
+  discount: MyString
+  additional_discount: MyString
+  delivery_terms: MyString
+  note: MyText
+
+two:
+  brand: MyString
+  web: MyString
+  autorification: MyString
+  style: MyString
+  line_product: MyString
+  catalog: MyString
+  price: MyString
+  discount: MyString
+  additional_discount: MyString
+  delivery_terms: MyString
+  note: MyText

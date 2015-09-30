@@ -1,0 +1,29 @@
+<tr id="factory_<%= factory.id %>">
+  <td><%= factory.brand %></td>
+  <td><%= factory.web %></td>
+  <td><%= factory.autorification %></td>
+  <td><%= factory.style %></td>
+  <td><%= factory.line_product %></td>
+  <td><%= factory.catalog %></td>
+  <td>
+    <% factory.discounts.each do |company| %>
+      <%= company.percent %>
+    <% end %>
+ </td>
+  <td>
+<!--   <%= factory.discounts do |i|%>
+    <%= i.percent %>
+  <% end %></td> -->
+  <td><%= factory.additional_discount %></td>
+  <td><%= factory.delivery_terms %></td>
+  <td><%= factory.note %></td>
+  <td>
+    <% if can? :update, factory %>
+    <%= link_to t('edit'), edit_factory_path(factory), remote: true, :class => 'btn btn-sm btn-info' %>
+    <% end %>
+    
+    <% if can? :destroy, factory %>
+    <%= link_to t('delete'), factory, remote: true, :method => :delete, data: {confirm: "Delete Customer: #{factory.brand}"}, :class => 'btn btn-sm btn-danger' %>
+    <% end %> 
+  </td>
+</tr>

@@ -1,0 +1,330 @@
+$('.table-button').hide().after("<%= j render 'form' %>");
+$(document).ready(function(){
+	$("#table_specification_factory_brand").autocomplete({
+	   source: $("#table_specification_factory_brand").data('autocomplete-source'),
+        select: function( event, ui ) {
+                // $("#table_specification_factory_brand").val( ui.item.label );
+                $.ajax({
+                    url: "/factories/brand",
+                    type: 'GET',
+                    dataType: 'json',
+                
+                success: function (data) {
+                        var ids = $(".ui-helper-hidden-accessible div:last-child").text();
+                        var i = 0;
+                        var discount_brand;
+
+                        while(ids >= data[i].id) {
+                            discount_brand = data[i];
+                                i++;
+                            if (i == data.length)
+                                break;
+                        }
+
+                       	var percents = discount_brand.discount;
+
+
+                        var additional_discount = [];
+                        additional_discount[0] = parseInt(discount_brand.additional_discount);
+           
+                        var brand_id = discount_brand.id;
+                        
+     	   				var array_discount = getArrayDiscounts(percents);
+        				var first_percent_in_array = array_discount[0];
+
+        				var percent_with_id = [];
+                        percent_with_id = getFactoryOptions(array_discount, percents)
+                        // console.log(percent_with_id)
+                    	
+                        var id = percent_with_id[1];
+                    	$("#discount").change(function() {
+							// console.log(id)
+							var discount = parseInt($("#discount option:selected").val());
+							for (var p in percents) {
+					   			if (percents[p].percent == discount) {
+					       			id = percents[p].id
+
+								};
+						
+                            };
+                            setId(id)
+						});
+						setId(id)
+						// console.log(percent_with_id[0])
+                        $("#discount").html(percent_with_id[0]);    
+                        $("#additional_discount").html(getFactoryOptions(additional_discount));    
+                    }
+                    }).done(function(html) {
+                      return $("#results").append(html);
+                    });
+                $( "#factory_id" ).val( ui.item.value );
+                return false;
+            },
+
+        focus: function( event, ui ) {
+                $( "#table_specification_factory_brand" ).val( ui.item.label );
+                return false;
+            },
+             
+        change: function(event, ui) {
+            if (!ui.item) {
+                $("#factory_brand").val("");
+                $("#factory_brand").val("");
+            }        
+        }
+	});
+
+ 
+    $.ajax({
+    	url: '/deliveries/',
+		type: 'GET',
+		dataType: 'json',
+		success: function(data) {
+			formCalculation(data);
+
+		}
+	});
+
+	function formCalculation(data) {
+	    var delivery = {}
+	    var deliv = getDelivery(data)
+
+	    $('#table_specification_delivery_id').bind('click focus blur keyup', function() {
+	    	delivery = getDelivery(data);
+	    });
+
+	    $('form').bind('click focus blur keyup', function(){
+	        
+	        // Calculate size
+	        var width = parseFloat($("#table_specification_width").val());
+		    var height = parseFloat($("#table_specification_height").val());
+		    var depth = parseFloat($("#table_specification_depth").val());
+		    var percent_v = parseInt($("#table_specification_percent_v").val());
+		    var unitV = parseFloat($("#table_specification_unit_v").val() || $("#unit_v").text());
+
+		    ckeckSize(width, height, depth, percent_v, unitV);
+	        
+	        //Get delivery properties
+	        var d_id = delivery.id;
+            var cost = delivery.cost;
+	        var execution_document = delivery.execution_document;
+	        var check_factory = delivery.check_factory;
+	        var bank_service = delivery.bank_service;
+	        var bank_percent = delivery.bank_percent;
+
+	        // var factory_id = ($("#table_specification_factory_brand"))
+            var upf = parseFloat($("#table_specification_unit_price_factory").val());
+	        var discount_values = parseInt($("#discount option:selected").val() || $("#default_discount").text());  
+	        var additional_discount = parseInt($("#additional_discount" ).text());
+	        var increment_discount = parseInt($("#table_specification_increment_discount" ).val());
+	        var number_of = parseInt($("#table_specification_number_of").val());
+	        var interest_percent = parseFloat($("#table_specification_interest_percent").val());
+	        var arhitec_percent = parseInt($("#table_specification_arhitec_percent").val());
+	        var additional_deliver = parseInt($("#table_specification_additional_delivery").val());
+
+	        var unit_price_factory = unitPriceNetto(discount_values, upf, additional_discount, increment_discount);
+	        var summa_netto = multiplication(unit_price_factory, number_of);
+	        var v_sum = multiplication(unitV, number_of);
+	        var price_at_nil = calculatePercentBankDelivery(summa_netto, cost, execution_document, check_factory,  bank_service, bank_percent, v_sum, additional_deliver);
+	        price_at_nil = NanOrNoNan(price_at_nil);
+	        var with_interest = ourInterest(price_at_nil, interest_percent);
+	        var factor = devision(with_interest, summa_netto);
+	        var unit_price = multiplication(factor, unit_price_factory);
+	        var summa = multiplication(factor, summa_netto);
+	        var interest = minus(with_interest, price_at_nil);
+            var architector = calculatePercentMinus(interest, arhitec_percent);
+            var architector_percent = architectorPercent(with_interest, architector);
+
+	        $('#unit_price_netto').html(unit_price_factory.toFixed(2));
+	        $('#sn').html(summa_netto.toFixed(2));
+	        $('#sv').html(v_sum.toFixed(2));
+	        $('#at_nil').html(price_at_nil.toFixed(2));
+	        $('#with_interest').html(with_interest.toFixed(2));
+	        $('#factor').html(factor.toFixed(2));
+	        $('#up').html(unit_price.toFixed(2));
+	        $('#summ').html(summa.toFixed(2));
+            $('#interest').html(interest.toFixed(2));
+            $('#architector').html(architector.toFixed(2));
+	        $('#architector_percent').html(architector_percent.toFixed(2));
+    
+	    });
+	}
+
+    function calculateSumSize(width, height, depth, percent_v){
+        var v = width*height*depth
+        return (v*percent_v/100)+v
+    } 
+
+    function ckeckSize(width, height, depth, percent_v, unitV) {
+        var unit_v_t = $('#table_specification_unit_v')
+        // console.log(unitV)
+            if(width > 0 || height > 0 || depth > 0) {
+                if(unit_v_t) { 
+                    unit_v_t.remove();
+                    var vep = calculateSumSize(width, height, depth, percent_v)
+                    $('#unit_v').html('<span>'+vep+'</span>');
+                    return false
+                }
+            }
+        
+        if(width == 0 && height == 0 && depth == 0 && percent_v >= 0) {
+            if (!($("input").is("#table_specification_unit_v"))) {            
+                $('#unit_v').html('<input step="0.1" type="number" name="table_specification[unit_v]" id="table_specification_unit_v">');  
+                return true
+            }
+        }
+    }
+        
+    function setId(id) {
+        $('input[name="table_specification[discount_id]"]').val(id);
+    }
+
+
+    function getArrayDiscounts(discounts) {
+        var array_percents = [];
+        var array_discount_id = [];
+        var array_discount_id_percent = [];
+        
+        for (var i = 0; i < discounts.length; i++) { 
+            array_percents[i] = discounts[i].percent
+            array_discount_id[i] = discounts[i].id
+            // array_discount_id_percent[i] = array_discount_id[i]+'/'+array_percents[i]
+        };
+        return array_percents
+    }
+
+    // Render select option 
+
+    function getFactoryOptions(arrFactories, percents) {
+
+        var resultHtml = "";
+        var id;
+        var results_with_id = []
+        // console.log(percents)
+        
+        if (typeof arrFactories != 'undefined') {
+            if (isNaN(arrFactories[0])) {
+                return 0;
+            }
+            // console.log(arrFactories.length)
+            if (arrFactories.length == 1 ) {
+                resultHtml = "<span id='default_discount'>"+arrFactories[0]+"</span>";
+                
+                for (var p in percents) {
+                    id = percents[p].id
+                    // console.log(id)
+                }
+            } else {
+                resultHtml += '<select id="discount">'
+                
+                for (var i = 0; i < arrFactories.length; i++) {
+                    resultHtml += "<option id='"+i+"' value='" + arrFactories[i] + "'>" + arrFactories[i] + "</option>";
+                };
+                var discount = arrFactories[0];
+                id = percents[0].id;
+
+                resultHtml += '</select>'
+            };
+        };
+        results_with_id.push(resultHtml, id)
+    
+        return results_with_id;
+    }
+    
+    function calculatePercentMinus(a, b) {
+        return a - (a / 100 * b)
+    }
+
+    function calculatePercentPlus(a, b) {
+        return a + (a / 100 * b)
+    }
+
+    function calculatePercentBankDelivery(summa_netto, cost, execution_document, check_factory,  bank_service, bank_percent, v_sum, additional_deliver) {
+        return summa_netto+bank_service+(summa_netto+bank_service)*bank_percent/100+execution_document+check_factory+(cost+additional_deliver)*v_sum
+    }
+
+    function unitPriceNetto(percent, upf, add_discount, incr_discount) {
+        var d1 = calculatePercentMinus(upf, percent);
+        var d2 = calculatePercentMinus(d1, add_discount);
+        var d3 = calculatePercentPlus(d2, incr_discount);
+        return d3;
+    }
+
+    function multiplication(a, b) {
+        return a * b;
+    }
+
+    function minus(a, b) {
+        return a-b
+    }
+
+    function multiplicationSumm(value, numberOf) {
+        return value * numberOf + value;
+    }
+    var getSomeData = function() {
+      var data;
+
+        $.ajax({
+            url: '/deliveries/',
+            dataType: 'json',
+            success: function(resp) {
+                data = resp.people;
+            }
+        });
+
+      return data;
+    }
+
+    // Cloning object
+    function clone(obj) {
+        if(obj == null || typeof(obj) != 'object') {
+            return obj;
+        }
+        var temp = {};
+        for(var key in obj) {
+            temp[key] = clone(obj[key]);
+        }
+        return temp;
+    }
+
+    //Getting delivery data in selecting 
+    function getDelivery(data) {
+        var deliv = clone(data[0]);
+        var delivery_text = $('#table_specification_delivery_id option:selected').text()
+
+        if (delivery_text == "") {
+            for(var p in deliv) {
+                    deliv[p] = 0;
+            }
+
+            return deliv;
+        }
+
+        for (var p in data) {
+            if (data[p].direction == delivery_text) {
+                return  data[p];
+            }
+        };
+    };
+
+    function ourInterest(summa_netto, percent){
+        return summa_netto*100/(100-percent)
+    }
+
+    function architectorPercent(with_interest, architector) {
+        return 100-(with_interest-architector)/with_interest*100;
+    }
+
+    function devision(with_interest, summa_netto) {
+        return with_interest/summa_netto;
+    }
+
+    function NanOrNoNan(res) {
+        if (isNaN(res)) {
+            return 0;
+        } else {
+            return res;                         
+        };
+    };
+});
+

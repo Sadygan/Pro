@@ -1,0 +1,21 @@
+<div class="container">
+	<% @table_specifications.each do |i| %> 
+			<%= i.id %>
+	<% end %>
+	
+	<p id="notice"><%=  %></p>
+
+	<p>
+	  <strong><%= t('project.name') %>:</strong>
+	  <%= @project.object_name %>
+	</p>
+
+	<p>
+	  <strong><%= t('project.client') %>:</strong>
+	  <%= @project.client %>
+	</p>
+	<%= render 'specifications/index_show' %>
+
+	<%= link_to 'Edit', edit_project_path(@project) %> |
+	<%= link_to 'Back', projects_path %>
+</div>

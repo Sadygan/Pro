@@ -1,0 +1,26 @@
+<div class="container">
+   
+  <h2>Specifations</h2>
+  <div class="well">
+    <%= link_to "New Specification", new_specification_path, remote: true, class: "btn btn-primary" %>
+  </div>
+  <div class="new-specification"></div>
+ 
+  <table id class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Style</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody id="specifications">
+    <%= render @specifications %>
+    </tbody>
+  </table>
+ 
+  <%= render 'dialog' %>
+ 
+</div>

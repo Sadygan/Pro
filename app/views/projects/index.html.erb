@@ -1,0 +1,39 @@
+<div class="container">
+ 
+  <h2><%= t('project.projects') %></h2>
+  <div class="well">
+    <%= link_to t('project.new_project'), new_project_path, remote: true, class: "btn btn-primary" %>
+  </div>
+  <div class="new-project"></div>
+ 
+  <table id class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th><%= t('project.user.email') %></th>
+      <th><%= t('project.object_name') %></th>
+      <th><%= t('project.city') %></th>
+      <th><%= t('project.style') %></th>      
+      <th><%= t('client.name') %></th>
+      <th><%= t('project.type_furniture') %></th>
+      <th><%= t('project.date_request') %></th>
+      <th><%= t('project.status') %></th>
+      <th><%= t('project.status_description') %></th>
+      <th><%= t('project.deadline') %></th>
+      <th><%= t('project.planned_budget') %></th>
+      <th><%= t('project.date_delivery_client') %></th>
+      <th><%= t('project.amount_contract') %></th>
+      <th><%= t('project.client_prepayment') %></th>
+      <th><%= t('project.client_surcharge') %></th>
+      <th><%= t('project.status_transaction') %></th>
+      <th><%= t('project.delivery_status') %></th>
+      <th></th>
+     </tr>
+    </thead>
+    <tbody id="projects">
+    <%= render @projects %>
+    </tbody>
+  </table>
+ 
+  <%= render 'dialog' %>
+ 
+</div>

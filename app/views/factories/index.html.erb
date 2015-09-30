@@ -1,0 +1,31 @@
+<div class="container">
+  <%= flash[:alert] %>
+  <h2><%= t('brand.brands') %></h2>
+  <div class="well">
+    <%= link_to t('brand.new_brand'), new_factory_path, remote: true, class: "btn btn-primary" %>
+  </div>
+  <div class="new-brand"></div>
+ 
+  <table id class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th><%= t('brand.brand') %></th>
+        <th><%= t('brand.web') %></th>
+        <th><%= t('brand.autorification') %></th>
+        <th><%= t('brand.style') %></th>
+        <th><%= t('brand.line_product') %></th>
+        <th><%= t('brand.catalog') %></th>
+        <th><%= t('brand.discount') %></th>
+        <th><%= t('brand.additional_discount') %></th>
+        <th><%= t('brand.delivery_terms') %></th>
+        <th><%= t('brand.note') %></th>
+    </tr>
+    </thead>
+    <tbody id="factories">
+    <%= render @factorys %>
+    </tbody>
+  </table>
+ 
+  <%= render 'dialog' %>
+ 
+</div>

@@ -1,0 +1,21 @@
+<script type="text/javascript">$(":file").filestyle({input: false}); </script>
+<%= form_for([@project, @specification, @table_specification], remote: true, :html => { :role => "form" }) do |f| %>
+<div id="error_explanation" class="bg-danger text-danger">
+</div>
+ <div class="row">
+ <div class="col-sm-6">
+  <div class="form-group">
+    <%= f.label :image, :class => "control-label" %>
+    <%= f.file_field :image, class: "filestyle", :"data-input" => :"false", :"data-buttonText" => :"Find file" %>
+  </div>
+  
+  <div class="col-sm-6">
+    <div class="form-group">
+      <%= f.submit :value => t('save') %>
+  </div>
+  </div>
+ </div>
+</div>
+
+
+<% end %>

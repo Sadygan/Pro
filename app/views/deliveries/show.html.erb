@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Direction:</strong>
+  <%= @delivery.direction %>
+</p>
+
+<p>
+  <strong>Cost:</strong>
+  <%= @delivery.cost %>
+</p>
+
+<p>
+  <strong>Execution document:</strong>
+  <%= @delivery.execution_document %>
+</p>
+
+<p>
+  <strong>Check factory:</strong>
+  <%= @delivery.check_factory %>
+</p>
+
+<p>
+  <strong>Bank service:</strong>
+  <%= @delivery.bank_service %>
+</p>
+
+<p>
+  <strong>Bank percent:</strong>
+  <%= @delivery.bank_percent %>
+</p>
+
+<%= link_to 'Edit', edit_delivery_path(@delivery) %> |
+<%= link_to 'Back', deliveries_path %>

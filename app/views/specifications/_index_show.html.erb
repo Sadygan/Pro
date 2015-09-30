@@ -1,0 +1,33 @@
+<div class="container">
+ 
+  <h2><%= t('specification.specifications') %></h2>
+  <div class="well">
+    <%= link_to t('specification.new_specification'), new_project_specification_path(@project), remote: true, class: "btn btn-primary" %>
+  </div>
+  <div class="new-specification"></div>
+ 
+  <table id class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th><%= t('specification.name') %></th>
+      <th><%= t('specification.style') %></th>
+      <th><%= t('specification.summ') %></th>
+      <th><%= t('table.print_sum') %></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody id="specifications">
+    <%= render @project.specifications %>
+    </tbody>
+    <tr>
+      <th></th>
+      <th><%= t('specification.total_sum') %></th>
+      <!-- Return sum project -->
+       <th><%= @total_sum %></th>
+         
+    </tr>
+  </table>
+
+<%= render "dialog" %>
+
+</div>

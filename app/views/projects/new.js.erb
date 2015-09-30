@@ -1,0 +1,63 @@
+// Add the dialog title
+$('#dialog h3').html("<i class='glyphicon glyphicon-plus'></i><%= t('project.add_new_project') %>");
+ 
+// Render the new form
+$('.modal-body').html('<%= j render("form") %>');
+ 
+// Show the dynamic dialog
+$('#dialog').modal("show");
+ 
+// Set focus to the first element
+$('#dialog').on('shown.bs.modal', function () {
+	  $('.first_input').focus()
+  })
+$("#table_specification_factory_brand").autocomplete({
+   source: $("#table_specification_factory_brand").data('autocomplete-source'),
+    select: function( event, ui ) {
+            // $("#table_specification_factory_brand").val( ui.item.label );
+            $.ajax({
+                url: "/factories/brand",
+                type: 'GET',
+                dataType: 'json',
+            
+            success: function (data) {
+                    var ids = $(".ui-helper-hidden-accessible div:last-child").text();
+                    parseInt(ids)
+                    console.log(ids)                        
+                    var i = 0;
+                    var discount_brand;
+                    
+                    while(ids >= data[i].id) {
+                        discount_brand = data[i];
+                            i++;
+                        if (i == data.length)
+                            break
+                    }
+                    
+                    var discount_arr = discount_brand.discount.split(/[/]/);
+                    console.log(discount_brand.discount);
+                    
+                    msg = JSON.stringify(discount_arr)
+                    console.log(msg);
+
+                    $("#discount").html( getFactoryOptions (discount_arr));    
+                }
+                }).done(function(html) {
+                  return $("#results").append(html);
+                });
+            $( "#factory_id" ).val( ui.item.value );
+            return false;
+        },
+
+    focus: function( event, ui ) {
+            $( "#table_specification_factory_brand" ).val( ui.item.label );
+            return false;
+        },
+         
+    change: function(event, ui) {
+        if (!ui.item) {
+            $("#factory_brand").val("");
+            $("#factory_brand").val("");
+        }        
+    }
+});

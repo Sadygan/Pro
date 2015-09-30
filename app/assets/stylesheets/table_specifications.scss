@@ -1,0 +1,324 @@
+// Place all the styles related to the table_specifications controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.container-fluid {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+
+
+table {
+	  width: 200% !important;
+	  max-width: 200% !important;
+	  margin-bottom: 20px;
+	font-size: 11px;
+	min-height: 40px;
+
+	textarea, input[type="text"], input[type="number"], select {
+		border-radius: 0px;
+		padding: 0px;
+		margin-bottom: 0px;
+		resize:vertical;
+		height: 22px;
+	}
+		
+	textarea:focus, input[type="text"]:focus, input[type="number"]:focus {
+		border-color: gray;
+		outline: thin dotted \9;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+	}
+	td, th {
+		padding: 2px !important;
+	}
+
+	th {
+		word-break: break-word;
+	}
+	.box_v {
+		width: 30px;
+	}
+	.box_v > input {
+		width: 28px;
+	}
+	.image {
+		max-width: 157px;
+		width: 157px;
+		padding: 8px 4px 0 4px;
+		
+		img {
+			width: 152px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}			
+	}
+
+	.factor {
+		max-width: 70px;
+		width: 70px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 70px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}			
+	}
+
+	.brand {
+		max-width: 70px;
+		width: 70px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 65px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}			
+	}
+
+	.article {
+		max-width: 45px;
+		width: 45px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 40px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}			
+	}
+
+	.type_furniture {
+		max-width: 140px;
+		width: 140px;
+		padding: 8px 4px 0 4px;
+		
+		textarea {
+			width: 135px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}
+
+	}
+	.finishing {
+		max-width: 30px;
+		width: 30px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 25px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+	.finishing_for_client {
+		max-width: 135px;
+		width: 135px;
+		padding: 8px 4px 0 4px;
+		
+		textarea {
+			width: 130px;
+
+		}
+		
+		tr {
+			min-height: 50px;
+		}
+	}
+	.size {
+		max-width: 135px;
+		width: 135px;
+		padding: 8px 4px 0 4px;
+		
+		textarea {
+			width: 130px;
+
+		}
+		
+		tr {
+			min-height: 50px;
+		}
+	}
+	.unit_price_factory {
+		max-width: 60px;
+		width: 60px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 55px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+	.unit_price_factory_input {
+		max-width: 60px;
+		width: 60px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 55px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+	.discount {
+		max-width: 45px;
+		width: 45px;
+		padding: 8px 4px 0 4px;
+		
+		select {
+			width: 40px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}	
+	.increment_discount {
+		max-width: 40px;
+		width: 40px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 	35px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+	.unit_price_netto {
+		max-width: 57px;
+		width: 57px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 57px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+	.summ_netto {
+		max-width: 60px;
+		width: 60px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 60px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+	.unit_v {
+		max-width: 42px;
+		width: 42px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 37px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+	.summ_v {
+		max-width: 50px;
+		width: 50px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 50px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+	.factor {
+		max-width: 42px;
+		width: 42px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 37px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+	.unit_price {
+		max-width: 60px;
+		width: 60px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 60px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+	.number_of {
+		max-width: 42px;
+		width: 42px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 37px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+	.summ {
+		max-width: 80px;
+		width: 80px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 80px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+	.destroy {
+		max-width: 10px;
+		width: 10px;
+		padding: 8px 4px 0 4px;
+	}
+}

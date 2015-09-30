@@ -1,0 +1,1 @@
+json.extract! @table_specification, :id, :article, :type_fyrniture, :finishing, :finishing_for_client, :size, :unit_price_factory, :increment_discount, :unit_price_netto, :summ_netto, :unit_v, :factor, :unit_price, :number_of, :summ, :required, :specification_id, :created_at, :updated_at

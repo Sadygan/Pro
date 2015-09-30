@@ -1,0 +1,110 @@
+<%= form_for([@project, @specification, @table_specification]) do |f| %>
+  <% if @table_specification.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@table_specification.errors.count, "error") %> prohibited this table_specification from being saved:</h2>
+
+      <ul>
+      <% @table_specification.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <table class="table table-bordered table-striped" id="table_specification_form">
+    <tr>
+      <th>Изображение</th>
+      <th>Бренд</th>
+      <th>Артикул</th>
+      <th>Тип мебели</th>
+      <th>Отделка</th>
+      <th>Отделка для клиента</th>
+      <th colspan="4">Размер</th>
+      <th>Цена на фабрике</th>
+      <th>Скидка</th>
+      <th>Скидка фабрика</th>
+      <th>Добавочная скидка</th>
+      <th>Цена за шт.</th>
+      <th>Сумма нетто</th>
+      <th>Единица V</th>
+      <th>Сумма V</th>
+      <th>Коэффициент</th>
+      <th>Цена за шт </th>
+      <th>Ко-во</th>
+      <th>Сумма</th>
+      <th>Цена в 0</th>
+      <th>Интерес %</th>
+      <th>С интересом €</th>
+      <th>Интерес</th>
+      <th>Архитектор %</th>
+      <th>Архитектор €</th>
+      <th>Архитектор % от заказа</th>
+      <th>Доставка</th>
+      <th>Добавить к до-ке</th>
+      <th>Группа</th>
+    </tr>
+    <tr>
+    <script type="text/javascript">$(":file").filestyle({input: false}); </script>
+      <th><%= f.file_field :image, class: "filestyle", :"data-input" => :"false", :"data-buttonText" => :"Find file" %></th>  
+      <th class="brand"><%= f.text_field :factory_brand, :class => "mlm mtm", data: {autocomplete_source: Factory.order(:brand).map { |t| { :label => t.brand, :value => t.id } } } %>
+      <%= f.hidden_field :factory_id, id: "factory_id" %>
+      </th>
+      <th class="article"><%= f.text_field :article %></th>
+      <th class="type_furniture"><%= f.text_area :type_fyrniture %></th>
+      <th class="finishing"><%= f.text_field :finishing %></th>
+      <th class="finishing_for_client"><%= f.text_area :finishing_for_client %></th>
+      <th class="size" colspan="4"><%= f.text_area :size %>
+      <%= f.file_field :size_image, class: "filestyle", :"data-input" => :"false", :"data-buttonText" => :"Find file" %></th>
+      <th class="unit_price_factory"><%= f.text_field :unit_price_factory %></th>
+      <th class="discount" id="discount"></th>
+      <th class="additional_discount" id="additional_discount"></th>
+      <th class="increment_discount"><%= f.number_field :increment_discount, value: 0 %></th>
+      <th class="unit_price_netto" id="unit_price_netto"></th>
+      <th class="summ_netto" id="sn"></th>
+      <th class="unit_v" id="unit_v"><%= f.number_field :unit_v, value: 0 %></th>
+      <th class="summ_v" id="sv"></th>
+      <th class="factor" id="factor"></th>
+      <th class="unit_price" id="up"></th>
+      <th class="number_of"><%= f.number_field :number_of, value: 1 %></th>
+      <th class="summ" id="summ"></th>
+      <th class="at_nil" id="at_nil"></th>
+      <th><%= f.number_field :interest_percent, value: 30 %></th>
+      <th class="with_interest" id="with_interest"></th>
+      <th class="with_interest" id="interest"></th>
+      <th><%= f.number_field :arhitec_percent, value: 50 %></th>
+      <th class="architector" id="architector"></th>
+      <th class="architector_percent" id="architector_percent"></th>
+      <th><%= f.collection_select :delivery_id, Delivery.order(:direction), :id, :direction, include_blank: true %></th>
+      <th><%= f.number_field :additional_delivery, value: 0 %></th>
+      <th><%= f.number_field :group %></th>
+      <th class="destroy"><%= %></th>
+    </tr>
+    <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th class="box_v"><%= f.number_field :width, value: 0, :step => 0.01 %></th>
+          <th class="box_v"><%= f.number_field :height, value: 0, :step => 0.01 %></th>
+          <th class="box_v"><%= f.number_field :depth, value: 0, :step => 0.01 %></th>
+          <th class="box_v"><%= f.number_field :percent_v, value: 10 %></th>
+          <th style="display:none"><%= f.number_field :discount_id %></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+
+    </tr>
+  </table>
+  <div class="actions">
+    <%= f.submit :value => t('table.add_to') %>
+  </div>
+<% end %>

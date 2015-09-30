@@ -1,0 +1,41 @@
+<%= form_for(@delivery) do |f| %>
+  <% if @delivery.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@delivery.errors.count, "error") %> prohibited this delivery from being saved:</h2>
+
+      <ul>
+      <% @delivery.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :direction %><br>
+    <%= f.text_field :direction %>
+  </div>
+  <div class="field">
+    <%= f.label :cost %><br>
+    <%= f.number_field :cost %>
+  </div>
+  <div class="field">
+    <%= f.label :execution_document %><br>
+    <%= f.number_field :execution_document %>
+  </div>
+  <div class="field">
+    <%= f.label :check_factory %><br>
+    <%= f.number_field :check_factory %>
+  </div>
+  <div class="field">
+    <%= f.label :bank_service %><br>
+    <%= f.number_field :bank_service %>
+  </div>
+  <div class="field">
+    <%= f.label :bank_percent %><br>
+    <%= f.number_field :bank_percent, step: 0.1 %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
