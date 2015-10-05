@@ -3,6 +3,171 @@ jQuery(function() {
   return $('.best_in_place').best_in_place();
 });
 
+$(document).ready(function() {
+	
+
+
+	$(document).on('blur','#txt_fullname', function(){
+	    var name = $(this).val();
+	    //alert('Make an AJAX call and pass this parameter >> name=' + name);
+		var calculate = {'table_specification': {'unit_v': 1}};
+				
+// 		$.ajax({
+// 			url: './table_specifications/'+id,
+// 			type: 'PUT',
+// 			dataType: 'json',
+// 			data: calculate,
+
+// 			async: true,
+// 			success: function (data) {
+
+// 			}
+// 		});
+
+	    $('.uv').text(name);
+	});
+
+
+    $.ajax({
+    	url: '/deliveries/',
+		type: 'GET',
+		dataType: 'json',
+		success: function(data) {
+			tableCalculation(data);
+
+		}
+	});
+
+	function tableCalculation(data) {
+		// Include helper file
+	    var imported = document.createElement('calculating_helper.js');
+	    // imported.src = '/assets/javascripts';
+	    document.head.appendChild(imported);
+
+		$('#assets').on('click focus keyup', '[data-attribute="unit_price_factory"], [name="discount"] select, [data-attribute="increment_discount"], [data-attribute="unit_v"], [data-attribute="number_of"], [data-attribute="interest_percent"], [data-attribute="arhitec_percent"], [data-attribute="group"], [data-attribute="additional_delivery"], [data-attribute="width"], [data-attribute="height"], [data-attribute="depth"], [data-attribute="percent_v"], .delivery select, .unit_v' , function(){
+			// Get id
+			var id = parseInt($(this).attr('id').replace(/\D+/g,""));
+	        var delivery_id = parseInt($('#delivery_'+id+' option:selected').val());
+	       	var delivery_text = ($('#delivery_'+id+' option:selected').text())
+	      	var v_ = parseFloat($('form > input').val());
+			
+	      	// Get data input table
+			var upf = parseFloat($('#best_in_place_table_specification_'+id+'_unit_price_factory').text());
+	      	var discount = parseInt($('#discount_'+id+' option:selected').text());
+			var additional_discount = parseFloat($('#best_in_place_table_specification_'+id+'_increment_discount').text());
+	        var unitV = parseFloat($('#best_in_place_table_specification_'+id+'_unit_v').text());
+	        var number_of = parseFloat($('#best_in_place_table_specification_'+id+'_number_of').text());
+	        var interest_percent = parseFloat($('#best_in_place_table_specification_'+id+'_interest_percent').text());
+	        var arhitec_percent = parseFloat($('#best_in_place_table_specification_'+id+'_arhitec_percent').text());
+	        var additional_delivery = parseFloat($('#best_in_place_table_specification_'+id+'_additional_delivery').text());
+
+	       	// Get delivey
+			var delivery = getDelivery(data, delivery_text)
+	       	var cost = delivery.cost
+	       	var execution_document = delivery.execution_document 
+	       	var direction = delivery.direction
+	       	var check_factory = delivery.check_factory
+	       	var bank_service = delivery.bank_service
+	       	var bank_percent = delivery.bank_percent
+	       	
+	       	upf = isntNan(upf, v_)
+	       	additional_discount = isntNan(additional_discount, v_)
+	       	unitV = isntNan(unitV, v_)
+	       	number_of = isntNan(number_of, v_)
+	       	interest_percent = isntNan(interest_percent, v_)
+	       	arhitec_percent = isntNan(arhitec_percent, v_)
+	       	additional_delivery = isntNan(additional_delivery, v_)
+
+	       	// Get size
+	       	var width = parseFloat($('#best_in_place_table_specification_'+id+'_width').text());
+	       	var height = parseFloat($('#best_in_place_table_specification_'+id+'_height').text());
+	       	var depth = parseFloat($('#best_in_place_table_specification_'+id+'_depth').text());
+	       	var percent_v = parseFloat($('#best_in_place_table_specification_'+id+'_percent_v').text());
+
+       		upf = isntNan(upf, v_)
+	       	additional_discount = isntNan(additional_discount, v_)
+	       	unitV = isntNan(unitV, v_)
+	       	number_of = isntNan(number_of, v_)
+	       	interest_percent = isntNan(interest_percent, v_)
+	       	arhitec_percent = isntNan(arhitec_percent, v_)
+	       	additional_delivery = isntNan(additional_delivery, v_)
+			width = isntNan(width, v_)
+			height = isntNan(height, v_)
+			depth = isntNan(depth, v_)
+			percent_v = isntNan(percent_v, v_)
+
+			var unit_v_t = $('#unit_v_'+id)
+			tableCheckSize(width, height, depth, percent_v, unit_v_t, id)
+
+			
+			
+
+			// Correct unit_V and recortd table_specification.unit_v
+			$(".uv").click( function(e){   
+			    if($(this).find('input').length){
+			         return ;   
+			    }        
+			    var input = $("<input type='text' size='5' />").val( $(this).text() );
+			    $(this).empty().append(input);
+			    input.focus();
+			    $(this).find('input')
+			    .focus(function(e){
+			        if($(this).val()=='0.00' || $(this).val()=='0'){$(this).val('');}
+			    }).keydown(function(event){
+			         if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 190  || event.keyCode == 13 || 
+			              // Allow: Ctrl+A
+			             (event.keyCode == 65 && event.ctrlKey === true) || 
+			             // Allow: home, end, left, right
+			             (event.keyCode >= 35 && event.keyCode <= 39)) {
+			             // let it happen, don't do anything
+			             return;
+			        }
+			        else {
+			            // Ensure that it is a number and stop the keypress
+			            if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+			                event.preventDefault(); 
+			            }   }
+			    }).blur( function(e){
+			              	if($(this).val()!=""){
+								if (!isNaN(parseFloat($(this).val()))) {
+									var val1=parseFloat($(this).val()).toFixed(2);
+									$(this).val(val1);
+									$(this).parent('.uv').text( 
+										  $(this).val()
+									);
+									
+									val1 = parseFloat(val1)
+									console.log(val1)
+									var v1 = {'table_specification': {'unit_v': val1}};
+
+									$.ajax({
+							    		url: 'table_specifications/'+id,
+							    		type: 'PUT',
+							    		dataType: 'json',
+							    		data: v1,
+							    		async: true,
+										success: function (data) {
+
+										}
+									});
+								  }
+								}
+								else{
+										$(this).parent('.uv').text("0.00");
+								}
+			            });    
+				});
+
+
+
+
+			// -------------------
+			
+		});
+	};
+});
+
+
 // $(document).ready(function() {
 // 	// addSumm();
 // 	// putSumm();

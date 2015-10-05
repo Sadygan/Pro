@@ -1,0 +1,147 @@
+function calculateSumSize(width, height, depth, percent_v){
+    var v = width*height*depth
+    return (v*percent_v/100)+v
+}
+ 
+function calculatePercentMinus(a, b) {
+    return a - (a / 100 * b)
+}
+
+function calculatePercentPlus(a, b) {
+    return a + (a / 100 * b)
+}
+
+function calculatePercentBankDelivery(summa_netto, cost, execution_document, check_factory,  bank_service, bank_percent, v_sum, additional_deliver) {
+    return summa_netto+bank_service+(summa_netto+bank_service)*bank_percent/100+execution_document+check_factory+(cost+additional_deliver)*v_sum
+}
+
+function unitPriceNetto(percent, upf, add_discount, incr_discount) {
+    var d1 = calculatePercentMinus(upf, percent);
+    var d2 = calculatePercentMinus(d1, add_discount);
+    var d3 = calculatePercentPlus(d2, incr_discount);
+    return d3;
+}
+
+function multiplication(a, b) {
+    return a * b;
+}
+
+function minus(a, b) {
+    return a - b
+}
+
+function multiplicationSumm(value, numberOf) {
+    return value * numberOf + value;
+}
+
+var getSomeData = function() {
+  var data;
+
+    $.ajax({
+        url: '/deliveries/',
+        dataType: 'json',
+        success: function(resp) {
+            data = resp.people;
+        }
+    });
+
+  return data;
+}
+
+// Cloning object
+function clone(obj) {
+    if(obj == null || typeof(obj) != 'object') {
+        return obj;
+    }
+    var temp = {};
+    for(var key in obj) {
+        temp[key] = clone(obj[key]);
+    }
+    return temp;
+}
+
+//Getting delivery data in selecting 
+function getDelivery(data, delivery_text) {
+    var deliv = clone(data[0]);
+
+    if (delivery_text == "") {
+        for(var p in deliv) {
+                deliv[p] = 0;
+        }
+        return deliv;
+    }
+
+    for (var p in data) {
+        if (data[p].direction == delivery_text) {
+            return  data[p];
+        }
+    };
+};
+
+function ourInterest(summa_netto, percent){
+    return summa_netto*100/(100-percent)
+}
+
+function architectorPercent(with_interest, architector) {
+    return 100-(with_interest-architector)/with_interest*100;
+}
+
+function devision(with_interest, summa_netto) {
+    return with_interest/summa_netto;
+}
+
+function NanOrNoNan(res) {
+    if (isNaN(res)) {
+        return 0;
+    } else {
+        return res;                         
+    };
+};
+
+function ckeckSize(width, height, depth, percent_v) {
+	
+	var unit_v_t = $('#table_specification_unit_v')
+	// console.log(unitV)
+    if(width > 0 || height > 0 || depth > 0) {
+        if(unit_v_t) { 
+            unit_v_t.remove();
+            var vep = calculateSumSize(width, height, depth, percent_v)
+            $('#unit_v').html('<span>'+vep+'</span>');
+            return false
+        }
+    }
+    
+    if(width == 0 && height == 0 && depth == 0 && percent_v >= 0) {
+        if (!($("input").is("#table_specification_unit_v"))) {            
+            $('#unit_v').html('<input step="0.1" type="number" name="table_specification[unit_v]" id="table_specification_unit_v">');  
+            return true
+        }
+    }
+}
+
+function tableCheckSize(width, height, depth, percent_v, unit_v_t, id) {
+    if(width > 0 || height > 0 || depth > 0) {
+        if(unit_v_t) { 
+            var vep = calculateSumSize(width, height, depth, percent_v)
+            $(unit_v_t).replaceWith('<span class="unit_v" id="unit_v_'+id+'">'+vep+'</span>');
+        }
+    }
+
+    if(width == 0 && height == 0 && depth == 0 && percent_v >= 0) {
+    	// console.log("zero")
+    	if($('#unit_v_')) {
+	    	var temp = $('#unit_v_'+id);
+	    	var text = $('#clone_unit_v_'+id).text();
+	    	$(temp).replaceWith('<span class="uv" id="unit_v_'+id+'">'+text+'</span>')
+	   	}
+    }
+}
+
+function isntNan(prv, prv_) {
+		if (isNaN(prv)) {
+    	return prv = prv_
+    } else {
+    	return prv
+    }
+}
+
