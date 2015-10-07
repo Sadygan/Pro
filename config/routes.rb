@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  resources :products do
+      resources :photos
+      resources :size_images
+  end
+    resources :assets 
+      
+  
   resources :deliveries
   resources :cities
   resources :styles

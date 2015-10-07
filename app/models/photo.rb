@@ -1,0 +1,3 @@
+class Photo < Asset
+
+end

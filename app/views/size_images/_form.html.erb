@@ -1,0 +1,22 @@
+<%= form_for([@product, @size_image]) do |f| %>
+  <% if @size_image.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@size_image.errors.count, "error") %> prohibited this size_image from being saved:</h2>
+
+      <ul>
+      <% @size_image.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <div class="field">
+    <%= f.label :image %><br>
+    <%= f.file_field :img %>
+  </div>
+
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

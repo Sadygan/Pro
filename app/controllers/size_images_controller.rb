@@ -1,0 +1,79 @@
+class SizeImagesController < ApplicationController
+  before_action :set_size_image, only: [:show, :edit, :update, :destroy]
+  before_action :set_product
+  # GET /size_images
+  # GET /size_images.json
+  def index
+    @size_images = SizeImage.where(product_id: @product)
+  end
+
+  # GET /size_images/1
+  # GET /size_images/1.json
+  def show
+  end
+
+  # GET /size_images/new
+  def new
+    @size_image = SizeImage.new
+  end
+
+  # GET /size_images/1/edit
+  def edit
+  end
+
+  # POST /size_images
+  # POST /size_images.json
+  def create
+    @size_image = SizeImage.new(size_image_params)
+    @size_image.product_id = @product.id
+
+    respond_to do |format|
+      if @size_image.save
+        format.html { redirect_to @product, notice: 'Size image was successfully created.' }
+        format.json { render :show, status: :created, location: @size_image }
+      else
+        format.html { render :new }
+        format.json { render json: @size_image.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /size_images/1
+  # PATCH/PUT /size_images/1.json
+  def update
+    respond_to do |format|
+      if @size_image.update(size_image_params)
+        format.html { redirect_to [@product, @size_image], notice: 'Size image was successfully updated.' }
+        format.json { render :show, status: :ok, location: @size_image }
+      else
+        format.html { render :edit }
+        format.json { render json: @size_image.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /size_images/1
+  # DELETE /size_images/1.json
+  def destroy
+    @size_image.destroy
+    respond_to do |format|
+      format.html { redirect_to size_images_url, notice: 'Size image was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_size_image
+      @size_image = SizeImage.find(params[:id])
+    end
+
+    # Never trust parameters from the scary inteparams[:size_image]the white list through.
+    def size_image_params
+      params.require(:size_image).permit(:type, :img, :product_id)
+    end
+
+    def set_product
+      @product = Product.find(params[:product_id])
+    end
+end

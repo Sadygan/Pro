@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150923161257) do
+ActiveRecord::Schema.define(version: 20151006090539) do
+
+  create_table "assets", force: :cascade do |t|
+    t.string   "type"
+    t.string   "img_file_name"
+    t.string   "img_content_type"
+    t.integer  "img_file_size"
+    t.datetime "img_updated_at"
+    t.integer  "product_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "assets", ["product_id"], name: "index_assets_on_product_id"
 
   create_table "cities", force: :cascade do |t|
     t.string   "name"
@@ -74,6 +87,12 @@ ActiveRecord::Schema.define(version: 20150923161257) do
   end
 
   add_index "factories", ["user_id"], name: "index_factories_on_user_id"
+
+  create_table "products", force: :cascade do |t|
+    t.string   "article"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "projects", force: :cascade do |t|
     t.string   "object_name"

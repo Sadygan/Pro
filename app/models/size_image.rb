@@ -1,0 +1,2 @@
+class SizeImage < Asset
+end

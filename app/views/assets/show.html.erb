@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @asset.type %>
+</p>
+
+<p>
+  <strong>Img:</strong>
+  <%= @asset.img %>
+</p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @asset.product %>
+</p>
+
+<%= link_to 'Edit', edit_asset_path(@asset) %> |
+<%= link_to 'Back', assets_path %>
