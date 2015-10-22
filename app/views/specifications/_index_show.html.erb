@@ -10,9 +10,9 @@
     <thead>
     <tr>
       <th><%= t('specification.name') %></th>
-      <th><%= t('specification.style') %></th>
-      <th><%= t('specification.summ') %></th>
       <th><%= t('table.print_sum') %></th>
+      <th><%= t('specification.summ') %></th>
+      <th><%=  %></th>
       <th></th>
     </tr>
     </thead>
@@ -23,7 +23,7 @@
       <th></th>
       <th><%= t('specification.total_sum') %></th>
       <!-- Return sum project -->
-       <th><%= @total_sum %></th>
+       <th><%= Project::sum_specifications(@project.specifications)  %></th>
          
     </tr>
   </table>

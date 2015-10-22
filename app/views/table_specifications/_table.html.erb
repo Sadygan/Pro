@@ -30,28 +30,27 @@
         <th class="delivery"><%= t('table.delivery') %></th>
         <th class="additional_delivery"><%= t('table.additional_delivery') %></th>
         <th class="group"><%= t('table.group') %></th>
-
         <th class="destroy"></th>
       </tr>
     </thead>
 
     <tbody>
+      <% i = 0 %>
       <% @specification.table_specifications.each do |table_specification| %>
+        
         <tr>
-          <td class="image" id="image_<%= table_specification.id %>" ><%= image_tag table_specification.image.url %>
-          <%= link_to t('change_image'), project_specification_table_specification_edit_image_path(@project, @specification, table_specification), remote: true, :class => 'btn btn-sm btn-info' %></td>
-
-          <td class="brand" id="brand_<%= table_specification.id %>"><%= table_specification.factory.brand %></td>
-          <td class="article"><%= best_in_place [@project, @specification, table_specification], :article %></td>
-          <td class="type_furniture"><%= best_in_place [@project, @specification, table_specification], :type_fyrniture, type: :textarea %></td>
+          <td class="image"><div name="photo_select" id="photo_<%= table_specification.id %>"><%= select("photo", table_specification.product.article, options_for_select(table_specification.photo_select(table_specification.product.id).all.collect {|p| [p.img_file_name, p.id, name: p.img_file_name, article: p.product.article]}, table_specification.photo_id)) %></div><div id="current_photo_<%= table_specification.id %>"><%= image_tag table_specification.image(table_specification.photo_id) %></div>       
+          </td>
+          <td class="brand" id="brand_<%= table_specification.id %>"><%= table_specification.product.factory.brand %></td>
+          <td class="article"><%= table_specification.product.article %></td>
+          <td class="type_furniture"><%= table_specification.product.type_furniture.name %></td>
           <td class="finishing"><%= best_in_place [@project, @specification, table_specification], :finishing %></td>
           <td class="finishing_for_client"><%= best_in_place [@project, @specification, table_specification], :finishing_for_client, type: :textarea %></td>
-          <td class="size" colspan="4"><%= best_in_place [@project, @specification, table_specification], :size, type: :textarea, :class => "size_v" %><%= image_tag table_specification.size_image.url %>
-
+          <td class="size" colspan="4"><%= best_in_place [@project, @specification, table_specification], :size, type: :textarea, :class => "size_v" %><div name="size_image_select" id="size_image_<%= table_specification.id %>"><%= select("size_image", table_specification.product.article, options_for_select(table_specification.size_image_select(table_specification.product.id).all.collect {|p| [p.img_file_name, p.id, name: p.img_file_name, article: p.product.article]}, table_specification.size_image_id)) %></div><div id="current_size_image_<%= table_specification.id %>"><%= image_tag table_specification.image(table_specification.size_image_id) %></div>  
           </td>
           <td class="unit_price_factory" id="unit_price_factory_<%= table_specification.id %>" ><%= best_in_place [@project, @specification, table_specification], :unit_price_factory, :sanitize => false, inner_class: :upf %></td>
-          <td calss="discount" name="discount"><%= select("discount", table_specification.id, options_for_select(table_specification.factory.discounts.all.collect {|p| [p.percent, p.id]}, table_specification.discount_id))%></td>
-          <td class="additional_discount"><%= table_specification.factory.additional_discount %></td>
+          <td calss="discount"><div name="discount_select" id="discount_<%= table_specification.id %>"><%= select("discount", table_specification.id, options_for_select(table_specification.product.factory.discounts.all.collect {|p| [p.percent, p.id, discount_id: p.id]}, table_specification.discount_id))%></div></td>
+          <td class="additional_discount"><%= table_specification.product.factory.additional_discount %></td>
           <td class="increment_discount"><%= best_in_place [@project, @specification, table_specification], :increment_discount %></td>
           <td class="unit_price_netto" id="unit_price_netto_<%= table_specification.id %>"><%= table_specification.upn %></td>
           <td class="summ_netto" id="summ_netto_<%= table_specification.id %>"><%= table_specification.summ_netto %></td>
@@ -62,6 +61,8 @@
           <td class="factor"><%= table_specification.factor%></td>
           <td class="unit_price" id="unit_price_<%= table_specification.id %>"><%= table_specification.unit_price %></td>
           <td class="number_of"><%= best_in_place [@project, @specification, table_specification], :number_of %></td>
+          
+          <% if table_specification.group.nil? || table_specification.add_row(@specification)[table_specification.group] == 1%>
           <td class="summ all" id="summ_<%= table_specification.id %>"><%= table_specification.summa %></td>
           <td class="price_from_nil" id=""><%= table_specification.price_from_nil%></td>
           <td class="interest_percent" id=""><%= best_in_place [@project, @specification, table_specification], :interest_percent %></td>
@@ -72,8 +73,11 @@
           <td class="architector_percent_from_order" id=""><%= table_specification.architector_percent_from_order %></td>
           <td class="delivery"><%= select("delivery", table_specification.id, options_for_select(Delivery.all.collect {|p| [p.direction, p.id]}, table_specification.delivery_id))%></td>
           <td class="additional_delivery" id=""><%= best_in_place [@project, @specification, table_specification], :additional_delivery %></td>
-           <td class="group" id=""><%= best_in_place [@project, @specification, table_specification], :group %></td>
-          
+        <% end %>
+        <% if table_specification.add_row(@specification)[table_specification.group] > 1 %>
+          <td colspan="10"></td>
+        <% end %>
+          <td class="group" id=""><%= best_in_place [@project, @specification, table_specification], :group %></td>
           <td class="destroy"><%= link_to 'x', [@project, @specification, table_specification], method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
         <tr>
@@ -85,7 +89,46 @@
           <th style="display:none"></th>
           <th colspan="23"></th>
         </tr>
+        <% unless table_specification.group.nil? %>
+        <% i = i + 1 %>
+          <% if table_specification.add_row(@specification)[table_specification.group] > 1 %>
+            <% if table_specification.add_row(@specification)[table_specification.group] == i %>
+              <% i = 0 %>
+              <tr style="background-color: yellow">
+                <!-- if tb -->
+                <th colspan="10"></th>
+                <th ><%= table_specification.group_sum(table_specification.group) %></th>
+                <th colspan="3">-</th>
+                <th ><%= table_specification.groupDataSum(table_specification.group, "netto") %></th>
+                <th ><%= table_specification.groupDataSum(table_specification.group, "sum_netto")%></th>
+                <th ></th>
+                <th ><%= table_specification.groupDataSum(table_specification.group, "sum_v") %></th>
+                <th ></th>
+                <th >-</th>
+                <th ><%= table_specification.groupDataSum(table_specification.group, "number_of") %></th>
+                <th ><%= table_specification.groupDataSum(table_specification.group, "sum") %></th>
+                <th ><%= table_specification.groupDataSum(table_specification.group, "from_nil_sum") %></th>
+                <th ><%= best_in_place [@project, @specification, table_specification], :interest_percent %></th>
+                <th ><%= table_specification.groupDataSum(table_specification.group, "with_interest") %></th>
+                <th ><%= table_specification.groupDataSum(table_specification.group, "interest") %></th>
+                <th ><%= best_in_place [@project, @specification, table_specification], :arhitec_percent %></th>
+                <th ><%= table_specification.groupDataSum(table_specification.group, "architector_interest") %></th>
+                <th ><%= table_specification.groupDataSum(table_specification.group, "architector_interest_from_order") %></th>
+                <th ><%= select("delivery", table_specification.id, options_for_select(Delivery.all.collect {|p| [p.direction, p.id]}, table_specification.delivery_id))%></th>
+                <th ><%= best_in_place [@project, @specification, table_specification], :additional_delivery %></th>
+                <th >-</th>
+                <th >-</th>
+            <% end %>
+          <% end %>
+        <% end %>
+        </tr>
+
       <% end %>
+        <tr>
+          <th colspan="21"></th>
+          <th><%= TableSpecification::specification_sum_all(@specification) %></th>
+          <th colspan="10"></th>
+        </tr>
     </tbody>
   </table>
 <table class="table table-bordered table-striped">

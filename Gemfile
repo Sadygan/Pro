@@ -43,7 +43,6 @@ group :development, :test do
   gem 'spring'
 end
 
-
 gem 'responders'
 gem 'best_in_place', github: 'aaronchi/best_in_place'
 gem 'jquery-ui-rails'
@@ -65,3 +64,5 @@ gem 'html5_validators'
 
 # Nested form fields
 gem 'nested_form_fields'
+
+gem 'rails4-autocomplete'

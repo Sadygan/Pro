@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
 
+  resources :type_furnitures
   resources :products do
+      get :autocomplete_type_furniture_name, :on => :collection
       resources :photos
       resources :size_images
   end
-    resources :assets 
+  
+  # resources :assets 
       
   
   resources :deliveries
@@ -30,6 +33,10 @@ Rails.application.routes.draw do
     resources :specifications do
       resources :table_specifications do
         get "edit_image", :edit
+        get :autocomplete_factory_brand, :on => :collection
+        get :autocomplete_product_article, :on => :collection
+        # get "/photos/:id"
+        get '/photos/:id', to: 'photos#show', as: 'photos'
       end
       get "delete"
     end

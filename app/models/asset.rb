@@ -1,5 +1,8 @@
 class Asset < ActiveRecord::Base
   	belongs_to :product
+  	has_one :table_specification
+  	# accepts_nested_attributes_for :table_specifications
+
   	has_attached_file :img, 
 		   			  :default_url => "/images/original/missing.png",
 	                  :styles=>{:medium => "600x600>", :thumb => "300x300>"},
@@ -16,4 +19,7 @@ class Asset < ActiveRecord::Base
 	  attachment.instance.product.article
 	end
 
+	def img_url
+      img.url
+  end
 end

@@ -15,6 +15,23 @@
     <%= f.label :article %><br>
     <%= f.text_field :article %>
   </div>
+    <div class="field">
+    <%= f.label :type_furniture %><br>
+    <%= f.autocomplete_field :type_furniture,autocomplete_type_furniture_name_products_path, :id_element => '#product_type_furniture_id' %>
+  </div>
+  <div class="field">
+    <%= f.label :price %><br>
+    <%= f.text_field :price %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :type_furniture_id %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :factory, :class => "control-label" %>
+    <%= f.collection_select :factory_id, Factory.order(:brand),:id,:brand, include_blank: true %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

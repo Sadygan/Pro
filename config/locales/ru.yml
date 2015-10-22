@@ -25,6 +25,9 @@ ru:
     date_request: "Дата запроса"
     city: "Город"
     status_description: "Описание статуса"
+    client_surcharge: "Доплата клиента"
+    status_transaction: "Статус сделки"
+    delivery_status: "Статус доставки"
   specification: 
     specification: "Спецификация"
     specifications: "Спецификации"
@@ -78,7 +81,6 @@ ru:
     delivery_terms: "Срок доставки"
     note: "Заметки"
     add: "Добавить новый бренд"
-  
   activerecord:
     models:
       Edit: "Редактировать"

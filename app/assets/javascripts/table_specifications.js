@@ -1,12 +1,7 @@
-// alert('qqq')
 jQuery(function() {
   return $('.best_in_place').best_in_place();
 });
-
 $(document).ready(function() {
-	
-
-
 	$(document).on('blur','#txt_fullname', function(){
 	    var name = $(this).val();
 	    //alert('Make an AJAX call and pass this parameter >> name=' + name);
@@ -44,13 +39,72 @@ $(document).ready(function() {
 	    // imported.src = '/assets/javascripts';
 	    document.head.appendChild(imported);
 
-		$('#assets').on('click focus keyup', '[data-attribute="unit_price_factory"], [name="discount"] select, [data-attribute="increment_discount"], [data-attribute="unit_v"], [data-attribute="number_of"], [data-attribute="interest_percent"], [data-attribute="arhitec_percent"], [data-attribute="group"], [data-attribute="additional_delivery"], [data-attribute="width"], [data-attribute="height"], [data-attribute="depth"], [data-attribute="percent_v"], .delivery select, .unit_v' , function(){
+		$('[name="photo_select"]').click(function(){
+	      	var id = parseInt($(this).attr('id').replace(/\D+/g,""));
+	      	var img_id = parseInt($("#photo_"+id+" select option:selected").attr("value"));
+	      	var article = $("#photo_"+id+" select option:selected").attr("article");
+	      	var photo_src = '';
+	      	var img_file_name = $("#photo_"+id+" option:selected").attr("name")
+	      	photo_src += '<img src="/photos/product/'+article+'/Photo/'+img_file_name+'">'
+	      	$('#current_photo_'+id).html(photo_src);
+		
+			// Set current image ID
+			console.log(img_id)
+			var setImage = {'table_specification': {'photo_id': img_id}}
+
+			$.ajax({
+				url: './table_specifications/'+id,
+				type: 'PUT',
+				dataType: 'JSON',
+				data: setImage, 
+				success: function (data) {
+
+				}
+			})
+
+		});
+
+		$('[name="size_image_select"]').click(function(){
+	      	var id = parseInt($(this).attr('id').replace(/\D+/g,""));
+	      	var img_id = parseInt($("#size_image_"+id+" select option:selected").attr("value"));
+	      	var article = $("#size_image_"+id+" select option:selected").attr("article");
+	      	var photo_src = '';
+	      	var img_file_name = $("#size_image_"+id+" option:selected").attr("name")
+	      	photo_src += '<img src="/photos/product/'+article+'/SizeImage/'+img_file_name+'">'
+	      	$('#current_size_image_'+id).html(photo_src);
+		
+			// Set current image ID
+			var setImage = {'table_specification': {'size_image_id': img_id}}
+			$.ajax({
+				url: './table_specifications/'+id,
+				type: 'PUT',
+				dataType: 'JSON',
+				data: setImage
+			});
+		});
+
+		$('[name="discount_select"]').click(function() {
+			var id = parseInt($(this).attr('id').replace(/\D+/g,""));
+			var discount_id = parseInt($("#discount_"+id+" select option:selected").attr("discount_id"));
+			console.log(discount_id)
+
+			// Set current discount
+			var setImage = {'table_specification': {'discount_id': discount_id}}
+			$.ajax({
+				url: './table_specifications/'+id,
+				type: 'PUT',
+				dataType: 'JSON',
+				data: setImage
+			});
+		});
+
+		$('#assets').on('click focus keyup', '[name="discount_select"], [data-attribute="unit_price_factory"], [data-attribute="increment_discount"], [data-attribute="unit_v"], [data-attribute="number_of"], [data-attribute="interest_percent"], [data-attribute="arhitec_percent"], [data-attribute="group"], [data-attribute="additional_delivery"], [data-attribute="width"], [data-attribute="height"], [data-attribute="depth"], [data-attribute="percent_v"], .delivery select, .unit_v' , function(){
 			// Get id
 			var id = parseInt($(this).attr('id').replace(/\D+/g,""));
 	        var delivery_id = parseInt($('#delivery_'+id+' option:selected').val());
 	       	var delivery_text = ($('#delivery_'+id+' option:selected').text())
 	      	var v_ = parseFloat($('form > input').val());
-			
+
 	      	// Get data input table
 			var upf = parseFloat($('#best_in_place_table_specification_'+id+'_unit_price_factory').text());
 	      	var discount = parseInt($('#discount_'+id+' option:selected').text());
@@ -98,9 +152,6 @@ $(document).ready(function() {
 
 			var unit_v_t = $('#unit_v_'+id)
 			tableCheckSize(width, height, depth, percent_v, unit_v_t, id)
-
-			
-			
 
 			// Correct unit_V and recortd table_specification.unit_v
 			$(".uv").click( function(e){   
@@ -158,11 +209,6 @@ $(document).ready(function() {
 			            });    
 				});
 
-
-
-
-			// -------------------
-			
 		});
 	};
 });

@@ -3,6 +3,8 @@ class TableSpecificationsController < ApplicationController
   before_action :set_find
   respond_to :html, :json
   respond_to :html, :js
+  autocomplete :factory, :brand
+  autocomplete :product, :article, :extra_data => [:type_furniture_id, :factory_id]
 
   skip_before_action :verify_authenticity_token
   # GET /table_specifications
@@ -14,6 +16,7 @@ class TableSpecificationsController < ApplicationController
     @table_specifications = @specification.table_specifications.all
 
       respond_to do |format|
+      format.json
       format.html
       format.pdf do 
         pdf = TableSpecificationPdf.new(@project, @specification, @table_specifications)
@@ -22,6 +25,7 @@ class TableSpecificationsController < ApplicationController
                               disposition: "inline"
       end
     end
+    
   end
 
   # GET /table_specifications/1
@@ -55,11 +59,11 @@ class TableSpecificationsController < ApplicationController
       if @table_specification.save
         format.html { redirect_to project_specification_table_specifications_path, notice: 'Table specification was successfully created.' }
         format.json { render :show, status: :created, location: @table_specification }
-        # format.js
+        format.js
       else
         format.html { render :index }
         format.json { render json: @table_specification.errors, status: :unprocessable_entity }
-        # format.js
+        format.js
       end
     end
   end
@@ -115,15 +119,11 @@ class TableSpecificationsController < ApplicationController
       else
         params.require(:table_specification).permit(
           :id, 
-          :image, 
-          :article, 
-          :type_fyrniture, 
           :finishing, 
           :finishing_for_client,
           :unit_price_factory,
           :increment_discount,
           :size,
-          :size_image, 
           :weight, 
           :width, 
           :height, 
@@ -143,7 +143,11 @@ class TableSpecificationsController < ApplicationController
           :factory_id, 
           :discount_id,
           :delivery_id, 
-          :factory_discount)
+          :asset_id,
+          :factory_discount,
+          :photo_id,
+          :size_image_id,
+          :product_id)
       end
     end
 

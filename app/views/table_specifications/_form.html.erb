@@ -44,16 +44,13 @@
     </tr>
     <tr>
     <script type="text/javascript">$(":file").filestyle({input: false}); </script>
-      <th><%= f.file_field :image, class: "filestyle", :"data-input" => :"false", :"data-buttonText" => :"Find file" %></th>  
-      <th class="brand"><%= f.text_field :factory_brand, :class => "mlm mtm", data: {autocomplete_source: Factory.order(:brand).map { |t| { :label => t.brand, :value => t.id } } } %>
-      <%= f.hidden_field :factory_id, id: "factory_id" %>
-      </th>
-      <th class="article"><%= f.text_field :article %></th>
-      <th class="type_furniture"><%= f.text_area :type_fyrniture %></th>
+      <th class="photos"><div id="photos"></div><div id="current_img"></div><%= f.number_field :photo_id, id: :"photo_id" %></br></th>  
+      <th class="brand" id="brand"></th>
+      <th class="article"><%= f.autocomplete_field :product_id, autocomplete_product_article_project_specification_table_specifications_path, :id_element => '#product_id', :size => 75, :"data-autocomplete-label" => "Sorry, nothing found." %><%= f.number_field :product_id, id: :"product_id" %></th>
+      <th class="type_furniture" id="type_furniture"></th>
       <th class="finishing"><%= f.text_field :finishing %></th>
       <th class="finishing_for_client"><%= f.text_area :finishing_for_client %></th>
-      <th class="size" colspan="4"><%= f.text_area :size %>
-      <%= f.file_field :size_image, class: "filestyle", :"data-input" => :"false", :"data-buttonText" => :"Find file" %></th>
+      <th class="size_images" colspan="4"><div id="size_images"></div><div id="current_size_img"></div><%= f.text_area :size %><%= f.number_field :size_image_id, id: :"size_image_id" %></th>
       <th class="unit_price_factory"><%= f.text_field :unit_price_factory %></th>
       <th class="discount" id="discount"></th>
       <th class="additional_discount" id="additional_discount"></th>
@@ -81,7 +78,7 @@
     <tr>
           <th></th>
           <th></th>
-          <th></th>
+          <th  id="link_product"></th>
           <th></th>
           <th></th>
           <th></th>
@@ -91,7 +88,7 @@
           <th class="box_v"><%= f.number_field :percent_v, value: 10 %></th>
           <th style="display:none"><%= f.number_field :discount_id %></th>
           <th></th>
-          <th></th>
+          <th><div id="hidden_discount"><%= f.number_field :discount_id, id: :"discount_id" %></div></th>
           <th></th>
           <th></th>
           <th></th>
@@ -103,7 +100,20 @@
           <th></th>
 
     </tr>
+
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
   </table>
+  <div id="article_id">1</div>
   <div class="actions">
     <%= f.submit :value => t('table.add_to') %>
   </div>

@@ -16,6 +16,7 @@
   <td><%= project.planned_budget %></td>
   <td><%= project.date_delivery_client %></td>
   <td><%= project.amount_contract %></td>
+  <td><%= Project::sum_specifications(project.specifications) %></td>
   <td><%= project.client_prepayment %></td>
   <td><%= project.client_surcharge %></td>
   <td><%= project.status_transaction %></td>

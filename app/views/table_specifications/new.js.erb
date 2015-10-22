@@ -1,128 +1,211 @@
 $('.table-button').hide().after("<%= j render 'form' %>");
 
 $(document).ready(function(){
-    
     // Include helper file
     var imported = document.createElement('calculating_helper.js');
     imported.src = '/assets/javascripts';
     document.head.appendChild(imported);
-
-	$("#table_specification_factory_brand").autocomplete({
-	   source: $("#table_specification_factory_brand").data('autocomplete-source'),
-        select: function( event, ui ) {
-                // $("#table_specification_factory_brand").val( ui.item.label );
-                $.ajax({
-                    url: "/factories/brand",
-                    type: 'GET',
-                    dataType: 'json',
-                
-                success: function (data) {
-                        var ids = $(".ui-helper-hidden-accessible div:last-child").text();
-                        var i = 0;
-                        var discount_brand;
-
-                        while(ids >= data[i].id) {
-                            discount_brand = data[i];
-                                i++;
-                            if (i == data.length)
-                                break;
-                        }
-
-                       	var percents = discount_brand.discount;
-
-
-                        var additional_discount = [];
-                        additional_discount[0] = parseInt(discount_brand.additional_discount);
-           
-                        var brand_id = discount_brand.id;
-                        
-     	   				var array_discount = getArrayDiscounts(percents);
-        				var first_percent_in_array = array_discount[0];
-
-        				var percent_with_id = [];
-                        percent_with_id = getFactoryOptions(array_discount, percents)
-                        // console.log(percent_with_id)
-                    	
-                        var id = percent_with_id[1];
-                    	$("#discount").change(function() {
-							// console.log(id)
-							var discount = parseInt($("#discount option:selected").val());
-							for (var p in percents) {
-					   			if (percents[p].percent == discount) {
-					       			id = percents[p].id
-
-								};
-						
-                            };
-                            setId(id)
-						});
-						setId(id)
-						// console.log(percent_with_id[0])
-                        $("#discount").html(percent_with_id[0]);    
-                        $("#additional_discount").html(getFactoryOptions(additional_discount));    
-                    }
-                    }).done(function(html) {
-                      return $("#results").append(html);
-                    });
-                $( "#factory_id" ).val( ui.item.value );
-                return false;
-            },
-
-        focus: function( event, ui ) {
-                $( "#table_specification_factory_brand" ).val( ui.item.label );
-                return false;
-            },
-             
-        change: function(event, ui) {
-            if (!ui.item) {
-                $("#factory_brand").val("");
-                $("#factory_brand").val("");
-            }        
-        }
-	});
-
+   
     $.ajax({
     	url: '/deliveries/',
 		type: 'GET',
 		dataType: 'json',
 		success: function(data) {
 			formCalculation(data);
-
 		}
 	});
 
-	function formCalculation(data) {
-	    var delivery = {}
-	    var deliv = getDelivery(data)
+             
+    $('#table_specification_product_id').bind('click focus blur keyup', function(){ 
+    
 
+        $('#table_specification_product_id').bind('railsAutocomplete.select', function(event, data){
+            var factory_id = data.item.factory_id;
+            var type_furniture_id = data.item.type_furniture_id;
+            var article = data.item.label;
+
+            getFactory(factory_id);
+
+            getTypeFurniture(type_furniture_id);
+            
+            // draw image photos
+            getImage(data.item.id, article, 'photos', 'Photo');
+        
+            // draw image size_images
+            getImage(data.item.id, article, 'size_images', 'SizeImage');
+        });
+
+    });
+
+
+    function getImage(id, article, catalog, catalog_img) {
+        $.ajax({
+            type: "GET",
+            url: "/products/"+id+"/"+catalog+"/",
+            dataType: "JSON",
+            success: function(data) {
+            var current_image;
+            current_image = '<select id="current_image_'+catalog+'">'
+            if (data.length != 0) {
+                    for(var p in data) {
+                        current_image += '<option article="'+article+'" img_id="'+data[p].id+'">'+data[p].img_file_name+'</option>'
+                    }
+                } else {
+                    image = '';
+                }
+
+            current_image += '</select>'
+            $("#"+catalog).html(current_image)
+
+            }
+        });
+    }
+
+    function getTypeFurniture(id) {
+        $.ajax({
+            type: "GET",
+            url: "/type_furnitures/"+id,
+            dataType: "JSON",
+            success: function(data) {
+                var type_furniture = data.name;
+                $("#type_furniture").html(type_furniture); 
+            }
+        });
+    };
+
+ 
+
+    function getFactory(id) {
+        $.ajax({
+            type: "GET",
+            url: "/factories/brand",
+            dataType: "JSON",
+            success: function(data) {
+                id = id - 1;
+                var brand = data[id].brand                
+
+                var additional_discount = [];
+                additional_discount[0] = data[id].additional_discount;
+                if (additional_discount[0] == null) {additional_discount[0] = 0};
+
+                var percents = data[id].discount;
+                // console.log(percents)          
+                var array_discount = getArrayDiscounts(percents);
+                percent_with_id = getFactoryOptions(array_discount, percents);
+
+                $("#brand").html(brand); 
+                $("#discount").html(percent_with_id[0]);
+                $("#additional_discount").html(getFactoryOptions(additional_discount, percents)); 
+
+            }
+        });
+    }
+
+	function formCalculation(data) {
+	    var delivery = {};
+	    var deliv = getDelivery(data);
+
+        // Add view images photo and size_image
+        $('#photos').bind('click focus blur keyup', function(){
+            var article = $("#photos select option:selected").attr("article");
+            var img_id = $("#photos select option:selected").attr("img_id");
+            var photo_src = '';
+        	var img_file_name = $('#photos select').val();
+            photo_src += '<img src="/photos/product/'+article+'/Photo/'+img_file_name+'">'
+            console.log(img_id)
+            $('#current_img').html(photo_src);
+            
+            // Add hide size_image_id
+            $('input[name="table_specification[photo_id]"]').val(img_id);
+        });
+        $('#size_images').bind('click focus blur keyup', function(){
+            var article = $("#size_images select option:selected").attr("article");
+            var img_id = $("#size_images select option:selected").attr("img_id");
+            var photo_src = '';
+            var img_file_name = $('#size_images select').val();
+            photo_src += '<img src="/photos/product/'+article+'/SizeImage/'+img_file_name+'">'
+            console.log(img_id)
+            $('#current_size_img').html(photo_src)
+
+            // Add hide size_image_id
+            $('input[name="table_specification[size_image_id]"]').val(img_id);
+        });
+        //Get delivery properties
+
+
+        var group_bool = false;
+
+       // Get all product
+        $.ajax({
+            type: "GET",
+            url: "./table_specifications/",
+            dataType: "JSON",
+            success: function(data) {
+                selectionGroup(data)
+            }
+        });
+
+        function selectionGroup(data) {
+            var groups_arr = [];
+            var current_group_arr = [];
+            var current_group = 0;
+            for(var p in data) {
+                groups_arr.push(data[p].group);
+            }
+            
+            current_group_arr = groups_arr.uniq();
+            console.log(current_group_arr)
+            $('#table_specification_group').bind('click focus blur keyup', function(){
+                current_group = $("#table_specification_group").val()
+                group_bool = in_array(current_group, current_group_arr)
+                console.log(group_bool)
+            });
+
+        }
 
         $('form').bind('click focus blur keyup', function(){
-            
-        	var delivery_text = $('#table_specification_delivery_id option:selected').text()
+            var cost = 0;
+            var execution_document = 0;
+            var check_factory = 0;
+            var bank_service = 0;
+            var bank_percent = 0;
+
+            var delivery_text = $('#table_specification_delivery_id option:selected').text()
             delivery = getDelivery(data, delivery_text);
-    	   
-	        // Calculate size
+    	   // console.log(delivery)
+            // Calculate size
 	        var width = parseFloat($("#table_specification_width").val());
 		    var height = parseFloat($("#table_specification_height").val());
 		    var depth = parseFloat($("#table_specification_depth").val());
 		    var percent_v = parseInt($("#table_specification_percent_v").val());
 		    var unitV = parseFloat($("#table_specification_unit_v").val() || $("#unit_v").text());
 
-
 		    ckeckSize(width, height, depth, percent_v);
-       
-            //Get delivery properties
-	        var d_id = delivery.id;
-            var cost = delivery.cost;
-	        var execution_document = delivery.execution_document;
-	        var check_factory = delivery.check_factory;
-	        var bank_service = delivery.bank_service;
-	        var bank_percent = delivery.bank_percent;
-
+            // console.log(group_bool)
+            if(group_bool != true){
+                //Get delivery properties
+                cost = delivery.cost;
+                execution_document = delivery.execution_document;
+                check_factory = delivery.check_factory;
+                bank_service = delivery.bank_service;
+                bank_percent = delivery.bank_percent;
+                // console.log(cost)
+            } else {
+                cost = 0;
+                execution_document = 0;
+                check_factory = 0;
+                bank_service = 0;
+                bank_percent = 0;
+                // console.log(cost)
+            }
+            // console.log(delivery.execution_document)
 	        // var factory_id = ($("#table_specification_factory_brand"))
             var upf = parseFloat($("#table_specification_unit_price_factory").val());
 	        var discount_values = parseInt($("#discount option:selected").val() || $("#default_discount").text());  
-	        var additional_discount = parseInt($("#additional_discount" ).text());
+	        var discount_id = parseInt($("#discount option:selected").attr("discount_id") || $("#default_discount").attr("discount_id"));
+            setId(discount_id)
+
+            var additional_discount = parseInt($("#additional_discount" ).text());
 	        var increment_discount = parseInt($("#table_specification_increment_discount" ).val());
 	        var number_of = parseInt($("#table_specification_number_of").val());
 	        var interest_percent = parseFloat($("#table_specification_interest_percent").val());
@@ -177,29 +260,21 @@ $(document).ready(function(){
     // Render select option 
 
     function getFactoryOptions(arrFactories, percents) {
-
         var resultHtml = "";
         var id;
         var results_with_id = []
-        // console.log(percents)
-        
         if (typeof arrFactories != 'undefined') {
             if (isNaN(arrFactories[0])) {
                 return 0;
             }
-            // console.log(arrFactories.length)
             if (arrFactories.length == 1 ) {
-                resultHtml = "<span id='default_discount'>"+arrFactories[0]+"</span>";
-                
-                for (var p in percents) {
-                    id = percents[p].id
-                    // console.log(id)
-                }
+
+                resultHtml = "<span id='default_discount' discount_id='"+percents[0].id+"'>"+arrFactories[0]+"</span>";
             } else {
                 resultHtml += '<select id="discount">'
                 
                 for (var i = 0; i < arrFactories.length; i++) {
-                    resultHtml += "<option id='"+i+"' value='" + arrFactories[i] + "'>" + arrFactories[i] + "</option>";
+                    resultHtml += "<option discount_id='"+percents[i].id+"' value='" + arrFactories[i] + "'>" + arrFactories[i] + "</option>";
                 };
                 var discount = arrFactories[0];
                 id = percents[0].id;

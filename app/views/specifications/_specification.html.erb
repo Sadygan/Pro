@@ -4,7 +4,7 @@
   <td><%= link_to specification.name, project_specification_table_specifications_path(@project, specification), 'data-no-turbolink' => true %></td>
   
   <td><%= check_box("print", "sum", {checked: false}, "sit") %></td>
-
+  <td><%= TableSpecification::specification_sum_all(specification) %></td>
   <td>
     <%= link_to t('edit'), edit_project_specification_path(@project, specification), remote: true, :class => 'btn btn-sm btn-info' %>
     <%= link_to t('delete'), project_specification_path(@project, specification), remote: true, :method => :delete, data: {confirm: "Delete Customer: #{specification.name}"}, :class => 'btn btn-sm btn-danger' %>

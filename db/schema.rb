@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151006090539) do
+ActiveRecord::Schema.define(version: 20151007133358) do
 
   create_table "assets", force: :cascade do |t|
     t.string   "type"
@@ -90,9 +90,15 @@ ActiveRecord::Schema.define(version: 20151006090539) do
 
   create_table "products", force: :cascade do |t|
     t.string   "article"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.float    "price"
+    t.integer  "factory_id"
+    t.integer  "type_furniture_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
+
+  add_index "products", ["factory_id"], name: "index_products_on_factory_id"
+  add_index "products", ["type_furniture_id"], name: "index_products_on_type_furniture_id"
 
   create_table "projects", force: :cascade do |t|
     t.string   "object_name"
@@ -151,8 +157,6 @@ ActiveRecord::Schema.define(version: 20151006090539) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.string   "article"
-    t.text     "type_fyrniture"
     t.string   "finishing"
     t.text     "finishing_for_client"
     t.float    "unit_price_factory"
@@ -175,20 +179,34 @@ ActiveRecord::Schema.define(version: 20151006090539) do
     t.integer  "group"
     t.float    "additional_delivery"
     t.boolean  "required"
+    t.integer  "product_id"
     t.integer  "specification_id"
     t.string   "factory_brand"
     t.integer  "factory_id"
     t.integer  "discount_id"
     t.integer  "delivery_id"
+    t.integer  "asset_id"
+    t.integer  "photo_id"
+    t.integer  "size_image_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
 
+  add_index "table_specifications", ["asset_id"], name: "index_table_specifications_on_asset_id"
   add_index "table_specifications", ["delivery_id"], name: "index_table_specifications_on_delivery_id"
   add_index "table_specifications", ["discount_id"], name: "index_table_specifications_on_discount_id"
   add_index "table_specifications", ["factory_brand"], name: "index_table_specifications_on_factory_brand"
   add_index "table_specifications", ["factory_id"], name: "index_table_specifications_on_factory_id"
+  add_index "table_specifications", ["photo_id"], name: "index_table_specifications_on_photo_id"
+  add_index "table_specifications", ["product_id"], name: "index_table_specifications_on_product_id"
+  add_index "table_specifications", ["size_image_id"], name: "index_table_specifications_on_size_image_id"
   add_index "table_specifications", ["specification_id"], name: "index_table_specifications_on_specification_id"
+
+  create_table "type_furnitures", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.boolean  "admin"
