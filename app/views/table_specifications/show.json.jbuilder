@@ -1,5 +1,5 @@
 json.extract! @table_specification,   		  
-		  :id, 
+		:id, 
           :finishing, 
           :finishing_for_client,
           :unit_price_factory,

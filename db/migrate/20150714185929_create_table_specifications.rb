@@ -20,7 +20,6 @@ class CreateTableSpecifications < ActiveRecord::Migration
       t.integer    :percent_v
       t.float      :unit_v
       
-      t.float      :light_factor
       t.integer    :number_of
       t.integer    :interest_percent
       t.integer    :arhitec_percent

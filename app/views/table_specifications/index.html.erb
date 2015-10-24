@@ -4,13 +4,7 @@
   <%= label_tag(:print_sum, t('table.print_sum')) %>
   
   <%= check_box("print", "sum", {checked: @specification.print_sum}, "sit") %>
-
-  <!-- Развилка между спецификацией и спецификацией свет --> 
-  <% if @specification.light %> 
-   	<%= render 'light' %>
-  <% else %>
-   	<%= render 'table' %>
-  <% end %>
+  <%= render 'table' %>
 
   <%= render 'dialog' %>
 	  

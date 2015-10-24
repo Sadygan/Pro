@@ -3,7 +3,7 @@
 </div>
  
 <div class="row">
- <div class="col-sm-6">
+ <div class="col-sm-4">
   <div class="form-group">
     <%= f.label t('brand.brand'), :class => "control-label" %>
     <%= f.text_field :brand, :class => "form-control first_input"  %>
@@ -16,6 +16,9 @@
     <%= f.label t('brand.autorification'), :class => "control-label" %>
     <%= f.text_field :autorification, :class => "form-control" %>
   </div>
+</div>
+ 
+<div class="col-sm-4">
   <div class="form-group">
     <%= f.label t('brand.style'), :class => "control-label" %>
     <%= f.text_field :style, :class => "form-control" %>
@@ -29,8 +32,22 @@
     <%= f.text_field :catalog, :class => "form-control" %>
   </div>
 </div>
- 
-<div class="col-sm-6">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <%= f.label t('brand.delivery_terms'), :class => "control-label" %>
+      <%= f.text_field :delivery_terms, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label t('brand.note') , :class => "control-label" %>
+      <%= f.text_field :note, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label t('brand.additional_discount'), :class => "control-label" %>
+      <%= f.text_field :additional_discount, :class => "form-control" %>
+    </div>
+  </div>
+
+<div class="col-sm-12">
   <div class="form-group">
     <%= f.label t('brand.discount'), :class => "control-label" %>
     <%= f.nested_fields_for :discounts do |ff| %>
@@ -39,23 +56,38 @@
       <%= ff.text_field :percent %>
     <% end %>
     <%= f.add_nested_fields_link :discounts %>
-  
   </div>
-  <div class="form-group">
-    <%= f.label t('brand.additional_discount'), :class => "control-label" %>
-    <%= f.text_field :additional_discount, :class => "form-control" %>
+  <h2>Свет</h2>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <%= f.label t('brand.light_factor'), :class => "control-label" %>
+      <%= f.text_field :light_factor, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label t('brand.minimum_order'), :class => "control-label" %>
+      <%= f.text_field :minimum_order, :class => "form-control" %>
+    </div>
   </div>
-  <div class="form-group">
-    <%= f.label t('brand.delivery_terms'), :class => "control-label" %>
-    <%= f.text_field :delivery_terms, :class => "form-control" %>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <%= f.label t('brand.delivery_time'), :class => "control-label" %>
+      <%= f.text_field :delivery_time, :class => "form-control" %>
+    </div>
   </div>
-  <div class="form-group">
-    <%= f.label t('brand.note') , :class => "control-label" %>
-    <%= f.text_field :note, :class => "form-control" %>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <%= f.label t('brand.group_brend'), :class => "control-label" %>
+      <%= f.text_field :group_brend, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+    </br>
+    <%= f.submit  @factory.new_record? ? "Create Factory" : "Update Factory", :class => "btn btn-primary" %>
   </div>
-  <div class="form-group">
-    <%= f.submit  @factory.new_record? ? "Create Create" : "Update Customer", :class => "btn btn-primary" %>
   </div>
+
+
+
+</div>
 </div>
 </div>
 <% end %>

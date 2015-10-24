@@ -81,11 +81,17 @@ ActiveRecord::Schema.define(version: 20151007133358) do
     t.integer  "additional_discount"
     t.string   "delivery_terms"
     t.text     "note"
+    t.float    "light_factor"
+    t.integer  "minimum_order"
+    t.integer  "delivery_time"
+    t.string   "group_brend"
     t.integer  "user_id"
+    t.integer  "light_factory_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
   end
 
+  add_index "factories", ["light_factory_id"], name: "index_factories_on_light_factory_id"
   add_index "factories", ["user_id"], name: "index_factories_on_user_id"
 
   create_table "products", force: :cascade do |t|
@@ -172,7 +178,6 @@ ActiveRecord::Schema.define(version: 20151007133358) do
     t.float    "depth"
     t.integer  "percent_v"
     t.float    "unit_v"
-    t.float    "factor"
     t.integer  "number_of"
     t.integer  "interest_percent"
     t.integer  "arhitec_percent"

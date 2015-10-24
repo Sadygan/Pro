@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :light_factories do
+    get :autocomplete_factory_brand, :on => :collection
+  end
+  
   resources :type_furnitures
   resources :products do
       get :autocomplete_type_furniture_name, :on => :collection
@@ -37,6 +41,9 @@ Rails.application.routes.draw do
         get :autocomplete_product_article, :on => :collection
         # get "/photos/:id"
         get '/photos/:id', to: 'photos#show', as: 'photos'
+      end
+      resources :table_specification_lights do
+        
       end
       get "delete"
     end

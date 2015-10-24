@@ -1,6 +1,6 @@
 class TableSpecificationsController < ApplicationController
   before_action :set_table_specification, only: [:show, :edit, :update, :destroy]
-  before_action :set_find
+  before_action :set_project_specification
   respond_to :html, :json
   respond_to :html, :js
   autocomplete :factory, :brand
@@ -107,7 +107,7 @@ class TableSpecificationsController < ApplicationController
       @table_specification = TableSpecification.find(params[:id])
     end
 
-    def set_find
+    def set_project_specification
       @project = Project.find(params[:project_id])
       @specification = Specification.find(params[:specification_id])      
     end
@@ -130,7 +130,6 @@ class TableSpecificationsController < ApplicationController
           :depth, 
           :percent_v, 
           :unit_v,
-          :factor,
           :number_of,
           :interest_percent,
           :arhitec_percent,

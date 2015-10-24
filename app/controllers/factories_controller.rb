@@ -25,8 +25,7 @@ class FactoriesController < ApplicationController
   
   def brand
     @factories = Factory.order([:id]).where("brand like ?", "%#{params[:id]}%")
-    # render json: @factories.map{|x| [x.id, x.brand, x.discount]}
-    render json: @factories.map{|x| {id: x.id, brand: x.brand, discount: x.discounts, additional_discount: x.additional_discount}}
+    render json: @factories.map{|x| {id: x.id, brand: x.brand, discount: x.discounts, additional_discount: x.additional_discount, light_factor: x.light_factor}}
   end
 
   def new
@@ -82,7 +81,7 @@ private
   end
   
   def factory_params
-    params.require(:factory).permit(:brand, :web, :autorification, :style, :line_product, :catalog, :price, :additional_discount, :delivery_terms, :note, discounts_attributes:[:percent, :_destroy, :id])
+    params.require(:factory).permit(:brand, :web, :autorification, :style, :line_product, :catalog, :price, :additional_discount, :delivery_terms, :note,:light_factory_id, discounts_attributes:[:percent, :_destroy, :id])
   end
  
 end

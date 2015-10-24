@@ -17,8 +17,6 @@ $(document).ready(function(){
 
              
     $('#table_specification_product_id').bind('click focus blur keyup', function(){ 
-    
-
         $('#table_specification_product_id').bind('railsAutocomplete.select', function(event, data){
             var factory_id = data.item.factory_id;
             var type_furniture_id = data.item.type_furniture_id;
@@ -36,7 +34,6 @@ $(document).ready(function(){
         });
 
     });
-
 
     function getImage(id, article, catalog, catalog_img) {
         $.ajax({
@@ -72,8 +69,6 @@ $(document).ready(function(){
             }
         });
     };
-
- 
 
     function getFactory(id) {
         $.ajax({
@@ -172,7 +167,7 @@ $(document).ready(function(){
 
             var delivery_text = $('#table_specification_delivery_id option:selected').text()
             delivery = getDelivery(data, delivery_text);
-    	   // console.log(delivery)
+    	    // console.log(delivery)
             // Calculate size
 	        var width = parseFloat($("#table_specification_width").val());
 		    var height = parseFloat($("#table_specification_height").val());
@@ -258,7 +253,6 @@ $(document).ready(function(){
     }
 
     // Render select option 
-
     function getFactoryOptions(arrFactories, percents) {
         var resultHtml = "";
         var id;

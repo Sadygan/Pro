@@ -1,8 +1,15 @@
 <% @project.specifications.each do |specification| %>
       <tr>
+      <% unless specification.light %>
         <td><%= link_to specification.name, project_specification_table_specifications_path(@project, specification) %></td>
         <td><%= specification.style %></td>
         <td><%= link_to "Edit", edit_project_specification_path(@project, specification), remote: true, class: "btn" %></td>
         <td><%= link_to "Delete", project_specification_delete_path(@project, specification), remote: true, class: "btn btn-danger" %></td>
+      <% else %>
+        <td><%= link_to specification.name, project_specification_table_specification_lights_path(@project, specification) %></td>
+        <td><%= specification.style %></td>
+        <td><%= link_to "Edit", edit_project_specification_path(@project, specification), remote: true, class: "btn" %></td>
+        <td><%= link_to "Delete", project_specification_delete_path(@project, specification), remote: true, class: "btn btn-danger" %></td>
+      <% end %>
       </tr>
 <% end %>

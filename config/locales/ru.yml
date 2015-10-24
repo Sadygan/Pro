@@ -81,6 +81,10 @@ ru:
     delivery_terms: "Срок доставки"
     note: "Заметки"
     add: "Добавить новый бренд"
+    light_factor: "Коэффициет"
+    minimum_order: "Минимальный заказ"
+    delivery_time: "Срок поставки"
+    group_brend: "Группа бренда"
   activerecord:
     models:
       Edit: "Редактировать"

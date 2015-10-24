@@ -2,6 +2,7 @@ class Factory < ActiveRecord::Base
 	has_many :table_specifications
 	has_many :discounts
 	has_many :products
+	has_one  :light_factory
 
 	belongs_to :user
 	
