@@ -1,0 +1,2 @@
+module TypeFurnituresHelper
+end

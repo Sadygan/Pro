@@ -1,0 +1,2 @@
+class TableSpecificationLight < TableSpecification
+end

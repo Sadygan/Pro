@@ -1,0 +1,138 @@
+$('.table-button').hide().after("<%= j render 'form' %>");
+
+$(document).ready(function(){
+    // Include helper file
+    var imported = document.createElement('calculating_helper.js');
+    imported.src = '/assets/javascripts';
+    document.head.appendChild(imported);
+    
+    $('#table_specification_light_product_id').bind('click focus blur keyup', function(){ 
+        $('#table_specification_light_product_id').bind('railsAutocomplete.select', function(event, data){
+            var factory_id = data.item.factory_id;
+            var type_furniture_id = data.item.type_furniture_id;
+            var article = data.item.label;
+
+            getFactory(factory_id);
+            console.log(type_furniture_id)
+
+            getTypeFurniture(type_furniture_id);
+            
+            // draw image photos
+            getImage(data.item.id, article, 'photos', 'Photo');
+        
+            // draw image size_images
+            getImage(data.item.id, article, 'size_images', 'SizeImage');
+        });
+
+    });
+
+    function getImage(id, article, catalog, catalog_img) {
+        $.ajax({
+            type: "GET",
+            url: "/products/"+id+"/"+catalog+"/",
+            dataType: "JSON",
+            success: function(data) {
+            var current_image;
+            current_image = '<select id="current_image_'+catalog+'">'
+            if (data.length != 0) {
+                    for(var p in data) {
+                        current_image += '<option article="'+article+'" img_id="'+data[p].id+'">'+data[p].img_file_name+'</option>'
+                    }
+                } else {
+                    image = '';
+                }
+
+            current_image += '</select>'
+            $("#"+catalog).html(current_image)
+
+            }
+        });
+    }
+
+    function getTypeFurniture(id) {
+        $.ajax({
+            type: "GET",
+            url: "/type_furnitures/"+id,
+            dataType: "JSON",
+            success: function(data) {
+                var type_furniture = data.name;
+                $("#type_furniture").html(type_furniture); 
+            }
+        });
+    };
+
+    function getFactory(id) {
+        $.ajax({
+            type: "GET",
+            url: "/factories/brand",
+            dataType: "JSON",
+            success: function(data) {
+                id = id - 1;
+                var brand = data[id].brand                
+
+                var light_factor = data[id].light_factor
+
+                $("#brand").html(brand); 
+                $("#light_factor").html(light_factor);
+                // $("#additional_discount").html(getFactoryOptions(additional_discount, percents)); 
+
+            }
+        });
+    }
+
+    // Add view images photo and size_image
+    $('#photos').bind('click focus blur keyup', function(){
+        var article = $("#photos select option:selected").attr("article");
+        var img_id = $("#photos select option:selected").attr("img_id");
+        var photo_src = '';
+    	var img_file_name = $('#photos select').val();
+        photo_src += '<img src="/photos/product/'+article+'/Photo/'+img_file_name+'">'
+        console.log(img_id)
+        $('#current_img').html(photo_src);
+        
+        // Add hide size_image_id
+        $('input[name="table_specification_light[photo_id]"]').val(img_id);
+    });
+
+    $('#size_images').bind('click focus blur keyup', function(){
+        var article = $("#size_images select option:selected").attr("article");
+        var img_id = $("#size_images select option:selected").attr("img_id");
+        var photo_src = '';
+        var img_file_name = $('#size_images select').val();
+        photo_src += '<img src="/photos/product/'+article+'/SizeImage/'+img_file_name+'">'
+        console.log(img_id)
+        $('#current_size_img').html(photo_src)
+
+        // Add hide size_image_id
+        $('input[name="table_specification_light[size_image_id]"]').val(img_id);
+    });
+
+    var light_factor, upf, number_of, unit_price_factory, interest_percent, arhitec_percent,
+    	suma_netto, unit_price_with_factor, sum_with_factor, sum_with_interest, interest, arhitector, arhitector_percent_order;
+    $('#table_specification_light_form').bind('click focus blur keyup', function(){
+    	light_factor = parseFloat($("#light_factor").text())
+    	upf = parseFloat($("#table_specification_light_unit_price_factory").val());
+    	number_of = parseInt($("#table_specification_light_number_of").val());
+    	unit_price_factory = parseInt($("#table_specification_light_unit_price_factory").val());
+		interest_percent = parseInt($("#table_specification_light_interest_percent").val());
+		arhitec_percent = parseInt($("#table_specification_light_arhitec_percent").val());
+
+		suma_netto = multiplication(upf, number_of);
+		unit_price_with_factor = multiplication(light_factor, upf);
+		sum_with_factor = multiplication(unit_price_with_factor, number_of);
+		sum_with_interest = ourInterest(sum_with_factor, interest_percent);
+		interest = minus(sum_with_interest, sum_with_factor);
+		arhitector = calculatePercentMinus(interest, arhitec_percent);
+		architector_percent_order = architectorPercent(sum_with_interest, arhitector)
+
+		$('#suma_netto').html(suma_netto.toFixed(2));
+		$('#unit_price_with_factor').html(unit_price_with_factor.toFixed(2));
+		$('#sum_with_factor').html(sum_with_factor.toFixed(2));
+		$('#sum_with_interest').html(sum_with_interest.toFixed(2));
+		$('#interest').html(interest.toFixed(2));
+		$('#arhitector').html(arhitector.toFixed(2));
+		$('#architector_percent_order').html(architector_percent_order.toFixed(2));
+
+		
+    });
+});

@@ -1,0 +1,2 @@
+module TableSpecificationLightsHelper
+end
