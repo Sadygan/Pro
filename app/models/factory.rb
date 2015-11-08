@@ -10,4 +10,10 @@ class Factory < ActiveRecord::Base
 	accepts_nested_attributes_for :products
 	accepts_nested_attributes_for :discounts, allow_destroy: true
 
+	validates :brand, presence: true, uniqueness: true, length: {minimum: 2}
+	validates :additional_discount, numericality: { only_integer: true }, length: {maximum: 2}
+
+	validates :light_factor, numericality: true, length: {maximum: 3}
+	validates :minimum_order, numericality: true, length: {maximum: 5}
+	validates :delivery_time, numericality: { only_integer: true }, length: {maximum: 3}
 end

@@ -5,7 +5,6 @@
     <%= link_to t('specification.new_specification'), new_project_specification_path(@project), remote: true, class: "btn btn-primary" %>
   </div>
   <div class="new-specification"></div>
- 
   <table id class="table table-bordered table-striped">
     <thead>
     <tr>
@@ -20,8 +19,8 @@
     <%= render @project.specifications %>
     </tbody>
     <tr>
-      <th></th>
       <th><%= t('specification.total_sum') %></th>
+      <th><%=  check_box("print_sum", "#{@project.id}", {checked:  @project.print_sum}, "project") %></th>
       <!-- Return sum project -->
        <th><%= Project::sum_specifications(@project.specifications)  %></th>
          

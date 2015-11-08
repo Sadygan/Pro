@@ -12,105 +12,80 @@
   <% end %>
   <table class="table table-bordered table-striped" id="table_specification_form">
     <tr>
-      <th>Изображение</th>
-      <th>Бренд</th>
-      <th>Артикул</th>
-      <th>Тип мебели</th>
-      <th>Отделка</th>
-      <th>Отделка для клиента</th>
-      <th colspan="4">Размер</th>
-      <th>Цена на фабрике</th>
-      <th>Скидка</th>
-      <th>Скидка фабрика</th>
-      <th>Добавочная скидка</th>
-      <th>Цена за шт.</th>
-      <th>Сумма нетто</th>
-      <th>Единица V</th>
-      <th>Сумма V</th>
-      <th>Коэффициент</th>
-      <th>Цена за шт </th>
-      <th>Ко-во</th>
-      <th>Сумма</th>
-      <th>Цена в 0</th>
-      <th>Интерес %</th>
-      <th>С интересом €</th>
-      <th>Интерес</th>
-      <th>Архитектор %</th>
-      <th>Архитектор €</th>
-      <th>Архитектор % от заказа</th>
-      <th>Доставка</th>
-      <th>Добавить к до-ке</th>
-      <th>Группа</th>
+      <th class="photos"><%= t('table.image') %></th>
+      <th class="brand"><%= t('table.brand') %></th>
+      <th class="article"><%= t('table.article') %></th>
+      <th class="type_furniture"><%= t('table.type_furniture') %></th>
+      <th class="finishing"><%= t('table.finishing') %></th>
+      <th class="finishing_for_client"><%= t('table.finishing_for_client') %></th>
+      <th class="size" colspan="4"><%= t('table.size') %></th>
+      <th class="unit_price_factory"><%= t('table.unit_price_factory') %></th>
+      <th class="discount"><%= t('table.discount') %></th>
+      <th class="additional_discount">-%</th>
+      <th class="increment_discount"><%= t('table.increment_discount') %></th>
+      <th class="unit_price_netto"><%= t('table.unit_price_netto') %></th>
+      <th class="summ_netto"><%= t('table.summ_netto') %></th>
+      <th class="unit_v"><%= t('table.unit_v') %></th>
+      <th class="summ_v"><%= t('table.summ_v') %></th>
+      <th class="factor"><%= t('table.factor') %></th>
+      <th class="unit_price"><%= t('table.unit_price') %></th>
+      <th class="summ"><%= t('table.summ') %></th>
+      <th class="number_of"><%= t('table.number_of') %></th>
+      <th class="price_from_nil"><%= t('table.price_from_nil') %></th>
+      <th class="interest_percent"><%= t('table.interest_percent') %></th>
+      <th class="with_interest"><%= t('table.with_interest') %></th>
+      <th class="interest"><%= t('table.interest') %></th>
+      <th class="architector_percent"><%= t('table.architector_percent') %></th>
+      <th class="architector"><%= t('table.architector') %></th>
+      <th class="architector_percent_from_order"><%= t('table.architector_percent_from_order') %></th>
+      <th class="delivery"><%= t('table.delivery') %></th>
+      <th class="additional_delivery"><%= t('table.additional_delivery') %></th>
+      <th class="group"><%= t('table.group') %></th>
+      <th class="destroy"></th>
     </tr>
     <tr>
     <script type="text/javascript">$(":file").filestyle({input: false}); </script>
-      <th class="photos"><div id="photos"></div><div id="current_img"></div><%= f.number_field :photo_id, id: :"photo_id" %></br></th>  
-      <th class="brand" id="brand"></th>
-      <th class="article"><%= f.autocomplete_field :product_id, autocomplete_product_article_project_specification_table_specifications_path, :id_element => '#product_id', :size => 75, :"data-autocomplete-label" => "Sorry, nothing found." %><%= f.number_field :product_id, id: :"product_id" %></th>
+      <th class="photos"><div id="photos"></div><div id="current_img"></div><%= f.hidden_field :photo_id, id: :"photo_id" %></br></th>  
+      <th class="brand" id="brend"></th>
+      <th class="article"><%= f.autocomplete_field :product_id, autocomplete_product_article_project_specification_table_specifications_path, :id_element => '#product_id', :size => 75, :"data-autocomplete-label" => "Sorry, nothing found." %><%= f.hidden_field :product_id, id: :"product_id" %></th>
       <th class="type_furniture" id="type_furniture"></th>
       <th class="finishing"><%= f.text_field :finishing %></th>
       <th class="finishing_for_client"><%= f.text_area :finishing_for_client %></th>
-      <th class="size_images" colspan="4"><div id="size_images"></div><div id="current_size_img"></div><%= f.text_area :size %><%= f.number_field :size_image_id, id: :"size_image_id" %></th>
-      <th class="unit_price_factory"><%= f.text_field :unit_price_factory %></th>
+      <th class="size size_images" colspan="4"><div id="size_images"></div><div id="current_size_img"></div><%= f.text_area :size %><%= f.hidden_field :size_image_id, id: :"size_image_id" %></th>
+      <th class="unit_price_factory"><%= f.number_field :unit_price_factory, value: 0 %></th>
       <th class="discount" id="discount"></th>
       <th class="additional_discount" id="additional_discount"></th>
       <th class="increment_discount"><%= f.number_field :increment_discount, value: 0 %></th>
       <th class="unit_price_netto" id="unit_price_netto"></th>
       <th class="summ_netto" id="sn"></th>
-      <th class="unit_v" id="unit_v"><%= f.number_field :unit_v, value: 0 %></th>
+      <th class="unit_v" id="unit_v"><%= f.number_field :unit_v, value: 0, step: 0.1 %></th>
       <th class="summ_v" id="sv"></th>
       <th class="factor" id="factor"></th>
       <th class="unit_price" id="up"></th>
-      <th class="number_of"><%= f.number_field :number_of, value: 1 %></th>
       <th class="summ" id="summ"></th>
-      <th class="at_nil" id="at_nil"></th>
-      <th><%= f.number_field :interest_percent, value: 30 %></th>
+      <th class="number_of"><%= f.number_field :number_of, value: 1 %></th>
+      <th class="at_nil price_from_nil" id="at_nil"></th>
+      <th class="interest_percent"><%= f.number_field :interest_percent, value: 30 %></th>
       <th class="with_interest" id="with_interest"></th>
-      <th class="with_interest" id="interest"></th>
-      <th><%= f.number_field :arhitec_percent, value: 50 %></th>
+      <th class="interest" id="interest"></th>
+      <th class="architector_percent"><%= f.number_field :arhitec_percent, value: 50 %></th>
       <th class="architector" id="architector"></th>
-      <th class="architector_percent" id="architector_percent"></th>
-      <th><%= f.collection_select :delivery_id, Delivery.order(:direction), :id, :direction, include_blank: true %></th>
-      <th><%= f.number_field :additional_delivery, value: 0 %></th>
-      <th><%= f.number_field :group %></th>
+      <th class="architector_percent_from_order" id="architector_percent"></th>
+      <th class="delivery"><%= f.collection_select :delivery_id, Delivery.order(:direction), :id, :direction, {include_blank: false}, {class: :"form-control"} %></th>
+      <th class="additional_delivery"><%= f.number_field :additional_delivery, value: 0 %></th>
+      <th class="group"><%= f.number_field :group %></th>
       <th class="destroy"><%= %></th>
     </tr>
     <tr>
-          <th></th>
-          <th></th>
-          <th  id="link_product"></th>
-          <th></th>
-          <th></th>
-          <th></th>
+          <th id="link_product" colspan="2"></th>
+          <th id="err_article"></th>
+          <th colspan="3"></th>
           <th class="box_v"><%= f.number_field :width, value: 0, :step => 0.01 %></th>
           <th class="box_v"><%= f.number_field :height, value: 0, :step => 0.01 %></th>
           <th class="box_v"><%= f.number_field :depth, value: 0, :step => 0.01 %></th>
           <th class="box_v"><%= f.number_field :percent_v, value: 10 %></th>
           <th style="display:none"><%= f.number_field :discount_id %></th>
-          <th></th>
-          <th><div id="hidden_discount"><%= f.number_field :discount_id, id: :"discount_id" %></div></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-
-    </tr>
-
-    <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+          <th colspan="23"><div id="hidden_discount"><%= f.hidden_field :discount_id, id: :"discount_id" %></div></th>
     </tr>
   </table>
   <div id="article_id">1</div>

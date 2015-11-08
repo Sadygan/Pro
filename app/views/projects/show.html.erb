@@ -1,18 +1,28 @@
+<%= javascript_include_tag "projects/show" %>
 <div class="container">
 	
 	<p id="notice"><%=  %></p>
 
 	<p>
-	  <strong><%= t('project.name') %>:</strong>
+	  <strong><%= t('project.project') %>:</strong>
 	  <%= @project.object_name %>
 	</p>
 
 	<p>
-	  <strong><%= t('project.client') %>:</strong>
-	  <%= @project.client %>
+	  <strong><%= t('clients.client') %>:</strong>
+	  <%= @project.client.name %>
 	</p>
+
+	<p>
+	  <strong><%= t('clients.telephone') %>:</strong>
+	  <%= @project.client.telephone %>
+	</p>
+	<div class="header_button">
+		<%= link_to t('project.print_project_pdf'), project_path(@project, format: "pdf") %>
+	</div>
 	<%= render 'specifications/index_show' %>
 
 	<%= link_to 'Edit', edit_project_path(@project) %> |
 	<%= link_to 'Back', projects_path %>
 </div>
+<div class="project_id" name="project_id" id="<%= @project.id %>"><%= @project.id %></div>

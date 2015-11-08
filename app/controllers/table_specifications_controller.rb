@@ -3,7 +3,6 @@ class TableSpecificationsController < ApplicationController
   before_action :set_project_specification
   respond_to :html, :json
   respond_to :html, :js
-  autocomplete :factory, :brand
   autocomplete :product, :article, :extra_data => [:type_furniture_id, :factory_id]
 
   skip_before_action :verify_authenticity_token
@@ -16,16 +15,15 @@ class TableSpecificationsController < ApplicationController
     @table_specifications = @specification.table_specifications.all
 
       respond_to do |format|
-      format.json
-      format.html
-      format.pdf do 
-        pdf = TableSpecificationPdf.new(@project, @specification, @table_specifications)
-        send_data pdf.render, filename: "specification_#{@specification.id}.pdf",
-                              type: "application/pdf",
-                              disposition: "inline"
+        format.json
+        format.html
+        format.pdf do 
+          pdf = TableSpecificationPdf.new(@project, @specification, @table_specifications, @user)
+          send_data pdf.render, filename: "specification_#{@specification.id}.pdf",
+                                type: "application/pdf",
+                                disposition: "inline"
       end
     end
-    
   end
 
   # GET /table_specifications/1
@@ -51,9 +49,6 @@ class TableSpecificationsController < ApplicationController
     @table_specification = @specification.table_specifications.create(table_specification_params)
 
     @table_specifications = @specification.table_specifications.all
-    # @total_sum = @table_specifications.sum("summ")
-
-    # @specification.update(summ: @total_sum)
 
     respond_to do |format|
       if @table_specification.save
@@ -70,23 +65,16 @@ class TableSpecificationsController < ApplicationController
 
   def set_discount_value
   end
-  def edit_image
-    @table_specification = TableSpecification.find(params[:table_specification_id])
-  end
-
 
   # PATCH/PUT /table_specifications/1
   # PATCH/PUT /table_specifications/1.json
   def update
     respond_to do |format|
       if  @table_specification.update(table_specification_params)
-        format.html { redirect_to project_specification_table_specifications_path, notice: 'Table specific was successfully updated.' }
         format.json { head :no_content }
         format.js
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @table_specific.errors, status: :unprocessable_entity }
-        format.js
+        format.json { respond_with_bip(@table_specification) }
       end
     end   
   end
@@ -149,6 +137,4 @@ class TableSpecificationsController < ApplicationController
           :product_id)
       end
     end
-
-
 end

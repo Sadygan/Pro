@@ -3,7 +3,7 @@ class Status < ActiveRecord::Base
 
 	# Массив статусов 
 	def array_status
-		status = ["Start", "Send", "Correct", "Finish"]
+		status = ["Обрабатываеться", "Отправлен", "Корректируется", "Выполнен"]
 	end
 	
 	# Возврощает следующий статус при добовлении в базу записи таблици Status

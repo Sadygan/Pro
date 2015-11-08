@@ -28,11 +28,11 @@ class StylesController < ApplicationController
 
     respond_to do |format|
       if @style.save
-        format.html { redirect_to @style, notice: 'Style was successfully created.' }
-        format.json { render :show, status: :created, location: @style }
+        format.json { head :no_content }
+        format.js
       else
-        format.html { render :new }
-        format.json { render json: @style.errors, status: :unprocessable_entity }
+        format.json { render json: @customer.errors.full_messages, 
+                            status: :unprocessable_entity }
       end
     end
   end
@@ -42,11 +42,11 @@ class StylesController < ApplicationController
   def update
     respond_to do |format|
       if @style.update(style_params)
-        format.html { redirect_to @style, notice: 'Style was successfully updated.' }
-        format.json { render :show, status: :ok, location: @style }
+        format.json { head :no_content }
+        format.js
       else
-        format.html { render :edit }
-        format.json { render json: @style.errors, status: :unprocessable_entity }
+        format.json { render json: @style.errors.full_messages,
+                                   status: :unprocessable_entity }
       end
     end
   end
@@ -56,6 +56,7 @@ class StylesController < ApplicationController
   def destroy
     @style.destroy
     respond_to do |format|
+      format.js
       format.html { redirect_to styles_url, notice: 'Style was successfully destroyed.' }
       format.json { head :no_content }
     end

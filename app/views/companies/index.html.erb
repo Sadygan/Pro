@@ -1,8 +1,13 @@
+<div class="container">
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Companies</h1>
+<h2>Listing Companies</h2>
+<div class="well">
+  <%= link_to 'New Company', new_company_path, remote: true, class: "btn btn-primary" %>
+</div>
+<div class="new-company"></div>
 
-<table>
+<table class="table table-bordered table-striped">
   <thead>
     <tr>
       <th>Name</th>
@@ -11,19 +16,9 @@
     </tr>
   </thead>
 
-  <tbody>
-    <% @companies.each do |company| %>
-      <tr>
-        <td><%= company.name %></td>
-        <td><%= company.address %></td>
-        <td><%= link_to 'Show', company %></td>
-        <td><%= link_to 'Edit', edit_company_path(company) %></td>
-        <td><%= link_to 'Destroy', company, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+  <tbody id="companies">
+    <%= render @companies %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Company', new_company_path %>
+<%= render 'dialog' %>
+</div>

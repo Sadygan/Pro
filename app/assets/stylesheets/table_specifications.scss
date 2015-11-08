@@ -12,10 +12,8 @@ input::-webkit-inner-spin-button {
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
-
-
-table {
-	  width: 200% !important;
+table#assets, table#table_specification_light_form, #project, .new_table_specification {
+	  width: 171% !important;
 	  max-width: 200% !important;
 	  margin-bottom: 20px;
 	font-size: 11px;
@@ -49,7 +47,7 @@ table {
 	.box_v > input {
 		width: 28px;
 	}
-	.image {
+	.photos, .image {
 		max-width: 157px;
 		width: 157px;
 		padding: 8px 4px 0 4px;
@@ -78,8 +76,8 @@ table {
 	}
 
 	.brand {
-		max-width: 70px;
-		width: 70px;
+		max-width: 100px;
+		width: 100px;
 		padding: 8px 4px 0 4px;
 		
 		input {
@@ -92,12 +90,12 @@ table {
 	}
 
 	.article {
-		max-width: 45px;
-		width: 45px;
+		max-width: 100px;
+		width: 100px;
 		padding: 8px 4px 0 4px;
 		
 		input {
-			width: 40px;
+			width: 95px;
 		}
 		
 		tr {
@@ -120,12 +118,12 @@ table {
 
 	}
 	.finishing {
-		max-width: 30px;
-		width: 30px;
+		max-width: 60px;
+		width: 60px;
 		padding: 8px 4px 0 4px;
 		
 		input {
-			width: 25px;
+			width: 55px;
 		}
 		
 		tr {
@@ -165,12 +163,12 @@ table {
 		}
 	}
 	.unit_price_factory {
-		max-width: 60px;
-		width: 60px;
+		max-width: 90px;
+		width: 90px;
 		padding: 8px 4px 0 4px;
 		
 		input {
-			width: 55px;
+			width: 85px;
 		}
 		
 		tr {
@@ -211,6 +209,15 @@ table {
 		input {
 			width: 	35px;
 		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+	.additional_discount {
+		max-width: 40px;
+		width: 40px;
+		padding: 8px 4px 0 4px;
 		
 		tr {
 			min-height: 50px;
@@ -293,6 +300,19 @@ table {
 		tr {
 			min-height: 50px;
 		}		
+	}	
+	.unit_with_interest {
+		max-width: 80px;
+		width: 80px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 60px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
 	}
 	.number_of {
 		max-width: 42px;
@@ -320,6 +340,138 @@ table {
 			min-height: 50px;
 		}		
 	}
+	.price_from_nil {
+		max-width: 80px;
+		width: 80px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 80px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+	
+	.interest_percent {
+		max-width: 65px;
+		width: 65px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 50px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+	.with_interest, .with_interest_ {
+		max-width: 80px;
+		width: 80px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 45px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}	
+	.interest {
+		max-width: 80px;
+		width: 80px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 45px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}	
+	.architector {
+		max-width: 80px;
+		width: 80px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 45px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+	.architector_percent {
+		max-width: 50px;
+		width: 50px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 45px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}	
+	.architector_percent_from_order {
+		max-width: 50px;
+		width: 50px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 45px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}	
+	.delivery {
+		max-width: 130px;
+		width: 130px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 45px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}	
+	.additional_delivery {
+		max-width: 50px;
+		width: 50px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 45px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}	
+	.group {
+		max-width: 40px;
+		width: 40px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 35px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}		
+	}
+
 	.destroy {
 		max-width: 10px;
 		width: 10px;

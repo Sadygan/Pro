@@ -59,6 +59,7 @@ class FactoriesController < ApplicationController
       else
         format.json { render json: @factory.errors.full_messages,
                                    status: :unprocessable_entity }
+        format.js
       end
      
     end
@@ -81,7 +82,21 @@ private
   end
   
   def factory_params
-    params.require(:factory).permit(:brand, :web, :autorification, :style, :line_product, :catalog, :price, :additional_discount, :delivery_terms, :note,:light_factory_id, discounts_attributes:[:percent, :_destroy, :id])
+    params.require(:factory).permit(
+      :brand, 
+      :web, 
+      :autorification, 
+      :style, 
+      :line_product, 
+      :catalog, 
+      :price, 
+      :additional_discount, 
+      :delivery_terms, 
+      :note,
+      :light_factor,
+      :minimum_order,
+      :delivery_time,
+      :group_brend,
+      discounts_attributes:[:percent, :_destroy, :id])
   end
- 
 end

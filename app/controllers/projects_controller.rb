@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  
+  respond_to :html, :json
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -27,15 +27,14 @@ class ProjectsController < ApplicationController
 
     @totals = @project.specifications
     @specifications = @project.specifications.all
-   
+    @user = current_user
     @table_specifications = Project.find_table_specifications(@specifications)
-
-
+    # @tables = Table.all
 
     respond_to do |format|
       format.html
       format.pdf do 
-        pdf = TableSpecificationPdf.new(@project, @specifications, @table_specifications)
+        pdf = TableSpecificationPdf.new(@project, @specifications, @table_specifications, @user)
         send_data pdf.render, filename: "project_#{@project.id}.pdf",
                               type: "application/pdf",
                               disposition: "inline"
@@ -52,13 +51,10 @@ class ProjectsController < ApplicationController
     @user = current_user
     @project = @user.projects.create(project_params)
     
-    status_name = Status.new.array_status[0]
-    @project.statuses.create(name: status_name)
-
-    # @project.client = Client.find(@project.client.name)
-    
     respond_to do |format|
       if @project.save
+        status_name = Status.new.array_status[0]
+        @project.statuses.create(name: status_name)
         format.json { head :no_content }
         format.js
       else
@@ -78,8 +74,7 @@ class ProjectsController < ApplicationController
         format.json { head :no_content }
         format.js
       else
-        format.json { render json: @project.errors.full_messages,
-                                   status: :unprocessable_entity }
+         format.json { respond_with_bip(@project) }
       end
      
     end
@@ -108,9 +103,8 @@ private
   def project_params
     params.require(:project).permit(
       :object_name, 
-      :style, 
       :type_furniture, 
-      :date_request, 
+      # :date_request, 
       :deadline, 
       :planned_budget, 
       :date_delivery_client, 
@@ -124,7 +118,8 @@ private
       :user_id,
       :city_id,
       :style_id,
-      :client_id
+      :client_id,
+      :print_sum
       )
   end
  

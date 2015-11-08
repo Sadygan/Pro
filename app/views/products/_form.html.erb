@@ -1,38 +1,39 @@
-<%= form_for(@product) do |f| %>
-  <% if @product.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
-
-      <ul>
-      <% @product.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :article %><br>
-    <%= f.text_field :article %>
-  </div>
-    <div class="field">
-    <%= f.label :type_furniture %><br>
-    <%= f.autocomplete_field :type_furniture,autocomplete_type_furniture_name_products_path, :id_element => '#product_type_furniture_id' %>
-  </div>
-  <div class="field">
-    <%= f.label :price %><br>
-    <%= f.text_field :price %>
-  </div>
-  <div class="field">
-    <%= f.hidden_field :type_furniture_id %>
-  </div>
-
+<%= form_for(@product, remote: true, :html => { :role => "form" }) do |f| %>
+<div id="error_explanation" class="bg-danger text-danger">
+</div>
+  
+  <div class="row">
+    <div class="col-sm-6">
   <div class="form-group">
-    <%= f.label :factory, :class => "control-label" %>
-    <%= f.collection_select :factory_id, Factory.order(:brand),:id,:brand, include_blank: true %>
+    <%= f.label t('products.article'), :class => "control-label" %><br>
+    <%= f.text_field :article, :class => "form-control" %>
+  </div>
+  <div class="form-group" id="factory">
+    <%= f.label t('factories.factory'), :class => "control-label" %>
+    <%= f.autocomplete_field :factory_brand, autocomplete_factory_brand_products_path, :id_element => '#product_factory_id', :class => "form-control addresspicker", :validate => { :presence => true } %>
+  <span id="err_factory"></span>
+  </div>
+  <div class="form-group" id="type_furniture">
+    <%= f.label t('type_furnitures.type_furniture'), :class => "control-label" %><br>
+    <%= f.autocomplete_field :type_furniture_name, autocomplete_type_furniture_name_products_path, :id_element => '#product_type_furniture_id', :class => "form-control addresspicker", :validate => { :presence => true } %>
+    <span id="err_furniture"></span>
+  </div>
+  <div class="form-group">
+    <%= f.label t('products.price'), :class => "control-label" %><br>
+    <%= f.text_field :price, :class => "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.hidden_field :type_furniture_id, :class => "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.hidden_field :factory_id, :class => "form-control" %>
   </div>
 
+  
+  </div>
+
+  </div>
   <div class="actions">
-    <%= f.submit %>
+     <%= f.submit  @product.new_record? ?  t('create') :  t('update'), :class => "btn btn-primary" %>
   </div>
 <% end %>

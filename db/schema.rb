@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151007133358) do
+ActiveRecord::Schema.define(version: 20151024103231) do
 
   create_table "assets", force: :cascade do |t|
     t.string   "type"
@@ -99,8 +99,10 @@ ActiveRecord::Schema.define(version: 20151007133358) do
     t.float    "price"
     t.integer  "factory_id"
     t.integer  "type_furniture_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.string   "factory_brand"
+    t.string   "type_furniture_name"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   add_index "products", ["factory_id"], name: "index_products_on_factory_id"
@@ -109,7 +111,6 @@ ActiveRecord::Schema.define(version: 20151007133358) do
   create_table "projects", force: :cascade do |t|
     t.string   "object_name"
     t.string   "type_furniture"
-    t.date     "date_request"
     t.date     "deadline"
     t.float    "planned_budget"
     t.date     "date_delivery_client"
@@ -118,6 +119,7 @@ ActiveRecord::Schema.define(version: 20151007133358) do
     t.float    "client_surcharge"
     t.text     "status_transaction"
     t.text     "delivery_status"
+    t.boolean  "print_sum"
     t.integer  "user_id"
     t.integer  "city_id"
     t.integer  "client_id"
@@ -206,6 +208,46 @@ ActiveRecord::Schema.define(version: 20151007133358) do
   add_index "table_specifications", ["product_id"], name: "index_table_specifications_on_product_id"
   add_index "table_specifications", ["size_image_id"], name: "index_table_specifications_on_size_image_id"
   add_index "table_specifications", ["specification_id"], name: "index_table_specifications_on_specification_id"
+
+  create_table "tables", force: :cascade do |t|
+    t.string   "finishing"
+    t.text     "finishing_for_client"
+    t.float    "unit_price_factory"
+    t.integer  "increment_discount"
+    t.text     "size"
+    t.float    "weight"
+    t.float    "width"
+    t.float    "height"
+    t.float    "depth"
+    t.integer  "percent_v"
+    t.float    "unit_v"
+    t.integer  "number_of"
+    t.integer  "interest_percent"
+    t.integer  "arhitec_percent"
+    t.integer  "group"
+    t.float    "additional_delivery"
+    t.string   "type"
+    t.boolean  "required"
+    t.integer  "product_id"
+    t.integer  "specification_id"
+    t.string   "factory_brand"
+    t.integer  "factory_id"
+    t.integer  "discount_id"
+    t.integer  "delivery_id"
+    t.integer  "photo_id"
+    t.integer  "size_image_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "tables", ["delivery_id"], name: "index_tables_on_delivery_id"
+  add_index "tables", ["discount_id"], name: "index_tables_on_discount_id"
+  add_index "tables", ["factory_brand"], name: "index_tables_on_factory_brand"
+  add_index "tables", ["factory_id"], name: "index_tables_on_factory_id"
+  add_index "tables", ["photo_id"], name: "index_tables_on_photo_id"
+  add_index "tables", ["product_id"], name: "index_tables_on_product_id"
+  add_index "tables", ["size_image_id"], name: "index_tables_on_size_image_id"
+  add_index "tables", ["specification_id"], name: "index_tables_on_specification_id"
 
   create_table "type_furnitures", force: :cascade do |t|
     t.string   "name"

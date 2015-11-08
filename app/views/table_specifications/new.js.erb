@@ -15,7 +15,6 @@ $(document).ready(function(){
 		}
 	});
 
-             
     $('#table_specification_product_id').bind('click focus blur keyup', function(){ 
         $('#table_specification_product_id').bind('railsAutocomplete.select', function(event, data){
             var factory_id = data.item.factory_id;
@@ -155,7 +154,6 @@ $(document).ready(function(){
                 group_bool = in_array(current_group, current_group_arr)
                 console.log(group_bool)
             });
-
         }
 
         $('form').bind('click focus blur keyup', function(){
@@ -219,18 +217,19 @@ $(document).ready(function(){
 	        var interest = minus(with_interest, price_at_nil);
             var architector = calculatePercentMinus(interest, arhitec_percent);
             var architector_percent = architectorPercent(with_interest, architector);
+            
 
 	        $('#unit_price_netto').html(unit_price_factory.toFixed(2));
 	        $('#sn').html(summa_netto.toFixed(2));
 	        $('#sv').html(v_sum.toFixed(2));
-	        $('#at_nil').html(price_at_nil.toFixed(2));
-	        $('#with_interest').html(with_interest.toFixed(2));
+	        $('#at_nil').html(price_at_nil);
+	        $('#with_interest').html(with_interest);
 	        $('#factor').html(factor.toFixed(2));
 	        $('#up').html(unit_price.toFixed(2));
 	        $('#summ').html(summa.toFixed(2));
             $('#interest').html(interest.toFixed(2));
             $('#architector').html(architector.toFixed(2));
-	        $('#architector_percent').html(architector_percent.toFixed(2));
+            $('#architector_percent').html(architector_percent.toFixed(2));
     
 	    });
 	}
@@ -280,6 +279,15 @@ $(document).ready(function(){
     
         return results_with_id;
     }
+
+    $("form").submit(function() {
+    
+        if ($('#product_id').val() != "") {
+            $('#err_article').html('')
+        } else {
+            $('#err_article').html('error')
+        }
+    });
    
 });
 

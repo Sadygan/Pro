@@ -9,13 +9,14 @@
     <% factory.discounts.each do |company| %>
       <%= company.percent %>
     <% end %>
- </td>
-  <td>
-<!--   <%= factory.discounts do |i|%>
-    <%= i.percent %>
-  <% end %></td> -->
+  </td>
   <td><%= factory.additional_discount %></td>
   <td><%= factory.delivery_terms %></td>
+  <td><%= factory.minimum_order %></td>
+  <td><%= factory.delivery_time %></td>
+  <td><%= factory.light_factor %></td>
+  <td><%= factory.delivery_time %></td>
+  <td><%= factory.group_brend %></td>
   <td><%= factory.note %></td>
   <td>
     <% if can? :update, factory %>
@@ -23,7 +24,7 @@
     <% end %>
     
     <% if can? :destroy, factory %>
-    <%= link_to t('delete'), factory, remote: true, :method => :delete, data: {confirm: "Delete Customer: #{factory.brand}"}, :class => 'btn btn-sm btn-danger' %>
+    <%= link_to t('delete'), factory, remote: true, :method => :delete, data: {confirm: "Delete Factory: #{factory.brand}"}, :class => 'btn btn-sm btn-danger' %>
     <% end %> 
   </td>
 </tr>

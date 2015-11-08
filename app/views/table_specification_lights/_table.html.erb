@@ -1,1 +1,62 @@
-efrrrgtgt
+<table class="table table-bordered table-striped" id="assets">
+	<thead>
+	<tr>
+        <th class="photos"><%= t('table.image') %></th>
+        <th class="brand"><%= t('table.brand') %></th>
+        <th class="article"><%= t('table.article') %></th>
+        <th class="type_furniture"><%= t('table.type_furniture') %></th>
+        <th class="finishing"><%= t('table.finishing') %></th>
+        <th class="finishing_for_client"><%= t('table.finishing_for_client') %></th>
+        <th class="size"><%= t('table.size') %></th>
+        <th class="unit_price_factory"><%= t('table.unit_price_factory') %></th>
+        <th class="summ_netto"><%= t('table.summ_netto') %></th>
+        <th class="factor"><%= t('table.factor') %></th>
+        <th class="unit_price"><%= t('table.unit_price') %></th>
+        <th class="number_of"><%= t('table.number_of') %></th>
+        <th class="summ"><%= t('table.summ') %></th>
+        <th class="interest_percent"><%= t('table.interest_percent') %></th>
+        <th class="unit_with_interest"><%= t('table.unit_with_interest') %></th>
+        <th class="with_interest_"><%= t('table.with_interest') %></th>
+        <th class="interest"><%= t('table.interest') %></th>
+        <th class="architector_percent"><%= t('table.architector_percent') %></th>
+        <th class="architector"><%= t('table.architector') %></th>
+		<th class="architector_percent_from_order"><%= t('table.architector_percent_from_order') %></th>
+		<th class="destroy"></th>
+	</tr>
+	</thead>
+	<tbody>
+		<% @table_specification_lights.each do |light| %>
+		<tr>
+	      	<td class="image"><div name="photo_select" id="photo_<%= light.id %>"><%= select("photo", light.product.article, options_for_select(light.photo_select(light.product.id).all.collect {|p| [p.img_file_name, p.id, name: p.img_file_name, article: p.product.article]}, light.photo_id)) %></div><div id="current_photo_<%= light.id %>"><%= image_tag light.image(light.photo_id) %></div> </td>
+	      	<td class="brand" id="brand_<%= light.id %>"><%= light.product.factory.brand %></td>
+          	<td class="article"><%= light.product.article %></td>
+          	<td class="type_furniture"><%= light.product.type_furniture.name %></td>
+          	<td class="finishing"><%= best_in_place [@project, @specification, light], :finishing %></td>
+          	<td class="finishing_for_client"><%= best_in_place [@project, @specification, light], :finishing_for_client, type: :textarea %></td>
+          	<td class="size"><%= best_in_place [@project, @specification, light], :size, type: :textarea, :class => "size_v" %><div name="size_image_select" id="size_image_<%= light.id %>"><%= select("size_image", light.product.article, options_for_select(light.size_image_select(light.product.id).all.collect {|p| [p.img_file_name, p.id, name: p.img_file_name, article: p.product.article]}, light.size_image_id)) %></div><div id="current_size_image_<%= light.id %>"><%= image_tag light.image(light.size_image_id) %></div></td>
+          	<td class="unit_price_factory" id="unit_price_factory_<%= light.id %>" ><%= best_in_place [@project, @specification, light], :unit_price_factory, :sanitize => false, inner_class: :upf %></td>
+          	<td class="summ_netto" id="summ_netto_<%= light.id %>"><%= light.summ_netto %></td>
+            <td class="factor_light" id="factor_light_<%= light.id %>"><%= light.product.factory.light_factor %></td>
+            <td class="unit_price_factor" id="unit_price_factor_<%= light.id %>"><%= light.unit_price_factor %></td>
+            <td class="number_of"><%= best_in_place [@project, @specification, light], :number_of %></td>
+            <td class="price_from_nil" id="price_from_nil_<%= light.id %>"><%= light.price_from_nil %></td>
+            <td class="interest_percent"><%= best_in_place [@project, @specification, light], :interest_percent %></td>
+          	<td class="unit_with_interest" id="unit_with_interest_<%= light.id %>"><%= light.unit_with_interest_light %></td>
+            <td class="with_interest" id="with_interest_<%= light.id %>" ><%= light.with_interest %></td>
+          	<td class="interest" id="interest_<%= light.id %>"><%= light.interest %></td>
+          	<td class="architector_percent"><%= best_in_place [@project, @specification, light], :arhitec_percent %></td>
+          	<td class="architector_interest" id="architector_interest_<%= light.id %>"><%= light.architector_interest %></td>
+          	<td class="architector_percent_from_order" id="architector_percent_from_order_<%= light.id %>"><%= light.architector_percent_from_order %></td>
+          	<td class="destroy"><%= link_to 'x', [@project, @specification, light], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		</tr>
+		<% end %>
+	  <tr>
+      <td colspan="15"></td>
+      <td id="light_sum"><%= TableSpecificationLight::specification_sum_all(@specification) %></td>
+      <td colspan="4"></td>
+      <td></td>
+    </tr>
+  </tbody>
+
+</table>
+<div class="specification_id" id="<%= @specification.id %>"><%= @specification.id %></div>

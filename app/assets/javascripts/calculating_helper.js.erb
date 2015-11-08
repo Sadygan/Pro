@@ -12,7 +12,8 @@ function calculatePercentPlus(a, b) {
 }
 
 function calculatePercentBankDelivery(summa_netto, cost, execution_document, check_factory,  bank_service, bank_percent, v_sum, additional_deliver) {
-    return summa_netto+bank_service+(summa_netto+bank_service)*bank_percent/100+execution_document+check_factory+(cost+additional_deliver)*v_sum
+    // console.log(summa_netto, cost, execution_document, check_factory,  bank_service, bank_percent, v_sum, additional_deliver)
+    return (summa_netto+bank_service+(summa_netto+bank_service)*bank_percent/100+execution_document+check_factory+(cost+additional_deliver)*v_sum).toFixed(2)
 }
 
 function unitPriceNetto(percent, upf, add_discount, incr_discount) {
@@ -79,7 +80,7 @@ function getDelivery(data, delivery_text) {
 };
 
 function ourInterest(summa_netto, percent){
-    return summa_netto*100/(100-percent)
+    return (summa_netto*100/(100-percent)).toFixed(2)
 }
 
 function architectorPercent(with_interest, architector) {
@@ -106,6 +107,8 @@ function ckeckSize(width, height, depth, percent_v) {
         if(unit_v_t) { 
             unit_v_t.remove();
             var vep = calculateSumSize(width, height, depth, percent_v)
+            vep.toFixed(2);
+            console.log(vep)
             $('#unit_v').html('<span>'+vep+'</span>');
             return false
         }
@@ -119,20 +122,29 @@ function ckeckSize(width, height, depth, percent_v) {
     }
 }
 
-function tableCheckSize(width, height, depth, percent_v, unit_v_t, id) {
+function tableCheckSize(width, height, depth, percent_v, unit_v_t, id, group_id, project_id, specification_id, unitV) {
+    console.log(width, height, depth, percent_v, unit_v_t, id)
+    // console.log(width, height, depth, percent_v, unit_v_t, id)
+    var vep = calculateSumSize(width, height, depth, percent_v)
+    console.log(vep)
     if(width > 0 || height > 0 || depth > 0) {
         if(unit_v_t) { 
-            var vep = calculateSumSize(width, height, depth, percent_v)
-            $(unit_v_t).replaceWith('<span class="unit_v" id="unit_v_'+id+'">'+vep+'</span>');
+            $(unit_v_t).replaceWith('<td class="unitv" id="best_in_place_table_specification_'+id+'_unit_v">'+vep.toFixed(2)+'</td>');
         }
     }
 
     if(width == 0 && height == 0 && depth == 0 && percent_v >= 0) {
     	// console.log("zero")
-    	if($('#unit_v_')) {
+    	if($('#unitv_'+id)) {
 	    	var temp = $('#unit_v_'+id);
 	    	var text = $('#clone_unit_v_'+id).text();
-	    	$(temp).replaceWith('<span class="uv" id="unit_v_'+id+'">'+text+'</span>')
+            // $(temp).replaceWith("<td class='unitv' id='unit_v_"+id+" data-html-attrs="+group_id+">"+text+"</td>")
+	    	console.log(id, group_id, project_id, specification_id)
+            if(isNaN(group_id)) {
+                group_id = 0
+            }
+            $(temp).replaceWith('<span class="best_in_place" id="best_in_place_table_specification_'+id+'_unit_v" data-url="/projects/'+project_id+'/specifications/'+specification_id+'/table_specifications/'+id+'" data-object="table_specification" data-attribute="unit_v" data-type="input" data-html-attrs="'+group_id+'">'+unitV+'</span>')
+
 	   	}
     }
 }
@@ -167,4 +179,68 @@ function in_array(needle, haystack, strict) {   // Checks if a value exists in a
     }
 
     return found;
+}
+
+// Group function
+function groupArrSum(class_group, group_id, current_val) {
+    // console.log(class_group, group_id, current_val)
+    vals = []
+    $(class_group+" [data-html-attrs="+group_id+"]").each(function() {
+        if (this.textContent != "")
+            vals.push(parseFloat(this.textContent))
+        else
+            vals.push(this.textContent)
+    });
+    if (in_array_element("", vals)) {
+        indexSpace = vals.indexOf("");
+        vals[indexSpace] = current_val
+    }
+    
+    var count = 0;
+    vals.forEach(function(value, index) {
+        count += +value;
+    });
+    return count;
+}
+
+function in_array_element(value, array) {
+    for(var i = 0; i < array.length; i++) 
+    {
+        if(array[i] == value) return true;
+    }
+    return false;
+}
+
+function printSum(print, specification_id, url) {
+        console.log(print)
+        
+        // var p = {'specification': {'print_sum': print}};
+
+        $.ajax({
+            // url: '../'+specification_id,
+            url: url,
+            type: 'PUT',
+            dataType: 'json',
+            data: print,
+
+            async: true,
+            error: function() {
+                alert("Войдите через страницу проекты")
+            },
+            success: function (data) {
+
+         }
+    });
+}
+
+function percent_of_number(summa_netto, sum_summa_netto) {
+    return (summa_netto/sum_summa_netto*100).toFixed(2)
+}
+
+function group_sum_price_with_inerest(percent_of_number, sum_with_interest) {
+    return (sum_with_interest / 100 * percent_of_number).toFixed(2)
+}
+
+function group_unit_price_with_inerest(group_sum_price_with_interest, number_of) {
+    return (group_sum_price_with_interest/number_of).toFixed(2)
 }

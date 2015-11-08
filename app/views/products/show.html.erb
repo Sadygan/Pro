@@ -1,9 +1,51 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+	<p id="notice"><%= notice %></p>
+  
+  <div class="row">
+    <div class="col-sm-4">
+    	<div class="well">
+			<p>
+			  <strong>Article:</strong>
+			  <%= @product.article %>
+			</p>
+			<p>
+			  <strong>Type Furniture:</strong>
+			  <%= @product.type_furniture.name %>
+			</p>
+			<p>
+			  <strong>Price:</strong>
+			  <%= @product.price %>
+			</p>
+			<p>
+			  <strong>Brand:</strong>
+			  <%= @product.factory.brand %>
+			</p>
+		</div>
+	</div>
+    <div class="col-sm-4">
+		<p><strong>Photos</strong></p>
+		<%= render partial: "photos/form", locals: {:collection => @photo} %>
+		<div class="row">
+			<% @photos.each do |i| %>
+				<div class="col-md-5 portfolio-item">
+				<%= image_tag i.img.url, class: "img-responsive" %>
+				</div>
+			<% end %>
+		</div>
+	</div>
+    <div class="col-sm-4">
+		<p><strong>Size Images</strong></p>
+		<%= render partial: "size_images/form", locals: {:collection => @size_image} %>
+		<div class="row">
+			<% @size_images.each do |i| %>
+				<div class="col-md-5 portfolio-item">
+					<%= image_tag i.img.url, class: "img-responsive" %>
+				</div>
+			<% end %>
+		</div>
+	</div>
+	</div>
 
-<p>
-  <strong>Article:</strong>
-  <%= @product.article %>
-</p>
-
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+	<%= link_to 'Edit', edit_product_path(@product) %> |
+	<%= link_to 'Back', products_path %>
+</div>

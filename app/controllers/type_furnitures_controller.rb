@@ -28,11 +28,11 @@ class TypeFurnituresController < ApplicationController
 
     respond_to do |format|
       if @type_furniture.save
-        format.html { redirect_to @type_furniture, notice: 'Type furniture was successfully created.' }
-        format.json { render :show, status: :created, location: @type_furniture }
+        format.json { head :no_content }
+        format.js
       else
-        format.html { render :new }
-        format.json { render json: @type_furniture.errors, status: :unprocessable_entity }
+        format.json { render json: @type_furniture.errors.full_messages, 
+                            status: :unprocessable_entity }
       end
     end
   end
@@ -42,11 +42,11 @@ class TypeFurnituresController < ApplicationController
   def update
     respond_to do |format|
       if @type_furniture.update(type_furniture_params)
-        format.html { redirect_to @type_furniture, notice: 'Type furniture was successfully updated.' }
-        format.json { render :show, status: :ok, location: @type_furniture }
+        format.json { head :no_content }
+        format.js
       else
-        format.html { render :edit }
-        format.json { render json: @type_furniture.errors, status: :unprocessable_entity }
+        format.json { render json: @type_furniture.errors.full_messages, 
+                            status: :unprocessable_entity }
       end
     end
   end
@@ -56,6 +56,7 @@ class TypeFurnituresController < ApplicationController
   def destroy
     @type_furniture.destroy
     respond_to do |format|
+      format.js
       format.html { redirect_to type_furnitures_url, notice: 'Type furniture was successfully destroyed.' }
       format.json { head :no_content }
     end

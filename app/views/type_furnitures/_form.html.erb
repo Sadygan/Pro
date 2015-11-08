@@ -1,21 +1,15 @@
-<%= form_for(@type_furniture) do |f| %>
-  <% if @type_furniture.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@type_furniture.errors.count, "error") %> prohibited this type_furniture from being saved:</h2>
-
-      <ul>
-      <% @type_furniture.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= form_for(@type_furniture, remote: true, :html => { :role => "form" }) do |f| %>
+<div id="error_explanation" class="bg-danger text-danger">
+</div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <%= f.label :name, :class => "control-label" %><br>
+        <%= f.text_field :name, :class => "form-control" %>
+      </div>
+      <div class="actions">
+        <%= f.submit  @type_furniture.new_record? ? "Create" : "Update", :class => "btn btn-primary" %>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
   </div>
 <% end %>

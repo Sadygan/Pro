@@ -108,7 +108,9 @@ $(document).ready(function(){
     });
 
     var light_factor, upf, number_of, unit_price_factory, interest_percent, arhitec_percent,
-    	suma_netto, unit_price_with_factor, sum_with_factor, sum_with_interest, interest, arhitector, arhitector_percent_order;
+    	suma_netto, unit_price_with_factor, sum_with_factor, sum_with_interest, interest, arhitector,
+        arhitector_percent_order, unit_with_interest;
+
     $('#table_specification_light_form').bind('click focus blur keyup', function(){
     	light_factor = parseFloat($("#light_factor").text())
     	upf = parseFloat($("#table_specification_light_unit_price_factory").val());
@@ -124,15 +126,24 @@ $(document).ready(function(){
 		interest = minus(sum_with_interest, sum_with_factor);
 		arhitector = calculatePercentMinus(interest, arhitec_percent);
 		architector_percent_order = architectorPercent(sum_with_interest, arhitector)
+        unit_with_interest = sum_with_interest/number_of
 
 		$('#suma_netto').html(suma_netto.toFixed(2));
 		$('#unit_price_with_factor').html(unit_price_with_factor.toFixed(2));
 		$('#sum_with_factor').html(sum_with_factor.toFixed(2));
-		$('#sum_with_interest').html(sum_with_interest.toFixed(2));
+		$('#sum_with_interest').html(sum_with_interest);
 		$('#interest').html(interest.toFixed(2));
 		$('#arhitector').html(arhitector.toFixed(2));
 		$('#architector_percent_order').html(architector_percent_order.toFixed(2));
-
+        $('#unit_with_interest').html(unit_with_interest.toFixed(2));
 		
+    });
+    $("form").submit(function() {
+    
+        if ($('#product_id').val() != "") {
+            $('#err_article').html('')
+        } else {
+            $('#err_article').html('error')
+        }
     });
 });

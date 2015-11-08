@@ -1,6 +1,9 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-  autocomplete :type_furniture, :name, :full => false
+  autocomplete :type_furniture, :name, :full => true
+  autocomplete :factory, :brand, :full => true
+  respond_to :html, :json
+
   # GET /products
   # GET /products.json
   def index
@@ -10,6 +13,11 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
+    @photo = Photo.new
+    @photos = Photo.where(product_id: @product)
+
+    @size_image = SizeImage.new
+    @size_images = SizeImage.where(product_id: @product)
   end
 
   # GET /products/new
@@ -46,6 +54,7 @@ class ProductsController < ApplicationController
       if @product.update(product_params)
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { render :show, status: :ok, location: @product }
+        format.js
       else
         format.html { render :edit }
         format.json { render json: @product.errors, status: :unprocessable_entity }
@@ -58,6 +67,7 @@ class ProductsController < ApplicationController
   def destroy
     @product.destroy
     respond_to do |format|
+      format.js
       format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
       format.json { head :no_content }
     end
@@ -71,6 +81,6 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:article, :price, :factory_id, :type_furniture_id)
+      params.require(:product).permit(:article, :price, :factory_id, :type_furniture_id, :factory_brand, :type_furniture_name)
     end
 end

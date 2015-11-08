@@ -1,6 +1,6 @@
 <fieldset>
 	<%= f.select :field_type, %w[text_field check_box] %>
-	<%= f.text_field :name, placeholder: "field_name" %>
+	<%= f.text_field :name, placeholder: "field_name", :class => "form-control first_input"  %>
 	<%= f.check_box :required %> <%= f.label :required %>
 	<%= f.hidden_field :destroy %>
 	<%= link_to "[remove]", '#', class: "remove_fields" %>

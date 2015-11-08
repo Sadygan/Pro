@@ -19,7 +19,8 @@ class Asset < ActiveRecord::Base
 	  attachment.instance.product.article
 	end
 
+	# Get path url current image 
 	def img_url
       img.url
-  end
+ 	end
 end

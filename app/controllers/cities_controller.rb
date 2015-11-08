@@ -28,11 +28,11 @@ class CitiesController < ApplicationController
 
     respond_to do |format|
       if @city.save
-        format.html { redirect_to @city, notice: 'City was successfully created.' }
-        format.json { render :show, status: :created, location: @city }
+        format.json { head :no_content }
+        format.js
       else
-        format.html { render :new }
-        format.json { render json: @city.errors, status: :unprocessable_entity }
+        format.json { render json: @city.errors.full_messages, 
+                            status: :unprocessable_entity }
       end
     end
   end
@@ -42,11 +42,11 @@ class CitiesController < ApplicationController
   def update
     respond_to do |format|
       if @city.update(city_params)
-        format.html { redirect_to @city, notice: 'City was successfully updated.' }
-        format.json { render :show, status: :ok, location: @city }
+        format.json { head :no_content }
+        format.js
       else
-        format.html { render :edit }
-        format.json { render json: @city.errors, status: :unprocessable_entity }
+        format.json { render json: @city.errors.full_messages, 
+                            status: :unprocessable_entity }
       end
     end
   end
@@ -56,6 +56,7 @@ class CitiesController < ApplicationController
   def destroy
     @city.destroy
     respond_to do |format|
+      format.js
       format.html { redirect_to cities_url, notice: 'City was successfully destroyed.' }
       format.json { head :no_content }
     end

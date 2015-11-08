@@ -1,4 +1,4 @@
-<%= form_for([@project,@specification, @table_specification_light]) do |f| %>
+<%= form_for([@project, @specification, @table_specification_light]) do |f| %>
   <% if @table_specification_light.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@table_specification_light.errors.count, "error") %> prohibited this table_specification_light from being saved:</h2>
@@ -12,51 +12,55 @@
   <% end %>
   <table class="table table-bordered table-striped" id="table_specification_light_form">
   <tr>
-    <th>Изображение</th>
-    <th>Бренд</th>
-    <th>Артикул</th>
-    <th>Наименование</th>
-    <th>Тип отделки</th>
-    <th>Отделка</th>
-    <th>Размер</th>
-    <th>Цена за 1шт. фабрики</th>
-    <th>Сумма нетто</th>
-    <th>Коэффициент</th>
-    <th>Цена за шт.</th>
-    <th>Количество</th>
-    <th>Сумма</th>
-    <th>Интерес %</th>
-    <th>Стоимость с интересом €</th>
-    <th>Интерес €</th>
-    <th>Архитектор %</th>
-    <th>Архитектор €</th>
-    <th>Архитектор % от заказа</th>
+        <th class="photos"><%= t('table.image') %></th>
+        <th class="brand"><%= t('table.brand') %></th>
+        <th class="article"><%= t('table.article') %></th>
+        <th class="type_furniture"><%= t('table.type_furniture') %></th>
+        <th class="finishing"><%= t('table.finishing') %></th>
+        <th class="finishing_for_client"><%= t('table.finishing_for_client') %></th>
+        <th class="size"><%= t('table.size') %></th>
+        <th class="unit_price_factory"><%= t('table.unit_price_factory') %></th>
+        <th class="summ_netto"><%= t('table.summ_netto') %></th>
+        <th class="factor"><%= t('table.factor') %></th>
+        <th class="unit_price"><%= t('table.unit_price') %></th>
+        <th class="number_of"><%= t('table.number_of') %></th>
+        <th class="summ"><%= t('table.summ') %></th>
+        <th class="interest_percent"><%= t('table.interest_percent') %></th>
+        <th class="unit_with_interest"><%= t('table.unit_with_interest') %></th>
+        <th class="with_interest_"><%= t('table.with_interest') %></th>
+        <th class="interest"><%= t('table.interest') %></th>
+        <th class="architector_percent"><%= t('table.architector_percent') %></th>
+        <th class="architector"><%= t('table.architector') %></th>
+    <th class="architector_percent_from_order"><%= t('table.architector_percent_from_order') %></th>
+    <th class="destroy"></th>
   </tr>
-  <script type="text/javascript">$(":file").filestyle({input: false}); </script>
   <tr>
-    <th class="photos"><div id="photos"></div><div id="current_img"></div><%= f.number_field :photo_id, id: :"photo_id" %></br></th>  
-    <th class="brand" id="brand"></th>
-    <th class="article"><%= f.autocomplete_field :product_id, autocomplete_product_article_project_specification_table_specifications_path, :id_element => '#product_id', :size => 75, :"data-autocomplete-label" => "Sorry, nothing found." %><%= f.number_field :product_id, id: :"product_id" %></th>
-    <th class="type_furniture" id="type_furniture"></th>
-      <th class="finishing"><%= f.text_field :finishing %></th>
-      <th class="finishing_for_client"><%= f.text_area :finishing_for_client %></th>
-      <th class="size_images"><div id="size_images"></div><div id="current_size_img"></div><%= f.text_area :size %></br><%= f.number_field :size_image_id, id: :"size_image_id" %></th> 
-      <th class="unit_price_factory"><%= f.text_field :unit_price_factory %></th> 
-    <td><div id="suma_netto"></div></td>  
-    <td id="light_factor"></td>  
-    <td><div id="unit_price_with_factor"></div></td>  
-    <th class="number_of"><%= f.number_field :number_of, value: 1 %>
-    <td><div id="sum_with_factor"></div></td>  
-    <th><%= f.number_field :interest_percent, value: 30 %></th>  
-    <td><div id="sum_with_interest"></div></td>  
-    <td><div id="interest"></div></td>  
-    <th><%= f.number_field :arhitec_percent, value: 50 %></th>
-    <td><div id="arhitector"></div></td>  
-    <td><div id="architector_percent_order"></div></td>  
+    <td class="photos"><div id="photos"></div><div id="current_img"></div><%= f.hidden_field :photo_id, id: :"photo_id" %></br></td>  
+    <td class="brand" id="brand"></td>
+   <td class="article"><%= f.autocomplete_field :product_id, autocomplete_product_article_project_specification_table_specifications_path, :id_element => '#product_id', :size => 75, :"data-autocomplete-label" => "Sorry, nothing found." %><%= f.hidden_field :product_id, id: :"product_id" %><span id="err_article"></span></td>
+    <td class="type_furniture" id="type_furniture"></td>
+    <td class="finishing"><%= f.text_field :finishing %></td>
+    <td class="finishing_for_client"><%= f.text_area :finishing_for_client %></td>
+    <td class="size"><div id="size_images"></div><div id="current_size_img"></div><%= f.text_area :size %><%= f.hidden_field :size_image_id, id: :"size_image_id" %></td> 
+    <td class="unit_price_factory"><%= f.number_field :unit_price_factory, value: 0 %></td> 
+    <td class="summ_netto"><div id="suma_netto"></div></td>  
+    <td class="factor" id="light_factor"></td>  
+    <td class="unit_price"><div id="unit_price_with_factor"></div></td>  
+    <td class="number_of"><%= f.number_field :number_of, value: 1 %></td>
+    <td class="summ"><div id="sum_with_factor"></div></td>  
+    <td class="interest_percent"><%= f.number_field :interest_percent, value: 30 %></td>  
+    <td class="unit_with_interest" id="unit_with_interest">---</td>
+    <td class="with_interest_"><div id="sum_with_interest"></div></td>  
+    <td class="interest"><div id="interest"></div></td>  
+    <td class="architector_percent"><%= f.number_field :arhitec_percent, value: 50 %></td>
+    <td class="architector"><div id="arhitector"></div></td>  
+    <td class="architector_percent_from_order"><div id="architector_percent_order"></div></td>  
+    <td class="destroy"></td>
+    
   </tr>
   </table>
   
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :value => t('table.add_to')%>
   </div>
 <% end %>

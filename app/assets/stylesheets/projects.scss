@@ -3,3 +3,33 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.purr {
+  position: fixed;
+  top: 30px;
+  right: 100px;
+  width: 250px;
+  padding: 20px;
+  background-color: #FCC;
+  border: solid 2px #C66;
+  &:first-letter { text-transform: uppercase; }
+}
+.project.well {
+	width: 200% !important;
+}
+
+table#project {
+	  width: 200% !important;
+	  max-width: 200% !important;
+	  margin-bottom: 20px;
+	font-size: 11px;
+	min-height: 40px;
+
+	textarea, input[type="text"], input[type="number"], select {
+		border-radius: 0px;
+		padding: 0px;
+		margin-bottom: 0px;
+		resize:vertical;
+		height: 22px;
+	}
+}

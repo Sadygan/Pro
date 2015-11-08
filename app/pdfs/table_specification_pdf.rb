@@ -1,11 +1,14 @@
 # encoding: utf-8
 class TableSpecificationPdf < Prawn::Document
 	
-	def initialize(project ,specification, table_specifications)
+	def initialize(project, specification, table_specifications, user)
 		super(margin: 10)
 		
-		@table_specifications = table_specifications
+		@tables = table_specifications
+		# @specification = specification
 		@project = project
+		@user = user
+
 		# font "#{Rails.root}/app/assets/fonts/Ubuntu-M.ttf"
 		font_families.update("Ubuntu" => { :bold => "#{Rails.root}/app/assets/fonts/Ubuntu-B.ttf",
 		 								   :normal => "#{Rails.root}/app/assets/fonts/Ubuntu-M.ttf"
@@ -13,8 +16,9 @@ class TableSpecificationPdf < Prawn::Document
 		font_families.update("helvetica-ultra-light" => { :normal => "#{Rails.root}/app/assets/fonts/helvetica-neue-ultra-light.ttf" })
 		font_size 8
 		header
+		manager_info
 		
-		if !specification[1]
+		if !specification[0]
 			@specification  = specification
 			rect_specification
 			name_specification
@@ -30,6 +34,7 @@ class TableSpecificationPdf < Prawn::Document
 				total_price
 			i+=1
 			end
+			total_sum_project
 		end
 	end
 
@@ -37,6 +42,14 @@ class TableSpecificationPdf < Prawn::Document
 		font "helvetica-ultra-light"
 		text "DIZAAP", size: 50 
 		text " \##{@project.id}", size: 30
+	end
+
+	def manager_info
+		font "Ubuntu"
+		text @user.name, size: 10
+		text @user.telephone, size: 10
+		text @user.email
+		move_down 10
 	end
 
 	def name_specification
@@ -62,39 +75,80 @@ class TableSpecificationPdf < Prawn::Document
 	def line_items
 		move_down 0
 		font "Ubuntu", style: :normal
-		table line_items_rows do
-			rows(0).style = :bold
-			rows(0).size = 10
-			columns(1..3).align = :center
-			columns(1..3).width = 100
-			columns(4).width = 45
-			columns(5).width = 27
-			columns(6).width = 60
-			# self.row_colors = ["DDDDDD", "FFFFFF"]
-			self.header = true
+
+		items = [["Изображение", "Наименование", "Отделка", "Размер", "Цена за 1шт.", "Ко-во", "Сумма"]]
+		@specification.tables.each_with_index.map do |item, i|
+		
+		if item.photo_id
+			current_photo = Photo.find(item.photo_id)
+			image = current_photo.img.path	
+		else
+			image = "#{Rails.root}/public/no_image/no_image.png"
 		end
+
+		if item.size_image_id
+			current_photo = SizeImage.find(item.size_image_id)
+			image_size1 = current_photo.img.path
+		else
+			image_size1 = "#{Rails.root}/public/no_image/no_image.png"
+		end
+
+		sum = 0
+		if item.add_row(@specification)[item.group] > 1
+			sum = item.groupDataSum(item.group, "gp_sum_number")
+			summa = {content: "#{sum}", rowspan: 2}
+		else	
+			sum = item.with_interest
+			summa = {content: "#{sum}", rowspan: 2}
+		end
+
+		unit_price = 0
+
+		if (item.class.name === "TableSpecification")
+			unit_price = item.groupDataSum(item.group, "gp_unit_sum")
+		elsif (item.class.name === "TableSpecificationLight")
+			unit_price = item.unit_with_interest_light
+		end
+	
+		items << [
+				{:image => image, image_width: 150, rowspan: 2},
+				{content: "#{item.product.article}", rowspan: 2}, 
+				{content: "#{item.finishing_for_client}", rowspan: 2}, 
+				{:image => image_size1, image_width: 100, rowspan: 1}, 
+				{content: "#{unit_price}", rowspan: 2}, 
+				{content: "#{item.number_of}", rowspan: 2}, 
+				summa, 
+				]
+		  	
+		items << [ {content: "#{item.size}"},
+
+		  	]
+		end
+		items += total_price
+
+
+		table items, :header => true, 
+		:column_widths => { 0 => 160, 1 => 68, 2 => 98, 3 => 110, 4 => 60, 5 => 36, 6 => 60}
 	end
-
-	def line_items_rows
-		[["Изображение", "Наименование", "Отделка", "Размер", "Цена за 1шт.", "Ко-во", "Сумма"]] +
-			@specification.table_specifications.map do |item|
-
-				if item.image.path
-					image = Rails.root + "#{item.image.path(:medium)}"	
-				else
-					image = "#{Rails.root}/public/images/original/missing.png"
-				end
-
-				[{:image => image, image_width: 150}, item.type_fyrniture, item.finishing_for_client, item.size, item.unit_price, item.number_of, item.summ]
-			end
-	end
-
+		
 	def total_price
-		move_down 4
-		if (@specification.print_sum)
-			text "Сумма:  #{@specification.summ}", size: 14, align: :right 
+		total_sum = []
+		if @specification.print_sum
+			if @specification.light
+				total_sum = [[{colspan: 5}, "Сумма", {content: "#{TableSpecificationLight::specification_sum_all(@specification)}"}]]
+			else
+				total_sum = [[{colspan: 5}, "Сумма", {content: "#{TableSpecification::specification_sum_all(@specification)}"}]]
+			end
 		end
-		move_down 8
+		total_sum
+	end
+
+	def total_sum_project
+		# total_sum = []
+		if @project.print_sum
+			data = [[{colspan: 1}, "Сумма проекта", {content: "#{Project::sum_specifications(@project.specifications)}"}]]
+			table(data, :column_widths => {0=>436, 1=>96, 2=>60})
+		end
 	end
 
 	def temp

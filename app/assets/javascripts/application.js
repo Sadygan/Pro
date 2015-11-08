@@ -12,15 +12,24 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui/autocomplete
 //= require jquery-ui
 //= require autocomplete-rails
 //= require bootstrap-sprockets
 //= require bootstrap-filestyle
 //= require best_in_place
+//= require jquery.purr
+//= require jquery.validate
+//= require jquery.validate.additional-methods
+//= require best_in_place.purr
 //= require turbolinks
 //= require bootstrap
 //= require nested_form_fields
-//= require_tree .
+//= require_directory .
+
+$.datepicker.setDefaults({
+    dateFormat: 'dd-mm-yy'
+});
 
 $(document).ajaxError(function(event,xhr,options,exc) {
     

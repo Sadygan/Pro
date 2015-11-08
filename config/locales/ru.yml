@@ -1,4 +1,10 @@
 ru:
+  date:
+    formats:
+      default: "%d/%m/%Y"
+  time:
+    formats:
+      default: "%d/%m/%Y %H:%M"
   edit: "Редактировать"
   delete: "Удалить"
   change_image: "Изменить изображение"
@@ -28,7 +34,14 @@ ru:
     client_surcharge: "Доплата клиента"
     status_transaction: "Статус сделки"
     delivery_status: "Статус доставки"
-  specification: 
+    status: "Статус"
+    print_project_pdf: "PDF"
+  status:
+    new: "Новый статус"
+    start: "Старт"
+    send: "Отправлен"
+    finish: "Финиш"
+  specification:
     specification: "Спецификация"
     specifications: "Спецификации"
     new_specification: "Новая спецификация"
@@ -67,6 +80,17 @@ ru:
     new_row: "Доавить строку"
     add_to: "Подкрепить"
     print_sum: "Печатать сумму"
+    price_from_nil: "Сумма в ноль"
+    interest_percent: "Интерес %"
+    with_interest: "С интересом"
+    interest: "Интерес €"
+    architector_percent: "% Архитектора"
+    architector: "Архитектор €"
+    architector_percent_from_order: "% архитектору от заказа"
+    delivery: "Доставка"
+    additional_delivery: "+ Доставка"
+    group: "Группа"
+    unit_with_interest: "За шт. с интересом"
   brand:
     brand: "Бренд"
     brands: "Бренды"
@@ -88,3 +112,25 @@ ru:
   activerecord:
     models:
       Edit: "Редактировать"
+  user:
+    name: "Имя"
+  products:
+    products: "Товары"
+    new_product: "Добавить продукт"
+    edit_product: "Редактировать продукт"
+    article: "Артикул"
+    price: "Стоимость"
+  factories: 
+    factory: "Фабрики"
+  styles: "Стили"
+  clients:
+    client: "Клиент"
+    clients: "Клиенты"
+    telephone: "Телефон"
+  companies: "Компании"
+  cities: "Города"
+  deliveries: "Доставка"
+  type_furnitures:
+    type_furniture: "Тип мебели"
+  update: "Обновить"
+  create: "Создать"

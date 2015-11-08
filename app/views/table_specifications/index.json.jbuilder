@@ -25,7 +25,6 @@ json.array!(@table_specifications) do |table_specification|
           :factory_id, 
           :discount_id,
           :delivery_id, 
-          :asset_id,
  	
           :photo_id,
           :size_image_id,

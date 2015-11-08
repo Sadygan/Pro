@@ -1,50 +1,34 @@
-class TableSpecification < ActiveRecord::Base
-  include ActiveModel::Validations
+class TableSpecification < Table
+  # include ActiveModel::Validations
   
-  belongs_to :specification
-  belongs_to :discount
-  belongs_to :factory
-  belongs_to :delivery
-  belongs_to :product
-  belongs_to :photo
-
   default_scope { order(:group => :ASC) }
+
+  validates_presence_of :product
+  validates :unit_price_factory, presence: true, numericality: true, on: :update
+  validates :increment_discount, presence: true, numericality: true, on: :update
+  validates :unit_v, numericality: true
+  validates :width, numericality: true
+  validates :height, numericality: true
+  validates :depth, numericality: true
+  validates :number_of, presence: true, numericality: { only_integer: true }
+  validates :interest_percent, presence: true, numericality: { only_integer: true }
+  validates :arhitec_percent, presence: true, numericality: { only_integer: true }
+  validates :additional_delivery, presence: true, numericality: true
+  validates :group, numericality: { only_integer: true }
+  
+  before_save :default_values
+  def default_values
+    self.unit_v ||= 0
+    self.width ||= 0
+    self.height ||= 0
+    self.depth ||= 0  
+  end
 
   # def initialize
   #   @table_specification = table_specification
   #   @percent = table_specification.discount.percent
   #   @additional_discount = table_specification.additional_discount
   # end
-  
-  def add_row specification
-    # ar = specification.table_specifications.pluck(:group)
-    ar = TableSpecification.where(specification_id: specification).pluck(:group)
-    h = Hash.new(0)
-    ar.each{ | v | h.store(v, h[v]+1)}
-    h
-  end
-
-  def multiplication a, b
-    a * b
-  end
-
-  def calculatePercentMinus a, b
-    a = a.to_f
-    b = b.to_f
-    a - (a / 100 * b)
-  end
-
-  def calculatePercentPlus a, b
-    a = a.to_f
-    b = b.to_f
-    a + (a / 100 * b)
-  end
-
-  def minus a, b
-    a - b
-  end
-
-
   def calculate_percent_bank_delivery summa_netto, cost, execution_document, check_factory,  bank_service, bank_percent, v_sum, additional_deliver
     summa_netto+bank_service+(summa_netto+bank_service)*bank_percent/100+execution_document+check_factory+(cost+additional_deliver)*v_sum
   end
@@ -55,34 +39,16 @@ class TableSpecification < ActiveRecord::Base
     calculatePercentPlus(d2, incr_discount)
   end
 
-  def our_interest summ_netto, percent
-    summ_netto*100/(100-percent)
-  end
-
-  def devision with_interest, summa_netto
-    with_interest/summa_netto
-  end
-
-
-  def architector_percent with_interest, architector
-    100-(with_interest-architector)/with_interest*100
-  end
-  
-  
   def calculatingSize
     v = width*height*depth
     v = (v*percent_v/100)+v
     v.round(2)
   end
-
+ 
   def upn
     unit_price_netto(discount.percent, unit_price_factory, product.factory.additional_discount, increment_discount).round(2)
   end
   
-  def summ_netto
-    multiplication(upn, number_of).round(2)
-  end
-
   def v_sum
     if width != 0 && height !=0 && depth !=0 && percent_v !=0
       multiplication(calculatingSize, number_of).round(2)
@@ -91,12 +57,9 @@ class TableSpecification < ActiveRecord::Base
     end  
   end
 
+
   def price_from_nil
     calculate_percent_bank_delivery(summ_netto, delivery.cost, delivery.execution_document, delivery.check_factory,  delivery.bank_service, delivery.bank_percent, v_sum, additional_delivery).round(2)
-  end
-
-  def with_interest
-    our_interest(price_from_nil, interest_percent).round(2)
   end
 
   def factor
@@ -109,18 +72,6 @@ class TableSpecification < ActiveRecord::Base
 
   def summa
     multiplication(factor, summ_netto).round(2)
-  end
-
-  def interest
-    minus(with_interest, price_from_nil).round(2)
-  end
-
-  def architector_interest
-    calculatePercentMinus(interest, arhitec_percent).round(2)
-  end
-
-  def architector_percent_from_order
-    architector_percent(with_interest, architector_interest).round(2)
   end
 
   def group_sum gr
@@ -207,6 +158,9 @@ class TableSpecification < ActiveRecord::Base
     # Additional delivery
     additional_delivery_arr = group.pluck(:additional_delivery)
 
+    # Percent V
+    percent_v_arr = group.pluck(:percent_v)
+
     # Object table specification group
     data_group = {  unit_price_factory:  unit_price_factory_group_arr, 
                     number_of:           number_of_group, 
@@ -217,6 +171,7 @@ class TableSpecification < ActiveRecord::Base
                     width:               width_arr,
                     height:              height_arr,
                     depth:               depth_arr,
+                    percent_v:           percent_v_arr,
                     delivery:            delivery_arr,
                     interest_percent:    interest_percent_arr,
                     architector_percent: architector_percent_arr,
@@ -229,14 +184,26 @@ class TableSpecification < ActiveRecord::Base
       return group_sum_netto(data_group, ln).inject(0){ |result, elem| result + elem }.round(2)
     elsif (col == "sum_v")
       return group_sum_v(data_group, ln).inject(0){ |result, elem| result + elem }.round(2)
+    
+    elsif (col == "gp_unit_sum")
+      return gp_unit_sum(data_group, ln)
+    elsif (col == "gp_sum_number")
+      return gp_sum_number(data_group, ln)
+
+    elsif (col == "factor")
+      return group_factor(data_group, ln)
     elsif (col == "number_of")
       return number_of_arr.inject(0){ |result, elem| result + elem }.round(2)
-    elsif (col == "from_nil_sum")
-      return group_first_price_from_nil_sum(data_group, ln)
+    elsif (col == "percent_of_number")
+      return unit_price_with_percent(data_group, ln)
     elsif (col == "interest_percent")
       return group_first_interest_percent(data_group, ln)
+    
     elsif (col == "with_interest")
       return group_with_interest(data_group, ln)
+    
+    elsif (col == "from_nil_sum")
+      return group_unit_price_nil(data_group, ln)
     elsif (col == "interest")
       return group_interest(data_group, ln)
     elsif (col == "architector_percent")
@@ -291,6 +258,65 @@ class TableSpecification < ActiveRecord::Base
     return sum_v
   end
 
+  def unit_price_with_delivery_nil data_group, ln
+    upg_nil = (group_first_price_from_nil_sum(data_group, ln)/100)*percent_of_number(data_group, ln)
+    upg_nil.round(2)
+  end
+
+  def unit_price_with_percent data_group, ln
+    interest_percent = data_group[:interest_percent].last
+    a = unit_price_with_delivery_nil(data_group, ln)
+    (a*100/(100-interest_percent)).round(2)
+  end
+
+  def group_factor data_group, ln
+    (unit_price_with_percent(data_group, ln)/unit_price_with_delivery_nil(data_group, ln)).round(2)
+  end
+# ///
+#   def v_sum
+#     if width != 0 && height !=0 && depth !=0 && percent_v !=0
+#       multiplication(calculatingSize, number_of).round(2)
+#     else
+#       multiplication(unit_v, number_of).round(2)
+#     end  
+#   end
+# ///
+
+  def arr_sum_v data_group, ln
+    number_of_arr = data_group[:number_of]
+    unit_v_arr = data_group[:unit_v]
+    width_arr = data_group[:width]
+    height_arr = data_group[:height]
+    depth_arr = data_group[:depth]
+    percent_v_arr = data_group[:percent_v]
+
+    arr = []
+    for index in 0..ln
+      if width_arr[index] != 0 && height_arr[index] !=0 && depth_arr[index] !=0 && percent_v_arr[index] !=0
+        arr.push(multiplication(calculatingSize_arr(width_arr[index],height_arr[index],depth_arr[index], percent_v_arr[index]), number_of_arr[index]).round(2))
+      else
+        arr.push(multiplication(unit_v_arr[index], number_of_arr[index]).round(2))
+      end
+    end
+    arr
+  end
+  
+  def calculatingSize_arr(width,height,depth, percent_v)
+    v = width*height*depth
+    v = (v*percent_v/100)+v
+    v.round(2)
+  end
+
+  def group_percent_sum_netto data_group, ln
+    arr = []
+    gsv = group_sum_v(data_group, ln).inject(0){ |result, elem| result + elem }.round(2)
+    arr_sum_v(data_group, ln).each do |i|
+      # arr.push(i / group_sum_v(data_group, ln)*100)
+      arr.push((i / gsv)*100)
+    end
+    arr
+  end
+
   def group_first_price_from_nil_sum data_group, ln
     group_sum = group_sum_netto(data_group, ln).inject(0){ |result, elem| result + elem }.round(2)
     v_sum = group_sum_v(data_group, ln).inject(0){ |result, elem| result + elem }.round(2)
@@ -305,14 +331,35 @@ class TableSpecification < ActiveRecord::Base
     calculate_percent_bank_delivery(group_sum, cost, execution_document, check_factory,  bank_service, bank_percent, v_sum, additional_delivery).round(2)
   end
 
+  def group_unit_price_from_nil data_group, ln
+    gpsn_arr = group_percent_sum_netto(data_group, ln)
+    gfpfn = group_first_price_from_nil_sum(data_group, ln)
+    
+    arr = []
+    for index in 0..ln
+      arr.push(gfpfn/100*gpsn_arr[index])
+    end
+  arr
+
+  end
+
+  def group_unit_price_nil data_group, ln
+    group_unit_price_from_nil(data_group, ln).inject(0){ |result, elem| result + elem }.round(2)
+  end
+
   def group_first_interest_percent data_group, ln 
     data_group[:interest_percent].last
   end
 
   def group_with_interest data_group, ln
     intrest_percent = group_first_interest_percent(data_group, ln)
-    price_from_nil = group_first_price_from_nil_sum(data_group, ln)
-    our_interest(price_from_nil, interest_percent).round(2)
+    gp = group_unit_price_from_nil( data_group, ln).inject(0){ |result, elem| result + elem }.round(2)
+    our_interest(gp, intrest_percent).round(2)
+  end
+
+  def group_unit_with_interest data_group, ln
+    group_with_interest = group_with_interest(data_group, ln)
+
   end
 
   def group_interest data_group, ln
@@ -347,27 +394,103 @@ class TableSpecification < ActiveRecord::Base
     our_interest(price_from_nil, interest_percent).round(2)
   end
 
+  # def group_factor data_group, ln
+  #   gwi = group_with_interest(data_group, ln)
+  #   gsn = group_sum_netto(data_group, ln).inject(0){ |result, elem| result + elem }.round(2)
+  #   devision(gwi, gsn).round(2)
+  # end
+
+  # Percent of number from unit netto
+  def percent_of_number data_group, ln
+    sum_netto = group_sum_netto(data_group, ln).inject(0){ |result, elem| result + elem }.round(2)
+    sum_netto_ = sum_netto
+    upn_ = upn
+    (upn_/sum_netto_*100).round(2)
+  end
+
+  # ALL SUM GROUP
+  def gp_sum_netto data_group, ln
+    # group_netto(data_group, ln).inject(0){ |result, elem| result + elem }.round(2)
+    number_of = data_group[:number_of]
+    unit_price_factory = data_group[:unit_price_factory]
+
+    arr = []
+    for index in 0..ln
+      arr.push(number_of[index] * unit_price_factory[index])
+    end
+    arr.inject(0){ |result, elem| result + elem }.round(2)
+  end
+  
+  # -----
+  def gp_sum_netto data_group, ln
+    # group_netto(data_group, ln).inject(0){ |result, elem| result + elem }.round(2)
+    number_of = data_group[:number_of]
+    unit_price_factory = data_group[:unit_price_factory]
+
+    arr = []
+    for index in 0..ln
+      arr.push(unit_price_factory[index] * unit_price_factory[index])
+    end
+    arr.inject(0){ |result, elem| result + elem }.round(2)
+  end
+
+  #-----------
+
+  def gp_v_sum data_group, ln
+    group_sum_v(data_group, ln).inject(0){ |result, elem| result + elem }.round(2)
+  end
+
+  def gp_sum_nil data_group, ln
+    gp_sum_netto = group_sum_netto(data_group, ln).inject(0){ |result, elem| result + elem }.round(2)
+    gp_v_sum = gp_v_sum(data_group, ln)
+    
+    cost = data_group[:delivery].last.cost
+    execution_document = data_group[:delivery].last.execution_document
+    check_factory = data_group[:delivery].last.check_factory
+    bank_service = data_group[:delivery].last.bank_service
+    bank_percent = data_group[:delivery].last.bank_percent
+    additional_delivery = data_group[:additional_delivery].last
+
+    calculate_percent_bank_delivery(gp_sum_netto, cost, execution_document, check_factory,  bank_service, bank_percent, gp_v_sum, additional_delivery).round(2)
+  end
+
+  def gp_sum_with_interest data_group, ln
+    interest_percent = data_group[:interest_percent].last
+    gp_sum_nil = gp_sum_nil(data_group, ln)
+    our_interest(gp_sum_nil, interest_percent).round(2)
+  end
+
+  def gp_unit_sum data_group, ln
+    percent_of_number = percent_of_number(data_group, ln)
+    gp_sum_with_interest = gp_sum_with_interest(data_group, ln)
+    
+    (gp_sum_with_interest / 100 * percent_of_number).round(2)
+    # group_sum_netto data_group, ln
+  end
+
+  def gp_sum_number data_group, ln
+    gp_unit_sum = (gp_unit_sum(data_group, ln)).to_f
+    (gp_unit_sum * number_of).round(2)
+    
+  end
+
+
   def self.specification_sum_all(specification)
     no_group_sum = 0
     group_sum = 0
     g = []
     table_specifications = TableSpecification.where(specification_id: specification)
     
-    # specification.
-    # unless group.nil?
-    # else
-      # return specification.table_specifications
-    # end
     j = 0
     table_specifications.each do |i|
       if i.group.nil?
-        no_group_sum += i.summa
+        no_group_sum += i.with_interest
       end
       if !i.group.nil?
         j = j + 1
       if i.add_row(specification)[i.group] >= 1 
         if i.add_row(specification)[i.group] == j
-        group_sum += i.groupDataSum(i.group, "with_interest")
+        group_sum += i.groupDataSum(i.group, "sum")
         g.push(i.groupDataSum(i.group, "sum"))
         j = 0
         end
@@ -376,26 +499,6 @@ class TableSpecification < ActiveRecord::Base
 
     end
     (group_sum+no_group_sum).round(2)
-    # specification.group_sum_ ()
   end
-
- # Select image in form
-  def image id 
-    if id.nil? || id == 0
-      "/no_image/no_image.png"
-    else
-      Asset.find(id).img.url
-    end
-  end
-
-  def photo_select id
-    Photo.where(product_id: id)
-  end
-
-  def size_image_select id
-    SizeImage.where(product_id: id)
-  end
- # ----
-
 
 end

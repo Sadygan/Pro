@@ -1,15 +1,25 @@
+<%= javascript_include_tag "projects/index" %>
 <div class="container">
  
   <h2><%= t('project.projects') %></h2>
-  <div class="well">
+  <div class="project well">
     <%= link_to t('project.new_project'), new_project_path, remote: true, class: "btn btn-primary" %>
+    <%= link_to t('products.products'), products_path, class: "btn btn-primary" %>
+    <%= link_to t('factories.factory'), factories_path, class: "btn btn-primary" %>
+    <%= link_to t('styles'), styles_path, class: "btn btn-primary" %>
+    <%= link_to t('companies'), companies_path, class: "btn btn-primary" %>
+    <%= link_to t('clients.clients'), clients_path, class: "btn btn-primary" %>
+    <%= link_to t('cities'), cities_path, class: "btn btn-primary" %>
+    <%= link_to t('deliveries'), deliveries_path, class: "btn btn-primary" %>
+    <%= link_to t('type_furnitures.type_furniture'), type_furnitures_path, class: "btn btn-primary" %>
   </div>
   <div class="new-project"></div>
  
-  <table id class="table table-bordered table-striped">
+  <table id="project" class="table table-bordered table-striped table-hover">
     <thead>
     <tr>
-      <th><%= t('project.user.email') %></th>
+      <th><%= t('user.name') %></th>
+      <th><%= t('user.email') %></th>
       <th><%= t('project.object_name') %></th>
       <th><%= t('project.city') %></th>
       <th><%= t('project.style') %></th>      
