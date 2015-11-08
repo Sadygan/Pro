@@ -119,6 +119,7 @@ GEM
       mime-types
       mimemagic (= 0.3.0)
     pdf-core (0.6.0)
+    pg (0.18.3)
     prawn (2.0.2)
       pdf-core (~> 0.6.0)
       ttfunk (~> 1.4.0)
@@ -216,6 +217,7 @@ DEPENDENCIES
   jquery-validation-rails
   nested_form_fields
   paperclip (~> 4.3)
+  pg
   prawn-rails
   rails (= 4.2.2)
   rails4-autocomplete
