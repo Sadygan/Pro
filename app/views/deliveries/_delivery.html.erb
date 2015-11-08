@@ -1,0 +1,10 @@
+<tr id="delivery_<%= delivery.id %>">
+  <td><%= delivery.direction %></td>
+  <td><%= delivery.cost %></td>
+  <td><%= delivery.execution_document %></td>
+  <td><%= delivery.check_factory %></td>
+  <td><%= delivery.bank_service %></td>
+  <td><%= delivery.bank_percent %></td>
+  <td><%= link_to 'Edit', edit_delivery_path(delivery), remote: true, :class => 'btn btn-sm btn-info' %></td>
+  <td><%= link_to 'Destroy', delivery, remote: true, :method => :delete, data: {confirm: "Delete Delivery: #{delivery.direction}"}, :class => 'btn btn-sm btn-danger' %></td>
+</tr>

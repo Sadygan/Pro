@@ -1,0 +1,10 @@
+<tr id="client_<%= client.id %>">
+    <td><%= client.name %></td>
+    <td><%= client.company.name %></td>
+    <td><%= client.status_position %></td>
+    <td><%= client.telephone %></td>
+    <td><%= client.email %></td>
+    <td><%= client.company.address %></td>
+    <td><%= link_to 'Edit', edit_client_path(client), remote: true, :class => 'btn btn-sm btn-info' %></td>
+    <td><%= link_to 'Destroy', client, method: :delete, remote: true, :method => :delete, data: {confirm: "Delete Client: #{client.name}"}, :class => 'btn btn-sm btn-danger'  %></td>
+</tr>
