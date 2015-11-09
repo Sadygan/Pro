@@ -10,9 +10,7 @@ class Product < ActiveRecord::Base
 	validates_presence_of :factory
 	validates_presence_of :type_furniture
 
-	validates_presence_of :table
-
-	validates :article_id, presence: true, numericality: {only_integer: true}
+	# validates :article_id, presence: true, numericality: {only_integer: true}
 
 	accepts_nested_attributes_for :assets
 

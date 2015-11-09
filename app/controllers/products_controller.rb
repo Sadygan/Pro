@@ -36,13 +36,11 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to @product, notice: 'Product was successfully created.' }
-        format.json { render :show, status: :created, location: @product }
+        format.json { head :no_content }
         format.js
       else
-        format.html { render :new }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
-        format.js
+        format.json { render json: @style.errors.full_messages,
+                                   status: :unprocessable_entity }
       end
     end
   end
