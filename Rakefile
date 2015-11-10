@@ -4,7 +4,3 @@
 require File.expand_path('../config/application', __FILE__)
 
 Rails.application.load_tasks
-
-if (Rails.env == "test" || Rails.env == "development")
-  MiniTest::Rails::Testing.default_tasks << "features"
-end
