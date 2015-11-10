@@ -12,9 +12,7 @@
 /db/*.sqlite3-journal
 
 # Ignore image files.
-/avatars/*
-/no_image/*
-/photos/*
+
 
 # Ignore all logfiles and tempfiles.
 /log/*
