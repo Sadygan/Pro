@@ -14,7 +14,7 @@ class TableSpecification < Table
   validates :interest_percent, presence: true, numericality: { only_integer: true }
   validates :arhitec_percent, presence: true, numericality: { only_integer: true }
   validates :additional_delivery, presence: true, numericality: true
-  validates :group, numericality: { only_integer: true }
+  # validates :group, numericality: { only_integer: true }
   
   before_save :default_values
   def default_values

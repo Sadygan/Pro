@@ -6,9 +6,6 @@ class Table < ActiveRecord::Base
   belongs_to :product
   belongs_to :photo
 
-  validates_presence_of :product
-  validates :product_id, presence: true
-  
 
  def add_row specification
     # ar = specification.table_specifications.pluck(:group)

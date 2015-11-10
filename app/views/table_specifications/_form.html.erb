@@ -52,7 +52,7 @@
       <th class="finishing"><%= f.text_field :finishing %></th>
       <th class="finishing_for_client"><%= f.text_area :finishing_for_client %></th>
       <th class="size size_images" colspan="4"><div id="size_images"></div><div id="current_size_img"></div><%= f.text_area :size %><%= f.hidden_field :size_image_id, id: :"size_image_id" %></th>
-      <th class="unit_price_factory"><%= f.number_field :unit_price_factory, value: 0 %></th>
+      <th class="unit_price_factory"><%= f.number_field :unit_price_factory, value: 0, step: 0.1 %></th>
       <th class="discount" id="discount"></th>
       <th class="additional_discount" id="additional_discount"></th>
       <th class="increment_discount"><%= f.number_field :increment_discount, value: 0 %></th>
