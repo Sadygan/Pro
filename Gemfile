@@ -78,3 +78,4 @@ gem 'rails4-autocomplete'
 
 # Tagging
 gem 'acts-as-taggable-on', '~> 3.4'
+
