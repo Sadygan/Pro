@@ -1,6 +1,6 @@
 <tr id="style_<%= style.id %>">
 	<td><%= style.name %></td>
 	<td><%= link_to t('edit'), edit_style_path(style), remote: true, :class => 'btn btn-sm btn-info'  %></td>
-	<td><%= link_to t('delete'), style, remote: true, :method => :delete, data: {confirm:  t('delete') "#{style.name}"}, :class => 'btn btn-sm btn-danger' %>
+	<td><%= link_to t('delete'), style, remote: true, :method => :delete, data: {confirm: "Удалить #{style.name}"}, :class => 'btn btn-sm btn-danger' %>
  </td>
 </tr>
