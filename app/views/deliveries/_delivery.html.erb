@@ -5,6 +5,6 @@
   <td><%= delivery.check_factory %></td>
   <td><%= delivery.bank_service %></td>
   <td><%= delivery.bank_percent %></td>
-  <td><%= link_to 'Edit', edit_delivery_path(delivery), remote: true, :class => 'btn btn-sm btn-info' %></td>
-  <td><%= link_to 'Destroy', delivery, remote: true, :method => :delete, data: {confirm: "Delete Delivery: #{delivery.direction}"}, :class => 'btn btn-sm btn-danger' %></td>
+  <td><%= link_to t('edit.new'), edit_delivery_path(delivery), remote: true, :class => 'btn btn-sm btn-info' %></td>
+  <td><%= link_to t('delete'), delivery, remote: true, :method => :delete, data: {confirm: "Удалить: #{delivery.direction}"}, :class => 'btn btn-sm btn-danger' %></td>
 </tr>

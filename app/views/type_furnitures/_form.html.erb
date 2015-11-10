@@ -4,11 +4,11 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="form-group">
-        <%= f.label :name, :class => "control-label" %><br>
+        <%= f.label t('type_furnitures.name'), :class => "control-label" %><br>
         <%= f.text_field :name, :class => "form-control" %>
       </div>
       <div class="actions">
-        <%= f.submit  @type_furniture.new_record? ? "Create" : "Update", :class => "btn btn-primary" %>
+        <%= f.submit  @type_furniture.new_record? ? t('create'): t('update'), :class => "btn btn-primary" %>
       </div>
     </div>
   </div>

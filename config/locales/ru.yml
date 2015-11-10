@@ -9,9 +9,22 @@ ru:
   delete: "Удалить"
   change_image: "Изменить изображение"
   save: "Сохранить"
+  create: "Создать"
+  update: "Обновить"
   client:
     name: "Имя клиента"
-    company: "Название компании"
+    new_client: "Добавить клиента"
+    edit_client: "Редактировать клиента"
+    create: "Создать"
+    update: "Обновить"
+    name: "Имя"
+    status_position: "Статус"
+    telephone: "Контактный телефон"
+    listing: "Список клиентов"
+  company:
+    name: "Компания"
+    address: "Адрес компании"
+
   project:
     project: "Проект"
     projects: "Проекты"
@@ -109,6 +122,7 @@ ru:
     minimum_order: "Минимальный заказ"
     delivery_time: "Срок поставки"
     group_brend: "Группа бренда"
+    add_discount: "Добавить поле для скидки"
   activerecord:
     models:
       Edit: "Редактировать"
@@ -122,15 +136,45 @@ ru:
     price: "Стоимость"
   factories: 
     factory: "Фабрики"
-  styles: "Стили"
+  styles: 
+    styles: "Стили"
+    new: "Добавить стиль"
+    edit: "Редактировать стиль"
+    name: "Название стиля"
   clients:
     client: "Клиент"
     clients: "Клиенты"
     telephone: "Телефон"
-  companies: "Компании"
-  cities: "Города"
-  deliveries: "Доставка"
+  companies: 
+    companies: "Компании"
+    company: "Компания"
+    name: "Имя компании"
+    address: "Адрес"
+    edit: "Редактировать компанию"
+    new: "Добавить компанию"
+    listing: "Список компаний"
+  cities:
+    cities: "Города"
+    new: "Добавить город" 
+    name: "Название города"
+    listing: "Список городов"
+    edit: "Редактировать город"
+  deliveries:
+    deliveries: "Доставка"
+    new: "Добавить доставку"
+    edit: "Редактировать доставку"
+    listing: "Список направлений"
+    direction: "Направления"
+    cost: "Стоимость за куб"
+    execution_document: "Оформление документов"
+    check_factory: "Заезд на фабрику"
+    bank_service: "Услуги банка(€)"
+    bank_percent: "Услуги банка(%)"
   type_furnitures:
+    listing: "Список типов"
+    new: "Добавить тип"
+    name: "Имя типа"
+    edit: "Редактировать тип"
     type_furniture: "Тип мебели"
   update: "Обновить"
   create: "Создать"

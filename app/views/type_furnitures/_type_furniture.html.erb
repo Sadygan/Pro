@@ -1,5 +1,5 @@
 <tr id="type_furniture_<%= type_furniture.id %>">
 	<td><%= type_furniture.name %></td>
-	<td><%= link_to 'Edit', edit_type_furniture_path(type_furniture), remote: true, :class => 'btn btn-sm btn-info' %></td>
-	<td><%= link_to 'Destroy', type_furniture, remote: true, :method => :delete, data: {confirm: "Delete Customer: #{type_furniture.name}"}, :class => 'btn btn-sm btn-danger' %></td>
+	<td><%= link_to t('edit'), edit_type_furniture_path(type_furniture), remote: true, :class => 'btn btn-sm btn-info' %></td>
+	<td><%= link_to t('delete'), type_furniture, remote: true, :method => :delete, data: {confirm: "Удалить: #{type_furniture.name}"}, :class => 'btn btn-sm btn-danger' %></td>
 </tr>

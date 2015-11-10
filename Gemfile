@@ -74,3 +74,6 @@ gem 'html5_validators'
 gem 'nested_form_fields'
 
 gem 'rails4-autocomplete'
+
+# Tagging
+gem 'acts-as-taggable-on', '~> 3.4'

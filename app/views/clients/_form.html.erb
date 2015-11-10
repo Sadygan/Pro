@@ -5,19 +5,19 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="form-group">
-        <%= f.label :name %><br>
+        <%= f.label t('client.name') %><br>
         <%= f.text_field :name, :class => "form-control" %>
       </div>
       <div class="form-group">
-        <%= f.label :company %><br>
-        <%= f.collection_select :company_id, Company.order(:name),:id,:name, {include_blank: true}, {class: :"form-control"} %>
+        <%= f.label t('company.name') %><br>
+        <%= f.collection_select :company_id, Company.order(:name),:id,:name, {include_blank: false}, {class: :"form-control"} %>
       </div>
       <div class="form-group">
-        <%= f.label :status_position %><br>
+        <%= f.label t('client.status_position') %><br>
         <%= f.text_field :status_position, :class => "form-control" %>
       </div>
       <div class="form-group">
-        <%= f.label :telephone %><br>
+        <%= f.label t('client.telephone') %><br>
         <%= f.number_field :telephone, :class => "form-control" %>
       </div>
       <div class="form-group">
@@ -26,7 +26,7 @@
       </div>
 
       <div class="actions">
-        <%= f.submit  @client.new_record? ? "Create Client" : "Update Client", :class => "btn btn-primary" %>
+        <%= f.submit  @client.new_record? ? t('client.create') : t('client.update'), :class => "btn btn-primary" %>
       </div>
     </div>
   </div>

@@ -1,16 +1,16 @@
 <div class="container"> 
 <p id="notice"><%= notice %></p>
 
-<h2><%= t('styles') %></h2>
+<h2><%= t('styles.styles') %></h2>
   <div class="well">
-    <%= link_to t('product.new_product'), new_style_path, remote: true, class: "btn btn-primary" %>
+    <%= link_to t('styles.new'), new_style_path, remote: true, class: "btn btn-primary" %>
   </div>
   <div class="new-style"></div>
 
 <table class="table table-bordered table-striped table-hover">
   <thead>
     <tr>
-      <th>Name</th>
+      <th><%= t('styles.name') %></th>
       <th colspan="2"></th>
     </tr>
   </thead>

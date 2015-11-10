@@ -1,20 +1,20 @@
 <div class="container">
 <p id="notice"><%= notice %></p>
-<h2>Listing Deliveries</h2>
+<h2><%= t('deliveries.listing') %></h2>
 
 <div class="well">
-  <%= link_to 'New Delivery', new_delivery_path, remote: true, class: "btn btn-primary" %>
+  <%= link_to t('deliveries.new'), new_delivery_path, remote: true, class: "btn btn-primary" %>
 </div>
 
 <table id class="table table-bordered table-striped">
   <thead>
     <tr>
-      <th>Direction</th>
-      <th>Cost</th>
-      <th>Execution document</th>
-      <th>Check factory</th>
-      <th>Bank service</th>
-      <th>Bank percent</th>
+      <th><%= t('deliveries.direction') %></th>
+      <th><%= t('deliveries.cost') %></th>
+      <th><%= t('deliveries.execution_document') %></th>
+      <th><%= t('deliveries.check_factory') %></th>
+      <th><%= t('deliveries.bank_service') %></th>
+      <th><%= t('deliveries.bank_percent') %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
