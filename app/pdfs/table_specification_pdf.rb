@@ -18,8 +18,8 @@ class TableSpecificationPdf < Prawn::Document
 		header
 		manager_info
 
-		require "open-uri"
-		require "prawn/gmagick"
+		# require "open-uri"
+		# require "prawn/gmagick"
 
 		if !specification[0]
 			@specification  = specification
