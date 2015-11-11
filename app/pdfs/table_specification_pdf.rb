@@ -17,7 +17,10 @@ class TableSpecificationPdf < Prawn::Document
 		font_size 8
 		header
 		manager_info
-		
+
+		require "open-uri"
+		require "prawn/gmagick"
+
 		if !specification[0]
 			@specification  = specification
 			rect_specification
@@ -79,18 +82,15 @@ class TableSpecificationPdf < Prawn::Document
 		items = [["Изображение", "Наименование", "Отделка", "Размер", "Цена за 1шт.", "Ко-во", "Сумма"]]
 		@specification.tables.each_with_index.map do |item, i|
 		
+		require "open-uri"
+		require "prawn/gmagick"
+		
 		if item.photo_id
 			current_photo = Photo.find(item.photo_id)
-			image = current_photo.img.path	
-		else
-			image = "#{Rails.root}/public/no_image/no_image.png"
-		end
+			image_photo = open(current_photo.img.url)
 
-		if item.size_image_id
-			current_photo = SizeImage.find(item.size_image_id)
-			image_size1 = current_photo.img.path
 		else
-			image_size1 = "#{Rails.root}/public/no_image/no_image.png"
+			# image = "#{Rails.root}/public/no_image/no_image.png"
 		end
 
 		sum = 0
@@ -109,16 +109,45 @@ class TableSpecificationPdf < Prawn::Document
 		elsif (item.class.name === "TableSpecificationLight")
 			unit_price = item.unit_with_interest_light
 		end
-	
-		items << [
-				{:image => image, image_width: 150, rowspan: 2},
+		
+		if item.size_image_id
+			current_photo = SizeImage.find(item.size_image_id)
+			image_size1 = open(current_photo.img.url)
+			image_size = {:image => image_size1, image_width: 100, rowspan: 1}
+			
+			items << [
+				{:image => image_photo, image_width: 150, rowspan: 2},
 				{content: "#{item.product.article}", rowspan: 2}, 
 				{content: "#{item.finishing_for_client}", rowspan: 2}, 
-				{:image => image_size1, image_width: 100, rowspan: 1}, 
+				image_size, 
 				{content: "#{unit_price}", rowspan: 2}, 
 				{content: "#{item.number_of}", rowspan: 2}, 
-				summa, 
-				]
+				summa
+			]
+		else
+			image_size = {content: "", rowspan: 2}
+			items << [
+				{:image => image_photo, image_width: 150, rowspan: 1},
+				{content: "#{item.product.article}", rowspan: 2}, 
+				{content: "#{item.finishing_for_client}", rowspan: 2}, 
+				image_size, 
+				{content: "#{unit_price}", rowspan: 2}, 
+				{content: "#{item.number_of}", rowspan: 2}, 
+				summa
+			]
+			# image_size1 = "#{Rails.root}/public/no_image/no_image.png"
+		end
+		
+		
+		# items << [
+		# 		{:image => image_photo, image_width: 150, rowspan: 2},
+		# 		{content: "#{item.product.article}", rowspan: 2}, 
+		# 		{content: "#{item.finishing_for_client}", rowspan: 2}, 
+		# 		image_size, 
+		# 		{content: "#{unit_price}", rowspan: 2}, 
+		# 		{content: "#{item.number_of}", rowspan: 2}, 
+		# 		summa
+		# 		]
 		  	
 		items << [ {content: "#{item.size}"},
 

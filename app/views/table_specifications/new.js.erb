@@ -38,13 +38,14 @@ $(document).ready(function(){
         $.ajax({
             type: "GET",
             url: "/products/"+id+"/"+catalog+"/",
+
             dataType: "JSON",
             success: function(data) {
-            var current_image;
-            current_image = '<select id="current_image_'+catalog+'">'
-            if (data.length != 0) {
+                var current_image;
+                current_image = '<select id="current_image_'+catalog+'">'
+                if (data.length != 0) {
                     for(var p in data) {
-                        current_image += '<option article="'+article+'" img_id="'+data[p].id+'">'+data[p].img_file_name+'</option>'
+                        current_image += '<option article="'+article+'" img_path="'+data[p].img_url+' "img_id="'+data[p].id+'">'+p+'</option>'
                     }
                 } else {
                     image = '';
@@ -103,9 +104,10 @@ $(document).ready(function(){
         $('#photos').bind('click focus blur keyup', function(){
             var article = $("#photos select option:selected").attr("article");
             var img_id = $("#photos select option:selected").attr("img_id");
+            var img_path = $("#photos select option:selected").attr("img_path");
             var photo_src = '';
-        	var img_file_name = $('#photos select').val();
-            photo_src += '<img src="/photos/product/'+article+'/Photo/'+img_file_name+'">'
+            var img_file_name = $('#photos select').val();
+            photo_src += '<img src="'+img_path+'">'
             console.log(img_id)
             $('#current_img').html(photo_src);
             
@@ -115,9 +117,11 @@ $(document).ready(function(){
         $('#size_images').bind('click focus blur keyup', function(){
             var article = $("#size_images select option:selected").attr("article");
             var img_id = $("#size_images select option:selected").attr("img_id");
+            var img_path = $("#size_images select option:selected").attr("img_path");
+            console.log(img_path)
             var photo_src = '';
             var img_file_name = $('#size_images select').val();
-            photo_src += '<img src="/photos/product/'+article+'/SizeImage/'+img_file_name+'">'
+            photo_src += '<img src="'+img_path+'">'
             console.log(img_id)
             $('#current_size_img').html(photo_src)
 

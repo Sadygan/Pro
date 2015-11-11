@@ -2,6 +2,19 @@ jQuery(function() {
   return $('.best_in_place').best_in_place();
 });
 $(document).ready(function() {
+	var client = new Dropbox.Client({
+	  key:    "oqe1u2h3676wzpc", // App key
+	  secret: "6d38819v60m67c1", // App secret
+	  token:  "yza6vaucz0yy8eeb", // Generated access token
+	  user:   "489572075",
+	  sandbox: false
+	});
+
+    console.log(client);
+    client.isAuthenticated();
+    
+    // $('.specification_id').html()
+
 	
 	$('#print_sum').click(function() {
 		var print = ($("#print_sum").prop("checked"));
@@ -40,10 +53,12 @@ $(document).ready(function() {
 		$('[name="photo_select"]').click(function(){
 	      	var id = $(this).attr('id').replace(/\D+/g,"");
 	      	var img_id = parseInt($("#photo_"+id+" select option:selected").attr("value"));
+	      	var img_path = $("#photo_"+id+" select option:selected").attr("path");
+	      	console.log(img_path)
 	      	var article = $("#photo_"+id+" select option:selected").attr("article");
 	      	var photo_src = '';
 	      	var img_file_name = $("#photo_"+id+" option:selected").attr("name")
-	      	photo_src += '<img src="/photos/product/'+article+'/Photo/'+img_file_name+'">'
+	      	photo_src += '<img src="'+img_path+'">'
 	      	$('#current_photo_'+id).html(photo_src);
 		
 			// Set current image ID
@@ -65,10 +80,11 @@ $(document).ready(function() {
 		$('[name="size_image_select"]').click(function(){
 	      	var id = parseInt($(this).attr('id').replace(/\D+/g,""));
 	      	var img_id = parseInt($("#size_image_"+id+" select option:selected").attr("value"));
+	      	var img_path = $("#size_image_"+id+" select option:selected").attr("path");
 	      	var article = $("#size_image_"+id+" select option:selected").attr("article");
 	      	var photo_src = '';
 	      	var img_file_name = $("#size_image_"+id+" option:selected").attr("name")
-	      	photo_src += '<img src="/photos/product/'+article+'/SizeImage/'+img_file_name+'">'
+	      	photo_src += '<img src="'+img_path+'">'
 	      	$('#current_size_image_'+id).html(photo_src);
 		
 			// Set current image ID

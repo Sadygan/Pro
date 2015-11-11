@@ -79,3 +79,7 @@ gem 'rails4-autocomplete'
 gem 'acts-as-taggable-on', '~> 3.4'
 
 gem 'puma'
+
+gem "paperclip-dropbox", ">= 1.1.7"
+
+gem "prawn-gmagick"
