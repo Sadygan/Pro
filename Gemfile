@@ -82,4 +82,6 @@ gem 'puma'
 
 gem "paperclip-dropbox", ">= 1.1.7"
 
+gem 'rmagick'
+gem 'graphicsmagick'
 gem "prawn-gmagick"
