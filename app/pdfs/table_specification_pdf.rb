@@ -82,8 +82,8 @@ class TableSpecificationPdf < Prawn::Document
 		items = [["Изображение", "Наименование", "Отделка", "Размер", "Цена за 1шт.", "Ко-во", "Сумма"]]
 		@specification.tables.each_with_index.map do |item, i|
 		
-		require "open-uri"
-		require "prawn/gmagick"
+		# require "open-uri"
+		# require "prawn/gmagick"
 		
 		if item.photo_id
 			current_photo = Photo.find(item.photo_id)
