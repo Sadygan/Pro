@@ -116,10 +116,10 @@ class TableSpecificationPdf < Prawn::Document
 			image_size = {:image => image_size1, image_width: 100, rowspan: 1}
 			
 			items << [
-				{:image => image_photo, image_width: 150, rowspan: 2},
+				# {:image => image_photo, image_width: 150, rowspan: 2},
 				{content: "#{item.product.article}", rowspan: 2}, 
 				{content: "#{item.finishing_for_client}", rowspan: 2}, 
-				image_size, 
+				# image_size, 
 				{content: "#{unit_price}", rowspan: 2}, 
 				{content: "#{item.number_of}", rowspan: 2}, 
 				summa
