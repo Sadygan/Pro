@@ -130,8 +130,6 @@ GEM
     prawn (2.0.2)
       pdf-core (~> 0.6.0)
       ttfunk (~> 1.4.0)
-    prawn-gmagick (0.0.8)
-      prawn (>= 0.15, < 3.0)
     prawn-rails (0.1.1)
       prawn
       prawn-table
@@ -235,7 +233,6 @@ DEPENDENCIES
   paperclip (~> 4.3)
   paperclip-dropbox (>= 1.1.7)
   pg
-  prawn-gmagick
   prawn-rails
   puma
   rails (= 4.2.2)
