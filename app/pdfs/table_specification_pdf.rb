@@ -26,7 +26,7 @@ class TableSpecificationPdf < Prawn::Document
 			rect_specification
 			name_specification
 			# line_items
-			# total_price
+			total_price
 		else
 			i = 0
 			while i < specification.length do
