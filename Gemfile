@@ -43,6 +43,8 @@ group :development, :test do
   
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
+
+  gem "prawn-gmagick"
 end
 
 group :production do
@@ -82,6 +84,3 @@ gem 'puma'
 
 gem "paperclip-dropbox", ">= 1.1.7"
 
-# gem 'rmagick'
-# gem 'graphicsmagick'
-# gem "prawn-gmagick"
