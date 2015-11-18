@@ -134,31 +134,32 @@ $(document).ready(function(){
         var group_bool = false;
 
        // Get all product
-        $.ajax({
-            type: "GET",
-            url: "./table_specifications/",
-            dataType: "JSON",
-            success: function(data) {
-                selectionGroup(data)
-            }
-        });
-
-        function selectionGroup(data) {
-            var groups_arr = [];
-            var current_group_arr = [];
-            var current_group = 0;
-            for(var p in data) {
-                groups_arr.push(data[p].group);
-            }
+        // $.ajax({
+        //     type: "GET",
+        //     url: "./table_specifications/",
+        //     dataType: "JSON",
+        //     success: function(data) {
+        //         selectionGroup(data)
+        //     }
+        // });
+        
+        // Group calculating
+        // function selectionGroup(data) {
+        //     var groups_arr = [];
+        //     var current_group_arr = [];
+        //     var current_group = 0;
+        //     for(var p in data) {
+        //         groups_arr.push(data[p].group);
+        //     }
             
-            current_group_arr = groups_arr.uniq();
-            console.log(current_group_arr)
-            $('#table_specification_group').bind('click focus blur keyup', function(){
-                current_group = $("#table_specification_group").val()
-                group_bool = in_array(current_group, current_group_arr)
-                console.log(group_bool)
-            });
-        }
+        //     current_group_arr = groups_arr.uniq();
+        //     console.log(current_group_arr)
+        //     $('#table_specification_group').bind('click focus blur keyup', function(){
+        //         current_group = $("#table_specification_group").val()
+        //         group_bool = in_array(current_group, current_group_arr)
+        //         console.log(group_bool)
+        //     });
+        // }
 
         $('form').bind('click focus blur keyup', function(){
             var cost = 0;

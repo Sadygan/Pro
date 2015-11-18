@@ -21,7 +21,7 @@ class TableSpecification < Table
     self.unit_v ||= 0
     self.width ||= 0
     self.height ||= 0
-    self.depth ||= 0  
+    self.depth ||= 0
   end
 
   # def initialize

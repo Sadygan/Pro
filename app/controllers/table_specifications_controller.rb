@@ -84,7 +84,7 @@ class TableSpecificationsController < ApplicationController
   def destroy
     @table_specification.destroy
     respond_to do |format|
-      format.html { redirect_to table_specification_url, notice: 'Table specification was successfully destroyed.' }
+      format.html { redirect_to project_specification_table_specifications_path, notice: 'Table specification was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -38,14 +38,14 @@
       <% i = 0 %>
       <% @specification.table_specifications.each do |table_specification| %>
         <tr >
-          <td class="image"><div name="photo_select" id="photo_<%= table_specification.id %>"><%= select("photo", table_specification.product.article, options_for_select(table_specification.photo_select(table_specification.product.id).all.collect {|p| [p.img_file_name, p.id, name: p.img_file_name, article: p.product.article, path: p.img.url]}, table_specification.photo_id)) %></div><div id="current_photo_<%= table_specification.id %>"><%= image_tag table_specification.image(table_specification.photo_id) %></div>       
+          <td class="image"><div name="photo_select" id="photo_<%= table_specification.id %>"><%= select("photo", table_specification.product.article, options_for_select(table_specification.photo_select(table_specification.product.id).all.collect.with_index {|p, index| [index+1, p.id, name: p.img_file_name, article: p.product.article, path: p.img.url]}, table_specification.photo_id)) %></div><div id="current_photo_<%= table_specification.id %>"><%= image_tag table_specification.image(table_specification.photo_id) %></div>
           </td>
           <td class="brand" id="brand_<%= table_specification.id %>"><%= table_specification.product.factory.brand %></td>
           <td class="article"><%= table_specification.product.article %></td>
           <td class="type_furniture"><%= table_specification.product.type_furniture.name %></td>
           <td class="finishing"><%= best_in_place [@project, @specification, table_specification], :finishing %></td>
           <td class="finishing_for_client"><%= best_in_place [@project, @specification, table_specification], :finishing_for_client, type: :textarea %></td>
-          <td class="size" colspan="4"><%= best_in_place [@project, @specification, table_specification], :size, type: :textarea, :class => "size_v" %><div name="size_image_select" id="size_image_<%= table_specification.id %>"><%= select("size_image", table_specification.product.article, options_for_select(table_specification.size_image_select(table_specification.product.id).all.collect {|p| [p.img_file_name, p.id, name: p.img_file_name, article: p.product.article, path: p.img.url]}, table_specification.size_image_id)) %></div><div id="current_size_image_<%= table_specification.id %>"><%= image_tag table_specification.image(table_specification.size_image_id) %></div>  
+          <td class="size" colspan="4"><%= best_in_place [@project, @specification, table_specification], :size, type: :textarea, :class => "size_v" %><div name="size_image_select" id="size_image_<%= table_specification.id %>"><%= select("size_image", table_specification.product.article, options_for_select(table_specification.size_image_select(table_specification.product.id).all.collect.with_index {|p, index| [index+1, p.id, name: p.img_file_name, article: p.product.article, path: p.img.url]}, table_specification.size_image_id)) %></div><div id="current_size_image_<%= table_specification.id %>"><%= image_tag table_specification.image(table_specification.size_image_id) %></div>  
           </td>
           <td class="unit_price_factory" id="unit_price_factory_<%= table_specification.id %>"><%= best_in_place [@project, @specification, table_specification], :unit_price_factory, :sanitize => false, inner_class: :upf, :html_attrs => table_specification.group %></td>
           <td calss="discount"><div name="discount_select" id="discount_<%= table_specification.id %>"><%= select("discount", table_specification.id, options_for_select(table_specification.product.factory.discounts.all.collect {|p| [p.percent, p.id, discount_id: p.id]}, table_specification.discount_id))%></div></td>
@@ -83,7 +83,7 @@
           <td class="delivery"><div name="delivery_select" id="delivery_select_<%= table_specification.id %>"><%= select("delivery", table_specification.id, options_for_select(Delivery.all.collect {|p| [p.direction, p.id]}, table_specification.delivery_id))%></td>
           <td class="additional_delivery" id=""><%= best_in_place [@project, @specification, table_specification], :additional_delivery %></td>
         <% end %>
-        <% if table_specification.group %>
+        <% if table_specification.add_row(@specification)[table_specification.group] > 1 %>
           <td colspan="9"><%= table_specification.group.to_i %></td>
         <% else %>
         <% end %>
