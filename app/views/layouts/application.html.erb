@@ -10,7 +10,7 @@
 
 
   <%if user_signed_in? %>
-  <%= render partial: 'layouts/main_menu' %>
+  <%= render 'blocks/menu' %>
   <p> Hello, <%= current_user.email %> - <%= link_to "Sign_out", destroy_user_session_path, :method => 'delete' %></p>
   <br>
   <% end %>
