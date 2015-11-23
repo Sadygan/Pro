@@ -1,5 +1,5 @@
 class TypeFurnituresController < ApplicationController
-  before_action :check_role
+  # before_action :check_role
   before_action :set_type_furniture, only: [:show, :edit, :update, :destroy]
   
   # GET /type_furnitures

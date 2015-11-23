@@ -6,7 +6,9 @@ class Ability
     if user.has_role? :admin
         can :manage, :all
     
-    elsif user.has_role? :logist
+    end
+
+    if user.has_role? :logist
         can :read, Factory
         can :create, Factory
         can :update, Factory
@@ -15,7 +17,10 @@ class Ability
         can :create, Delivery
         can :update, Delivery
 
-    elsif user.has_role? :manager
+    end
+
+    if user.has_role? :manager
+        # can :manage,:all
         can :read, Project
         can :create, Project
         can :update, Project
@@ -40,7 +45,12 @@ class Ability
         can :create, SizeImage
         can :update, SizeImage
 
-    elsif user.has_role? :company_moderator
+        # can :create, Factory
+        # can :read, Delivery
+
+    end
+        
+    if user.has_role? :company_moderator
         can :read, Project
         can :create, Project
         can :update, Project

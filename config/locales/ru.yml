@@ -134,6 +134,7 @@ ru:
     edit_product: "Редактировать продукт"
     article: "Артикул"
     price: "Стоимость"
+    model: "Модель"
   factories: 
     factory: "Фабрики"
   styles: 

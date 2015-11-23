@@ -1,5 +1,5 @@
 class TableSpecificationLightsController < ApplicationController
-  before_action :check_role
+  # before_action :check_role
   before_action :set_table_specification_light, only: [:show, :edit, :update, :destroy]
   before_action :set_project_specification
   respond_to :html, :json

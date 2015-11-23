@@ -7,7 +7,8 @@ class Product < ActiveRecord::Base
 	belongs_to :type_furniture
 
 	# validates_presence_of :type_furniture_id, message: "^We need to know who is filling in this form (your name)"
-	validates :name, uniqueness: true
+	validates :article, uniqueness: true, presence: true
+	validates :model, presence: true
 	validates_presence_of :factory
 	validates_presence_of :type_furniture
 

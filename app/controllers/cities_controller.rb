@@ -1,6 +1,6 @@
 class CitiesController < ApplicationController
   before_action :set_city, only: [:show, :edit, :update, :destroy]
-  before_action :check_role
+  # before_action :check_role
 
   # GET /cities
   # GET /cities.json

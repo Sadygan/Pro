@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :check_role
+  # before_action :check_role
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   autocomplete :type_furniture, :name, :full => true
   autocomplete :factory, :brand, :full => true
@@ -89,6 +89,6 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:article, :price, :factory_id, :type_furniture_id, :factory_brand, :type_furniture_name)
+      params.require(:product).permit(:article, :price, :factory_id, :type_furniture_id, :factory_brand, :type_furniture_name, :model)
     end
 end

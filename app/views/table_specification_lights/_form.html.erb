@@ -15,6 +15,7 @@
         <th class="photos"><%= t('table.image') %></th>
         <th class="brand"><%= t('table.brand') %></th>
         <th class="article"><%= t('table.article') %></th>
+        <th class="model"><%= t('product.model') %></th>
         <th class="type_furniture"><%= t('table.type_furniture') %></th>
         <th class="finishing"><%= t('table.finishing') %></th>
         <th class="finishing_for_client"><%= t('table.finishing_for_client') %></th>
@@ -38,6 +39,7 @@
     <td class="photos"><div id="photos"></div><div id="current_img"></div><%= f.hidden_field :photo_id, id: :"photo_id" %></br></td>  
     <td class="brand" id="brand"></td>
    <td class="article"><%= f.autocomplete_field :product_id, autocomplete_product_article_project_specification_table_specifications_path, :id_element => '#product_id', :size => 75, :"data-autocomplete-label" => "Sorry, nothing found." %><%= f.hidden_field :product_id, id: :"product_id" %><span id="err_article"></span></td>
+    <td class="model" id="model"></td>
     <td class="type_furniture" id="type_furniture"></td>
     <td class="finishing"><%= f.text_field :finishing %></td>
     <td class="finishing_for_client"><%= f.text_area :finishing_for_client %></td>

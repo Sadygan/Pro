@@ -1,5 +1,5 @@
 class SpecificationsController < ApplicationController
-  before_action :check_role
+  # before_action :check_role
   before_action :set_specification, only: [:show, :edit, :update, :destroy]
   
   def index

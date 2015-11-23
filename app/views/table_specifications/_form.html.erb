@@ -15,6 +15,7 @@
       <th class="photos"><%= t('table.image') %></th>
       <th class="brand"><%= t('table.brand') %></th>
       <th class="article"><%= t('table.article') %></th>
+      <th class="model"><%= t('product.model') %></th>
       <th class="type_furniture"><%= t('table.type_furniture') %></th>
       <th class="finishing"><%= t('table.finishing') %></th>
       <th class="finishing_for_client"><%= t('table.finishing_for_client') %></th>
@@ -46,8 +47,9 @@
     <tr>
     <script type="text/javascript">$(":file").filestyle({input: false}); </script>
       <th class="photos"><div id="photos"></div><div id="current_img"></div><%= f.hidden_field :photo_id, id: :"photo_id" %></br></th>  
-      <th class="brand" id="brend"></th>
+      <th class="brand" id="brand"></th>
       <th class="article"><%= f.autocomplete_field :product_id, autocomplete_product_article_project_specification_table_specifications_path, :id_element => '#product_id', :size => 75, :"data-autocomplete-label" => "Sorry, nothing found." %><%= f.hidden_field :product_id, id: :"product_id" %></th>
+      <th class="model" id="model"></th>
       <th class="type_furniture" id="type_furniture"></th>
       <th class="finishing"><%= f.text_field :finishing %></th>
       <th class="finishing_for_client"><%= f.text_area :finishing_for_client %></th>
@@ -79,7 +81,7 @@
     <tr>
           <th id="link_product" colspan="2"></th>
           <th id="err_article"></th>
-          <th colspan="3"></th>
+          <th colspan="4"></th>
           <th class="box_v"><%= f.number_field :width, value: 0, :step => 0.01 %></th>
           <th class="box_v"><%= f.number_field :height, value: 0, :step => 0.01 %></th>
           <th class="box_v"><%= f.number_field :depth, value: 0, :step => 0.01 %></th>

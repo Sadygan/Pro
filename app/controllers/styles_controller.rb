@@ -1,5 +1,5 @@
 class StylesController < ApplicationController
-  before_action :check_role
+  # before_action :check_role
   before_action :set_style, only: [:show, :edit, :update, :destroy]
 
   # GET /styles

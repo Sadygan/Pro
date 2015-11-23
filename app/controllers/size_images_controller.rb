@@ -1,5 +1,5 @@
 class SizeImagesController < ApplicationController
-  before_action :check_role
+  # before_action :check_role
   before_action :set_size_image, only: [:show, :edit, :update, :destroy]
   before_action :set_product
   # GET /size_images
