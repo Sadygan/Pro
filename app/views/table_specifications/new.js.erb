@@ -24,7 +24,10 @@ $(document).ready(function(){
             getFactory(factory_id);
 
             getTypeFurniture(type_furniture_id);
-            
+            console.log(data.item.id)
+            getProduct(data.item.id)
+
+
             // draw image photos
             getImage(data.item.id, article, 'photos', 'Photo');
         
@@ -70,6 +73,19 @@ $(document).ready(function(){
         });
     };
 
+    function getProduct(id) {
+        $.ajax({
+            type: "GET",
+            url: "/products/"+id,
+            dataType: "JSON",
+            success: function(data) {
+                // console.log(data)
+                var model = data.model;
+                $("#model").html(model); 
+            }
+        });
+    };
+
     function getFactory(id) {
         $.ajax({
             type: "GET",
@@ -99,7 +115,7 @@ $(document).ready(function(){
 	function formCalculation(data) {
 	    var delivery = {};
 	    var deliv = getDelivery(data);
-
+        
         // Add view images photo and size_image
         $('#photos').bind('click focus blur keyup', function(){
             var article = $("#photos select option:selected").attr("article");
@@ -134,14 +150,14 @@ $(document).ready(function(){
         var group_bool = false;
 
        // Get all product
-        // $.ajax({
-        //     type: "GET",
-        //     url: "./table_specifications/",
-        //     dataType: "JSON",
-        //     success: function(data) {
-        //         selectionGroup(data)
-        //     }
-        // });
+       //  $.ajax({
+       //      type: "GET",
+       //      url: "./table_specifications/",
+       //      dataType: "JSON",
+       //      success: function(data) {
+       //          selectionGroup(data)
+       //      }
+       //  });
         
         // Group calculating
         // function selectionGroup(data) {

@@ -1,8 +1,9 @@
 class FactoriesController < ApplicationController
   before_action :set_factory, only: [:show, :edit, :update, :destroy]
-  before_action :check_role
+  # before_action :check_role
 
   def index
+    # check_role
     @factorys = Factory.all
     
     if user_signed_in?
@@ -83,7 +84,7 @@ private
   
   def check_role
     @user = current_user
-    if (@user.has_role? :admin) || (@user.has_role? :logist)
+    if (@user.has_role? :admin) || (@user.has_role? :logist) || (@user.has_role? :manager) 
 
     else
       redirect_to main_page_index_path

@@ -4,6 +4,7 @@
         <th class="photos"><%= t('table.image') %></th>
         <th class="brand"><%= t('table.brand') %></th>
         <th class="article"><%= t('table.article') %></th>
+        <th class="model"><%= t('table.model') %></th>
         <th class="type_furniture"><%= t('table.type_furniture') %></th>
         <th class="finishing"><%= t('table.finishing') %></th>
         <th class="finishing_for_client"><%= t('table.finishing_for_client') %></th>
@@ -42,6 +43,7 @@
           </td>
           <td class="brand" id="brand_<%= table_specification.id %>"><%= table_specification.product.factory.brand %></td>
           <td class="article"><%= table_specification.product.article %></td>
+          <td class="model"><%= table_specification.product.model %></td>
           <td class="type_furniture"><%= table_specification.product.type_furniture.name %></td>
           <td class="finishing"><%= best_in_place [@project, @specification, table_specification], :finishing %></td>
           <td class="finishing_for_client"><%= best_in_place [@project, @specification, table_specification], :finishing_for_client, type: :textarea %></td>

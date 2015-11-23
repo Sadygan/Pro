@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :check_role
+  # before_action :check_role
   respond_to :html, :json
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :check_role

@@ -13,9 +13,9 @@ $(document).ready(function(){
             var article = data.item.label;
 
             getFactory(factory_id);
-            console.log(type_furniture_id)
 
             getTypeFurniture(type_furniture_id);
+            getProduct(data.item.id);
             
             // draw image photos
             getImage(data.item.id, article, 'photos', 'Photo');
@@ -35,7 +35,7 @@ $(document).ready(function(){
             current_image = '<select id="current_image_'+catalog+'">'
             if (data.length != 0) {
                     for(var p in data) {
-                        current_image += '<option article="'+article+'" img_path="'+data[p].img_url+'" img_id="'+data[p].id+'">'+data[p].img_file_name+'</option>'
+                        current_image += '<option article="'+article+'" img_path="'+data[p].img_url+'" img_id="'+data[p].id+'">'+p+'</option>'
                     }
                 } else {
                     image = '';
@@ -56,6 +56,19 @@ $(document).ready(function(){
             success: function(data) {
                 var type_furniture = data.name;
                 $("#type_furniture").html(type_furniture); 
+            }
+        });
+    };
+
+    function getProduct(id) {
+        $.ajax({
+            type: "GET",
+            url: "/products/"+id,
+            dataType: "JSON",
+            success: function(data) {
+                // console.log(data)
+                var model = data.model;
+                $("#model").html(model); 
             }
         });
     };

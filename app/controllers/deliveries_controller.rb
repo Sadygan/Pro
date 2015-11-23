@@ -1,6 +1,6 @@
 class DeliveriesController < ApplicationController
   before_action :set_delivery, only: [:show, :edit, :update, :destroy]
-  before_action :check_role
+  # before_action :check_role
 
   # GET /deliveries
   # GET /deliveries.json

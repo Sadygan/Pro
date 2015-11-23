@@ -103,6 +103,20 @@ table#assets, table#table_specification_light_form, #project, .new_table_specifi
 		}			
 	}
 
+	.model {
+		max-width: 100px;
+		width: 100px;
+		padding: 8px 4px 0 4px;
+		
+		input {
+			width: 95px;
+		}
+		
+		tr {
+			min-height: 50px;
+		}			
+	}
+
 	.type_furniture {
 		max-width: 140px;
 		width: 140px;

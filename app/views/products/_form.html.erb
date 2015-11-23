@@ -8,6 +8,10 @@
     <%= f.label t('products.article'), :class => "control-label" %><br>
     <%= f.text_field :article, :class => "form-control" %>
   </div>
+  <div class="form-group">
+    <%= f.label t('products.model'), :class => "control-label" %><br>
+    <%= f.text_field :model, :class => "form-control" %>
+  </div>
   <div class="form-group" id="factory">
     <%= f.label t('factories.factory'), :class => "control-label" %>
     <%= f.autocomplete_field :factory_brand, autocomplete_factory_brand_products_path, :id_element => '#product_factory_id', :class => "form-control addresspicker", :validate => { :presence => true } %>
