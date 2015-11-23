@@ -95,7 +95,7 @@ private
       :brand, 
       :web, 
       :autorification, 
-      :style, 
+      :style,
       :line_product, 
       :catalog, 
       :price, 
