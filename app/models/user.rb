@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  rolify
   has_many :factories
   has_many :projects
 
@@ -14,4 +15,11 @@ class User < ActiveRecord::Base
 	    			:url  => "/avatars/:filename"
 	
 	validates_attachment_content_type :avatar, :content_type => %w(image/jpeg image/jpg image/png)
+
+  rolify :before_add => :before_add_method
+
+  def before_add_method(role)
+    # do something before it gets added
+  end
+
 end

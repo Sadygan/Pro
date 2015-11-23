@@ -1,4 +1,5 @@
 class TypeFurnituresController < ApplicationController
+  before_action :check_role
   before_action :set_type_furniture, only: [:show, :edit, :update, :destroy]
   
   # GET /type_furnitures
@@ -66,6 +67,15 @@ class TypeFurnituresController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_type_furniture
       @type_furniture = TypeFurniture.find(params[:id])
+    end
+
+    def check_role
+      @user = current_user
+      if (@user.has_role? :admin) || (@user.has_role? :company_moderator)
+
+      else
+        redirect_to main_page_index_path
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

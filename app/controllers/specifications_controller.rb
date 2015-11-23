@@ -1,5 +1,5 @@
 class SpecificationsController < ApplicationController
- 
+  before_action :check_role
   before_action :set_specification, only: [:show, :edit, :update, :destroy]
   
   def index
@@ -79,6 +79,15 @@ private
     @specification = Specification.find(params[:id])
   end
   
+  def check_role
+    @user = current_user
+    if (@user.has_role? :admin) || (@user.has_role? :company_moderator) || (@user.has_role? :manager)
+
+    else
+      redirect_to main_page_index_path
+    end
+  end
+
   def specification_params
     params.require(:specification).permit(:name, :print_sum, :light, :project_id)
   end

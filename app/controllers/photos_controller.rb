@@ -1,4 +1,5 @@
   class PhotosController < ApplicationController
+  before_action :check_role
   before_action :set_photo, only: [:show, :edit, :update, :destroy]
   before_action :set_product
 
@@ -72,6 +73,15 @@
 
     def set_product
       @product = Product.find(params[:product_id])
+    end
+
+    def check_role
+      @user = current_user
+      if (@user.has_role? :admin) || (@user.has_role? :company_moderator) || (@user.has_role? :manager)
+
+      else
+        redirect_to main_page_index_path
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

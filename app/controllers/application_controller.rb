@@ -13,7 +13,6 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
 
-  
   protected
 
   def configure_devise_permitted_parameters

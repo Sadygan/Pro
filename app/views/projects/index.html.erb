@@ -3,8 +3,9 @@
  
   <h2><%= t('project.projects') %></h2>
   <div class="project well">
+  <% if can? :create, Project %>
     <%= link_to t('project.new_project'), new_project_path, remote: true, class: "btn btn-primary" %>
-
+  <% end %>
   </div>
   <div class="new-project"></div>
  

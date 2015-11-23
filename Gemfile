@@ -70,8 +70,9 @@ gem 'prawn-rails'
 #Authentication Devise and CanCan
 gem 'devise'
 gem 'cancancan', '~> 1.10'
-gem 'html5_validators'
+gem "rolify"
 
+gem 'html5_validators'
 # Nested form fields
 gem 'nested_form_fields'
 
@@ -83,4 +84,5 @@ gem 'acts-as-taggable-on', '~> 3.4'
 gem 'puma'
 
 gem "paperclip-dropbox", ">= 1.1.7"
+
 

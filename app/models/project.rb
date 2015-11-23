@@ -1,4 +1,5 @@
 class Project < ActiveRecord::Base
+  resourcify
   has_many :specifications, dependent: :destroy
   has_many :statuses
   belongs_to :user
@@ -21,7 +22,7 @@ class Project < ActiveRecord::Base
   validates_presence_of :city
   validates_presence_of :style
 
-  validates :object_name, presence: true
+  validates :object_name, presence: true, uniqueness: true
   validates :type_furniture, presence: true
   validates :planned_budget, numericality: { only_integer: false }, on: :update
   validates :amount_contract, numericality: { only_integer: false }, on: :update

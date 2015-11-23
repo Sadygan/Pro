@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :check_role
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   autocomplete :type_furniture, :name, :full => true
   autocomplete :factory, :brand, :full => true
@@ -75,6 +76,15 @@ class ProductsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Product.find(params[:id])
+    end
+    
+    def check_role
+      @user = current_user
+      if (@user.has_role? :admin) || (@user.has_role? :company_moderator) || (@user.has_role? :manager)
+
+      else
+        redirect_to main_page_index_path
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

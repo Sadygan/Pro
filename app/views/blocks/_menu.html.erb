@@ -14,15 +14,33 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><%= link_to t('project.projects'), projects_path %></li>
-        <li><%= link_to t('products.products'), products_path %></li>
-        <li><%= link_to t('factories.factory'), factories_path %></li>
-        <li><%= link_to t('styles.styles'), styles_path %></li>
-        <li><%= link_to t('companies.companies'), companies_path %></li>
-        <li><%= link_to t('clients.clients'), clients_path %></li>
-        <li><%= link_to t('cities.cities'), cities_path %></li>
-        <li><%= link_to t('deliveries.deliveries'), deliveries_path %></li>
-        <li><%= link_to t('type_furnitures.type_furniture'), type_furnitures_path %></li>
+        <% if can? :read, Project %>
+          <li><%= link_to t('project.projects'), projects_path %></li>
+        <% end %>
+        <% if can? :read, Product %>
+          <li><%= link_to t('products.products'), products_path %></li>
+        <% end %>
+        <% if can? :read, Factory %>
+          <li><%= link_to t('factories.factory'), factories_path %></li>
+        <% end %>
+        <% if can? :read, Style %>
+          <li><%= link_to t('styles.styles'), styles_path %></li>
+        <% end %>
+        <% if can? :read, Company %>
+          <li><%= link_to t('companies.companies'), companies_path %></li>
+        <% end %>
+        <% if can? :read, Client %>
+          <li><%= link_to t('clients.clients'), clients_path %></li>
+        <% end %>
+        <% if can? :read, City %>
+          <li><%= link_to t('cities.cities'), cities_path %></li>
+        <% end %>
+        <% if can? :read, Delivery %>
+          <li><%= link_to t('deliveries.deliveries'), deliveries_path %></li>
+        <% end %>
+        <% if can? :read, TypeFurniture %>
+          <li><%= link_to t('type_furnitures.type_furniture'), type_furnitures_path %></li>
+        <% end %>
       </ul>
     </div><!-- /.navbar-collapse -->
     </div><!-- /.navbar-collapse -->

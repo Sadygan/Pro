@@ -1,12 +1,15 @@
 class ProjectsController < ApplicationController
+  before_action :check_role
   respond_to :html, :json
   before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :check_role
 
   def index
     
     @user = current_user
     @projects = @user.projects.all 
     @last_status = Status.new.array_status.last
+
 
     if user_signed_in?
       
@@ -17,6 +20,7 @@ class ProjectsController < ApplicationController
   end
  
   def show
+    
     if user_signed_in?
          
     else
@@ -98,6 +102,15 @@ private
 
   def status_params
     params.require(:status).permit(:name, :description, :project_id)
+  end
+
+  def check_role
+    @user = current_user
+    if (@user.has_role? :admin) || (@user.has_role? :manager) || (@user.has_role? :company_moderator)
+
+    else
+      redirect_to main_page_index_path
+    end
   end
   
   def project_params

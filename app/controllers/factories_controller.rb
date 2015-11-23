@@ -1,7 +1,7 @@
 class FactoriesController < ApplicationController
- 
   before_action :set_factory, only: [:show, :edit, :update, :destroy]
-  
+  before_action :check_role
+
   def index
     @factorys = Factory.all
     
@@ -79,6 +79,15 @@ private
   
   def set_factory
     @factory = Factory.find(params[:id])
+  end
+  
+  def check_role
+    @user = current_user
+    if (@user.has_role? :admin) || (@user.has_role? :logist)
+
+    else
+      redirect_to main_page_index_path
+    end
   end
   
   def factory_params

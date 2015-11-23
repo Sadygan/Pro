@@ -1,5 +1,6 @@
 class DeliveriesController < ApplicationController
   before_action :set_delivery, only: [:show, :edit, :update, :destroy]
+  before_action :check_role
 
   # GET /deliveries
   # GET /deliveries.json
@@ -66,6 +67,15 @@ class DeliveriesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_delivery
       @delivery = Delivery.find(params[:id])
+    end
+
+    def check_role
+      @user = current_user
+      if (@user.has_role? :admin) || (@user.has_role? :logist)
+
+      else
+        redirect_to main_page_index_path
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

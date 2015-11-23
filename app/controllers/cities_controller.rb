@@ -1,5 +1,6 @@
 class CitiesController < ApplicationController
   before_action :set_city, only: [:show, :edit, :update, :destroy]
+  before_action :check_role
 
   # GET /cities
   # GET /cities.json
@@ -66,6 +67,15 @@ class CitiesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_city
       @city = City.find(params[:id])
+    end
+
+    def check_role
+      @user = current_user
+      if (@user.has_role? :admin) || (@user.has_role? :company_moderator)
+
+      else
+        redirect_to main_page_index_path
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'main_page/index'
+
   resources :light_factories do
     get :autocomplete_factory_brand, :on => :collection
   end
@@ -13,8 +15,7 @@ Rails.application.routes.draw do
   end
   
   # resources :assets 
-      
-  
+
   resources :deliveries
   resources :cities
   resources :styles

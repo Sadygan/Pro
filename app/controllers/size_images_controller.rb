@@ -1,4 +1,5 @@
 class SizeImagesController < ApplicationController
+  before_action :check_role
   before_action :set_size_image, only: [:show, :edit, :update, :destroy]
   before_action :set_product
   # GET /size_images
@@ -71,6 +72,15 @@ class SizeImagesController < ApplicationController
     # Never trust parameters from the scary inteparams[:size_image]the white list through.
     def size_image_params
       params.require(:size_image).permit(:type, :img, :product_id)
+    end
+
+    def check_role
+      @user = current_user
+      if (@user.has_role? :admin) || (@user.has_role? :company_moderator) || (@user.has_role? :manager)
+
+      else
+        redirect_to main_page_index_path
+      end
     end
 
     def set_product

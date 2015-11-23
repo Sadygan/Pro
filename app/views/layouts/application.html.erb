@@ -11,7 +11,7 @@
 
   <%if user_signed_in? %>
   <%= render 'blocks/menu' %>
-  <p> Hello, <%= current_user.email %> - <%= link_to "Sign_out", destroy_user_session_path, :method => 'delete' %></p>
+  <p> Hello, <%= current_user.email %> -  <%= current_user.roles.first.name %> - <%= link_to "Sign_out", destroy_user_session_path, :method => 'delete' %></p>
   <br>
   <% end %>
 
