@@ -113,28 +113,37 @@ class TableSpecificationPdf < Prawn::Document
 		if item.size_image_id
 			current_photo = SizeImage.find(item.size_image_id)
 			image_size1 = open(current_photo.img.url)
-			image_size = {:image => image_size1, image_width: 100, rowspan: 1}
+			image_size = {:image => image_size1, image_width: 100, rowspan: 1, :border_bottom_color => "FFFFFF"}
 			
+			items << [
+				{:image => image_photo, image_width: 150, rowspan: 1, :border_bottom_color => "FFFFFF"},
+				{content: "#{item.product.article}", rowspan: 1, :border_bottom_color => "FFFFFF"}, 
+				{content: "#{item.finishing_for_client}", rowspan: 1, :border_bottom_color => "FFFFFF"}, 
+				image_size, 
+				{content: "#{unit_price}", rowspan: 1, :border_bottom_color => "FFFFFF"}, 
+				{content: "#{item.number_of}", rowspan: 1, :border_bottom_color => "FFFFFF"}, 
+				summa
+			]
+		items << [ 
+			{:border_top_color => "FFFFFF"},
+			{:border_top_color => "FFFFFF"},
+			{:border_top_color => "FFFFFF"},
+			{content: "#{item.size}", :border_top_color => "FFFFFF"},
+			{:border_top_color => "FFFFFF"},
+			{:border_top_color => "FFFFFF"},
+		  	]
+		else
+			# image_size = {content: "", rowspan: 2}
 			items << [
 				{:image => image_photo, image_width: 150, rowspan: 2},
 				{content: "#{item.product.article}", rowspan: 2}, 
 				{content: "#{item.finishing_for_client}", rowspan: 2}, 
-				image_size, 
+				{content: "#{item.size}", rowspan: 2},
 				{content: "#{unit_price}", rowspan: 2}, 
 				{content: "#{item.number_of}", rowspan: 2}, 
 				summa
 			]
-		else
-			image_size = {content: "", rowspan: 2}
-			items << [
-				{:image => image_photo, image_width: 150, rowspan: 1},
-				{content: "#{item.product.article}", rowspan: 2}, 
-				{content: "#{item.finishing_for_client}", rowspan: 2}, 
-				image_size, 
-				{content: "#{unit_price}", rowspan: 2}, 
-				{content: "#{item.number_of}", rowspan: 2}, 
-				summa
-			]
+		items << [	]
 			# image_size1 = "#{Rails.root}/public/no_image/no_image.png"
 		end
 		
@@ -149,9 +158,7 @@ class TableSpecificationPdf < Prawn::Document
 		# 		summa
 		# 		]
 		  	
-		items << [ {content: "#{item.size}"},
 
-		  	]
 		end
 		items += total_price
 
