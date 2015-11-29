@@ -93,7 +93,7 @@
           <td class="destroy"><%= link_to 'x', [@project, @specification, table_specification], method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
         <tr>
-          <th colspan="6"><span id="clone_unit_v_<%= table_specification.id %>"><%= table_specification.unit_v %></span></th>
+          <th colspan="7"><span id="clone_unit_v_<%= table_specification.id %>"><%= table_specification.unit_v %></span></th>
           <th class="box_v"><%= best_in_place [@project, @specification, table_specification], :width, :html_attrs => table_specification.group %></th>
           <th class="box_v"><%= best_in_place [@project, @specification, table_specification], :height, :html_attrs => table_specification.group, :html_attrs => table_specification.group %></th>
           <th class="box_v"><%= best_in_place [@project, @specification, table_specification], :depth, :html_attrs => table_specification.group %></th>
