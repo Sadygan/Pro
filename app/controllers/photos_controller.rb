@@ -46,7 +46,7 @@
   def update
     respond_to do |format|
       if @photo.send model_update_method, photo_params
-        format.html { redirect_to [@product, @photo], notice: 'Photo was successfully updated.' }
+        format.html { redirect_to @product, notice: 'Photo was successfully updated.' }
         format.json { render :show, status: :ok, location: @photo }
         format.js
       else
