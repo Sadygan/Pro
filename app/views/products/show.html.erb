@@ -28,7 +28,8 @@
 		<div class="row">
 			<% @photos.each do |i| %>
 				<div class="col-md-5 portfolio-item">
-				<%= image_tag i.img.url, class: "img-responsive" %>
+				<%= image_tag i.img.url(:medium), class: "img-responsive" %>
+				<%= link_to 'img', [@product, i] %>
 				</div>
 			<% end %>
 		</div>
@@ -39,7 +40,7 @@
 		<div class="row">
 			<% @size_images.each do |i| %>
 				<div class="col-md-5 portfolio-item">
-					<%= image_tag i.img.url, class: "img-responsive" %>
+					<%= image_tag i.img.url(:medium), class: "img-responsive" %>
 				</div>
 			<% end %>
 		</div>

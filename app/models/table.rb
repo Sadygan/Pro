@@ -72,7 +72,7 @@ class Table < ActiveRecord::Base
     if id.nil? || id == 0
       "/no_image/no_image.png"
     else
-      Asset.find(id).img.url
+      Asset.find(id).img.url(:medium)
     end
   end
 

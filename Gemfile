@@ -85,4 +85,5 @@ gem 'puma'
 
 gem "paperclip-dropbox", ">= 1.1.7"
 
+gem "papercrop"
 

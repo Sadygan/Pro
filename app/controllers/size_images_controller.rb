@@ -30,7 +30,7 @@ class SizeImagesController < ApplicationController
 
     respond_to do |format|
       if @size_image.save
-        format.html { redirect_to @product, notice: 'Size image was successfully created.' }
+        format.html { render 'crop' }
         format.json { render :show, status: :created, location: @size_image }
       else
         format.html { render :new }
@@ -43,8 +43,8 @@ class SizeImagesController < ApplicationController
   # PATCH/PUT /size_images/1.json
   def update
     respond_to do |format|
-      if @size_image.update(size_image_params)
-        format.html { redirect_to [@product, @size_image], notice: 'Size image was successfully updated.' }
+      if @size_image.send model_update_method, size_image_params
+        format.html { redirect_to @product, notice: 'Size image was successfully updated.' }
         format.json { render :show, status: :ok, location: @size_image }
       else
         format.html { render :edit }
@@ -63,6 +63,11 @@ class SizeImagesController < ApplicationController
     end
   end
 
+  # POST /size_images/1/crop
+  # POST /size_images/1/crop.json
+  def crop
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_size_image
@@ -71,7 +76,19 @@ class SizeImagesController < ApplicationController
 
     # Never trust parameters from the scary inteparams[:size_image]the white list through.
     def size_image_params
-      params.require(:size_image).permit(:type, :img, :product_id)
+      params.require(:size_image).permit(
+        :type, 
+        :img, 
+        :product_id, 
+        :img_original_w, 
+        :img_original_h, 
+        :img_box_w, 
+        :img_aspect, 
+        :img_crop_x, 
+        :img_crop_y, 
+        :img_crop_w, 
+        :img_crop_h
+      )
     end
 
     def check_role
@@ -85,5 +102,9 @@ class SizeImagesController < ApplicationController
 
     def set_product
       @product = Product.find(params[:product_id])
+    end
+
+    def model_update_method
+      Rails::VERSION::MAJOR == 4 ? :update : :update_attributes
     end
 end

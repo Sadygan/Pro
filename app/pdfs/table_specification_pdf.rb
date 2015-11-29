@@ -87,7 +87,7 @@ class TableSpecificationPdf < Prawn::Document
 		
 		if item.photo_id
 			current_photo = Photo.find(item.photo_id)
-			image_photo = open(current_photo.img.url)
+			image_photo = open(current_photo.img.url(:medium))
 
 		else
 			# image = "#{Rails.root}/public/no_image/no_image.png"

@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui/autocomplete
+//= require jquery.jcrop
+//= require papercrop
 //= require jquery-ui
 //= require autocomplete-rails
 //= require bootstrap-sprockets

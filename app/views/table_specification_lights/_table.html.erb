@@ -28,14 +28,14 @@
 	<tbody>
 		<% @table_specification_lights.each do |light| %>
 		<tr>
-	      	<td class="image"><div name="photo_select" id="photo_<%= light.id %>"><%= select("photo", light.product.article, options_for_select(light.photo_select(light.product.id).all.collect.with_index {|p, index| [index+1, p.id, name: p.img_file_name, article: p.product.article, path: p.img.url]}, light.photo_id)) %></div><div id="current_photo_<%= light.id %>"><%= image_tag light.image(light.photo_id) %></div> </td>
+	      	<td class="image"><div name="photo_select" id="photo_<%= light.id %>"><%= select("photo", light.product.article, options_for_select(light.photo_select(light.product.id).all.collect.with_index {|p, index| [index+1, p.id, name: p.img_file_name, article: p.product.article, path: p.img.url(:medium)]}, light.photo_id)) %></div><div id="current_photo_<%= light.id %>"><%= image_tag light.image(light.photo_id) %></div> </td>
 	      	<td class="brand" id="brand_<%= light.id %>"><%= light.product.factory.brand %></td>
             <td class="article"><%= light.product.article %></td>
           	<td class="model"><%= light.product.model %></td>
           	<td class="type_furniture"><%= light.product.type_furniture.name %></td>
           	<td class="finishing"><%= best_in_place [@project, @specification, light], :finishing %></td>
           	<td class="finishing_for_client"><%= best_in_place [@project, @specification, light], :finishing_for_client, type: :textarea %></td>
-          	<td class="size"><%= best_in_place [@project, @specification, light], :size, type: :textarea, :class => "size_v" %><div name="size_image_select" id="size_image_<%= light.id %>"><%= select("size_image", light.product.article, options_for_select(light.size_image_select(light.product.id).all.collect.with_index {|p, index| [index+1, p.id, name: p.img_file_name, article: p.product.article, path: p.img.url]}, light.size_image_id)) %></div><div id="current_size_image_<%= light.id %>"><%= image_tag light.image(light.size_image_id) %></div></td>
+          	<td class="size"><%= best_in_place [@project, @specification, light], :size, type: :textarea, :class => "size_v" %><div name="size_image_select" id="size_image_<%= light.id %>"><%= select("size_image", light.product.article, options_for_select(light.size_image_select(light.product.id).all.collect.with_index {|p, index| [index+1, p.id, name: p.img_file_name, article: p.product.article, path: p.img.url(:medium)]}, light.size_image_id)) %></div><div id="current_size_image_<%= light.id %>"><%= image_tag light.image(light.size_image_id) %></div></td>
           	<td class="unit_price_factory" id="unit_price_factory_<%= light.id %>" ><%= best_in_place [@project, @specification, light], :unit_price_factory, :sanitize => false, inner_class: :upf %></td>
           	<td class="summ_netto" id="summ_netto_<%= light.id %>"><%= light.summ_netto %></td>
             <td class="factor_light" id="factor_light_<%= light.id %>"><%= light.product.factory.light_factor %></td>
