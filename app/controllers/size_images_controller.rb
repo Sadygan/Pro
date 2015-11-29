@@ -58,7 +58,7 @@ class SizeImagesController < ApplicationController
   def destroy
     @size_image.destroy
     respond_to do |format|
-      format.html { redirect_to size_images_url, notice: 'Size image was successfully destroyed.' }
+      format.html { redirect_to @product, notice: 'Size image was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

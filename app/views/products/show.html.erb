@@ -28,8 +28,8 @@
 		<div class="row">
 			<% @photos.each do |i| %>
 				<div class="col-md-5 portfolio-item">
-				<%= image_tag i.img.url(:medium), class: "img-responsive" %>
-				<%= link_to 'img', [@product, i] %>
+					<%= image_tag i.img.url(:medium), class: "img-responsive" %>
+					<%= link_to 'X', product_photo_path(@product, i.id), method: :delete, data: {confirm: "Delete photo?"}, :class => 'btn btn-sm btn-danger' %>
 				</div>
 			<% end %>
 		</div>
@@ -41,6 +41,7 @@
 			<% @size_images.each do |i| %>
 				<div class="col-md-5 portfolio-item">
 					<%= image_tag i.img.url(:medium), class: "img-responsive" %>
+					<%= link_to 'X', product_size_image_path(@product, i.id), method: :delete, data: {confirm: "Delete size image?"}, :class => 'btn btn-sm btn-danger' %>
 				</div>
 			<% end %>
 		</div>

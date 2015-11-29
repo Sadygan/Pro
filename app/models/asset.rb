@@ -45,4 +45,5 @@ class Asset < ActiveRecord::Base
 	def img_url
       img.url(:medium)
  	end
+
 end
