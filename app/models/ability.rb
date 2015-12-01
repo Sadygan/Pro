@@ -87,6 +87,10 @@ class Ability
         can :create, City
         can :update, City
 
+        can :read, Style
+        can :create, Style
+        can :update, Style
+
         can :read, TypeFurniture
         can :create, TypeFurniture
         can :update, TypeFurniture
