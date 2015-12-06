@@ -15,7 +15,7 @@ class TableSpecificationsController < ApplicationController
     authorize! :show, @project
     @table_specifications = @specification.table_specifications.all
 
-      respond_to do |format|
+    respond_to do |format|
         format.json
         format.html
         format.pdf do 
@@ -24,6 +24,14 @@ class TableSpecificationsController < ApplicationController
                                 type: "application/pdf",
                                 disposition: "inline"
       end
+    end
+  end
+
+  def update_products
+    @products = Product.where("factory_id = ?", params[:factory_id])
+    respond_to do |format|
+      format.json { render :show, status: :created, location: @table_specification }
+      format.js
     end
   end
 
@@ -36,6 +44,9 @@ class TableSpecificationsController < ApplicationController
   # GET /table_specifications/new
   def new
     @table_specification = TableSpecification.new 
+    @factories = Factory.all
+    @products = Product.where("factory_id = ?", Factory.first.id)
+
   end
 
   # GET /table_specifications/1/edit
