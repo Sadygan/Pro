@@ -87,3 +87,6 @@ gem "paperclip-dropbox", ">= 1.1.7"
 
 gem "papercrop"
 
+gem 'chosen-rails'
+
+gem "compass-rails", github: "Compass/compass-rails", branch: "master"

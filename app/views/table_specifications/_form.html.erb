@@ -1,22 +1,118 @@
 <%= form_for([@project, @specification, @table_specification]) do |f| %>
-  <% if @table_specification.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@table_specification.errors.count, "error") %> prohibited this table_specification from being saved:</h2>
+  <div id="webtable">
+    <table width="100%">
+      <thead>
+        <tr>
+          <th>Изображение</th>
+          <th>Фабрика</th>
+          <th>Модель</th>
+          <th>Артикул</th>
+          <th>Отделка</th>
+          <th>Описание</th>
+          <th>Размер</th>
+          <th>Кол-во</th>
+          <th>Цена фаб-ки</th>
+          <th>Сумма фаб-ки</th>
+          <th>Интерес</th>
+          <th>Цена, &euro;</th>
+          <th>Сумма, &euro;</th>
+          <th>V</th>
+          <th>Архитектор</th>
+        </tr>
+      </thead>
+		<tbody>	
+			<%= fields_for (@product) do |u| %>
+			<tr>
 
-      <ul>
-      <% @table_specification.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-    
-   <%= f.select :factory_id, options_for_select(@factories.collect { |country|
-    [country.brand.titleize, country.id] }, 1), {}, { id: 'factories_select' } %>
-  <%= f.select :product_id, options_for_select(@products.collect { |product|
-    [product.model.titleize, product.id] }, 0), {}, { id: 'products_select' } %>
+				<td>
+				<%= u.select :factory_id,
+                	@factories.map { |o| [o.brand, o.id] },
+                	{ include_blank: true },
+                	{ id: 'factories_select',
+                	class: 'chosen-select' }
+    			%>
+    			
+    			<br>
+				<a href="#">50%</a></td>
+				
+				<td>
+				<%= u.select :model,
+	                @products.map { |o| [o.model, o.id] },
+	                { include_blank: true },
+	                { id: 'products_select',
+	                class: 'chosen-select' }
+    			%>
+    			</td>
+				
+				<td>
+				<%= u.select :article,
+	                @products.map { |o| [o.article, o.id] },
+	                { include_blank: true },
+	                { id: 'articles_select',
+	                class: 'chosen-select' }
+    			%>
+				</td>
+				
+				<td>
+				<%= u.select :type_furniture_id,
+	                @type_furnitures.map { |o| [o.name, o.id] },
+	                { include_blank: true },
+	                { id: 'type_furnitures_select',
+	                class: 'chosen-select' }
+			    %>
+			    </td>
+				<% end %>
+				
+
+			</tr>
+		</tbody>
+    </table>
 
 
+      <th class="photos"><div id="photos"></div><div id="current_img"></div><%= f.hidden_field :photo_id, id: :"photo_id" %></br></th>  
+      <th class="brand" id="brand"></th>
+      <th class="article"><%= f.autocomplete_field :product_id, autocomplete_product_article_project_specification_table_specifications_path, :id_element => '#product_id', :size => 75, :"data-autocomplete-label" => "Sorry, nothing found." %><%= f.hidden_field :product_id, id: :"product_id" %></th>
+      <th class="model" id="model"></th>
+      <th class="type_furniture" id="type_furniture"></th>
+      <th class="finishing"><%= f.text_field :finishing %></th>
+      <th class="finishing_for_client"><%= f.text_area :finishing_for_client %></th>
+      <th class="size size_images" colspan="4"><div id="size_images"></div><div id="current_size_img"></div><%= f.text_area :size %><%= f.hidden_field :size_image_id, id: :"size_image_id" %></th>
+      <th class="unit_price_factory"><%= f.number_field :unit_price_factory, value: 0, step: 0.1 %></th>
+      <th class="discount" id="discount"></th>
+      <th class="additional_discount" id="additional_discount"></th>
+      <th class="increment_discount"><%= f.number_field :increment_discount, value: 0 %></th>
+      <th class="unit_price_netto" id="unit_price_netto"></th>
+      <th class="summ_netto" id="sn"></th>
+      <th class="unit_v" id="unit_v"><%= f.number_field :unit_v, value: 0, step: 0.1 %></th>
+      <th class="summ_v" id="sv"></th>
+      <th class="factor" id="factor"></th>
+      <th class="unit_price" id="up"></th>
+      <th class="summ" id="summ"></th>
+      <th class="number_of"><%= f.number_field :number_of, value: 1 %></th>
+      <th class="at_nil price_from_nil" id="at_nil"></th>
+      <th class="interest_percent"><%= f.number_field :interest_percent, value: 30 %></th>
+      <th class="with_interest" id="with_interest"></th>
+      <th class="interest" id="interest"></th>
+      <th class="architector_percent"><%= f.number_field :arhitec_percent, value: 50 %></th>
+      <th class="architector" id="architector"></th>
+      <th class="architector_percent_from_order" id="architector_percent"></th>
+      <th class="delivery"><%= f.collection_select :delivery_id, Delivery.order(:direction), :id, :direction, {include_blank: false}, {class: :"form-control"} %></th>
+      <th class="additional_delivery"><%= f.number_field :additional_delivery, value: 0 %></th>
+      <th class="group"><%= f.number_field :group %></th>
+      <th class="destroy"><%= %></th>
+    </tr>
+    <tr>
+          <th id="link_product" colspan="2"></th>
+          <th id="err_article"></th>
+          <th colspan="4"></th>
+          <th class="box_v"><%= f.number_field :width, value: 0, :step => 0.01 %></th>
+          <th class="box_v"><%= f.number_field :height, value: 0, :step => 0.01 %></th>
+          <th class="box_v"><%= f.number_field :depth, value: 0, :step => 0.01 %></th>
+          <th class="box_v"><%= f.number_field :percent_v, value: 10 %></th>
+          <th style="display:none"><%= f.number_field :discount_id %></th>
+          <th colspan="23"><div id="hidden_discount"><%= f.hidden_field :discount_id, id: :"discount_id" %></div></th>
+    </tr>
+  </table>
   <div id="article_id">1</div>
   <div class="actions">
     <%= f.submit :value => t('table.add_to') %>

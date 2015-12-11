@@ -1,494 +1,85 @@
-// Place all the styles related to the table_specifications controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-.container-fluid {
-  padding-left: 0px !important;
-  padding-right: 0px !important;
+table_specifications.scss
+#webtable {
+	width:100%;
 }
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+table {
+	border-collapse: collapse;
 }
-
-table#assets, table#table_specification_light_form, #project, .new_table_specification {
-	  width: 171% !important;
-	  max-width: 200% !important;
-	  margin-bottom: 20px;
-	font-size: 11px;
-	min-height: 40px;
-
-	textarea, input[type="text"], input[type="number"], select {
-		border-radius: 0px;
-		padding: 0px;
-		margin-bottom: 0px;
-		resize:vertical;
-		height: 22px;
-	}
-		
-	textarea:focus, input[type="text"]:focus, input[type="number"]:focus {
-		border-color: gray;
-		outline: thin dotted \9;
-		-webkit-box-shadow: none;
-		-moz-box-shadow: none;
-		box-shadow: none;
-	}
-	td, th {
-		padding: 2px !important;
-	}
-
-	th {
-		word-break: break-word;
-	}
-	.box_v {
-		width: 30px;
-	}
-	.box_v > input {
-		width: 28px;
-	}
-	.photos, .image {
-		max-width: 157px;
-		width: 157px;
-		padding: 8px 4px 0 4px;
-		
-		img {
-			width: 152px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}			
-	}
-
-	.factor {
-		max-width: 70px;
-		width: 70px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 70px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}			
-	}
-
-	.brand {
-		max-width: 100px;
-		width: 100px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 65px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}			
-	}
-
-	.article {
-		max-width: 100px;
-		width: 100px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 95px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}			
-	}
-
-	.model {
-		max-width: 100px;
-		width: 100px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 95px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}			
-	}
-
-	.type_furniture {
-		max-width: 140px;
-		width: 140px;
-		padding: 8px 4px 0 4px;
-		
-		textarea {
-			width: 135px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}
-
-	}
-	.finishing {
-		max-width: 60px;
-		width: 60px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 55px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-	.finishing_for_client {
-		max-width: 135px;
-		width: 135px;
-		padding: 8px 4px 0 4px;
-		
-		textarea {
-			width: 130px;
-
-		}
-		
-		tr {
-			min-height: 50px;
-		}
-	}
-	.size {
-		max-width: 135px;
-		width: 135px;
-		padding: 8px 4px 0 4px;
-		
-		textarea {
-			width: 130px;
-
-		}
-		
-		tr {
-			min-height: 50px;
-		}
-
-		img {
-			width: 132px;
-		}
-	}
-	.unit_price_factory {
-		max-width: 90px;
-		width: 90px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 85px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-	.unit_price_factory_input {
-		max-width: 60px;
-		width: 60px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 55px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-	.discount {
-		max-width: 45px;
-		width: 45px;
-		padding: 8px 4px 0 4px;
-		
-		select {
-			width: 40px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}	
-	.increment_discount {
-		max-width: 40px;
-		width: 40px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 	35px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-	.additional_discount {
-		max-width: 40px;
-		width: 40px;
-		padding: 8px 4px 0 4px;
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-	.unit_price_netto {
-		max-width: 57px;
-		width: 57px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 57px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-	.summ_netto {
-		max-width: 60px;
-		width: 60px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 60px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-	.unit_v {
-		max-width: 42px;
-		width: 42px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 37px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-	.summ_v {
-		max-width: 50px;
-		width: 50px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 50px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-	.factor {
-		max-width: 42px;
-		width: 42px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 37px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-	.unit_price {
-		max-width: 60px;
-		width: 60px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 60px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}	
-	.unit_with_interest {
-		max-width: 80px;
-		width: 80px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 60px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-	.number_of {
-		max-width: 42px;
-		width: 42px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 37px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-	.summ {
-		max-width: 80px;
-		width: 80px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 80px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-	.price_from_nil {
-		max-width: 80px;
-		width: 80px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 80px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-	
-	.interest_percent {
-		max-width: 65px;
-		width: 65px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 50px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-	.with_interest, .with_interest_ {
-		max-width: 80px;
-		width: 80px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 45px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}	
-	.interest {
-		max-width: 80px;
-		width: 80px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 45px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}	
-	.architector {
-		max-width: 80px;
-		width: 80px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 45px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-	.architector_percent {
-		max-width: 50px;
-		width: 50px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 45px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}	
-	.architector_percent_from_order {
-		max-width: 50px;
-		width: 50px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 45px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}	
-	.delivery {
-		max-width: 130px;
-		width: 130px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 45px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}	
-	.additional_delivery {
-		max-width: 50px;
-		width: 50px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 45px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}	
-	.group {
-		max-width: 40px;
-		width: 40px;
-		padding: 8px 4px 0 4px;
-		
-		input {
-			width: 35px;
-		}
-		
-		tr {
-			min-height: 50px;
-		}		
-	}
-
-	.destroy {
-		max-width: 10px;
-		width: 10px;
-		padding: 8px 4px 0 4px;
-	}
+td,th,input[type=text],textarea{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight:bold;
+	color:#000;
+}
+td,th {
+	border:1px solid black;
+	text-align:center;
+	vertical-align:middle;
+	padding:5px;
+}
+input[type=text],textarea {
+	box-sizing:border-box;
+	border:none;
+	width:100%;
+	text-align:center;
+} 
+textarea {
+	vertical-align:middle;
+	resize:none;
+	height:85px;
+}
+a:link,a:visited,a:hover,a:active {
+	color:#000 !important;
+	text-decoration:underline;
+}
+a:hover {
+	text-decoration:none;
+}
+thead.tableFloatingHeaderOriginal {
+	background-color: #FFF;
+}
+.chosen-container-single .chosen-single {
+	background:none;
+	border:0;
+	box-shadow:none;
+	color:#000;
+	padding:0;
+	text-align:center;
+}
+.chosen-container-single .chosen-single div {
+	display:none;
+}
+.chosen-container-single .chosen-single span {
+	margin-right:0;
+}
+/* .modal {
+	position: absolute;
+	//display:none;
+} */
+#modalv .modal-dialog,#modalpict .modal-dialog {
+	width:400px;
+}
+.modal-body {
+	text-align:center;
+}
+#modalv .col-sm-3{
+	padding:0;
+}
+#modalv input {
+	border:1px solid black;
+	width:50px;
+	height:50px;
+}
+#modalv .name {
+	margin-bottom:10px;
+}
+#modalv button {
+	margin-bottom:15px;
+	margin-left:25px;
+}
+#modalpict a{
+	margin-right:40px;
+}
+#modalpict a:last-child{
+	margin-right:0;
 }

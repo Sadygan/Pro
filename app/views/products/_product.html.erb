@@ -1,1 +1,9 @@
-<option value="<%= product.id %>"><%= product.model.titleize %></option>
+<tr id="product_<%= product.id %>">
+  <td><%= link_to product.article, product %></td>
+  <td><%= product.type_furniture.name %></td>
+  <td><%= product.model %></td>
+  <td><%= product.factory_brand %></td>
+  <td><%= product.price %></td>
+  <td><%= link_to 'Edit', edit_product_path(product), remote: true, class: 'btn btn-sm btn-info' %></td>
+  <td><%= link_to t('delete'), product, remote: true, :method => :delete, data: {confirm: "Delete Customer: #{product.article}"}, :class => 'btn btn-sm btn-danger' %></td>
+</tr>

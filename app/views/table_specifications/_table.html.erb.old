@@ -1,0 +1,148 @@
+<table class="table table-bordered table-striped" id="assets">
+    <thead>
+      <tr>
+        <th class="photos"><%= t('table.image') %></th>
+        <th class="brand"><%= t('table.brand') %></th>
+        <th class="article"><%= t('table.article') %></th>
+        <th class="model"><%= t('table.model') %></th>
+        <th class="type_furniture"><%= t('table.type_furniture') %></th>
+        <th class="finishing"><%= t('table.finishing') %></th>
+        <th class="finishing_for_client"><%= t('table.finishing_for_client') %></th>
+        <th class="size" colspan="4"><%= t('table.size') %></th>
+        <th class="unit_price_factory"><%= t('table.unit_price_factory') %></th>
+        <th class="discount"><%= t('table.discount') %></th>
+        <th class="additional_discount">-%</th>
+        <th class="increment_discount"><%= t('table.increment_discount') %></th>
+        <th class="unit_price_netto"><%= t('table.unit_price_netto') %></th>
+        <th class="summ_netto"><%= t('table.summ_netto') %></th>
+        <th class="unit_v"><%= t('table.unit_v') %></th>
+        <th class="summ_v"><%= t('table.summ_v') %></th>
+        <th class="factor"><%= t('table.factor') %></th>
+        <th class="unit_price"><%= t('table.unit_price') %></th>
+        <th class="summ"><%= t('table.summ') %></th>
+        <th class="number_of"><%= t('table.number_of') %></th>
+        <th class="price_from_nil"><%= t('table.price_from_nil') %></th>
+        <th class="interest_percent"><%= t('table.interest_percent') %></th>
+        <th class="with_interest"><%= t('table.with_interest') %></th>
+        <th class="interest"><%= t('table.interest') %></th>
+        <th class="architector_percent"><%= t('table.architector_percent') %></th>
+        <th class="architector"><%= t('table.architector') %></th>
+        <th class="architector_percent_from_order"><%= t('table.architector_percent_from_order') %></th>
+        <th class="delivery"><%= t('table.delivery') %></th>
+        <th class="additional_delivery"><%= t('table.additional_delivery') %></th>
+        <th class="group"><%= t('table.group') %></th>
+        <th class="destroy"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% i = 0 %>
+      <% @specification.table_specifications.each do |table_specification| %>
+        <tr >
+          <td class="image"><div name="photo_select" id="photo_<%= table_specification.id %>"><%= select("photo", table_specification.product.article, options_for_select(table_specification.photo_select(table_specification.product.id).all.collect.with_index {|p, index| [index+1, p.id, name: p.img_file_name, article: p.product.article, path: p.img.url(:medium)]}, table_specification.photo_id)) %></div><div id="current_photo_<%= table_specification.id %>"><%= image_tag table_specification.image(table_specification.photo_id) %></div>
+          </td>
+          <td class="brand" id="brand_<%= table_specification.id %>"><%= table_specification.product.factory.brand %></td>
+          <td class="article"><%= table_specification.product.article %></td>
+          <td class="model"><%= table_specification.product.model %></td>
+          <td class="type_furniture"><%= table_specification.product.type_furniture.name %></td>
+          <td class="finishing"><%= best_in_place [@project, @specification, table_specification], :finishing %></td>
+          <td class="finishing_for_client"><%= best_in_place [@project, @specification, table_specification], :finishing_for_client, type: :textarea %></td>
+          <td class="size" colspan="4"><%= best_in_place [@project, @specification, table_specification], :size, type: :textarea, :class => "size_v" %><div name="size_image_select" id="size_image_<%= table_specification.id %>"><%= select("size_image", table_specification.product.article, options_for_select(table_specification.size_image_select(table_specification.product.id).all.collect.with_index {|p, index| [index+1, p.id, name: p.img_file_name, article: p.product.article, path: p.img.url(:medium)]}, table_specification.size_image_id)) %></div><div id="current_size_image_<%= table_specification.id %>"><%= image_tag table_specification.image(table_specification.size_image_id) %></div>  
+          </td>
+          <td class="unit_price_factory" id="unit_price_factory_<%= table_specification.id %>"><%= best_in_place [@project, @specification, table_specification], :unit_price_factory, :sanitize => false, inner_class: :upf, :html_attrs => table_specification.group %></td>
+          <td calss="discount"><div name="discount_select" id="discount_<%= table_specification.id %>"><%= select("discount", table_specification.id, options_for_select(table_specification.product.factory.discounts.all.collect {|p| [p.percent, p.id, discount_id: p.id]}, table_specification.discount_id))%></div></td>
+          <td class="additional_discount" id="additional_discount_<%= table_specification.id %>"><%= table_specification.product.factory.additional_discount %></td>
+          <td class="increment_discount"><%= best_in_place [@project, @specification, table_specification], :increment_discount %></td>
+          <td class="unit_price_netto"><span id="unit_price_netto_<%= table_specification.id %>" data-html-attrs="<%= table_specification.group %>"><%= table_specification.upn %></span></td>
+          <td class="summ_netto"><span id="summ_netto_<%= table_specification.id %>" data-html-attrs="<%= table_specification.group %>"><%= table_specification.summ_netto %></span></td>
+          
+          <% if table_specification.width != 0 && table_specification.height !=0 && table_specification.depth !=0 && table_specification.percent_v !=0 %>
+          <td class="uv_n" id="uv_<%= table_specification.id %>"><span class="unitv" id="best_in_place_table_specification_<%= table_specification.id %>_unit_v"><%= table_specification.calculatingSize %></span>
+          <% else %>
+          <td class="unitv" id="unit_v_<%= table_specification.id %>" data-html-attrs="<%= table_specification.group %>"> <%= best_in_place [@project, @specification, table_specification], :unit_v, :html_attrs => table_specification.group %></td>
+          </td>
+          <% end %>
+          <td class="summ_v"><span id="summ_v_<%= table_specification.id %>" data-html-attrs="<%= table_specification.group %>"><%=table_specification.v_sum %></span></td>
+        
+          <% if table_specification.group.nil? %>
+          <td class="factor"><span id="factor_<%= table_specification.id %>"><%= table_specification.factor%></span></td>
+          <td class="unit_price" id="unit_price_<%= table_specification.id %>"><%= table_specification.unit_price %></td>
+          <td class="summa"><span data-html-attrs="0" id="summ_<%= table_specification.id %>"x><%= table_specification.with_interest %></span></td>
+          <% else %>
+          <td class="factor"><span id="group_factor_<%= table_specification.id %>"><%= table_specification.groupDataSum(table_specification.group, "factor") %></span></td>
+          <td class="unit_price" id="group_unit_price_with_interest_<%= table_specification.id %>"><%= table_specification.groupDataSum(table_specification.group, "gp_unit_sum") %></td>
+          <td class="unit_price" id="group_sum_price_with_interest_<%= table_specification.id %>"><%= table_specification.groupDataSum(table_specification.group, "gp_sum_number") %></td>
+          <% end %>
+          <td class="number_of"><span class="number_of" id="_<%= table_specification.id %>"><%= best_in_place [@project, @specification, table_specification], :number_of, :html_attrs => table_specification.group %></span></td>
+          <% if table_specification.group.nil? || table_specification.add_row(@specification)[table_specification.group] == 1%>
+          <td class="price_from_nil" id="at_nil_<%= table_specification.id %>"><%= table_specification.price_from_nil%></td>
+          <td class="interest_percent" id=""><%= best_in_place [@project, @specification, table_specification], :interest_percent %></td>
+          <td class="with_interest" id="with_interest_<%= table_specification.id %>"><%= table_specification.with_interest %></td>
+          <td class="interest" id="interest_<%= table_specification.id %>"><%= table_specification.interest %></td>
+          <td class="architector_percent" id=""><%= best_in_place [@project, @specification, table_specification], :arhitec_percent %></td>
+          <td class="architector" id="architector_<%= table_specification.id %>"><%= table_specification.architector_interest %></td>
+          <td class="architector_percent_from_order" id="architector_percent_from_order_<%= table_specification.id %>"><%= table_specification.architector_percent_from_order %></td>
+          <td class="delivery"><div name="delivery_select" id="delivery_select_<%= table_specification.id %>"><%= select("delivery", table_specification.id, options_for_select(Delivery.all.collect {|p| [p.direction, p.id]}, table_specification.delivery_id))%></td>
+          <td class="additional_delivery" id=""><%= best_in_place [@project, @specification, table_specification], :additional_delivery %></td>
+        <% end %>
+        <% if table_specification.add_row(@specification)[table_specification.group] > 1 %>
+          <td colspan="9"><%= table_specification.group.to_i %></td>
+        <% else %>
+        <% end %>
+          <td class="group" id=""><%= best_in_place [@project, @specification, table_specification], :group, :html_attrs => table_specification.group %></td>
+          <td class="destroy"><%= link_to 'x', [@project, @specification, table_specification], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+        <tr>
+          <th colspan="7"><span id="clone_unit_v_<%= table_specification.id %>"><%= table_specification.unit_v %></span></th>
+          <th class="box_v"><%= best_in_place [@project, @specification, table_specification], :width, :html_attrs => table_specification.group %></th>
+          <th class="box_v"><%= best_in_place [@project, @specification, table_specification], :height, :html_attrs => table_specification.group, :html_attrs => table_specification.group %></th>
+          <th class="box_v"><%= best_in_place [@project, @specification, table_specification], :depth, :html_attrs => table_specification.group %></th>
+          <th class="box_v"><%= best_in_place [@project, @specification, table_specification], :percent_v, :html_attrs => table_specification.group %></th>
+          <th style="display:none"></th>
+          <th colspan="23"></th>
+        </tr>
+        <% unless table_specification.group.nil? %>
+        <% i = i + 1 %>
+          <% if table_specification.add_row(@specification)[table_specification.group] > 1 %>
+            <% if table_specification.add_row(@specification)[table_specification.group] == i %>
+              <% i = 0 %>
+              <tr style="background-color: yellow">
+                <!-- if tb -->
+                <th colspan="10"></th>
+                <th class="unit_price_factory" id="group_sum_factory_<%= table_specification.group %>"><%= table_specification.group_sum(table_specification.group) %></th>
+                <th class="percent_group" colspan="3">-</th>
+                <th id="group_unit_netto_<%= table_specification.group %>"><%= table_specification.groupDataSum(table_specification.group, "netto") %></th>
+                <th id="group_sum_netto_<%= table_specification.group %>"><%= table_specification.groupDataSum(table_specification.group, "sum_netto")%></th>
+                <th id="group_sum_v_<%= table_specification.group %>"><%= table_specification.groupDataSum(table_specification.group, "sum_v") %></th>
+                <th id="group_factor_<%= table_specification.group %>"><%= table_specification.groupDataSum(table_specification.group, "factor") %></th>
+                <th id="group_number_of_<%= table_specification.group %>"><%= table_specification.groupDataSum(table_specification.group, "number_of") %></th>
+                <th id="group_from_nil_sum_<%= table_specification.group %>"><%= table_specification.groupDataSum(table_specification.group, "from_nil_sum") %></th>
+                <th class="sum_group"><span id="group_summa_<%= table_specification.group %>" data-html-attrs="<%= table_specification.group %>"><%= table_specification.groupDataSum(table_specification.group, "sum") %></th>
+                <th ></th>
+                <th id="interest_percent_group"><%= best_in_place [@project, @specification, table_specification], :interest_percent, :html_attrs => table_specification.group%></th>
+                <th id="group_with_interest_<%= table_specification.group %>"><%= table_specification.groupDataSum(table_specification.group, "with_interest") %></th>
+                <th id="group_interest_<%= table_specification.group %>"><%= table_specification.groupDataSum(table_specification.group, "interest") %></th>
+                <th id="arhitec_percent_group"><%= best_in_place [@project, @specification, table_specification], :arhitec_percent, :html_attrs => table_specification.group %></th>
+                <th id="group_architector_<%= table_specification.group %>"><%= table_specification.groupDataSum(table_specification.group, "architector_interest") %></th>
+                <th id="group_architector_interest_from_order_<%= table_specification.group %>"><%= table_specification.groupDataSum(table_specification.group, "architector_interest_from_order") %></th>
+                <th id="group_delivery_<%= table_specification.group %>"><div name="delivery_select" id="delivery_select_<%= table_specification.id %>" data-html-attrs="<%= table_specification.group %>" ><%= select("delivery", table_specification.id, options_for_select(Delivery.all.collect {|p| [p.direction, p.id]}, table_specification.delivery_id))%></div></th>
+                <th id="additional_delivery_group"><%= best_in_place [@project, @specification, table_specification], :additional_delivery, :html_attrs => table_specification.group %></th>
+                <th >-</th>
+                <th >-</th>
+            <% end %>
+          <% end %>
+        <% end %>
+        </tr>
+
+      <% end %>
+        <tr>
+          <th colspan="20"></th>
+          <th id="sum_specification"><%= TableSpecification::specification_sum_all(@specification) %></th>
+          <th colspan="12"></th>
+        </tr>
+    </tbody>
+  </table>
+<div class="project_id" id="<%= @specification.id %>"><%= @project.id %></div>
+<div class="specification_id" id="<%= @specification.id %>"><%= @specification.id %></div>
+
+

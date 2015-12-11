@@ -1,0 +1,72 @@
+<%= form_for([@project, @specification, @table_specification]) do |f| %>
+  <% if @table_specification.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@table_specification.errors.count, "error") %> prohibited this table_specification from being saved:</h2>
+
+      <ul>
+      <% @table_specification.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div id="webtable">
+    <table width="100%">
+      <thead>
+        <tr>
+          <th>Изображение</th>
+          <th>Артикул</th>
+          <th>Фабрика</th>
+          <th>Модель</th>
+          <th>Отделка</th>
+          <th>Описание</th>
+          <th>Размер</th>
+          <th>Кол-во</th>
+          <th>Цена фаб-ки</th>
+          <th>Сумма фаб-ки</th>
+          <th>Интерес</th>
+          <th>Цена, &euro;</th>
+          <th>Сумма, &euro;</th>
+          <th>V</th>
+          <th>Архитектор</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+    <%= f.select :factory_id,
+                 @factories.map { |u| [u.brand, u.id] },
+                 { include_blank: true },
+                 { id: 'factories_select',
+                  class: 'chosen-select' }
+    %>
+    <%= f.select :product_id,
+                 @products.map { |u| [u.model, u.id] },
+                 { include_blank: true },
+                 { id: 'products_select',
+                  class: 'chosen-select' }
+    %>
+    <%= f.select :product_id,
+                 @products.map { |u| [u.article, u.id] },
+                 { include_blank: true },
+                 { id: 'articles_select',
+                  class: 'chosen-select' }
+    %>
+    <%= f.select :product_id,
+                 @type_furnitures.map { |u| [u.name, u.id] },
+                 { include_blank: true },
+                 { id: 'type_furnitures_select',
+                  class: 'chosen-select' }
+    %>
+  <%= f.fields_for(@product) do |u| %>
+  <% end %>
+    
+    
+
+
+  <div id="article_id">1</div>
+  <div class="actions">
+    <%= f.submit :value => t('table.add_to') %>
+  </div>
+<% end %>

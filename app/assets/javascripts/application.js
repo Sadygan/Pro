@@ -27,6 +27,7 @@
 //= require turbolinks
 //= require bootstrap
 //= require nested_form_fields
+//= require chosen-jquery
 //= require_directory .
 
 $.datepicker.setDefaults({

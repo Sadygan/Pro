@@ -1,19 +1,22 @@
 class TableSpecification < Table
   # include ActiveModel::Validations
-  
+  # has_many :products
+  # accepts_nested_attributes_for :products
+
   default_scope { order(:group => :ASC) }
 
-  validates_presence_of :product
-  validates :unit_price_factory, presence: true, numericality: true, on: :update
-  validates :increment_discount, presence: true, numericality: true, on: :update
-  validates :unit_v, numericality: true
-  validates :width, numericality: true
-  validates :height, numericality: true
-  validates :depth, numericality: true
-  validates :number_of, presence: true, numericality: { only_integer: true }
-  validates :interest_percent, presence: true, numericality: { only_integer: true }
-  validates :arhitec_percent, presence: true, numericality: { only_integer: true }
-  validates :additional_delivery, presence: true, numericality: true
+    # validates_presence_of :product
+    # validates :unit_price_factory, presence: true, numericality: true, on: :update
+    # validates :increment_discount, presence: true, numericality: true, on: :update
+    # validates :unit_v, numericality: true
+    # validates :width, numericality: true
+    # validates :height, numericality: true
+    # validates :depth, numericality: true
+    # validates :number_of, presence: true, numericality: { only_integer: true }
+    # validates :interest_percent, presence: true, numericality: { only_integer: true }
+    # validates :arhitec_percent, presence: true, numericality: { only_integer: true }
+    # validates :additional_delivery, presence: true, numericality: true
+  
   # validates :group, numericality: { only_integer: true }
   
   before_save :default_values
@@ -22,6 +25,13 @@ class TableSpecification < Table
     self.width ||= 0
     self.height ||= 0
     self.depth ||= 0
+    
+    self.unit_price_factory ||= 0
+    self.increment_discount ||= 0
+    self.number_of ||= 0
+    self.interest_percent ||= 0
+    self.arhitec_percent ||= 0
+    self.additional_delivery ||= 0
   end
 
   # def initialize

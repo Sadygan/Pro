@@ -6,7 +6,6 @@ class Table < ActiveRecord::Base
   belongs_to :product
   belongs_to :photo
 
-
  def add_row specification
     # ar = specification.table_specifications.pluck(:group)
     ar = TableSpecification.where(specification_id: specification).pluck(:group)

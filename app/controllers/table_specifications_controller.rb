@@ -30,7 +30,14 @@ class TableSpecificationsController < ApplicationController
   def update_products
     @products = Product.where("factory_id = ?", params[:factory_id])
     respond_to do |format|
-      format.json { render :show, status: :created, location: @table_specification }
+      format.js
+    end
+  end
+
+  def update_articles
+    @product_articles = Product.where(model: params[:model])
+
+    respond_to do |format|
       format.js
     end
   end
@@ -44,8 +51,12 @@ class TableSpecificationsController < ApplicationController
   # GET /table_specifications/new
   def new
     @table_specification = TableSpecification.new 
+    # @table_specification.products.build
+    @product = Product.new
     @factories = Factory.all
+    @type_furnitures = TypeFurniture.all
     @products = Product.where("factory_id = ?", Factory.first.id)
+    @product_articles = Product.where("id = ?", Product.first.id)
 
   end
 
@@ -59,11 +70,12 @@ class TableSpecificationsController < ApplicationController
   # POST /table_specifications.json
   def create
     @table_specification = @specification.table_specifications.create(table_specification_params)
-
     @table_specifications = @specification.table_specifications.all
 
+    @product = Product.create(product_params)
     respond_to do |format|
       if @table_specification.save
+        @product.save
         format.html { redirect_to project_specification_table_specifications_path, notice: 'Table specification was successfully created.' }
         format.json { render :show, status: :created, location: @table_specification }
         format.js
@@ -121,6 +133,10 @@ class TableSpecificationsController < ApplicationController
       end
     end
 
+    def product_params
+      params.require(:product).permit(:article, :price, :factory_id, :type_furniture_id, :factory_brand, :type_furniture_name, :model)
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def table_specification_params
       if params[:table_specification].is_a? String
@@ -155,7 +171,8 @@ class TableSpecificationsController < ApplicationController
           :factory_discount,
           :photo_id,
           :size_image_id,
-          :product_id)
+          :product_id
+          )
       end
     end
 end
