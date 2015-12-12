@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123112816) do
+ActiveRecord::Schema.define(version: 20151211143301) do
 
   create_table "assets", force: :cascade do |t|
     t.string   "type"
@@ -25,6 +25,15 @@ ActiveRecord::Schema.define(version: 20151123112816) do
   end
 
   add_index "assets", ["product_id"], name: "index_assets_on_product_id"
+
+  create_table "brand_models", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "factory_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "brand_models", ["factory_id"], name: "index_brand_models_on_factory_id"
 
   create_table "cities", force: :cascade do |t|
     t.string   "name"
@@ -99,13 +108,14 @@ ActiveRecord::Schema.define(version: 20151123112816) do
     t.float    "price"
     t.integer  "factory_id"
     t.integer  "type_furniture_id"
+    t.integer  "brand_model_id"
     t.string   "factory_brand"
     t.string   "type_furniture_name"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
-    t.string   "model"
   end
 
+  add_index "products", ["brand_model_id"], name: "index_products_on_brand_model_id"
   add_index "products", ["factory_id"], name: "index_products_on_factory_id"
   add_index "products", ["type_furniture_id"], name: "index_products_on_type_furniture_id"
 

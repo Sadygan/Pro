@@ -1,5 +1,5 @@
 $("#articles_select").empty()
-  .append("<%= escape_javascript(render(partial: 'product', collection: @product_articles, layout: 'article')) %>")
+  .append("<%= escape_javascript(render(partial: 'product', collection: @products, layout: 'product')) %>")
 
 usedNames = {}
 $('#articles_select > option').each ->

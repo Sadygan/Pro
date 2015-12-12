@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :brand_models
   get 'main_page/index'
 
   resources :light_factories do
@@ -39,7 +40,7 @@ Rails.application.routes.draw do
         get "edit_image", :edit
         get :autocomplete_product_article, :on => :collection
         get '/photos/:id', to: 'photos#show', as: 'photos'
-        get 'update_products', as: 'update_products'
+        get 'update_brand_models', as: 'update_brand_models'
         get 'update_articles', as: 'update_articles'
       end
       resources :table_specification_lights do

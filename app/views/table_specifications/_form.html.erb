@@ -21,7 +21,7 @@
         </tr>
       </thead>
 		<tbody>	
-			<%= fields_for (@product) do |u| %>
+			<%= form_for(@brand_model) do |u| %>
 			<tr>
 
 				<td>
@@ -36,36 +36,38 @@
 				<a href="#">50%</a></td>
 				
 				<td>
-				<%= u.select :model,
-	                @products.map { |o| [o.model, o.id] },
-	                { include_blank: true },
-	                { id: 'products_select',
-	                class: 'chosen-select' }
-    			%>
-    			</td>
-				
-				<td>
-				<%= u.select :article,
-	                @products.map { |o| [o.article, o.id] },
-	                { include_blank: true },
-	                { id: 'articles_select',
-	                class: 'chosen-select' }
-    			%>
-				</td>
-				
-				<td>
-				<%= u.select :type_furniture_id,
-	                @type_furnitures.map { |o| [o.name, o.id] },
-	                { include_blank: true },
-	                { id: 'type_furnitures_select',
-	                class: 'chosen-select' }
-			    %>
-			    </td>
-				<% end %>
-				
+        <%= u.select :name,
+                  @brand_models.map { |o| [o.name, o.id] },
+                  { include_blank: true },
+                  { id: 'products_select',
+                  class: 'chosen-select' }
+          %>
+        </td>
+        <td>
+          
+          <%= form_for(@product) do |j| %>
+          <%= j.select :article,
+                  @articles.map { |o| [o.article, o.article, {'id' => o.id}] },
+                  { include_blank: true },
+                  { id: 'articles_select',
+                  class: 'chosen-select' }
+            %>
+          </td>
+          
+          <td>
+          <%= j.select :type_furniture_id,
+                    @type_furnitures.map { |o| [o.name, o.id] },
+                    { include_blank: true },
+                    { id: 'type_furnitures_select',
+                    class: 'chosen-select' }
+            %>
+            </td>
+          <% end %>
+        <% end %>
+        
 
-			</tr>
-		</tbody>
+      </tr>
+    </tbody>
     </table>
 
 

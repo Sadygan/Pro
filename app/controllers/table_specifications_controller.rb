@@ -27,16 +27,15 @@ class TableSpecificationsController < ApplicationController
     end
   end
 
-  def update_products
-    @products = Product.where("factory_id = ?", params[:factory_id])
+  def update_brand_models
+    @brand_models = BrandModel.where("factory_id = ?", params[:factory_id])
     respond_to do |format|
       format.js
     end
   end
 
   def update_articles
-    @product_articles = Product.where(model: params[:model])
-
+    @products = Product.where("brand_model_id = ?", params[:brand_model_id])
     respond_to do |format|
       format.js
     end
@@ -51,31 +50,46 @@ class TableSpecificationsController < ApplicationController
   # GET /table_specifications/new
   def new
     @table_specification = TableSpecification.new 
-    # @table_specification.products.build
+    @brand_model = BrandModel.new
     @product = Product.new
+    # @brand_model.products.new
+    # @product = Product.new
+    # @product.brand_models.build
+    
     @factories = Factory.all
+    @brand_models = BrandModel.all
+    # @brand_models = BrandModel.where("factory_id = ?", Factory.first.id)
+    # @articles = Product.where("brand_model_id = ?", BrandModel.first.id)
     @type_furnitures = TypeFurniture.all
-    @products = Product.where("factory_id = ?", Factory.first.id)
-    @product_articles = Product.where("id = ?", Product.first.id)
-
+    @articles = Product.all
   end
 
   # GET /table_specifications/1/edit
   def edit
   end
 
-
-
   # POST /table_specifications
   # POST /table_specifications.json
   def create
     @table_specification = @specification.table_specifications.create(table_specification_params)
     @table_specifications = @specification.table_specifications.all
+    # @product = Product.create(product_params)
+    
+    @brand_model = BrandModel.new(brand_model_params)
+    
+    if @brand_model.save
+      @product = Product.new(product_params)
+      @product.brand_model = @brand_model
+      @product.save
+    else
+      brand_model = BrandModel.where(name: params[:brand_model][:name]).last
+      @product = Product.new(product_params)
+      @product.brand_model_id = brand_model.id
+      @product.save
+    end
 
-    @product = Product.create(product_params)
     respond_to do |format|
       if @table_specification.save
-        @product.save
         format.html { redirect_to project_specification_table_specifications_path, notice: 'Table specification was successfully created.' }
         format.json { render :show, status: :created, location: @table_specification }
         format.js
@@ -132,9 +146,22 @@ class TableSpecificationsController < ApplicationController
         redirect_to main_page_index_path
       end
     end
+        # Never trust parameters from the scary internet, only allow the white list through.
+    def brand_model_params
+      params.require(:brand_model).permit(:name, :factory_id)
+    end
 
     def product_params
-      params.require(:product).permit(:article, :price, :factory_id, :type_furniture_id, :factory_brand, :type_furniture_name, :model)
+      params.require(:product).permit(
+      :article,
+      :price, 
+      :factory_id,
+      :type_furniture_id, 
+      :factory_brand, 
+      :type_furniture_name, 
+      :brand_model_id
+      # brand_model_attributes: [:name]
+      )
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -171,7 +198,7 @@ class TableSpecificationsController < ApplicationController
           :factory_discount,
           :photo_id,
           :size_image_id,
-          :product_id
+          :product_id,
           )
       end
     end

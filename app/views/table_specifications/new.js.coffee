@@ -2,8 +2,7 @@ $('.table-button').hide().after("<%= j render 'form' %>");
 $ ->
   $(document).on 'change', '#factories_select', (evt) ->
     console.log('ok')
-    $('#articles_select').trigger('liszt:updated')
-    $.ajax 'table_specification/update_products',
+    $.ajax 'table_specification/update_brand_models',
       type: 'GET'
       dataType: 'script'
       data: {
@@ -19,11 +18,12 @@ $ ->
       type: 'GET'
       dataType: 'script'
       data: {
-        model: $("#products_select option:selected").html().toLowerCase()
+        brand_model_id: $("#products_select option:selected").attr("id")
       }
       error: (jqXHR, textStatus, errorThrown) ->
         console.log("AJAX Error: #{textStatus}")
       success: (data, textStatus, jqXHR) ->
+        console.log($("#products_select option:selected").attr("id"))
         console.log("Dynamic country select OK!1111")
 
   $('.chosen-select').chosen

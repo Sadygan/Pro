@@ -6,6 +6,7 @@ class CreateProducts < ActiveRecord::Migration
 
       t.references :factory, index: true, foreign_key: true
       t.references :type_furniture, index: true, foreign_key: true
+      t.references :brand_model, index: true, foreign_key: true
       
       t.string :factory_brand
       t.string :type_furniture_name

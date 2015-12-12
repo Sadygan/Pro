@@ -3,11 +3,11 @@ class Product < ActiveRecord::Base
 
 	belongs_to :factory
 	belongs_to :type_furniture
-
+	belongs_to :brand_model
+	
 	validates :article, uniqueness: true, presence: true
-	validates :model, presence: true
-	validates_presence_of :factory
-	validates_presence_of :type_furniture
+	# validates_presence_of :factory
+	# validates_presence_of :type_furniture
 
 	# validates :article_id, presence: true, numericality: {only_integer: true}
 
