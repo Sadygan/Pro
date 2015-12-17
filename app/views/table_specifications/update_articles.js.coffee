@@ -1,5 +1,5 @@
 $("#articles_select").empty()
-  .append("<%= escape_javascript(render(partial: 'product', collection: @products, layout: 'product')) %>")
+  .append("<%= escape_javascript(render(partial: 'table_specifications/product/form', collection: @products, as: 'product')) %>")
 
 usedNames = {}
 $('#articles_select > option').each ->
@@ -33,5 +33,4 @@ chosen.dropdown.find('input').on 'keyup', (e) ->
     select.trigger 'chosen:updated'
 
   return
-
 

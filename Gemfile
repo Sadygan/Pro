@@ -58,7 +58,7 @@ gem 'best_in_place', github: 'aaronchi/best_in_place'
 gem 'jquery-ui-rails'
 
 #Bootstrap
-gem 'bootstrap-sass', '~> 3.3.3'
+gem 'bootstrap-sass', '~> 3.3.6'
 gem 'bootstrap-filestyle-rails'
 
 #PaperClip

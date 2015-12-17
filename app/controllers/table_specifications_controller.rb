@@ -1,6 +1,6 @@
 class TableSpecificationsController < ApplicationController
   # before_action :check_role
-  before_action :set_table_specification, only: [:show, :edit, :update, :destroy]
+  before_action :set_table_specification, only: [:show, :edit, :update, :destroy, :add_photos]
   before_action :set_project_specification
   respond_to :html, :json
   respond_to :html, :js
@@ -29,6 +29,19 @@ class TableSpecificationsController < ApplicationController
 
   def update_brand_models
     @brand_models = BrandModel.where("factory_id = ?", params[:factory_id])
+    @brand_model = @brand_models.first
+    @factory = Factory.find(params[:factory_id])
+    @discounts = Discount.where("factory_id = ?", params[:factory_id])
+    @discount = @discounts.first
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def discounts
+    @discounts = Discount.where("factory_id = ?", params[:factory_id])
+    @factory = @discounts.first.factory
     respond_to do |format|
       format.js
     end
@@ -36,6 +49,42 @@ class TableSpecificationsController < ApplicationController
 
   def update_articles
     @products = Product.where("brand_model_id = ?", params[:brand_model_id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def update_pipe_article
+    @photos = Photo.where("product_id = ?", params[:product_id])
+    @photo = @photos.first
+    @size_images = SizeImage.where("product_id = ?", params[:product_id])
+    @size_image = @size_images.first
+
+    @product = Product.find(params[:product_id])
+    @brand_model = BrandModel.find(@product.brand_model_id)
+    @factory = Factory.find(@brand_model.factory_id)
+    @brand_models = BrandModel.where(factory: @factory)
+    @factories = Factory.all
+    @type_furnitures = TypeFurniture.all 
+    @type_furniture = @product.type_furniture.name
+    @discounts = Discount.where("factory_id = ?", @factory)
+    @discount = @discounts.first
+    
+    respond_to do |format|
+      format.js
+    end
+  end
+
+
+  def photos
+    @photos = Photo.where("product_id = ?", params[:product_id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def size_images
+    @size_images = SizeImage.where("product_id = ?", params[:product_id])
     respond_to do |format|
       format.js
     end
@@ -52,16 +101,13 @@ class TableSpecificationsController < ApplicationController
     @table_specification = TableSpecification.new 
     @brand_model = BrandModel.new
     @product = Product.new
-    # @brand_model.products.new
-    # @product = Product.new
-    # @product.brand_models.build
+    @photo = Photo.new
     
     @factories = Factory.all
     @brand_models = BrandModel.all
-    # @brand_models = BrandModel.where("factory_id = ?", Factory.first.id)
-    # @articles = Product.where("brand_model_id = ?", BrandModel.first.id)
     @type_furnitures = TypeFurniture.all
     @articles = Product.all
+
   end
 
   # GET /table_specifications/1/edit
@@ -71,10 +117,11 @@ class TableSpecificationsController < ApplicationController
   # POST /table_specifications
   # POST /table_specifications.json
   def create
-    @table_specification = @specification.table_specifications.create(table_specification_params)
+    @table_specification = @specification.table_specifications.new(table_specification_params)
     @table_specifications = @specification.table_specifications.all
     # @product = Product.create(product_params)
-    
+
+
     @brand_model = BrandModel.new(brand_model_params)
     
     if @brand_model.save
@@ -87,6 +134,9 @@ class TableSpecificationsController < ApplicationController
       @product.brand_model_id = brand_model.id
       @product.save
     end
+    
+    @table_specification.product = @product
+    @table_specification.increment_discount = params[:increment_discount_modal]
 
     respond_to do |format|
       if @table_specification.save
@@ -155,7 +205,6 @@ class TableSpecificationsController < ApplicationController
       params.require(:product).permit(
       :article,
       :price, 
-      :factory_id,
       :type_furniture_id, 
       :factory_brand, 
       :type_furniture_name, 

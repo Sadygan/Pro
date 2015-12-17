@@ -39,9 +39,12 @@ Rails.application.routes.draw do
       resources :table_specifications do
         get "edit_image", :edit
         get :autocomplete_product_article, :on => :collection
-        get '/photos/:id', to: 'photos#show', as: 'photos'
         get 'update_brand_models', as: 'update_brand_models'
         get 'update_articles', as: 'update_articles'
+        get 'update_pipe_article', as: 'update_pipe_article'
+        get 'photos', as: 'photos'
+        get 'size_images', as: 'size_images'
+        get 'discounts', as: 'discounts'
       end
       resources :table_specification_lights do
         get "edit_image", :edit

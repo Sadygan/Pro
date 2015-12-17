@@ -1,5 +1,10 @@
 $("#products_select").empty()
-  .append("<%= escape_javascript(render(partial: 'brand_model', collection: @brand_models, layout: 'brand_model')) %>")
+  .append("<%= escape_javascript(render(partial: 'table_specifications/brand_model/form', collection: @brand_models, as: 'brand_model')) %>")
+
+# update factory discount href
+
+$("#number_discount").empty()
+  .append("<%= escape_javascript(render(partial: 'table_specifications/discount/percent', as: 'discount')) %>")
 
 # Remove duplicate in model chosen
 usedNames = {}

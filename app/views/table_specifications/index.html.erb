@@ -1,13 +1,15 @@
 <%= javascript_include_tag "table_specifications/index" %>
-<div class="container-fluid">
+<div>
   <p id="notice"><%= notice %></p>
   <%= link_to t('table.print_pdf'), project_specification_table_specifications_path(@project, @specification, @table_specification, format: "pdf") %>
   <%= label_tag(:print_sum, t('table.print_sum')) %>
   
   <%= check_box("print", "sum", {checked: @specification.print_sum}, "sit") %>
-  <%= render 'table' %>
 
-  <%= render 'dialog' %>
+  <%= render 'table' %>
+  <%= render 'table_specifications/photo/dialog' %>
+  <%= render 'table_specifications/size_image/dialog' %>
+  <%= render 'table_specifications/discount/dialog' %>
 	  
   <%= link_to t('table.new_row'), new_project_specification_table_specification_path, remote: true , class: "table-button btn btn-primary" %>
 </div>

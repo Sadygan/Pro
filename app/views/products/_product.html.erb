@@ -1,6 +1,6 @@
 <tr id="product_<%= product.id %>">
   <td><%= link_to product.article, product %></td>
-  <td><%= product.type_furniture.name %></td>
+
   <td><%= product.factory_brand %></td>
   <td><%= product.price %></td>
   <td><%= link_to 'Edit', edit_product_path(product), remote: true, class: 'btn btn-sm btn-info' %></td>

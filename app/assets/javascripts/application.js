@@ -28,6 +28,7 @@
 //= require bootstrap
 //= require nested_form_fields
 //= require chosen-jquery
+//= require jquery.simple_cropper
 //= require_directory .
 
 $.datepicker.setDefaults({

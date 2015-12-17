@@ -1,4 +1,6 @@
-<%= form_for([@project, @specification, @table_specification]) do |f| %>
+<%= form_for([@project, @specification, @table_specification], remote: true) do |f| %>
+  <%= f.hidden_field :increment_discount, :value => params[:requestval] %>
+  <%= f.hidden_field :discount_id %>
   <div id="webtable">
     <table width="100%">
       <thead>
@@ -23,6 +25,8 @@
 		<tbody>	
 			<%= form_for(@brand_model) do |u| %>
 			<tr>
+        <td id="photos">
+        </td>
 
 				<td>
 				<%= u.select :factory_id,
@@ -30,14 +34,14 @@
                 	{ include_blank: true },
                 	{ id: 'factories_select',
                 	class: 'chosen-select' }
-    			%>
-    			
-    			<br>
-				<a href="#">50%</a></td>
+    			%> 
+          <br>
+				<div id="number_discount"></div></td>
 				
 				<td>
         <%= u.select :name,
-                  @brand_models.map { |o| [o.name, o.id] },
+                  @brand_models.map { |o| 
+                  [o.name, o.name, {"id" => o.id}]},
                   { include_blank: true },
                   { id: 'products_select',
                   class: 'chosen-select' }
@@ -47,24 +51,43 @@
           
           <%= form_for(@product) do |j| %>
           <%= j.select :article,
-                  @articles.map { |o| [o.article, o.article, {'id' => o.id}] },
-                  { include_blank: true },
-                  { id: 'articles_select',
-                  class: 'chosen-select' }
+                  @articles.map { |o| 
+                    [o.article, o.article, {'id' => o.id}]},
+                    { include_blank: true },
+                    { id: 'articles_select',
+                    class: 'chosen-select' }
             %>
           </td>
           
           <td>
+            <%= f.text_area :finishing_for_client, name: "otdelka" %>
+          </td>
+          
+          <td>
           <%= j.select :type_furniture_id,
-                    @type_furnitures.map { |o| [o.name, o.id] },
-                    { include_blank: true },
-                    { id: 'type_furnitures_select',
-                    class: 'chosen-select' }
+                  @type_furnitures.map { |o| [o.name, o.id] },
+                  { include_blank: true },
+                  { id: 'type_furnitures_select',
+                  class: 'chosen-select' }
             %>
             </td>
           <% end %>
         <% end %>
-        
+        <td id="size_images"><input type="text" name="razm" value="H850 x L520 x P215" /></td>
+        <td><input type="text" name="number" value="3"></td>
+        <td><input type="text" name="price" value="116.5"></td>
+        <td>650</td>
+        <td><p><input type="text" name="interest" value="30"> %</p><p>240 &euro;</p></td>
+        <td>300</td>
+        <td>900</td>
+        <td class="v">
+          <a href="#" data-toggle="modal" data-target="#modaldelivery">
+          <img src="<%= image_url('delivery.png') %>">
+          </a><br>
+          <input type="text" name="v" value="1.7"><br>
+          <a href="#" data-toggle="modal" data-target="#modalv">ШВГ</a>
+        </td>
+        <td><p style="white-space:nowrap;">Интерес %: <input type="text" name="arh-interest" value="50"></p><p>От заказа %: 15<br>Интерес &euro;: 140</p></td>
 
       </tr>
     </tbody>
@@ -82,7 +105,7 @@
       <th class="unit_price_factory"><%= f.number_field :unit_price_factory, value: 0, step: 0.1 %></th>
       <th class="discount" id="discount"></th>
       <th class="additional_discount" id="additional_discount"></th>
-      <th class="increment_discount"><%= f.number_field :increment_discount, value: 0 %></th>
+
       <th class="unit_price_netto" id="unit_price_netto"></th>
       <th class="summ_netto" id="sn"></th>
       <th class="unit_v" id="unit_v"><%= f.number_field :unit_v, value: 0, step: 0.1 %></th>

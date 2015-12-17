@@ -1,0 +1,5 @@
+<% unless @size_image.nil? %>
+	<%= link_to image_tag(@size_image.img.url), "#", class: "invoker" %>
+<% else %>
+	<%= link_to image_tag('UploadDark.png'), "#", {class: "invoker", id: "upload_dark"} %>
+<% end %>

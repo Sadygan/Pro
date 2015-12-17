@@ -6,10 +6,7 @@ class Product < ActiveRecord::Base
 	belongs_to :brand_model
 	
 	validates :article, uniqueness: true, presence: true
-	# validates_presence_of :factory
-	# validates_presence_of :type_furniture
-
-	# validates :article_id, presence: true, numericality: {only_integer: true}
+	validates_presence_of :type_furniture
 
 	accepts_nested_attributes_for :assets
 

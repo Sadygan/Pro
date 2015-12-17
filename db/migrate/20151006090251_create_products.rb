@@ -4,7 +4,6 @@ class CreateProducts < ActiveRecord::Migration
       t.string :article
       t.float  :price
 
-      t.references :factory, index: true, foreign_key: true
       t.references :type_furniture, index: true, foreign_key: true
       t.references :brand_model, index: true, foreign_key: true
       
