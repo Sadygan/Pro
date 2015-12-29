@@ -1,5 +1,16 @@
 $('.table-button').hide().after("<%= j render 'form' %>");
-invoker = undefined
+
+$('input').on 'change keyup',(evt) ->
+  calculate($(this))
+
+$('.chosen-select').chosen
+  allow_single_deselect: false
+  no_results_text: 'Add to Data Base'
+  width: '110px'
+
+$('textarea').autoResize
+  extraSpace : 0
+
 $ ->
   $(document).on 'change', '#factories_select', (evt) ->
     console.log('ok')
@@ -12,7 +23,11 @@ $ ->
       error: (jqXHR, textStatus, errorThrown) ->
         console.log("AJAX Error: #{textStatus}")
       success: (data, textStatus, jqXHR) ->
-        console.log("Dynamic country select OK!")
+        console.log("discount ok!")
+        factory_id_ = $('#number_discount a').attr('discount-id')
+        console.log(factory_id_)
+        $('#table_specification_discount_id').val(factory_id_)
+
 $ ->
   $(document).on 'change', '#products_select', (evt) ->
     $.ajax 'table_specification/update_articles',
@@ -26,16 +41,23 @@ $ ->
       success: (data, textStatus, jqXHR) ->
 $ ->
   $(document).on 'change', '#articles_select', (evt) ->
+    article = 0
+    article = $("#articles_select option:selected").attr("id")
     $.ajax 'table_specification/update_pipe_article',
       type: 'GET'
       dataType: 'script'
       data: {
-        product_id: $("#articles_select option:selected").attr("id")
+        product_id: article
+        brand_model_id: $("#products_select option:selected").attr("id")
+        brand_model_val: $("#products_select option:selected").val()
+        factory_id: $("#factories_select option:selected").val()
+        type_furniture_id: $("#type_furnitures_select option:selected").val()
       }
       error: (jqXHR, textStatus, errorThrown) ->
         console.log("AJAX Error: #{textStatus}")
       success: (data, textStatus, jqXHR) ->
-        console.log("articles change")
+        $('#table_specification_product_id').val(article)
+        $('#table_specification_photo_id').val($("#photos img").attr('value'))
 $ ->
   $(document).on 'click', '#number_discount a', (evt) ->
     $.ajax 'table_specification/discounts',
@@ -47,7 +69,39 @@ $ ->
       error: (jqXHR, textStatus, errorThrown) ->
         console.log("AJAX Error: #{textStatus}")
       success: (data, textStatus, jqXHR) ->
+        increment = $(invoker).closest('tr').find('.table_specification_increment_discount').val();
+        $('.increment_discount_modal').val(increment);
+        current_discount_id = $('#table_specification_discount_id').val()
+        $('.discounts [value='+current_discount_id+']').attr('selected', 'selected')
+    return false
+$ ->
+  $(document).on 'click', 'a#delivery', (evt) ->
+    $.ajax 'table_specification/deliveries',
+      type: 'GET'
+      dataType: 'script'
+      data: {
+        # delivery_id: $('#table_specification_delivery_id').val()
+      }
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log("AJAX Error: #{textStatus}")
+      success: (data, textStatus, jqXHR) ->
         console.log("articles change")
+        current_delivery_id = $('#table_specification_delivery_id').val()
+        $('.deliveries [value='+current_delivery_id+']').attr('selected', 'selected')
+    return false
+$ ->
+  $(document).on 'click', 'form a.shvg', (evt) ->
+    $.ajax 'table_specification/packing_sizes',
+      type: 'GET'
+      dataType: 'script'
+      data: {
+        # factory_id: $(this).attr("id")
+      }
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log("AJAX Error: #{textStatus}")
+      success: (data, textStatus, jqXHR) ->
+        console.log("articles change")
+    return false
 $ ->
   $(document).on 'click', '#photos a', (evt) ->
     $.ajax 'table_specification/photos',
@@ -61,6 +115,8 @@ $ ->
       success: (data, textStatus, jqXHR) ->
         product_id: $("#articles_select option:selected").attr("id")
         console.log("Dynamic country select OK!3333")
+    return false
+
 $ ->
   $(document).on 'click', '#size_images a', (evt) ->
     $.ajax 'table_specification/size_images',
@@ -73,10 +129,21 @@ $ ->
         console.log("AJAX Error: #{textStatus}")
       success: (data, textStatus, jqXHR) ->
         product_id: $("#articles_select option:selected").attr("id")
-        console.log("Dynamic country select OK!4444")
-  
-  $('.chosen-select').chosen
-    allow_single_deselect: false
-    no_results_text: 'Add to Data Base'
-    width: '110px'
+    return false
 
+$ ->
+  $(document).on 'click', '#modaldelivery button', (evt) ->
+    $.ajax 'table_specification/delivery_data',
+      type: 'GET'
+      dataType: 'script'
+      data: {
+        delivery_id: $("#post_delivery_id option:selected").val()
+      }
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log("AJAX Error: #{textStatus}")
+      success: (data, textStatus, jqXHR) ->
+        console.log(invoker)
+        calculate(invoker)
+    return false
+    
+#$('#table_specification_size_image_id').val(base64)

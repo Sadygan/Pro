@@ -1,6 +1,9 @@
 jQuery(function() {
   return $('.best_in_place').best_in_place();
 });
+
+
+
 $(document).ready(function() {
 	var client = new Dropbox.Client({
 	  key:    "oqe1u2h3676wzpc", // App key
@@ -44,7 +47,7 @@ $(document).ready(function() {
 	});
 
 	function tableCalculation(data) {
-		console.log(data)
+		// console.log(data)
 		// Include helper file
 	    var imported = document.createElement('calculating_helper.js');
 	    // imported.src = '/assets/javascripts';

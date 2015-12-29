@@ -1,4 +1,5 @@
 class TableSpecification < Table
+  before_save :default_values
   # include ActiveModel::Validations
   # has_many :products
   # accepts_nested_attributes_for :products
@@ -6,34 +7,40 @@ class TableSpecification < Table
   default_scope { order(:group => :ASC) }
 
     # validates_presence_of :product
-    # validates :unit_price_factory, presence: true, numericality: true, on: :update
-    # validates :increment_discount, presence: true, numericality: true, on: :update
+    
+    # validates :unit_price_factory, presence: true, numericality: true
+    # validates :increment_discount, presence: true, numericality: true
     # validates :unit_v, numericality: true
+    
     # validates :width, numericality: true
     # validates :height, numericality: true
     # validates :depth, numericality: true
-    # validates :number_of, presence: true, numericality: { only_integer: true }
-    # validates :interest_percent, presence: true, numericality: { only_integer: true }
-    # validates :arhitec_percent, presence: true, numericality: { only_integer: true }
-    # validates :additional_delivery, presence: true, numericality: true
+    
+    validates :number_of, presence: true, numericality: { only_integer: true }
+    validates :interest_percent, presence: true, numericality: { only_integer: true }
+    validates :arhitec_percent, presence: true, numericality: { only_integer: true }
+    validates :additional_delivery, presence: true, numericality: true
+    
+    # validates :additional_packaging, presence: true, numericality: true
   
   # validates :group, numericality: { only_integer: true }
   
-  before_save :default_values
   def default_values
-    self.unit_v ||= 0
-    self.width ||= 0
-    self.height ||= 0
-    self.depth ||= 0
+    # self.unit_v ||= 0
+    # self.width ||= 0
+    # self.height ||= 0
+    # self.depth ||= 0
+    # self.percent_v ||= 0
     
-    self.unit_price_factory ||= 0
+    # self.unit_price_factory ||= 0
     self.increment_discount ||= 0
-    self.number_of ||= 0
-    self.interest_percent ||= 0
-    self.arhitec_percent ||= 0
-    self.additional_delivery ||= 0
+    # self.number_of ||= 0
+    # self.interest_percent ||= 0
+    # self.arhitec_percent ||= 0
+    # self.additional_delivery ||= 0
   end
 
+  attr_accessor :photo_base64, :photo_base64_form, :size_image_base64, :size_image_base64_form, :ts_id
   # def initialize
   #   @table_specification = table_specification
   #   @percent = table_specification.discount.percent
@@ -50,20 +57,21 @@ class TableSpecification < Table
   end
 
   def calculatingSize
-    v = width*height*depth
+    # p product.width
+    v = product.width.to_f*product.height.to_f*product.depth.to_f
     v = (v*percent_v/100)+v
     v.round(2)
   end
  
   def upn
-    unit_price_netto(discount.percent, unit_price_factory, product.factory.additional_discount, increment_discount).round(2)
+    unit_price_netto(discount.percent, unit_price_factory, product.brand_model.factory.additional_discount, increment_discount).round(2)
   end
   
   def v_sum
-    if width != 0 && height !=0 && depth !=0 && percent_v !=0
+    if product.width != 0 && product.height !=0 && product.depth !=0 && percent_v !=0
       multiplication(calculatingSize, number_of).round(2)
     else
-      multiplication(unit_v, number_of).round(2)
+      multiplication(product.unit_v, number_of).round(2)
     end  
   end
 
@@ -117,7 +125,7 @@ class TableSpecification < Table
     # Additional discount 
     add_discount = []
     group.each do |i|
-      temp = Product.find(i.product).factory.additional_discount
+      temp = Product.find(i.product).brand_model.factory.additional_discount
       if (add_discount.nil?)
         temp = 0
       end

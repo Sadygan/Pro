@@ -34,6 +34,7 @@ class PhotosController < ApplicationController
       if @photo.save
         format.html { render 'crop' }
         format.json { render :show, status: :created, location: @photo }
+        format.js
       else
         format.html { render :new }
         format.json { render json: @photo.errors, status: :unprocessable_entity }

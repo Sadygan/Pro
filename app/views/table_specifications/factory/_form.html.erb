@@ -1,1 +1,6 @@
+<% if @factory.id == factory.id %>
+  <option value="<%= @factory.id %>" selected="selected"><%= @factory.brand %></option>
+<% else %>
   <option value="<%= factory.id %>" ><%= factory.brand %></option>
+<% end %>
+

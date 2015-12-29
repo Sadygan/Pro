@@ -1,0 +1,17 @@
+<div class="col-sm-3">
+	<div class="name">Ширина</div>
+	<%= @product.width %>
+
+</div>
+<div class="col-sm-3">
+	<div class="name">Высота</div>
+	<%= @product.height %>
+</div>
+<div class="col-sm-3">
+	<div class="name">Глубина</div>
+	<%= @product.depth %>
+</div>
+<div class="col-sm-3">
+	<div class="name">Упаковка %</div>
+	<%= number_field_tag :unit_v, 10, {name: "pack", id: "pack"} %>
+</div>

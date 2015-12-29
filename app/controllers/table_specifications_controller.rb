@@ -14,6 +14,7 @@ class TableSpecificationsController < ApplicationController
     @user = current_user
     authorize! :show, @project
     @table_specifications = @specification.table_specifications.all
+    @table_specification = TableSpecification.new
 
     respond_to do |format|
         format.json
@@ -24,6 +25,37 @@ class TableSpecificationsController < ApplicationController
                                 type: "application/pdf",
                                 disposition: "inline"
       end
+    end
+  end
+
+  def packing_sizes
+    @deliveries = Delivery.all
+    @product = Product.first
+    
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def deliveries
+    @deliveries = Delivery.all
+    unless params[:row_id].nil?
+      @table_specification = TableSpecification.find(params[:row_id])
+    else
+      @table_specification = TableSpecification.new
+    end
+    
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def delivery_data
+    @delivery_data = Delivery.find(params[:delivery_id])
+      @table_specification = TableSpecification.new
+
+    respond_to do |format|
+      format.js
     end
   end
 
@@ -42,6 +74,11 @@ class TableSpecificationsController < ApplicationController
   def discounts
     @discounts = Discount.where("factory_id = ?", params[:factory_id])
     @factory = @discounts.first.factory
+    unless params[:row_id].nil?
+      @table_specification = TableSpecification.find(params[:row_id])
+    else
+      @table_specification = TableSpecification.new
+    end
     respond_to do |format|
       format.js
     end
@@ -59,14 +96,57 @@ class TableSpecificationsController < ApplicationController
     @photo = @photos.first
     @size_images = SizeImage.where("product_id = ?", params[:product_id])
     @size_image = @size_images.first
-
-    @product = Product.find(params[:product_id])
-    @brand_model = BrandModel.find(@product.brand_model_id)
-    @factory = Factory.find(@brand_model.factory_id)
-    @brand_models = BrandModel.where(factory: @factory)
+    
+    @type_furnitures = TypeFurniture.all
     @factories = Factory.all
-    @type_furnitures = TypeFurniture.all 
-    @type_furniture = @product.type_furniture.name
+
+    product_id = params[:product_id]
+
+    if product_id.to_i != 0
+      @product = Product.find(params[:product_id])
+      @brand_model = BrandModel.find(@product.brand_model_id)
+      @factory = Factory.find(@brand_model.factory_id)
+      @brand_models = BrandModel.where(factory: @factory)
+      p "-1---"
+      p @type_furniture = @product.type_furniture
+      p "-1---"
+
+    else
+      brand_model_id = params[:brand_model_id]
+  
+      if @brand_model.to_i != 0
+        @brand_model = BrandModel.find(params[:brand_model_id])
+        @factory = Factory.find(@brand_model.factory_id)
+      else
+        @factory = Factory.find(params[:factory_id])
+        @brand_models = BrandModel.where(factory_id: @factory)
+        @brand_model = BrandModel.new()
+        @brand_model.id = params[:brand_model_id]
+        @br = @brand_model.name = params[:brand_model_val]
+        p @br
+        p "-2---"
+        p product_id
+        if product_id.to_i != 0
+          @product = Product.find(product_id)
+        else
+          @product = Product.new(width: 0, height: 0, depth: 0)
+          
+        end
+
+        if params[:type_furniture] != nil
+          @type_furniture = TypeFurniture.find(params[:type_furniture])
+        else
+          @type_furniture = TypeFurniture.first
+        end 
+        p "-2---"
+        # if @type_furniture.nil?
+        #   @type_furniture.id = 1
+        # end
+
+      end
+
+    end
+    
     @discounts = Discount.where("factory_id = ?", @factory)
     @discount = @discounts.first
     
@@ -117,41 +197,113 @@ class TableSpecificationsController < ApplicationController
   # POST /table_specifications
   # POST /table_specifications.json
   def create
-    @table_specification = @specification.table_specifications.new(table_specification_params)
     @table_specifications = @specification.table_specifications.all
-    # @product = Product.create(product_params)
+    @table_specification = @specification.table_specifications.new(table_specification_params)
 
-
-    @brand_model = BrandModel.new(brand_model_params)
-    
-    if @brand_model.save
-      @product = Product.new(product_params)
-      @product.brand_model = @brand_model
-      @product.save
-    else
-      brand_model = BrandModel.where(name: params[:brand_model][:name]).last
-      @product = Product.new(product_params)
-      @product.brand_model_id = brand_model.id
-      @product.save
+    if params[:add_photos]
+      ts = TableSpecification.find(@table_specification.ts_id)
+      product = Product.find(@table_specification.product_id)
+      save_img ts, ts.photo_id, product, @table_specification.photo_base64, Photo
     end
-    
-    @table_specification.product = @product
-    @table_specification.increment_discount = params[:increment_discount_modal]
 
-    respond_to do |format|
-      if @table_specification.save
-        format.html { redirect_to project_specification_table_specifications_path, notice: 'Table specification was successfully created.' }
-        format.json { render :show, status: :created, location: @table_specification }
-        format.js
-      else
-        format.html { render :index }
-        format.json { render json: @table_specification.errors, status: :unprocessable_entity }
-        format.js
+    if params[:add_size_images]
+      ts = TableSpecification.find(@table_specification.ts_id)
+      product = Product.find(@table_specification.product_id)
+      save_img ts, ts.size_image_id, product, @table_specification.size_image_base64, SizeImage
+    end
+
+    if params[:create_ts]
+      @brand_model = BrandModel.new(brand_model_params)
+      @product = Product.new(product_params)
+      
+      respond_to do |format|
+        if @table_specification.save
+          brand_model = BrandModel.where(name: params[:brand_model][:name]).last
+
+          if brand_model.nil?
+            brand_model = BrandModel.new
+            brand_model.id = 0
+          end 
+          # Сценарий если нет ни модели ни продукта
+          if brand_model.id == 0
+            if @brand_model.save
+              if @product.save
+                p "+++++++"
+                p "+++++++"
+                p "+++++++"
+                @product.brand_model_id = @brand_model.id
+                @product.save
+                @table_specification.product_id = @product.id
+                @table_specification.save
+                
+                save_img @table_specification, @table_specification.photo_id, @product, @table_specification.photo_base64_form, Photo
+                save_img @table_specification, @table_specification.size_image_id, @product, @table_specification.size_image_base64_form, SizeImage
+
+              end
+            end
+          else
+            # @table_specification = TableSpecification.find()
+            product = Product.where(article: params[:product][:article]).last
+            p product
+            # Сценарий если есть модель но нет продукта
+            if product.nil?
+              if @product.save
+                p "---++++"
+                p "---++++"
+                p "---++++"
+                @product.brand_model_id = brand_model.id
+                @product.save
+                
+                @table_specification.product_id = @product.id
+                @table_specification.save
+
+                save_img @table_specification, @table_specification.photo_id, @product, @table_specification.photo_base64_form, Photo
+                save_img @table_specification, @table_specification.size_image_id, @product, @table_specification.size_image_base64_form, SizeImage
+                
+              end
+            # Сценарий если есть модель и продукт
+            else 
+                p "-------"
+                p "-------"
+                p "-------"
+                save_img @table_specification, @table_specification.photo_id, product, @table_specification.photo_base64_form, Photo
+                save_img @table_specification, @table_specification.size_image_id, @product, @table_specification.size_image_base64_form, SizeImage
+                
+                @table_specification.product_id = product.id
+                @table_specification.save
+            end 
+          end
+
+          format.html { redirect_to project_specification_table_specifications_path+'/', notice: 'Table specification was successfully created.' }
+          format.json { render :show, status: :created, location: @table_specification }
+        else
+          format.html { render :index }
+          format.json { render json: @table_specification.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
 
-  def set_discount_value
+  # Save photo
+  def save_img table_specification, model_id, product, base64, model
+
+    # if model_id.nil? 
+      photo = Paperclip.io_adapters.for(base64) 
+      photo.original_filename = product.article+'_photo.jpeg'
+      @photo = model.new(img: photo)
+      if @photo.save
+        @photo.product_id = product.id
+        @photo.save
+
+        if model == Photo
+          table_specification.photo_id = @photo.id
+        elsif model == SizeImage
+          table_specification.size_image_id = @photo.id
+        end
+        
+        table_specification.save
+      end
+    # end
   end
 
   # PATCH/PUT /table_specifications/1
@@ -201,10 +353,23 @@ class TableSpecificationsController < ApplicationController
       params.require(:brand_model).permit(:name, :factory_id)
     end
 
+    def photo_params
+       params.require(:photo).permit(
+        :type, 
+        :img, 
+        :product_id
+      )
+    end
+
     def product_params
       params.require(:product).permit(
       :article,
       :price, 
+      :weight, 
+      :width, 
+      :height, 
+      :depth, 
+      :unit_v,
       :type_furniture_id, 
       :factory_brand, 
       :type_furniture_name, 
@@ -220,23 +385,22 @@ class TableSpecificationsController < ApplicationController
       else
         params.require(:table_specification).permit(
           :id, 
-          :finishing, 
+          :finishing,
           :finishing_for_client,
           :unit_price_factory,
           :increment_discount,
           :size,
-          :weight, 
-          :width, 
-          :height, 
-          :depth, 
           :percent_v, 
-          :unit_v,
           :number_of,
           :interest_percent,
           :arhitec_percent,
           :group,
           :additional_delivery,
+          :additional_packaging,
           :required,
+          # :packing, 
+          # :add_to_delivery,
+
          
           :specification_id, 
           :factory_brand,
@@ -248,6 +412,11 @@ class TableSpecificationsController < ApplicationController
           :photo_id,
           :size_image_id,
           :product_id,
+          :photo_base64,
+          :photo_base64_form,
+          :size_image_base64,
+          :size_image_base64_form,
+          :ts_id
           )
       end
     end

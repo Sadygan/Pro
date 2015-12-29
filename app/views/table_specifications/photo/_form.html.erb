@@ -1,3 +1,3 @@
 <% @photos.each do |photo| %>
-	<%= link_to image_tag(photo.img.url), "#" %>
+	<%= link_to image_tag(photo.img.url, value: photo.id), "#" %>
 <% end %>

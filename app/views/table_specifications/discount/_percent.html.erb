@@ -1,1 +1,4 @@
-<%= link_to @discount.percent, '#', {id: @discount.factory_id, class: "invoker"} %>
+<%= link_to '#',  {id: @discount.factory_id, :"discount-id" => @discount.id, class: "invoker"} do %>
+  <%= content_tag :span, @discount.percent, class: "discount-value" %>
+<% end %>
+<input type="hidden" class="table_specification_additional_discount" value="<%= @discount.factory.additional_discount %>" >

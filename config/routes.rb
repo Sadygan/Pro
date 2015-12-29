@@ -9,10 +9,10 @@ Rails.application.routes.draw do
   
   resources :type_furnitures
   resources :products do
-      get :autocomplete_type_furniture_name, :on => :collection
-      get :autocomplete_factory_brand, :on => :collection
-      resources :photos
-      resources :size_images
+    get :autocomplete_type_furniture_name, :on => :collection
+    get :autocomplete_factory_brand, :on => :collection
+    resources :photos
+    resources :size_images
   end
 
   resources :deliveries
@@ -45,6 +45,9 @@ Rails.application.routes.draw do
         get 'photos', as: 'photos'
         get 'size_images', as: 'size_images'
         get 'discounts', as: 'discounts'
+        get 'deliveries', as: 'deliveries'
+        get 'packing_sizes', as: 'packing_sizes'
+        get 'delivery_data', as: 'delivery_data'
       end
       resources :table_specification_lights do
         get "edit_image", :edit

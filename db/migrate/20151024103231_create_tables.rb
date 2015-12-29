@@ -9,26 +9,20 @@ class CreateTables < ActiveRecord::Migration
       
       # V & weight
       t.text       :size
-      t.float      :weight
-      t.float      :width
-      t.float      :height
-      t.float      :depth
+
       t.integer    :percent_v
-      t.float      :unit_v
-      
       t.integer    :number_of
       t.integer    :interest_percent
       t.integer    :arhitec_percent
       t.integer    :group
       t.float      :additional_delivery
+      t.float      :additional_packaging
 
       t.string     :type
 
       t.boolean    :required
       t.references :product, index: true, foreign_key: true
       t.references :specification, index: true, foreign_key: true
-      t.string     :factory_brand, index: true, foreign_key: true
-      t.references :factory, index: true, foreign_key: true
       t.references :discount, index: true, foreign_key: true
       t.references :delivery, index: true, foreign_key: true
       t.references :photo, index: true, foreign_key: true

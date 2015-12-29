@@ -62,6 +62,10 @@ class Table < ActiveRecord::Base
     calculatePercentMinus(interest, arhitec_percent).round(2)
   end
 
+  def company_interest
+    (interest - architector_interest).round(2)
+  end
+
   def architector_percent_from_order
     architector_percent(with_interest, architector_interest).round(2)
   end
@@ -71,7 +75,7 @@ class Table < ActiveRecord::Base
     if id.nil? || id == 0
       "/no_image/no_image.png"
     else
-      Asset.find(id).img.url(:medium)
+      Asset.find(id).img.url(:original)
     end
   end
 
