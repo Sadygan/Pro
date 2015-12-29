@@ -1,6 +1,7 @@
-<%= form_for([@project, @specification, @table_specification], remote: true) do |f| %>
-  <%= f.hidden_field :increment_discount, :value => params[:requestval] %>
-  <%= f.hidden_field :discount_id %>
+<%= form_for([@project, @specification, @table_specification]) do |f| %>
+  <%= f.hidden_field :product_id %>
+  <%= f.hidden_field :percent_v %>
+
   <div id="webtable">
     <table width="100%">
       <thead>
@@ -12,9 +13,9 @@
           <th>Отделка</th>
           <th>Описание</th>
           <th>Размер</th>
-          <th>Кол-во</th>
           <th>Цена фаб-ки</th>
           <th>Сумма фаб-ки</th>
+          <th>Кол-во</th>
           <th>Интерес</th>
           <th>Цена, &euro;</th>
           <th>Сумма, &euro;</th>
@@ -22,23 +23,29 @@
           <th>Архитектор</th>
         </tr>
       </thead>
-		<tbody>	
-			<%= form_for(@brand_model) do |u| %>
-			<tr>
-        <td id="photos">
+    <tbody> 
+      <%= form_for(@brand_model) do |u| %>
+      <tr>
+        <td id="photos"> 
         </td>
-
-				<td>
-				<%= u.select :factory_id,
-                	@factories.map { |o| [o.brand, o.id] },
-                	{ include_blank: true },
-                	{ id: 'factories_select',
-                	class: 'chosen-select' }
-    			%> 
+          <%= f.hidden_field :photo_id, value: 0 %>
+          <%= f.hidden_field :photo_base64_form %>
+        <td>
+        <%= u.select :factory_id,
+                  @factories.map { |o| [o.brand, o.id] },
+                  { include_blank: true },
+                  { id: 'factories_select',
+                  class: 'chosen-select' }
+          %>
           <br>
-				<div id="number_discount"></div></td>
-				
-				<td>
+          <%= f.hidden_field :discount_id %>
+          <div id="number_discount"></div>
+          <%= f.hidden_field :increment_discount, value: 0 %>
+          <input type="hidden" class="table_specification_additional_discount" value="0">
+          <input type="hidden" class="table_specification_increment_discount" value="0">
+        </td>
+        
+        <td>
         <%= u.select :name,
                   @brand_models.map { |o| 
                   [o.name, o.name, {"id" => o.id}]},
@@ -60,86 +67,66 @@
           </td>
           
           <td>
-            <%= f.text_area :finishing_for_client, name: "otdelka" %>
+            <%= f.text_area :finishing_for_client %>
           </td>
           
           <td>
-          <%= j.select :type_furniture_id,
-                  @type_furnitures.map { |o| [o.name, o.id] },
-                  { include_blank: true },
-                  { id: 'type_furnitures_select',
-                  class: 'chosen-select' }
-            %>
+            <%= j.collection_select :type_furniture_id, TypeFurniture.all,:id,:name, {include_blank: false}, {class: 'chosen-select', selected: 1} %>
             </td>
-          <% end %>
-        <% end %>
-        <td id="size_images"><input type="text" name="razm" value="H850 x L520 x P215" /></td>
-        <td><input type="text" name="number" value="3"></td>
-        <td><input type="text" name="price" value="116.5"></td>
-        <td>650</td>
-        <td><p><input type="text" name="interest" value="30"> %</p><p>240 &euro;</p></td>
-        <td>300</td>
-        <td>900</td>
-        <td class="v">
-          <a href="#" data-toggle="modal" data-target="#modaldelivery">
-          <img src="<%= image_url('delivery.png') %>">
-          </a><br>
-          <input type="text" name="v" value="1.7"><br>
-          <a href="#" data-toggle="modal" data-target="#modalv">ШВГ</a>
+        <td>
+          <div id="size_images">
+          </div>
+          <%= f.hidden_field :size_image_id %>
+          <%= f.hidden_field :size_image_base64_form %>
+          <div>
+            <%= f.text_area :size %>
+          </div>
         </td>
-        <td><p style="white-space:nowrap;">Интерес %: <input type="text" name="arh-interest" value="50"></p><p>От заказа %: 15<br>Интерес &euro;: 140</p></td>
+        <td>
+          <%= f.number_field :unit_price_factory, {value: 0, class: "price"} %>
+         <td class="factory-sum">0</td>
+        <td>
+          <%= f.number_field :number_of, {value: 0, class: "number"} %>
+        <td>
+          <p>
+          <%= f.number_field :interest_percent, {value: 30, class: "interest"} %> %
+          </p>
+          <p style="white-space:nowrap;"><span class="interest-e">0</span> &euro;</p>
+        </td>
+        <td class="full_price">0</td>
+        <td class="full_sum">0</td>
+        <td class="v">
+          <%= link_to image_tag('delivery.png'), '#', {class: "invoker", id: "delivery"} %>
+          <%= f.hidden_field :delivery_id, {value: 1, class: "delivery_id"} %>
+          <%= f.hidden_field :additional_delivery, value: 0 %>
+          <%= f.hidden_field :additional_packaging, value: 0 %>
+          <div class="delivery_data"></div>
+          <br>
+          <span id="uv"><%= j.number_field :unit_v, {step: 0.1, class: "unit_v", value: 0} %></span>
+          <%= j.hidden_field :weight %>
+          <%= j.hidden_field :width %>
+          <%= j.hidden_field :height %>
+          <%= j.hidden_field :depth %>
+        <% end %>
+      <% end %>
+          <br>
+          <span id="shvg"><%= link_to 'ШВГ', '#', {class: "shvg invoker"} %></span>
+          <input type="hidden" name="table_specification[packing]" class="packing" value="0">
+          <input type="hidden" name="table_specification[add_to_delivery]" class="add_to_delivery" value="0">
+
+        </td>
+        <td><p style="white-space:nowrap;">Интерес %: 
+          <%= f.number_field :arhitec_percent, {value: 50, class: "arh-interest"}%>
+          </p>
+          <p>От заказа %: <span class="arh-order-percent">15</span><br>Интерес &euro;: <span class="arh-interest-e">0</span></p>
+        </td>
 
       </tr>
     </tbody>
     </table>
 
-
-      <th class="photos"><div id="photos"></div><div id="current_img"></div><%= f.hidden_field :photo_id, id: :"photo_id" %></br></th>  
-      <th class="brand" id="brand"></th>
-      <th class="article"><%= f.autocomplete_field :product_id, autocomplete_product_article_project_specification_table_specifications_path, :id_element => '#product_id', :size => 75, :"data-autocomplete-label" => "Sorry, nothing found." %><%= f.hidden_field :product_id, id: :"product_id" %></th>
-      <th class="model" id="model"></th>
-      <th class="type_furniture" id="type_furniture"></th>
-      <th class="finishing"><%= f.text_field :finishing %></th>
-      <th class="finishing_for_client"><%= f.text_area :finishing_for_client %></th>
-      <th class="size size_images" colspan="4"><div id="size_images"></div><div id="current_size_img"></div><%= f.text_area :size %><%= f.hidden_field :size_image_id, id: :"size_image_id" %></th>
-      <th class="unit_price_factory"><%= f.number_field :unit_price_factory, value: 0, step: 0.1 %></th>
-      <th class="discount" id="discount"></th>
-      <th class="additional_discount" id="additional_discount"></th>
-
-      <th class="unit_price_netto" id="unit_price_netto"></th>
-      <th class="summ_netto" id="sn"></th>
-      <th class="unit_v" id="unit_v"><%= f.number_field :unit_v, value: 0, step: 0.1 %></th>
-      <th class="summ_v" id="sv"></th>
-      <th class="factor" id="factor"></th>
-      <th class="unit_price" id="up"></th>
-      <th class="summ" id="summ"></th>
-      <th class="number_of"><%= f.number_field :number_of, value: 1 %></th>
-      <th class="at_nil price_from_nil" id="at_nil"></th>
-      <th class="interest_percent"><%= f.number_field :interest_percent, value: 30 %></th>
-      <th class="with_interest" id="with_interest"></th>
-      <th class="interest" id="interest"></th>
-      <th class="architector_percent"><%= f.number_field :arhitec_percent, value: 50 %></th>
-      <th class="architector" id="architector"></th>
-      <th class="architector_percent_from_order" id="architector_percent"></th>
-      <th class="delivery"><%= f.collection_select :delivery_id, Delivery.order(:direction), :id, :direction, {include_blank: false}, {class: :"form-control"} %></th>
-      <th class="additional_delivery"><%= f.number_field :additional_delivery, value: 0 %></th>
-      <th class="group"><%= f.number_field :group %></th>
-      <th class="destroy"><%= %></th>
-    </tr>
-    <tr>
-          <th id="link_product" colspan="2"></th>
-          <th id="err_article"></th>
-          <th colspan="4"></th>
-          <th class="box_v"><%= f.number_field :width, value: 0, :step => 0.01 %></th>
-          <th class="box_v"><%= f.number_field :height, value: 0, :step => 0.01 %></th>
-          <th class="box_v"><%= f.number_field :depth, value: 0, :step => 0.01 %></th>
-          <th class="box_v"><%= f.number_field :percent_v, value: 10 %></th>
-          <th style="display:none"><%= f.number_field :discount_id %></th>
-          <th colspan="23"><div id="hidden_discount"><%= f.hidden_field :discount_id, id: :"discount_id" %></div></th>
-    </tr>
-  </table>
   <div id="article_id">1</div>
   <div class="actions">
-    <%= f.submit :value => t('table.add_to') %>
+    <%= f.submit :value => t('table.add_to'), name: "create_ts" %>
   </div>
 <% end %>

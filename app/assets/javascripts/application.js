@@ -28,6 +28,8 @@
 //= require bootstrap
 //= require nested_form_fields
 //= require chosen-jquery
+//= require autoresize.jquery
+//= require jquery.stickytableheaders.min
 //= require jquery.simple_cropper
 //= require_directory .
 

@@ -1,0 +1,71 @@
+<div id="webtable">
+  <table width="100%">
+    <thead>
+      <tr>
+        <th>Изображение</th>
+        <th>Фабрика</th>
+        <th>Модель</th>
+        <th>Артикул</th>
+        <th>Отделка</th>
+        <th>Описание</th>
+        <th>Размер</th>
+        <th>Цена фаб-ки</th>
+        <th>Сумма фаб-ки</th>
+        <th>Кол-во</th>
+        <th>Интерес</th>
+        <th>Цена, &euro;</th>
+        <th>Сумма, &euro;</th>
+        <th>V</th>
+        <th>Архитектор</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @table_specifications.each do |ts| %>
+        <% pst = [@project, @specification, ts] %>
+        <tr row-id="<%= ts.id %>" product-id="<%= ts.product_id %>">
+          <td class="photos"><%= render "table_specifications/photo/first_in_table", ts: ts %></td>
+          <td class="factory"><%= ts.product.brand_model.factory.brand %></br>
+          <%= render "table_specifications/discount/percent", :"@discount" => ts.discount %>
+          </td>
+          <td><%= ts.product.brand_model.name %></td>
+          <td><%= ts.product.article %></td>
+          <td><%= best_in_place pst, :finishing_for_client %></td>
+          <td><%= ts.product.type_furniture.name %></td>
+          <td class="size_images">
+            <%= render "table_specifications/size_image/first_in_table", ts: ts %>
+            <br>
+            <%= best_in_place pst, :size %></td>
+          <td><%= best_in_place pst, :unit_price_factory %></td>
+          <td><%= ts.summ_netto %></td>
+          <td><%= best_in_place pst, :number_of %></td>
+          <td>
+            <p><%= best_in_place pst, :interest_percent %> %</p>
+            <p style="white-space:nowrap;"><span class="interest-e"><%= ts.company_interest %></span> €</p>
+          </td>
+          <td class="full_price" ><%= ts.unit_price %></td>
+          <td class="full_sum"><%=  ts.with_interest %></td>
+          <td class="v v_table">
+            <%= link_to image_tag('delivery.png'), '#', {class: "deliv invoker"} %>
+            <%= hidden_field_tag :delivery_id %>
+            <div class="delivery_data_table">
+              <%= render 'table_specifications/delivery/data', :"@delivery_data" => Delivery.find(ts.delivery_id) %>
+            </div>
+            <br>
+            <%= ts.product.unit_v  %>
+            <br>
+            <a class="shvg invoker" href="#">ШВГ</a>
+            <input type="hidden" name="table_specification[packing]" class="packing" value="0">
+            <input type="hidden" name="table_specification[add_to_delivery]" class="add_to_delivery" value="0">
+
+        </td>
+          <td>
+            <p style="white-space:nowrap;">Интерес %: 
+            <%= best_in_place pst, :arhitec_percent %>
+          </p>
+          <p>От заказа %: <span class="arh-order-percent"><%= ts.architector_percent_from_order %></span><br>Интерес €: <span class="arh-interest-e"><%= ts.architector_interest %></span></p>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

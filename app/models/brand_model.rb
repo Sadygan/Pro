@@ -4,6 +4,6 @@ class BrandModel < ActiveRecord::Base
 	has_many :products
 	accepts_nested_attributes_for :products, allow_destroy: true
 
-	validates :name, presence: true, uniqueness: true
-	validates_associated :products
+	# validates :name, presence: true, uniqueness: true
+	# validates_associated :products
 end

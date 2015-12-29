@@ -4,7 +4,7 @@
 table {
 	border-collapse: collapse;
 }
-td,th,input[type=text],textarea{
+td,th,input[type=text],input[type=number],textarea{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	font-weight:bold;
@@ -16,19 +16,24 @@ td,th {
 	vertical-align:middle;
 	padding:5px;
 }
-input[type=text],textarea {
+input[type=text],input[type=number],textarea {
 	box-sizing:border-box;
 	border:none;
 	width:100%;
 	text-align:center;
 }
-input[name=arh-interest],input[name=interest]{
-	width:25px;
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+input.arh-interest,input.interest{
+ width:25px;
 }
 textarea {
 	vertical-align:middle;
 	resize:none;
-	height:100px;
+	/*height:90px;*/
 }
 a:link,a:visited,a:hover,a:active {
 	color:#000 !important;
@@ -89,6 +94,13 @@ input[type=file] {
 #modaldelivery button {
 	margin-left:50px;
 }
+#modalfactory button {
+	margin-left:15px;
+}
+.modal-description {
+	text-align: left;
+    padding: 15px 0 0 0;
+}
 .modal-body a{
 	display:inline-block;
 	vertical-align:middle;
@@ -102,6 +114,9 @@ input[type=file] {
 }
 .modal-body a:last-child{
 	margin-right:0;
+}
+.modal-body input {
+	font-weight:normal;
 }
 .modal-footer {
 	text-align:left;
@@ -120,6 +135,9 @@ a.invoker img {
 	width:100px;
 	height:auto;
 }
+.v a.invoker img {
+	width:auto;
+}
 .addpict {
 	background-color: #f1f1f1;
 	background-image: url('UploadLight.png');
@@ -132,7 +150,7 @@ a.invoker img {
 	vertical-align:middle;
 }
 .addpict:hover {
-    background-image: url('UploadDark.png');
+    background-image: url("UploadDark.png");
 }
 .clear:after {
 	display:table;
@@ -214,5 +232,7 @@ a.invoker img {
 #preview .buttons .cancel:hover{
   background-image: url('CancelRed.png');
 }
-
+input:focus,textarea:focus {
+ outline:none;
+}
 /*****************/

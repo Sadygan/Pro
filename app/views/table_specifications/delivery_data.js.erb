@@ -1,0 +1,4 @@
+console.log(invoker)
+$(".delivery_data").empty()
+  .append("<%= escape_javascript(render(partial: 'table_specifications/delivery/data', as: 'delivery_data')) %>")
+$(invoker).closest('tr').find('.delivery_data')

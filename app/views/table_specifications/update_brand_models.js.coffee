@@ -1,19 +1,8 @@
 $("#products_select").empty()
   .append("<%= escape_javascript(render(partial: 'table_specifications/brand_model/form', collection: @brand_models, as: 'brand_model')) %>")
 
-# update factory discount href
-
 $("#number_discount").empty()
   .append("<%= escape_javascript(render(partial: 'table_specifications/discount/percent', as: 'discount')) %>")
-
-# Remove duplicate in model chosen
-usedNames = {}
-$('#products_select > option').each ->
-  if usedNames[@text]
-    $(this).remove()
-  else
-    usedNames[@text] = @value
-  return
 
 # reseting model chosen after change factory
 $("#products_select").prepend("<option value='' selected='selected'></option>");
@@ -32,7 +21,7 @@ chosen = select.data('chosen')
 chosen.dropdown.find('input').on 'keyup', (e) ->
   # if we hit Enter and the results list is empty (no matches) add the option
   if e.which == 13 and chosen.dropdown.find('li.no-results').length > 0
-    option = $('<option>').val(@value).text(@value)
+    option = $('<option id="0">').val(@value).text(@value)
     # add the new option
     select.prepend option
     # automatically select it
@@ -41,14 +30,13 @@ chosen.dropdown.find('input').on 'keyup', (e) ->
     select.trigger 'chosen:updated'
     # updating article list
     $.ajax 'table_specification/update_articles',
+
       type: 'GET'
       dataType: 'script'
       data: {
-        model: $("#products_select option:selected").html().toLowerCase()
       }
       error: (jqXHR, textStatus, errorThrown) ->
       success: (data, textStatus, jqXHR) ->
+  
     $('#articles_select').trigger('chosen:updated')
   return
-
-

@@ -1,3 +1,19 @@
+delivery: {
+    cost: 250,
+    execution_document: 100,
+
+}
+
+discount: {
+    percent: 50
+}
+
+var upf_netto = priceNetto(3000, discount.percent)
+
+function priceNetto (upf, discount_factory) {
+    return upf - (upf * discount_factory/100)
+}
+
 function calculateSumSize(width, height, depth, percent_v){
     var v = width*height*depth
     return (v*percent_v/100)+v

@@ -12,7 +12,6 @@ json.array!(@table_specifications) do |table_specification|
           :depth, 
           :percent_v, 
           :unit_v,
-          :factor,
           :number_of,
           :interest_percent,
           :arhitec_percent,
@@ -21,8 +20,6 @@ json.array!(@table_specifications) do |table_specification|
           :required,
          
           :specification_id, 
-          :factory_brand,
-          :factory_id, 
           :discount_id,
           :delivery_id, 
  	
