@@ -52,4 +52,35 @@ $(document).ajaxError(function(event,xhr,options,exc) {
     $("#error_explanation").html(kk);
        
 });
+// loader
+function centerLoader() {
+	var winW = $(window).width();
+	var winH = $(window).height();
 
+	var spinnerW = $('.fl').outerWidth();
+	var spinnerH = $('.fl').outerHeight();
+
+	$('.fl').css({
+		'position':'absolute',
+		'left':(winW/2)-(spinnerW/2),
+		'top':(winH/2)-(spinnerH/2)
+	});
+}
+function loader(on) {
+	if (on) {
+		$('.loader').fadeIn();
+	} else {
+		$('.loader').fadeOut();
+	}
+}
+$(window).load(function(){
+	centerLoader();
+	$(window).resize(function(){
+		centerLoader();
+	});
+});
+// end loader
+$('input[name="create_ts"]').on('click', function(evt){
+	console.log('loader')
+	loader(true)
+});

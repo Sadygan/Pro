@@ -1,3 +1,4 @@
+PERCENT_PACK = 10
 $("#photos").empty()
   .append("<%= escape_javascript(render(partial: 'table_specifications/photo/first', layout: 'table_specifications/photo/first')) %>")
 
@@ -22,21 +23,35 @@ $('#product_type_furniture_id').trigger('chosen:updated')
 $("#number_discount").empty()
   .append("<%= escape_javascript(render(partial: 'table_specifications/discount/percent', as: 'discount')) %>")
 
-shvg = "<%= @product.shvg %>"
-unit_v = "<%= @product.unit_v %>"
-console.log(unit_v)
-if unit_v == ""
+# V 
+shvg = parseFloat("<%= @product.shvg %>")
+unit_v = parseFloat("<%= @product.unit_v %>")
+console.log("uv:"+unit_v)
+console.log("svg: "+shvg)
+if isNaN(unit_v)
+  console.log("unit_v == ''")
   $("#uv").empty()
     .append('<input step="0.1" class="unit_v" value="0" type="number" name="product[unit_v]" id="product_unit_v">')
 if unit_v > 0
+  console.log("unit_v > 0")
   $("#uv").empty()
     .append("<%= @product.unit_v %>")
   $("#shvg").empty()
 if shvg > 0
+  console.log("shvg > 0")
   $("#uv").empty()
-    .append(shvg+shvg*10/100)
-    $("#shvg").empty()
+    .append(shvg+shvg*PERCENT_PACK/100)
+  $("#shvg").empty()
+    .append('<a class="shvg_percent invoker" href="#">ШВГ</a>')
+  $('#table_specification_percent_v').val(PERCENT_PACK)
+if isNaN(unit_v) && shvg == 0
+  console.log('unit_v == "" && shvg')
+  $("#uv").empty()
+    .append('<input step="0.1" class="unit_v" value="0" type="number" name="product[unit_v]" id="product_unit_v">')
+  $("#shvg").empty()
     .append('<a class="shvg invoker" href="#">ШВГ</a>')
+  $('#table_specification_percent_v').val("")
+
 
 
 # add record to list search in model field

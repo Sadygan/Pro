@@ -30,7 +30,19 @@ class TableSpecificationsController < ApplicationController
 
   def packing_sizes
     @deliveries = Delivery.all
-    @product = Product.first
+    p params[:id]
+    if params[:id]
+      table_specification = TableSpecification.find(params[:id])
+      @percent_v = table_specification.percent_v
+    else
+      @percent_v = 10
+    end
+
+    if params[:product_id].to_i != 0
+      @product = Product.find(params[:product_id])
+    else
+      @product = Product.new
+    end
     
     respond_to do |format|
       format.js
@@ -273,9 +285,9 @@ class TableSpecificationsController < ApplicationController
                 @table_specification.save
             end 
           end
-
           format.html { redirect_to project_specification_table_specifications_path+'/', notice: 'Table specification was successfully created.' }
           format.json { render :show, status: :created, location: @table_specification }
+          format.js
         else
           format.html { render :index }
           format.json { render json: @table_specification.errors, status: :unprocessable_entity }

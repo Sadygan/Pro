@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   resources :projects do
     resources :statuses
     resources :specifications do
+      get "print_sum", as: "print_sum"
       resources :table_specifications do
         get "edit_image", :edit
         get :autocomplete_product_article, :on => :collection

@@ -96,18 +96,22 @@ class TableSpecificationPdf < Prawn::Document
 		sum = 0
 		if item.add_row(@specification)[item.group] > 1
 			sum = item.groupDataSum(item.group, "gp_sum_number")
-			summa = {content: "#{sum}", rowspan: 2}
+			summa = {content: "#{sum}", rowspan: 2, valign: :center, align: :center}
 		else	
 			sum = item.with_interest
-			summa = {content: "#{sum}", rowspan: 2}
+			summa = {content: "#{sum}", rowspan: 2, valign: :center, align: :center}
 		end
 
 		unit_price = 0
 
 		if (item.class.name === "TableSpecification")
-			unit_price = item.groupDataSum(item.group, "gp_unit_sum")
+			if item.add_row(@specification)[item.group] > 1
+				unit_price = item.groupDataSum(item.group, "gp_unit_sum")
+			else	
+				unit_price = item.unit_price
+			end
 		elsif (item.class.name === "TableSpecificationLight")
-			unit_price = item.unit_with_interest_light
+			# unit_price = item.unit_with_interest_light
 		end
 		
 		if item.size_image_id
@@ -117,18 +121,18 @@ class TableSpecificationPdf < Prawn::Document
 			
 			items << [
 				{:image => image_photo, image_width: 150, rowspan: 1, :border_bottom_color => "FFFFFF"},
-				{content: "#{item.product.article}", rowspan: 1, :border_bottom_color => "FFFFFF"}, 
-				{content: "#{item.finishing_for_client}", rowspan: 1, :border_bottom_color => "FFFFFF"}, 
+				{content: "\n#{item.product.article}", rowspan: 1, :border_bottom_color => "FFFFFF", valign: :center, align: :center}, 
+				{content: "\n#{item.finishing_for_client}", rowspan: 1, :border_bottom_color => "FFFFFF", valign: :center}, 
 				image_size, 
-				{content: "#{unit_price}", rowspan: 1, :border_bottom_color => "FFFFFF"}, 
-				{content: "#{item.number_of}", rowspan: 1, :border_bottom_color => "FFFFFF"}, 
+				{content: "\n#{unit_price}", rowspan: 1, :border_bottom_color => "FFFFFF", valign: :center, align: :center}, 
+				{content: "\n#{item.number_of}", rowspan: 1, :border_bottom_color => "FFFFFF", valign: :center, align: :center}, 
 				summa
 			]
 		items << [ 
 			{:border_top_color => "FFFFFF"},
 			{:border_top_color => "FFFFFF"},
 			{:border_top_color => "FFFFFF"},
-			{content: "#{item.size}", :border_top_color => "FFFFFF"},
+			{content: "#{item.size}", :border_top_color => "FFFFFF", valign: :center, align: :center},
 			{:border_top_color => "FFFFFF"},
 			{:border_top_color => "FFFFFF"},
 		  	]
@@ -136,11 +140,11 @@ class TableSpecificationPdf < Prawn::Document
 			# image_size = {content: "", rowspan: 2}
 			items << [
 				{:image => image_photo, image_width: 150, rowspan: 2},
-				{content: "#{item.product.article}", rowspan: 2}, 
-				{content: "#{item.finishing_for_client}", rowspan: 2}, 
-				{content: "#{item.size}", rowspan: 2},
-				{content: "#{unit_price}", rowspan: 2}, 
-				{content: "#{item.number_of}", rowspan: 2}, 
+				{content: "#{item.product.article}", rowspan: 2, valign: :center, align: :center}, 
+				{content: "#{item.finishing_for_client}", rowspan: 2, valign: :center, align: :center}, 
+				{content: "#{item.size}", rowspan: 2, valign: :center, align: :center},
+				{content: "#{unit_price}", rowspan: 2, valign: :center, align: :center},
+				{content: "#{item.number_of}", rowspan: 2, valign: :center, align: :center}, 
 				summa
 			]
 		items << [	]
@@ -171,9 +175,9 @@ class TableSpecificationPdf < Prawn::Document
 		total_sum = []
 		if @specification.print_sum
 			if @specification.light
-				total_sum = [[{colspan: 5}, "Сумма", {content: "#{TableSpecificationLight::specification_sum_all(@specification)}"}]]
+				total_sum = [[{colspan: 5}, "Сумма", {content: "#{TableSpecificationLight::specification_sum_all(@specification, "sum")}"}]]
 			else
-				total_sum = [[{colspan: 5}, "Сумма", {content: "#{TableSpecification::specification_sum_all(@specification)}"}]]
+				total_sum = [[{colspan: 5}, "Сумма", {content: "#{TableSpecification::specification_sum_all(@specification, "sum")}"}]]
 			end
 		end
 		total_sum

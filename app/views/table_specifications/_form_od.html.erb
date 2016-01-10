@@ -4,14 +4,33 @@
 
   <div id="webtable">
     <table width="100%">
-      <tbody> 
+      <thead>
+        <tr>
+          <th>Изображение</th>
+          <th>Фабрика</th>
+          <th>Модель</th>
+          <th>Артикул</th>
+          <th>Отделка</th>
+          <th>Описание</th>
+          <th>Размер</th>
+          <th>Цена фаб-ки</th>
+          <th>Сумма фаб-ки</th>
+          <th>Кол-во</th>
+          <th>Интерес</th>
+          <th>Цена, &euro;</th>
+          <th>Сумма, &euro;</th>
+          <th>V</th>
+          <th>Архитектор</th>
+        </tr>
+      </thead>
+    <tbody> 
       <%= form_for(@brand_model) do |u| %>
       <tr>
-        <td class="photo" id="photos"> 
+        <td id="photos"> 
         </td>
           <%= f.hidden_field :photo_id, value: 0 %>
           <%= f.hidden_field :photo_base64_form %>
-        <td class="factory">
+        <td>
         <%= u.select :factory_id,
                   @factories.map { |o| [o.brand, o.id] },
                   { include_blank: true },
@@ -26,7 +45,7 @@
           <input type="hidden" class="table_specification_increment_discount" value="0">
         </td>
         
-        <td class="model">
+        <td>
         <%= u.select :name,
                   @brand_models.map { |o| 
                   [o.name, o.name, {"id" => o.id}]},
@@ -35,7 +54,7 @@
                   class: 'chosen-select' }
           %>
         </td>
-        <td class="article">
+        <td>
           
           <%= form_for(@product) do |j| %>
           <%= j.select :article,
@@ -47,14 +66,14 @@
             %>
           </td>
           
-          <td class="finishing_for_client">
+          <td>
             <%= f.text_area :finishing_for_client %>
           </td>
           
-          <td class="type_furniture">
+          <td>
             <%= j.collection_select :type_furniture_id, TypeFurniture.all,:id,:name, {include_blank: false}, {class: 'chosen-select', selected: 1} %>
             </td>
-        <td class="size">
+        <td>
           <div id="size_images">
           </div>
           <%= f.hidden_field :size_image_id %>
@@ -63,12 +82,12 @@
             <%= f.text_area :size %>
           </div>
         </td>
-        <td class="unit_price_factory">
+        <td>
           <%= f.number_field :unit_price_factory, {value: 0, class: "price"} %>
          <td class="factory-sum">0</td>
-        <td class="number_of">
+        <td>
           <%= f.number_field :number_of, {value: 0, class: "number"} %>
-        <td class="interest">
+        <td>
           <p>
           <%= f.number_field :interest_percent, {value: 30, class: "interest"} %> %
           </p>
@@ -96,7 +115,7 @@
           <input type="hidden" name="table_specification[add_to_delivery]" class="add_to_delivery" value="0">
 
         </td>
-        <td class="architector"><p style="white-space:nowrap;">Интерес %: 
+        <td><p style="white-space:nowrap;">Интерес %: 
           <%= f.number_field :arhitec_percent, {value: 50, class: "arh-interest"}%>
           </p>
           <p>От заказа %: <span class="arh-order-percent">15</span><br>Интерес &euro;: <span class="arh-interest-e">0</span></p>
@@ -106,16 +125,9 @@
     </tbody>
     </table>
 
-    <% if @table_specification.errors.any? %>
-      <ul>
-        <% @table_specification.errors.full_massages.each do |message|  %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    <% end %>
+  <div id="article_id">1</div>
   <div class="actions">
     <%= f.submit :value => t('table.add_to'), name: "create_ts" %>
   </div>
   </div>
-    
 <% end %>

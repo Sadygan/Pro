@@ -21,7 +21,7 @@ class TableSpecificationLight < Table
     with_interest/number_of
   end
 
-  def self.specification_sum_all(specification)
+  def self.specification_sum_all(specification, arg)
   	table_specification_lights = TableSpecificationLight.where(specification_id: specification)
   	sum = 0
 

@@ -1,43 +1,35 @@
 class TableSpecification < Table
   before_save :default_values
-  # include ActiveModel::Validations
+  include ActiveModel::Validations
   # has_many :products
   # accepts_nested_attributes_for :products
 
   default_scope { order(:group => :ASC) }
 
     # validates_presence_of :product
-    
+    validates :product_id, presence: true, numericality: true
+
     # validates :unit_price_factory, presence: true, numericality: true
     # validates :increment_discount, presence: true, numericality: true
-    # validates :unit_v, numericality: true
-    
-    # validates :width, numericality: true
-    # validates :height, numericality: true
-    # validates :depth, numericality: true
-    
-    validates :number_of, presence: true, numericality: { only_integer: true }
-    validates :interest_percent, presence: true, numericality: { only_integer: true }
-    validates :arhitec_percent, presence: true, numericality: { only_integer: true }
-    validates :additional_delivery, presence: true, numericality: true
+   
+  
+    # validates :number_of, presence: true, numericality: { only_integer: true }
+    # validates :interest_percent, presence: true, numericality: { only_integer: true }
+    # validates :arhitec_percent, presence: true, numericality: { only_integer: true }
+    # validates :additional_delivery, presence: true, numericality: true
     
     # validates :additional_packaging, presence: true, numericality: true
   
   # validates :group, numericality: { only_integer: true }
   
   def default_values
-    # self.unit_v ||= 0
-    # self.width ||= 0
-    # self.height ||= 0
-    # self.depth ||= 0
-    # self.percent_v ||= 0
     
-    # self.unit_price_factory ||= 0
+    self.unit_price_factory ||= 0
     self.increment_discount ||= 0
-    # self.number_of ||= 0
-    # self.interest_percent ||= 0
-    # self.arhitec_percent ||= 0
-    # self.additional_delivery ||= 0
+    self.number_of ||= 0
+    self.interest_percent ||= 0
+    self.arhitec_percent ||= 0
+    self.additional_delivery ||= 0
   end
 
   attr_accessor :photo_base64, :photo_base64_form, :size_image_base64, :size_image_base64_form, :ts_id
@@ -57,7 +49,8 @@ class TableSpecification < Table
   end
 
   def calculatingSize
-    # p product.width
+    p product.width
+    p product.id
     v = product.width.to_f*product.height.to_f*product.depth.to_f
     v = (v*percent_v/100)+v
     v.round(2)
@@ -66,9 +59,19 @@ class TableSpecification < Table
   def upn
     unit_price_netto(discount.percent, unit_price_factory, product.brand_model.factory.additional_discount, increment_discount).round(2)
   end
+
+  def unit_v
+    uv = 0
+    if product.width && product.height && product.depth
+      uv = calculatingSize.round(2)
+    else
+      uv = product.unit_v
+    end
+  end
   
   def v_sum
-    if product.width != 0 && product.height !=0 && product.depth !=0 && percent_v !=0
+    if product.width && product.height && product.depth
+  # || (product.width != 0.0 && product.height != 0.0 && product.depth != 0.0) || (product.width != 0 && product.height != 0 && product.depth != 0)
       multiplication(calculatingSize, number_of).round(2)
     else
       multiplication(product.unit_v, number_of).round(2)
@@ -100,8 +103,17 @@ class TableSpecification < Table
   # Calculate Group
   def groupDataSum gr, col
     group = TableSpecification.where(specification_id: self.specification).where(group: gr)
-    ln = group.length-1
+    gr_pr_arr = group.pluck(:product_id)
+    group_product_array = []
 
+    gr_pr_arr.each do |i|
+      group_product_array.push(Product.find(i))
+    end
+    p "--->"
+    p group_product_array
+    
+    group_product = Product.find(gr_pr_arr)
+    ln = group.length-1
     # Unit Price Netto
     unit_price_factory_group_arr = group.pluck(:unit_price_factory)
     
@@ -133,24 +145,28 @@ class TableSpecification < Table
     end
 
     # Unit V
-    unit_v_arr_all = group.pluck(:unit_v)
+    unit_v_arr_all = group_product_array.map {|e| e.unit_v}
+    # unit_v_arr_all = group_product.pluck(:unit_v)
     unit_v_arr = []
     # width
-    width_arr = group.pluck(:width)
+    width_arr = group_product_array.map {|e| e.width}
+    # width_arr = group_product.pluck(:width)
     # height
-    height_arr = group.pluck(:height)
+    height_arr = group_product_array.map {|e| e.height}
+    # height_arr = group_product.pluck(:height)
     # depth
-    depth_arr = group.pluck(:depth)
+    depth_arr = group_product_array.map {|e| e.depth}
+    # depth_arr = group_product.pluck(:depth)
     # percent_v
     percent_v_arr = group.pluck(:percent_v)
 
     # Adding array to main Unit V group
     for index in 0..ln
-      unless width_arr[index] != 0 && height_arr[index] != 0 && depth_arr[index] != 0 && percent_v_arr[index] != 0
-        unit_v_arr.push(unit_v_arr_all[index])
-      else
+      if width_arr[index] && height_arr[index] && depth_arr[index] && percent_v_arr[index]
         v = width_arr[index] * height_arr[index] * depth_arr[index]
-        unit_v_arr.push((v*percent_v/100)+v)
+        unit_v_arr.push((v*percent_v_arr[index]/100)+v)
+      else
+        p unit_v_arr.push(unit_v_arr_all[index])
       end
     end
 
@@ -265,7 +281,7 @@ class TableSpecification < Table
   end
 
   def group_sum_v data_group, ln
-    unit_v = data_group[:unit_v]
+    p unit_v = data_group[:unit_v]
     number_of_arr = data_group[:number_of]
     sum_v = []    
     
@@ -310,7 +326,7 @@ class TableSpecification < Table
 
     arr = []
     for index in 0..ln
-      if width_arr[index] != 0 && height_arr[index] !=0 && depth_arr[index] !=0 && percent_v_arr[index] !=0
+      if width_arr[index] && height_arr[index] && depth_arr[index] && percent_v_arr[index]
         arr.push(multiplication(calculatingSize_arr(width_arr[index],height_arr[index],depth_arr[index], percent_v_arr[index]), number_of_arr[index]).round(2))
       else
         arr.push(multiplication(unit_v_arr[index], number_of_arr[index]).round(2))
@@ -319,7 +335,7 @@ class TableSpecification < Table
     arr
   end
   
-  def calculatingSize_arr(width,height,depth, percent_v)
+  def calculatingSize_arr(width, height,depth, percent_v)
     v = width*height*depth
     v = (v*percent_v/100)+v
     v.round(2)
@@ -492,8 +508,10 @@ class TableSpecification < Table
     
   end
 
+# -------- SUMMING
+# Sum All
+  def self.specification_sum_all(specification, arg)
 
-  def self.specification_sum_all(specification)
     no_group_sum = 0
     group_sum = 0
     g = []
@@ -501,15 +519,25 @@ class TableSpecification < Table
     
     j = 0
     table_specifications.each do |i|
-      if i.group.nil?
-        no_group_sum += i.with_interest
+      
+      if arg === "sum"
+        if i.group.nil?
+          no_group_sum += i.with_interest
+        end
       end
+
+      if arg === "architector_interest"
+        if i.group.nil?
+          no_group_sum += i.architector_interest
+        end
+      end
+
       if !i.group.nil?
         j = j + 1
       if i.add_row(specification)[i.group] >= 1 
         if i.add_row(specification)[i.group] == j
-        group_sum += i.groupDataSum(i.group, "sum")
-        g.push(i.groupDataSum(i.group, "sum"))
+        group_sum += i.groupDataSum(i.group, arg)
+        g.push(i.groupDataSum(i.group, arg))
         j = 0
         end
       end
@@ -518,5 +546,12 @@ class TableSpecification < Table
     end
     (group_sum+no_group_sum).round(2)
   end
+
+  # Sum interest_architector
+  def self.specification_architector_sum_all(specification)
+
+  end
+
+
 
 end

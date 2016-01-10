@@ -19,3 +19,30 @@
 @import 'bootstrap';
 @import 'chosen';
 @import 'table_specifications';
+
+/* loader */
+.loader {
+	box-sizing: border-box;
+}
+.spinner1 {
+    height: 40px;
+    position: relative;
+    width: 40px;
+	box-sizing: border-box;
+}
+.double-bounce1, .double-bounce2 {
+    animation: 2s ease-in-out 0s normal none infinite running bounce;
+    background-color: #fff;
+    border-radius: 50%;
+    height: 100%;
+    left: 0;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    width: 100%;
+	box-sizing: border-box;
+}
+.double-bounce2 {
+    animation-delay: -1s;
+}
+/* end loader */

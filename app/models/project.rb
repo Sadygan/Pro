@@ -54,13 +54,13 @@ class Project < ActiveRecord::Base
     statuses.last.description
   end
 
-  def self.sum_specifications specifications
+  def self.sum_specifications specifications, arg
     # return specifications.ids.length
     spec_arr = []
     
     for index in 0..specifications.ids.length-1 
-      spec_arr.push(TableSpecification::specification_sum_all(specifications.ids[index]))
-      spec_arr.push(TableSpecificationLight::specification_sum_all(specifications.ids[index]))
+      spec_arr.push(TableSpecification::specification_sum_all(specifications.ids[index], arg))
+      spec_arr.push(TableSpecificationLight::specification_sum_all(specifications.ids[index], arg))
     end
     spec_arr.inject(0){ |result, elem| result + elem }.round(2)
   end

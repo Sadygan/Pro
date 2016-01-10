@@ -1,4 +1,6 @@
-$('.table-button').hide().after("<%= j render 'form' %>");
+#$('.table-button').hide()
+#$('#table_specification tr:last').after("<%= j render 'form' %>")
+$('.table-button').hide().after("<%= j render 'form' %>")
 
 $('input').on 'change keyup',(evt) ->
   calculate($(this))
@@ -90,12 +92,12 @@ $ ->
         $('.deliveries [value='+current_delivery_id+']').attr('selected', 'selected')
     return false
 $ ->
-  $(document).on 'click', 'form a.shvg', (evt) ->
+  $(document).on 'click', 'form a.shvg, a.shvg_percent', (evt) ->
     $.ajax 'table_specification/packing_sizes',
       type: 'GET'
       dataType: 'script'
       data: {
-        # factory_id: $(this).attr("id")
+        product_id: $('#articles_select option:selected').attr("id")
       }
       error: (jqXHR, textStatus, errorThrown) ->
         console.log("AJAX Error: #{textStatus}")

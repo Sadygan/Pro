@@ -1,14 +1,30 @@
 var invoker;
 
+function trueValue(input, text) {
+	var trval;
+	if (input === undefined) {
+		trval = text;
+	} else {
+		trval = input;
+	}
+	return trval;	
+}
 /***функция пересчета***/
 function calculate(td){
-	var price = td.closest('tr').find('input.price').val();
+	var price_input = td.closest('tr').find('input.price').val();
+	var price_text = td.closest('tr').find('[data-attribute="unit_price_factory"] input').val() || td.closest('tr').find('[data-attribute="unit_price_factory"]').text();
+	var price = trueValue(price_input, price_text)
+	
 	var discount = td.closest('tr').find('span.discount-value').text() * price / 100;
 	var additional_discount = td.closest('tr').find('input.table_specification_additional_discount').val();
 	additional_discount = (price - discount) * additional_discount / 100;
 	var price_with_discount = price - discount - additional_discount;
-	var number = td.closest('tr').find('input.number').val();
 	
+	var number_input = td.closest('tr').find('input.number').val();
+	var number_text = td.closest('tr').find('[data-attribute="number_of"]').text() || td.closest('tr').find('[data-attribute="number_of"] input').val();
+	var number = trueValue(number_input, number_text)
+	console.log(number)
+
 	/* Сумма фабрики */
 	var factory_sum = Math.round(price_with_discount * number * 100) / 100;
 	td.closest('tr').find('.factory-sum').text(factory_sum);
@@ -16,7 +32,18 @@ function calculate(td){
 	/* Доставка */
 	var ajax_delivery_cost = td.closest('tr').find('.delivery_data .cost').val()*1;
 	var add_to_delivery = td.closest('tr').find('input.add_to_delivery').val()*1;
-	var v = td.closest('tr').find('input.unit_v').val() * number;
+	
+	var v_input = td.closest('tr').find('input.unit_v').val();
+	var v_text = td.closest('tr').find('span.unv').text() || td.closest('tr').find('span.unit_v').text();
+	
+	var v;
+	console.log(v_text)
+	if (v_input === undefined) {
+		v = v_text * number;
+	} else {
+		v = v_input * number;
+	}
+	td.closest('tr').find('.unv').text(v);
 	var packing = td.closest('tr').find('input.packing').val()*1;
 	var delivery = (ajax_delivery_cost + add_to_delivery) * v + packing;
 	
@@ -30,7 +57,10 @@ function calculate(td){
 	//alert(zero_sum);
 	
 	/* Полная сумма */
-	var interest_percent = td.closest('tr').find('input.interest').val();
+	var interest_percent_input = td.closest('tr').find('input.interest').val();
+	var interest_percent_text = td.closest('tr').find('[data-attribute="interest_percent"] input').val() || td.closest('tr').find('[data-attribute="interest_percent"]').text();
+	var interest_percent = trueValue(interest_percent_input, interest_percent_text)
+	console.log(interest_percent)
 	var full_sum = Math.round(zero_sum * 100 / (100 - interest_percent)*100)/100;
 	td.closest('tr').find('.full_sum').text(full_sum);
 	
@@ -40,16 +70,27 @@ function calculate(td){
 	td.closest('tr').find('.full_price').text(full_price);
 	
 	/* Интерес */
-	var architector_percent = td.closest('tr').find('input.arh-interest').val();
+	var architector_percent_input = td.closest('tr').find('input.arh-interest').val();
+	var architector_percent_text = td.closest('tr').find('[data-attribute="arhitec_percent"] input').val() || td.closest('tr').find('[data-attribute="arhitec_percent"]').text();
+	var architector_percent = trueValue(architector_percent_input, architector_percent_text)
+
 	var profit = full_sum - zero_sum;
 	var interest = Math.round((profit - profit/100*architector_percent)*100)/100;
 	td.closest('tr').find('.interest-e').text(interest);
+	console.log(architector_percent)
 	
 	/* Интерес архитектора */
 	var arch_interest = Math.round((profit - interest)*100)/100;
 	var arh_order_percent = Math.round(100 - (full_sum - arch_interest) / full_sum * 100);
 	td.closest('tr').find('.arh-interest-e').text(arch_interest);
 	td.closest('tr').find('.arh-order-percent').text(arh_order_percent);
+}
+
+function activateBestInPlace(data_attribute) {
+    $('body').on('keyup', data_attribute, function() {
+    	invoker = $(this);
+    	calculate(invoker);
+    });
 }
 
 $(document).ready(function() {
@@ -62,11 +103,14 @@ $(document).ready(function() {
 	});
 
     client.isAuthenticated();
-    
+
+    activateBestInPlace('[data-attribute="unit_price_factory"]')
+    activateBestInPlace('[data-attribute="number_of"]')
+    activateBestInPlace('[data-attribute="interest_percent"]')
+    activateBestInPlace('[data-attribute="arhitec_percent"]')
 
 	$(document).on('click', 'a.invoker', function(){
 		invoker = $(this);
-		console.log(invoker);
 	});
 	$('body').on('click','#modalpict a',function(){
 		$('#modalpict').modal('hide');
@@ -76,7 +120,6 @@ $(document).ready(function() {
 
 		// Change value in photo_id and base64
 		var imgval = $(this).find('img').attr('value');
-		console.log(imgval)
 		if (imgsrc.substring(0, 10) != "data:image") {
 
 			$(invoker).find('img').attr('value', imgval);
@@ -85,17 +128,13 @@ $(document).ready(function() {
 		} else {
 			// Add photos in this product
 			var row_id = $(invoker).closest('tr').attr("row-id") 
-			console.log(row_id)
 			var product_id = $(invoker).closest('tr').attr("product-id")
-			console.log(product_id)
 			if (product_id != undefined) {	
-			console.log(product_id)
 				$(invoker).closest('tr').find('.id_table').val(row_id)		
 				$(invoker).closest('tr').find('.product_id_table').val(product_id)		
 				$(invoker).closest('tr').find('.base64_table').val(imgsrc)		
 				$(invoker).closest('tr').find('input[name=add_photos]').trigger('click')		
 			}
-			// console.log(imgsrc)
 		  	$(invoker).find('img').attr('value', '');
 		  	$('#table_specification_photo_base64_form').val(imgsrc);
 		  	$('#table_specification_photo_id').val('');
@@ -164,7 +203,6 @@ $(document).ready(function() {
 			$('#modalfactory_table').modal('hide');
 			$(invoker).find('span').html(current_discount[0]);
 			var increment = $('.increment_discount_modal').val();
-			console.log(increment)
 
 			var set_discount = {'table_specification': 
 				{'discount_id': current_discount[1], 
@@ -194,6 +232,7 @@ $(document).ready(function() {
 			calculate(invoker);
 		}
 	});
+
 	$('body').on('click','#modalv button',function(){
 		$('#modalv').modal('hide');
 		var w = $('#w').val();
@@ -203,12 +242,61 @@ $(document).ready(function() {
 		var v = w*h*d;
 		v += v/100*pack;
 		// $(invoker).siblings('input').val(v);
-		$('#product_unit_v').val(v);
+		$('#uv').html(v);
+		// $('#table_specification_percent_v').remove();
+
+		// $('#product_unit_v').val(v);
 		$('#product_width').val(w);
 		$('#product_height').val(h);
 		$('#product_depth').val(d);
 		$('#table_specification_percent_v').val(pack);
-		console.log(invoker)
+		calculate(invoker);
+	});
+	$('body').on('click','#modalv_table button',function(){
+		var row_id = $(invoker).closest('tr').attr('row-id');
+		var w = $('#w').text();
+		var h = $('#h').text();
+		var d = $('#d').text();
+		var pack = $('#pack').val();
+		var v = w*h*d;
+		v += v/100*pack;
+		console.log(w)
+		console.log(h)
+		console.log(d)
+		console.log(pack)
+		console.log(row_id)
+		console.log(v)
+
+		if (row_id != undefined) {
+			var set_percent_v = {'table_specification': 
+				{ 'percent_v': pack }
+			}
+			$.ajax({
+				url: row_id,
+				type: 'PUT',
+				dataType: 'JSON',
+				data: set_percent_v, 
+				success: function (data) {
+
+				}
+			})
+		
+			console.log(v)
+			$(invoker).siblings('input.unit_v').val(v);
+		} else {
+			$(invoker).siblings('.packing').html(pack);
+			// $('span').html(v)
+			$('#uv').html(v)
+			
+			$('#table_specification_percent_v').val(pack);
+			// $(invoker).siblings('input').val(v);
+			$('#product_unit_v').val("");
+			$('#product_width').val(w);
+			$('#product_height').val(h);
+			$('#product_depth').val(d);
+		}
+
+		$('#modalv_table').modal('hide');
 		calculate(invoker);
 	});
 
@@ -264,7 +352,9 @@ $(document).ready(function() {
 			calculate(invoker);
 		}
 	});
+
 	
+
  	$('input').on('change keyup', function(){
 		calculate($(this));
 	});

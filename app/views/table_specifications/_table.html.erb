@@ -1,25 +1,27 @@
 <div id="webtable">
-  <table width="100%">
+  <table width="100%" id="table_specification">
     <thead>
       <tr>
-        <th>Изображение</th>
-        <th>Фабрика</th>
-        <th>Модель</th>
-        <th>Артикул</th>
-        <th>Отделка</th>
-        <th>Описание</th>
-        <th>Размер</th>
-        <th>Цена фаб-ки</th>
-        <th>Сумма фаб-ки</th>
-        <th>Кол-во</th>
-        <th>Интерес</th>
-        <th>Цена, &euro;</th>
-        <th>Сумма, &euro;</th>
-        <th>V</th>
-        <th>Архитектор</th>
+        <th class="photo">Изображение</th>
+        <th class="factory">Фабрика</th>
+        <th class="model">Модель</th>
+        <th class="article">Артикул</th>
+        <th class="finishing_for_client">Отделка</th>
+        <th class="type_furniture">Описание</th>
+        <th class="size">Размер</th>
+        <th class="unit_price_factory">Цена фаб-ки</th>
+        <th class="factory-sum">Сумма фаб-ки</th>
+        <th class="number_of">Кол-во</th>
+        <th class="interest">Интерес</th>
+        <th class="full_price">Цена, &euro;</th>
+        <th class="full_sum">Сумма, &euro;</th>
+        <th class="v">V</th>
+        <th class="architector">Архитектор</th>
       </tr>
     </thead>
     <tbody>
+      <% i = 0 %>
+      <% j = 0 %>
       <% @table_specifications.each do |ts| %>
         <% pst = [@project, @specification, ts] %>
         <tr row-id="<%= ts.id %>" product-id="<%= ts.product_id %>">
@@ -42,22 +44,44 @@
             <p><%= best_in_place pst, :interest_percent %> %</p>
             <p style="white-space:nowrap;"><span class="interest-e"><%= ts.company_interest %></span> €</p>
           </td>
-          <td class="full_price" ><%= ts.unit_price %></td>
-          <td class="full_sum"><%=  ts.with_interest %></td>
+          <% if ts.group.nil? %>
+            <td class="full_price" ><%= ts.unit_price %></td>
+            <td class="full_sum"><%= ts.with_interest %></td>
+          <% else %>
+            <td class="full_price" ><%= ts.groupDataSum(ts.group, "gp_unit_sum") %></td>
+            <td class="full_sum" "<%= %>"><%= ts.groupDataSum(ts.group, "gp_sum_number") %></td>
+          <% end %>
           <td class="v v_table">
+          <% unless ts.group.nil? %>
+            <% j = j + 1 %>
+          <% end %>
+          
+          <% if ts.group.nil? %>
             <%= link_to image_tag('delivery.png'), '#', {class: "deliv invoker"} %>
             <%= hidden_field_tag :delivery_id %>
-            <div class="delivery_data_table">
+          <% elsif ts.add_row(@specification)[ts.group] == j %>
+            <%= link_to image_tag('delivery.png'), '#', {class: "deliv invoker"} %>
+            <%= hidden_field_tag :delivery_id %>
+            <% j = 0 %>
+
+          <% end %>
+            <div class="delivery_data">
               <%= render 'table_specifications/delivery/data', :"@delivery_data" => Delivery.find(ts.delivery_id) %>
             </div>
-            <br>
-            <%= ts.product.unit_v  %>
-            <br>
-            <a class="shvg invoker" href="#">ШВГ</a>
+            <% if ts.product.width && ts.product.height && ts.product.depth %>
+              <span class="unv"><%= ts.v_sum %></span>
+              <br>
+              <a class="shvg_percent invoker" href="#">ШВГ</a>
+              <br>
+            <% else %>
+              <span class="unv"><%= ts.v_sum %></span>
+            <% end %>
+            <input type="hidden" class="unit_v" value="<%= ts.unit_v %>">
             <input type="hidden" name="table_specification[packing]" class="packing" value="0">
             <input type="hidden" name="table_specification[add_to_delivery]" class="add_to_delivery" value="0">
-
-        </td>
+            <p>Гр.</p>
+            <span><%= best_in_place pst, :group %></span>
+          </td>
           <td>
             <p style="white-space:nowrap;">Интерес %: 
             <%= best_in_place pst, :arhitec_percent %>
@@ -65,7 +89,30 @@
           <p>От заказа %: <span class="arh-order-percent"><%= ts.architector_percent_from_order %></span><br>Интерес €: <span class="arh-interest-e"><%= ts.architector_interest %></span></p>
           </td>
         </tr>
-      <% end %>
+        <% unless ts.group.nil? %>
+          <% i = i + 1 %>
+            <% if ts.add_row(@specification)[ts.group] > 1 %>
+              <% if ts.add_row(@specification)[ts.group] == i %>
+                <% i = 0 %>
+                <tr>
+                  <td colspan="12"> Сумма за группу</td>
+                  <td class="sum_group"><span id="group_summa_<%= ts.group %>" data-html-attrs="<%= ts.group %>"><%= ts.groupDataSum(ts.group, "sum") %></td>
+                  <td></td>
+                  <td></td>
+                  
+                </tr>
+                <% end %>
+              <% end %>
+            <% end %>    
+          <% end %>
+        <tr>
+          <td colspan="12"> Сумма</td>
+          <td><%= TableSpecification::specification_sum_all(@specification, "sum") %></td>
+          <td></td>
+          <td><%= TableSpecification::specification_sum_all(@specification, "architector_interest") %></td>
+          
+        </tr>
+        
     </tbody>
   </table>
 </div>

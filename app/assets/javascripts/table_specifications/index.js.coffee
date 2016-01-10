@@ -51,18 +51,32 @@ $ ->
         console.log("articles change")
     return false
 $ ->
-  $(document).on 'click', '.v.v_table a.shvg.invoker', (evt) ->
+  $(document).on 'click', 'a.shvg_percent, a.shvg.invoker', (evt) ->
     $.ajax 'table_specification/packing_sizes',
       type: 'GET'
       dataType: 'script'
       data: {
-        row_id: $(invoker).closest('tr').attr("row-id")
+        product_id: $(invoker).closest('tr').attr("product-id")
+        id: $(invoker).closest('tr').attr("row-id")
       }
       error: (jqXHR, textStatus, errorThrown) ->
         console.log("AJAX Error: #{textStatus}")
       success: (data, textStatus, jqXHR) ->
         console.log("articles change")
+        console.log($(invoker).closest('tr').attr("product-id"))
     return false
+
+
+#$ ->
+#  $(document).on 'click', '#print_sum', (evt) ->
+#    print = $('#print_sum').prop('checked')
+#    specification_id = parseInt($('.specification_id').text())
+#    full_url = window.location.href
+#    url = './' + specification_id
+#    console.log(window.location.href)
+#    p = 'specification': 'print_sum': print
+#    printSum p, specification_id, url
+#    return
 
 $(document).ready ->
   client = new (Dropbox.Client)(

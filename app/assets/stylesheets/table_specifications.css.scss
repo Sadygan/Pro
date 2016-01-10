@@ -1,12 +1,12 @@
 #webtable {
-	width:100%;
+	/*width:100%;*/
 }
 table {
-	border-collapse: collapse;
+	/*border-collapse: collapse;*/
 }
 td,th,input[type=text],input[type=number],textarea{
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight:bold;
 	color:#000;
 }
@@ -14,7 +14,7 @@ td,th {
 	border:1px solid black;
 	text-align:center;
 	vertical-align:middle;
-	padding:5px;
+	padding: 5px 0px 5px 0px;
 }
 input[type=text],input[type=number],textarea {
 	box-sizing:border-box;
@@ -87,6 +87,55 @@ thead.tableFloatingHeaderOriginal {
 	margin-bottom:15px;
 	margin-left:35px;
 }
+/*- size columns table -*/
+
+.photo {
+	width: 8.64%;
+}
+.factory {
+	width: 9.42% !important;
+}
+.model {
+	width: 9.42% !important;
+}
+.article {
+	width: 9.42% !important;
+}
+.finishing_for_client {
+	width: 5.84%;
+}
+.type_furniture {
+	width: 9.42%;
+}
+.size {
+	width: 8.64%;
+}
+.unit_price_factory {
+	width: 4.05%;
+}
+.factory-sum {
+	width: 4.51%;
+}
+.number_of {
+	width: 3.81%;
+}
+.interest {
+	width: 5.37%;
+}
+.full_price {
+	width: 3.89%;
+}
+.full_sum {
+	width: 4.82%;
+}
+.v {
+	width: 3.5%;
+}
+.architector {
+	width: 9.26%;
+}
+/*----------------------*/
+
 input[type=file] {
 	margin-bottom:15px;
 	margin-left:17px;

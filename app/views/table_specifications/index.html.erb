@@ -7,7 +7,6 @@
   <%= check_box("print", "sum", {checked: @specification.print_sum}, "sit") %>
 
 
-  <%= render 'table' %>
   <%= render 'table_specifications/photo/dialog' %>
   <%= render 'table_specifications/photo/dialog_table' %>
   <%= render 'table_specifications/size_image/dialog' %>
@@ -17,6 +16,7 @@
   <%= render 'table_specifications/delivery/dialog_table' %>
   <%= render 'table_specifications/packing_size/dialog' %>
   <%= render 'table_specifications/packing_size/dialog_table' %>
-	  
+    
+  <%= render 'table' %>
   <%= link_to t('table.new_row'), new_project_specification_table_specification_path, remote: true , class: "table-button btn btn-primary" %>
 </div>

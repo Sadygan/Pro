@@ -22,7 +22,7 @@
       <th><%= t('specification.total_sum') %></th>
       <th><%=  check_box("print_sum", "#{@project.id}", {checked:  @project.print_sum}, "project") %></th>
       <!-- Return sum project -->
-       <th><%= Project::sum_specifications(@project.specifications)  %></th>
+       <th><%= Project::sum_specifications(@project.specifications, "sum")  %></th>
          
     </tr>
   </table>

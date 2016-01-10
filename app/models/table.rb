@@ -11,6 +11,9 @@ class Table < ActiveRecord::Base
     ar = TableSpecification.where(specification_id: specification).pluck(:group)
     h = Hash.new(0)
     ar.each{ | v | h.store(v, h[v]+1)}
+    h.delete(nil)
+    p "=====>"
+    p h
     h
   end
 
