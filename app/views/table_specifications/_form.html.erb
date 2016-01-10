@@ -38,6 +38,9 @@
         <td class="article">
           
           <%= form_for(@product) do |j| %>
+          <%= j.hidden_field :width %>
+          <%= j.hidden_field :height %>
+          <%= j.hidden_field :depth %>
           <%= j.select :article,
                   @articles.map { |o| 
                     [o.article, o.article, {'id' => o.id}]},
@@ -84,9 +87,6 @@
           <div class="delivery_data"></div>
           <br>
           <span id="uv" class="unit_v"><%= j.number_field :unit_v, {step: 0.1, class: "unit_v", value: 0} %></span>
-          <%= j.hidden_field :width %>
-          <%= j.hidden_field :height %>
-          <%= j.hidden_field :depth %>
         <% end %>
       <% end %>
           <br>
