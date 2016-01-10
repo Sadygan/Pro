@@ -45,7 +45,7 @@ $ ->
   $(document).on 'change', '#articles_select', (evt) ->
     article = 0
     article = $("#articles_select option:selected").attr("id")
-    $.ajax 'table_specification/update_pipe_article',
+    $.ajax 'update_pipe_article/',
       type: 'GET'
       dataType: 'script'
       data: {

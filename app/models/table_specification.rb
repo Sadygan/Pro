@@ -1,13 +1,17 @@
 class TableSpecification < Table
-  before_save :default_values
+  before_save :default_values 
   include ActiveModel::Validations
   # has_many :products
   # accepts_nested_attributes_for :products
-
+  # belongs_to :product
+  # validates :product_id, presence: true
+  # validates :product, presence: true, if: -> { product_id.present? }
+  
   default_scope { order(:group => :ASC) }
 
     # validates_presence_of :product
-    validates :product_id, presence: true, numericality: true
+    validates_numericality_of :unit_price_factory, greater_than_or_equal_to: 20
+    # validates :product_id, presence: true
 
     # validates :unit_price_factory, presence: true, numericality: true
     # validates :increment_discount, presence: true, numericality: true
@@ -33,11 +37,7 @@ class TableSpecification < Table
   end
 
   attr_accessor :photo_base64, :photo_base64_form, :size_image_base64, :size_image_base64_form, :ts_id
-  # def initialize
-  #   @table_specification = table_specification
-  #   @percent = table_specification.discount.percent
-  #   @additional_discount = table_specification.additional_discount
-  # end
+
   def calculate_percent_bank_delivery summa_netto, cost, execution_document, check_factory,  bank_service, bank_percent, v_sum, additional_deliver
     summa_netto+bank_service+(summa_netto+bank_service)*bank_percent/100+execution_document+check_factory+(cost+additional_deliver)*v_sum
   end
