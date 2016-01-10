@@ -38,10 +38,10 @@
         <td class="article">
           
           <%= form_for(@product) do |j| %>
-          <%= j.hidden_field :width %>
-          <%= j.hidden_field :height %>
-          <%= j.hidden_field :depth %>
-          <%= j.select :article,
+            <%= j.hidden_field :width %>
+            <%= j.hidden_field :height %>
+            <%= j.hidden_field :depth %>
+            <%= j.select :article,
                   @articles.map { |o| 
                     [o.article, o.article, {'id' => o.id}]},
                     { include_blank: true },
