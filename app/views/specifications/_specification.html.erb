@@ -1,6 +1,6 @@
 <tr id="specification_<%= specification.id %>">
   <% if specification.light %>
-  <td><%= link_to specification.name, project_specification_table_specification_lights_path(@project, specification), 'data-no-turbolink' => true %></td>
+  <td><%= link_to specification.name, project_specification_table_specification_lights_path(@project, specification)+'/', 'data-no-turbolink' => true %></td>
   <td><%= check_box("print_sum", "#{specification.id}", {checked:  specification.print_sum}, "specification") %></td>
   <td><%= TableSpecificationLight::specification_sum_all(specification, "sum") %></td>
   <td>
@@ -8,7 +8,7 @@
     <%= link_to t('delete'), project_specification_path(@project, specification), remote: true, :method => :delete, data: {confirm: "Delete Customer: #{specification.name}"}, :class => 'btn btn-sm btn-danger' %>
   </td>
   <% else %>
-  <td><%= link_to specification.name, project_specification_table_specifications_path(@project, specification), 'data-no-turbolink' => true %></td>
+  <td><%= link_to specification.name, project_specification_table_specifications_path(@project, specification)+'/', 'data-no-turbolink' => true %></td>
   <td><%= check_box("print", "#{specification.id}", {checked: specification.print_sum}, "specification") %></td>
   <td><%= TableSpecification::specification_sum_all(specification, "sum") %></td>
   <td>
