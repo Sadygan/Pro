@@ -136,7 +136,7 @@ $ ->
     return false
 
 $ ->
-  $(document).on 'click', '#modaldelivery button', (evt) ->
+  $(document).on 'click', '#modaldelivery .btn-primary', (evt) ->
     $.ajax 'table_specification/delivery_data',
       type: 'GET'
       dataType: 'script'

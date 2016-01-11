@@ -196,7 +196,7 @@ $(document).ready(function() {
 		return cdv;
 	}
 
-	$('body').on('click','#modalfactory button, #modalfactory_table button', function(){
+	$('body').on('click','#modalfactory .btn-primary, #modalfactory_table .btn-primary', function(){
 		var change_modal = $(invoker).closest('td');
 		var row_id = $(invoker).closest('tr').attr('row-id');
 		// Логика для таблицы 
@@ -235,7 +235,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('body').on('click','#modalv button',function(){
+	$('body').on('click','#modalv .btn-primary',function(){
 		$('#modalv').modal('hide');
 		var w = $('#w').val();
 		var h = $('#h').val();
@@ -254,7 +254,7 @@ $(document).ready(function() {
 		$('#table_specification_percent_v').val(pack);
 		calculate(invoker);
 	});
-	$('body').on('click','#modalv_table button',function(){
+	$('body').on('click','#modalv_table .btn-primary',function(){
 		var row_id = $(invoker).closest('tr').attr('row-id');
 		var w = $('#w').text();
 		var h = $('#h').text();
@@ -302,7 +302,7 @@ $(document).ready(function() {
 		calculate(invoker);
 	});
 
-	$('body').on('click','#modaldelivery button, #modaldelivery_table button',function(){
+	$('body').on('click','#modaldelivery .btn-primary, #modaldelivery_table .btn-primary',function(){
 		var change_modal = $(invoker).closest('td');
 		var row_id = $(invoker).closest('tr').attr('row-id');
 		// Логика для таблицы 
