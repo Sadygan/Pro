@@ -61,12 +61,12 @@ class Table < ActiveRecord::Base
     minus(with_interest, price_from_nil).round(2)
   end
 
-  def architector_interest
+  def company_interest
     calculatePercentMinus(interest, arhitec_percent).round(2)
   end
 
-  def company_interest
-    (interest - architector_interest).round(2)
+  def architector_interest
+    (interest - company_interest).round(2)
   end
 
   def architector_percent_from_order

@@ -1,5 +1,4 @@
 $(document).on "ajax:success", "form", (xhr, data, response) ->
-	#loader(true)
 	location.reload(false)
 	if data.error
 		for message of data

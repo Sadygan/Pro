@@ -158,10 +158,4 @@ $ ->
     else
       $('input[name=create_ts]').prop 'disabled', true
     return
-$ ->
-  $('#new_table_specification').submit (e) ->
-    e.preventDefault()
-    alert 'validation OK!'
-    return
-  return
 #$('#table_specification_size_image_id').val(base64)
