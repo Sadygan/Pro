@@ -28,6 +28,9 @@
 	  -webkit-appearance: none; 
 	  margin: 0; 
 	}
+	input[type='number'] {
+    	-moz-appearance: textfield;
+	}
 	input.arh-interest,input.interest{
 	 width:25px;
 	}
@@ -206,6 +209,15 @@
 		display:table;
 		content:'';
 		clear:both;
+	}
+	input[name=create_ts] {
+		 margin: 10px;
+	}
+		input[name=create_ts]:disabled,
+		input[name=create_ts]:disabled:hover {
+		 background: #ccc;
+		 color: #999;
+		 border-color: #999;
 	}
 }
 

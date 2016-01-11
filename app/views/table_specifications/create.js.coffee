@@ -1,6 +1,6 @@
+loader(true)
 $('.table-button').show()
 $('.new_table_specification').hide()
-loader(true)
 $(document).on "ajax:success", "form", (xhr, data, response) ->
 	location.reload(false)
 	if data.error

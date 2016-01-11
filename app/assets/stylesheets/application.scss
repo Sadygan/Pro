@@ -133,4 +133,12 @@ body{
     -webkit-border-radius: 50%;
     border-radius: 50%;
 }
+@keyframes bounce {
+0%, 100% {
+    transform: scale(0);
+}
+50% {
+    transform: scale(1);
+}
+}
 /* end login form */

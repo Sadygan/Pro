@@ -29,6 +29,7 @@ $ ->
         factory_id_ = $('#number_discount a').attr('discount-id')
         console.log(factory_id_)
         $('#table_specification_discount_id').val(factory_id_)
+        $('input[name=create_ts]').prop('disabled', true);
 
 $ ->
   $(document).on 'change', '#products_select', (evt) ->
@@ -60,6 +61,7 @@ $ ->
       success: (data, textStatus, jqXHR) ->
         $('#table_specification_product_id').val(article)
         $('#table_specification_photo_id').val($("#photos img").attr('value'))
+        $('input[name=create_ts]').prop('disabled', false);
 $ ->
   $(document).on 'click', '#number_discount a', (evt) ->
     $.ajax 'table_specification/discounts',
