@@ -231,7 +231,6 @@ class TableSpecificationsController < ApplicationController
       
       respond_to do |format|
         if @table_specification.save
-          format.js
           # format.js { render :js => "alert('ok');" }
           # format.js { render :js => "loader(true);" }
           brand_model = BrandModel.where(name: params[:brand_model][:name]).last
@@ -243,7 +242,6 @@ class TableSpecificationsController < ApplicationController
           # Сценарий если нет ни модели ни продукта
           if brand_model.id == 0
             if @brand_model.save
-              format.js
               if @product.save
                 p "+++++++"
                 p "+++++++"
@@ -281,7 +279,6 @@ class TableSpecificationsController < ApplicationController
               end
             # Сценарий если есть модель и продукт
             else
-                format.js 
                 p "-------"
                 p "-------"
                 p "-------"
