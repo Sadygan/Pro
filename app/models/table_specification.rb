@@ -11,18 +11,18 @@ class TableSpecification < Table
 
     # validates_presence_of :product
     validates_numericality_of :unit_price_factory, greater_than_or_equal_to: 20
+    validates_numericality_of :number_of, greater_than_or_equal_to: 1
     # validates :product_id, presence: true
 
     # validates :unit_price_factory, presence: true, numericality: true
-    # validates :increment_discount, presence: true, numericality: true
+    validates :increment_discount, presence: true, numericality: true
    
   
-    # validates :number_of, presence: true, numericality: { only_integer: true }
-    # validates :interest_percent, presence: true, numericality: { only_integer: true }
-    # validates :arhitec_percent, presence: true, numericality: { only_integer: true }
-    # validates :additional_delivery, presence: true, numericality: true
+    validates :interest_percent, presence: true, numericality: { only_integer: true }
+    validates :arhitec_percent, presence: true, numericality: { only_integer: true }
+    validates :additional_delivery, presence: true, numericality: true
     
-    # validates :additional_packaging, presence: true, numericality: true
+    validates :additional_packaging, presence: true, numericality: true
   
   # validates :group, numericality: { only_integer: true }
   
@@ -34,6 +34,7 @@ class TableSpecification < Table
     self.interest_percent ||= 0
     self.arhitec_percent ||= 0
     self.additional_delivery ||= 0
+    self.additional_packaging ||= 0
   end
 
   attr_accessor :photo_base64, :photo_base64_form, :size_image_base64, :size_image_base64_form, :ts_id

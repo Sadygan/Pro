@@ -1,4 +1,4 @@
-PERCENT_PACK = 10
+PERCENT_PACK = 15
 $("#photos").empty()
   .append("<%= escape_javascript(render(partial: 'table_specifications/photo/first', layout: 'table_specifications/photo/first')) %>")
 

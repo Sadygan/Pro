@@ -147,5 +147,14 @@ $ ->
         console.log(invoker)
         calculate(invoker)
     return false
+
+$ ->
+  $(document).on 'change', '.chosen-select', (evt) ->
+    console.log 'change'
+    if $('#factories_select option:selected').val() and $('#products_select option:selected').val() and $('#articles_select option:selected').val()
+      $('input[name=create_ts]').prop 'disabled', false
+    else
+      $('input[name=create_ts]').prop 'disabled', true
+    return
     
 #$('#table_specification_size_image_id').val(base64)
