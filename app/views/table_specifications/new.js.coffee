@@ -158,4 +158,5 @@ $ ->
     else
       $('input[name=create_ts]').prop 'disabled', true
     return
+
 #$('#table_specification_size_image_id').val(base64)

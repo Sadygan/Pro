@@ -47,7 +47,7 @@ if shvg > 0
 if isNaN(unit_v) && shvg == 0
   console.log('unit_v == "" && shvg')
   $("#uv").empty()
-    .append('<input step="0.1" class="unit_v" value="0" type="number" name="product[unit_v]" id="product_unit_v">')
+    .append('<input step="0.01" class="unit_v" value="0" type="number" name="product[unit_v]" id="product_unit_v">')
   $("#shvg").empty()
     .append('<a class="shvg invoker" href="#">ШВГ</a>')
   $('#table_specification_percent_v').val("")

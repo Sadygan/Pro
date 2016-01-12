@@ -17,6 +17,12 @@ else if (change_modal_a).hasClass('shvg')
 	$('#modalv').on 'shown.bs.modal', ->
 #	  $('.first_input').focus()
 	  return false
+	$('#modalv input').on 'change', ->
+	  if $('#w').val()*1 != 0 && $('#h').val()*1 != 0 && $('#d').val()*1 != 0
+	    $('#modalv .btn-primary').prop 'disabled', false
+	  else
+	    $('#modalv .btn-primary').prop 'disabled', true
+	  return
 #else
 	# Render the new form
 #	$('#modalv .modal-body').html '<%= j render("table_specifications/packing_size/form") %>'

@@ -16,7 +16,6 @@ class TableSpecification < Table
 
     # validates :unit_price_factory, presence: true, numericality: true
     validates :increment_discount, presence: true, numericality: true
-   
   
     validates :interest_percent, presence: true, numericality: { only_integer: true }
     validates :arhitec_percent, presence: true, numericality: { only_integer: true }
@@ -36,8 +35,6 @@ class TableSpecification < Table
     self.additional_delivery ||= 0
     self.additional_packaging ||= 0
   end
-
-  
 
   attr_accessor :photo_base64, :photo_base64_form, :size_image_base64, :size_image_base64_form, :ts_id
 
