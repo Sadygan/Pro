@@ -24,6 +24,11 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     @product = Product.new
+    @brand_model = BrandModel.new
+    
+    @factories = Factory.all
+    @brand_models = BrandModel.all
+    @type_furnitures = TypeFurniture.all
   end
 
   # GET /products/1/edit
@@ -97,9 +102,10 @@ class ProductsController < ApplicationController
         :height, 
         :depth, 
         :unit_v, 
-        :factory_id, 
+        :brand_model_id, 
         :type_furniture_id, 
-        :factory_brand, 
-        :type_furniture_name)
+        # :factory_brand, 
+        # :type_furniture_name
+        )
     end
 end

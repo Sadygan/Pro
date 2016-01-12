@@ -9,7 +9,7 @@ class Product < ActiveRecord::Base
 	has_many :table_specifications
 
 	validates :article, presence: true
-	# validates_presence_of :type_furniture, presence: true
+	validates_presence_of :type_furniture, presence: true
   # validates :unit_v, numericality: true
   # validates :width, numericality: true
   # validates :height, numericality: true

@@ -1,34 +1,73 @@
 <%= form_for(@product, remote: true, :html => { :role => "form" }) do |f| %>
-<div id="error_explanation" class="bg-danger text-danger">
-</div>
+<div id="error_explanation" class="bg-danger text-danger"></div>
   
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-8">
   <div class="form-group">
     <%= f.label t('products.article'), :class => "control-label" %><br>
     <%= f.text_field :article, :class => "form-control" %>
   </div>
   <div class="form-group" id="factory">
     <%= f.label t('factories.factory'), :class => "control-label" %>
-    <%= f.autocomplete_field :factory_brand, autocomplete_factory_brand_products_path, :id_element => '#product_factory_id', :class => "form-control addresspicker", :validate => { :presence => true } %>
+    <%= form_for(@brand_model) do |u| %>
+      <%= u.select :factory_id,
+            @factories.map { |o| [o.brand, o.id] },
+            { include_blank: true },
+            { id: 'factories_select',
+            class: 'chosen-select' }
+      %>
   <span id="err_factory"></span>
+  <div class="form-group" id="brand_model">
+    <%= f.label 'Модель', :class => "control-label" %>
+    <%= u.select :name,
+          @brand_models.map { |o| 
+          [o.name, o.name, {"id" => o.id}]},
+          { include_blank: true },
+          { id: 'products_select',
+          class: 'chosen-select' }
+      %>
+    <% end %>
+  </div>
   </div>
   <div class="form-group" id="type_furniture">
     <%= f.label t('type_furnitures.type_furniture'), :class => "control-label" %><br>
-    <%= f.autocomplete_field :type_furniture_name, autocomplete_type_furniture_name_products_path, :id_element => '#product_type_furniture_id', :class => "form-control addresspicker", :validate => { :presence => true } %>
+          <%= f.select :type_furniture_id,
+            @type_furnitures.map { |o| 
+              [o.name, o.id, {'id' => o.id}]},
+              { include_blank: true },
+              { id: 'articles_select',
+              class: 'chosen-select' }
+            %>
     <span id="err_furniture"></span>
   </div>
-  <div class="form-group">
-    <%= f.label t('products.price'), :class => "control-label" %><br>
-    <%= f.text_field :price, :class => "form-control" %>
+  <div class="v">
+    <div class="form-group col-xs-3">
+      <%= f.label 'Объем', :class => "control-label" %><br>
+      <%= f.text_field :unit_v, :class => "form-control" %>
+    </div>
+    <div class="form-group col-xs-3">
+      <%= f.label 'Ширина', :class => "control-label" %><br>
+      <%= f.text_field :width, :class => "form-control" %>
+    </div>
+    <div class="form-group col-xs-3">
+      <%= f.label 'Высота', :class => "control-label" %><br>
+      <%= f.text_field :height, :class => "form-control" %>
+    </div>
+    <div class="form-group col-xs-3">
+      <%= f.label 'Глубина', :class => "control-label" %><br>
+      <%= f.text_field :depth, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label t('products.price'), :class => "control-label" %><br>
+      <%= f.text_field :price, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.hidden_field :type_furniture_id, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.hidden_field :brand_model_id, :class => "form-control" %>
+    </div>
   </div>
-  <div class="form-group">
-    <%= f.hidden_field :type_furniture_id, :class => "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.hidden_field :factory_id, :class => "form-control" %>
-  </div>
-
   
   </div>
 
