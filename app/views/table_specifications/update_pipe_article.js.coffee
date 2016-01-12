@@ -31,7 +31,7 @@ console.log("svg: "+shvg)
 if isNaN(unit_v)
   console.log("unit_v == ''")
   $("#uv").empty()
-    .append('<input step="0.1" class="unit_v" value="0" type="number" name="product[unit_v]" id="product_unit_v">')
+    .append('<input step="0.01" class="unit_v" value="0" type="number" name="product[unit_v]" id="product_unit_v">')
 if unit_v > 0
   console.log("unit_v > 0")
   $("#uv").empty()
