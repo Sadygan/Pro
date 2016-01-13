@@ -1,0 +1,9 @@
+<% if @brand_model.id == brand_model.id %>
+	<option value="<%= @brand_model.name %>" id="<%= @brand_model.id %>" selected="selected" >
+	<%= @brand_model.name %></option>
+<% elsif @br %>
+	<option value="<%= @br %>" id="0" selected="selected" ><%= @br %></option>
+  	<% @br = nil %>
+<% else %>
+  	<option value="<%= brand_model.name %>" id="<%= brand_model.id %>"><%= brand_model.name %></option>
+<% end %>
