@@ -289,7 +289,7 @@ class TableSpecificationsController < ApplicationController
                 @table_specification.save
             end 
           end
-          format.html { redirect_to project_specification_table_specifications_path+'/', notice: 'Table specification was successfully created.' }
+          format.html { redirect_to project_specification_table_specifications_path, notice: 'Table specification was successfully created.' }
           format.json { render :show, status: :created, location: @table_specification }
           format.js
         else

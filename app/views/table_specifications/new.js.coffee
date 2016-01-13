@@ -16,7 +16,7 @@ $('textarea').autoResize
 $ ->
   $(document).on 'change', '#factories_select', (evt) ->
     console.log('ok')
-    $.ajax 'table_specification/update_brand_models',
+    $.ajax 'table_specifications/table_specification/update_brand_models',
       type: 'GET'
       dataType: 'script'
       data: {
@@ -30,10 +30,9 @@ $ ->
         console.log(factory_id_)
         $('#table_specification_discount_id').val(factory_id_)
         $('input[name=create_ts]').prop('disabled', true);
-
 $ ->
   $(document).on 'change', '#products_select', (evt) ->
-    $.ajax 'table_specification/update_articles',
+    $.ajax 'table_specifications/table_specification/update_articles',
       type: 'GET'
       dataType: 'script'
       data: {
@@ -46,7 +45,7 @@ $ ->
   $(document).on 'change', '#articles_select', (evt) ->
     article = 0
     article = $("#articles_select option:selected").attr("id")
-    $.ajax 'table_specification/update_pipe_article',
+    $.ajax 'table_specifications/table_specification/update_pipe_article',
       type: 'GET'
       dataType: 'script'
       data: {
@@ -64,7 +63,7 @@ $ ->
         $('input[name=create_ts]').prop('disabled', false);
 $ ->
   $(document).on 'click', '#number_discount a', (evt) ->
-    $.ajax 'table_specification/discounts',
+    $.ajax 'table_specifications/table_specification/discounts',
       type: 'GET'
       dataType: 'script'
       data: {
@@ -80,7 +79,7 @@ $ ->
     return false
 $ ->
   $(document).on 'click', 'a#delivery', (evt) ->
-    $.ajax 'table_specification/deliveries',
+    $.ajax 'table_specifications/table_specification/deliveries',
       type: 'GET'
       dataType: 'script'
       data: {
@@ -95,7 +94,7 @@ $ ->
     return false
 $ ->
   $(document).on 'click', 'form a.shvg, a.shvg_percent', (evt) ->
-    $.ajax 'table_specification/packing_sizes',
+    $.ajax 'table_specifications/table_specification/packing_sizes',
       type: 'GET'
       dataType: 'script'
       data: {
@@ -108,7 +107,7 @@ $ ->
     return false
 $ ->
   $(document).on 'click', '#photos a', (evt) ->
-    $.ajax 'table_specification/photos',
+    $.ajax 'table_specifications/table_specification/photos',
       type: 'GET'
       dataType: 'script'
       data: {
@@ -123,7 +122,7 @@ $ ->
 
 $ ->
   $(document).on 'click', '#size_images a', (evt) ->
-    $.ajax 'table_specification/size_images',
+    $.ajax 'table_specifications/table_specification/size_images',
       type: 'GET'
       dataType: 'script'
       data: {
@@ -137,7 +136,7 @@ $ ->
 
 $ ->
   $(document).on 'click', '#modaldelivery .btn-primary', (evt) ->
-    $.ajax 'table_specification/delivery_data',
+    $.ajax 'table_specifications/table_specification/delivery_data',
       type: 'GET'
       dataType: 'script'
       data: {

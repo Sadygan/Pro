@@ -3,12 +3,8 @@
   
   <div class="row">
     <div class="col-sm-8">
-  <div class="form-group">
-    <%= f.label t('products.article'), :class => "control-label" %><br>
-    <%= f.text_field :article, :class => "form-control" %>
-  </div>
   <div class="form-group" id="factory">
-    <%= f.label t('factories.factory'), :class => "control-label" %>
+    <%= f.label 'Фабрика', :class => "control-label" %>
     <%= form_for(@brand_model) do |u| %>
       <%= u.select :factory_id,
             @factories.map { |o| [o.brand, o.id] },
@@ -16,6 +12,7 @@
             { id: 'factories_select',
             class: 'chosen-select' }
       %>
+  </div>
   <span id="err_factory"></span>
   <div class="form-group" id="brand_model">
     <%= f.label 'Модель', :class => "control-label" %>
@@ -28,6 +25,9 @@
       %>
     <% end %>
   </div>
+  <div class="form-group">
+    <%= f.label t('products.article'), :class => "control-label" %><br>
+    <%= f.text_field :article, :class => "form-control" %>
   </div>
   <div class="form-group" id="type_furniture">
     <%= f.label t('type_furnitures.type_furniture'), :class => "control-label" %><br>

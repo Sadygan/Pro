@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   
   resources :type_furnitures
   resources :products do
+    get 'update_brand_models', as: 'update_brand_models'
+    get 'update_articles', as: 'update_articles'
     get :autocomplete_type_furniture_name, :on => :collection
     get :autocomplete_factory_brand, :on => :collection
     resources :photos

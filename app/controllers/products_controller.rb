@@ -76,6 +76,18 @@ class ProductsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def update_brand_models
+    @brand_models = BrandModel.where("factory_id = ?", params[:factory_id])
+    @brand_model = @brand_models.first
+    p params[:factory_id]
+    @factory = Factory.find(params[:factory_id])
+
+
+    respond_to do |format|
+      format.js
+    end
+  end
   
   private
     # Use callbacks to share common setup or constraints between actions.
