@@ -46,7 +46,7 @@
           </td>
           <% if ts.group.nil? %>
             <td class="full_price" ><%= ts.unit_price %></td>
-            <td class="full_sum"><%= ts.with_interest %></td>
+            <td class="full_sum"><%= ts.summa %></td>
           <% else %>
             <td class="full_price" ><%= ts.groupDataSum(ts.group, "gp_unit_sum") %></td>
             <td class="full_sum" "<%= %>"><%= ts.groupDataSum(ts.group, "gp_sum_number") %></td>

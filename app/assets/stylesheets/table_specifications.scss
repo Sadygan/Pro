@@ -63,10 +63,6 @@
 	.chosen-container-single .chosen-single span {
 		margin-right:0;
 	}
-	.modal-dialog {
-		display:table;
-		width:auto;
-	}
 	#modalv .modal-dialog, #modalfactory .modal-dialog {
 		width:400px;
 	}
@@ -221,6 +217,7 @@
 		 border-color: #999;
 	}
 }
+/* end modal window*/
 
 /*****cropper styles*****/
 #fileInput{
