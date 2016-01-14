@@ -98,7 +98,7 @@ class TableSpecificationPdf < Prawn::Document
 			sum = item.groupDataSum(item.group, "gp_sum_number")
 			summa = {content: "#{sum}", rowspan: 2, valign: :center, align: :center}
 		else	
-			sum = item.with_interest
+			sum = item.summa
 			summa = {content: "#{sum}", rowspan: 2, valign: :center, align: :center}
 		end
 

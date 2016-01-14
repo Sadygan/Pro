@@ -9,16 +9,16 @@ $('#dialog').on 'shown.bs.modal', ->
   $('.first_input').focus()
   return
 
-$('form').submit ->
-  if $('#product_type_furniture_id').val()*1 != ''
-    $('#err_furniture').html ''
-  else
-    $('#err_furniture').html 'error'
-  if $('#product_factory_id').val()*1 != ''
-    $('#err_factory').html ''
-  else
-    $('#err_factory').html 'error'
-  return
+#$('form').submit ->
+#  if $('#product_type_furniture_id').val()*1 != ''
+#    $('#err_furniture').html ''
+#  else
+#    $('#err_furniture').html 'error'
+#  if $('#product_factory_id').val()*1 != ''
+#    $('#err_factory').html ''
+#  else
+#    $('#err_factory').html 'error'
+#  return
 
 $('.chosen-select').chosen
   allow_single_deselect: false

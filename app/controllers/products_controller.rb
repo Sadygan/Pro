@@ -39,16 +39,27 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(product_params)
+    brand_model = BrandModel.where(name: params[:brand_model][:name]).last
 
-    respond_to do |format|
-      if @product.save
-        format.json { head :no_content }
-        format.js
-      else
-        format.json { render json: @style.errors.full_messages,
-                                   status: :unprocessable_entity }
+    if brand_model.nil?
+      brand_model = BrandModel.new
+      respond_to do |format|
+      if brand_model.save
+        if @product.save
+          @product.brand_model_id = brand_model.id
+          @product.save
+          format.json { head :no_content }
+          format.js
+        else
+          format.json { render json: @style.errors.full_messages,
+                                     status: :unprocessable_entity }
+        end
       end
+    end          
+
+
     end
+
   end
 
   # PATCH/PUT /products/1

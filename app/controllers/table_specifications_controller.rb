@@ -231,8 +231,6 @@ class TableSpecificationsController < ApplicationController
       
       respond_to do |format|
         if @table_specification.save
-          # format.js { render :js => "alert('ok');" }
-          # format.js { render :js => "loader(true);" }
           brand_model = BrandModel.where(name: params[:brand_model][:name]).last
 
           if brand_model.nil?
