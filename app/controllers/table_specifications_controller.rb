@@ -343,6 +343,23 @@ class TableSpecificationsController < ApplicationController
     end
   end
 
+    # UPDATE PRINT SUM IN SPECIFICATION 
+  def update_print_sum
+    # x = Boolean.new
+    x = params[:print_sum]
+    p x
+    @specification = Specification.find(params[:specification_id])
+    @specification.print_sum = params[:print_sum]
+    respond_to do |format|
+      if @specification.save
+       format.json { head :no_content }
+       format.js
+      else
+        format.json { respond_with_bip(@table_specification) }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_table_specification

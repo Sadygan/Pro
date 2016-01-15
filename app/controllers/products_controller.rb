@@ -39,7 +39,11 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(product_params)
+    @brand_model = BrandModel.new(brand_model_params)
+    p @brand_model
     brand_model = BrandModel.where(name: params[:brand_model][:name]).last
+    p "===>"
+    p brand_model
 
     if brand_model.nil?
       brand_model = BrandModel.new

@@ -73,13 +73,6 @@ class SpecificationsController < ApplicationController
     end
   end
 
-  def print_sum
-    p params[:print_sum]
-    respond_to do |format|
-      format.html 
-    end
-  end
- 
 private
   
   def set_specification
