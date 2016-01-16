@@ -345,9 +345,6 @@ class TableSpecificationsController < ApplicationController
 
     # UPDATE PRINT SUM IN SPECIFICATION 
   def update_print_sum
-    # x = Boolean.new
-    x = params[:print_sum]
-    p x
     @specification = Specification.find(params[:specification_id])
     @specification.print_sum = params[:print_sum]
     respond_to do |format|

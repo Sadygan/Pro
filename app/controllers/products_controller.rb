@@ -39,31 +39,49 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(product_params)
-    @brand_model = BrandModel.new(brand_model_params)
+    # @brand_model = BrandModel.new(brand_model_params)
     p @brand_model
     brand_model = BrandModel.where(name: params[:brand_model][:name]).last
-    p "===>"
+    p "=======>"
     p brand_model
 
-    if brand_model.nil?
-      brand_model = BrandModel.new
-      respond_to do |format|
-      if brand_model.save
-        if @product.save
-          @product.brand_model_id = brand_model.id
-          @product.save
-          format.json { head :no_content }
-          format.js
-        else
-          format.json { render json: @style.errors.full_messages,
-                                     status: :unprocessable_entity }
+    respond_to do |format|
+      if brand_model.nil?
+        @brand_model = BrandModel.new(brand_model_params)
+          if @brand_model.save
+            if @product.save
+              p "save product"
+
+              @product.brand_model_id = @brand_model.id
+              @product.save
+              format.json { head :no_content }
+              format.js
+            else
+              format.json { render json: @style.errors.full_messages,
+                                         status: :unprocessable_entity }
+            end
+        format.js
+        end          
+      else
+        @brand_model = BrandModel.new(brand_model_params)
+        if @brand_model.save
+          if @product.save
+              @product.brand_model_id = brand_model.id
+              @product.save
+              format.json { head :no_content }
+              format.js
+            else
+              format.json { render json: @style.errors.full_messages,
+                                         status: :unprocessable_entity }
+            end
         end
+        format.js
       end
-    end          
-
-
     end
 
+  end
+  def brand_model_params
+    params.require(:brand_model).permit(:name, :factory_id)
   end
 
   # PATCH/PUT /products/1
