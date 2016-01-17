@@ -86,5 +86,7 @@ $(document).ready ->
     user: '489572075'
     sandbox: false)
   client.isAuthenticated()
+  $('.addpict').simpleCropper()
+
   return
 

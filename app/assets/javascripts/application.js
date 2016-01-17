@@ -52,6 +52,7 @@ $(document).ajaxError(function(event,xhr,options,exc) {
     $("#error_explanation").html(kk);
        
 });
+
 // loader
 function centerLoader() {
 	var winW = $(window).width();

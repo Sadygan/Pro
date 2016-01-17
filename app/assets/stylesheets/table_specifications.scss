@@ -141,66 +141,12 @@
 		margin-bottom:15px;
 		margin-left:17px;
 	}
-	#modaldelivery button {
-		margin-left:50px;
-	}
-	#modalfactory button {
-		margin-left:15px;
-	}
-	.modal-description {
-		text-align: left;
-	    padding: 15px 0 0 0;
-	}
-	.modal-body a{
-		display:inline-block;
-		vertical-align:middle;
-	}
-	.modal-body img{
-		width:100px;
-		height:auto;
-	}
-	.modal-body a{
-		margin-right:40px;
-	}
-	.modal-body a:last-child{
-		margin-right:0;
-	}
-	.modal-body input {
-		font-weight:normal;
-	}
-	.modal-footer {
-		text-align:left;
-	}
-	#discount {
-		display:inline !important;
-	}
-	.name {
-		font-weight:bold;
-		padding-bottom: 10px;
-	}
-	#modalfactory .col-sm-4 {
-		padding:0 5px;
-	}
 	a.invoker img {
 		width:100px;
 		height:auto;
 	}
 	.v a.invoker img {
 		width:auto;
-	}
-	.addpict {
-		background-color: #f1f1f1;
-		background-image: url('UploadLight.png');
-		background-position: center center;
-		background-repeat: no-repeat;
-		display:inline-block;
-		cursor:pointer;
-		width:100px;
-		height:175px;
-		vertical-align:middle;
-	}
-	.addpict:hover {
-	    background-image: url("UploadDark.png");
 	}
 	.clear:after {
 		display:table;
@@ -217,6 +163,63 @@
 		 border-color: #999;
 	}
 }
+/* add pict */
+#modaldelivery button {
+		margin-left:50px;
+	}
+#modalfactory button {
+	margin-left:15px;
+}
+.modal-description {
+	text-align: left;
+    padding: 15px 0 0 0;
+}
+.modal-body a{
+	display:inline-block;
+	vertical-align:middle;
+}
+.modal-body img{
+	width:100px;
+	height:auto;
+}
+.modal-body a{
+	margin-right:40px;
+}
+.modal-body a:last-child{
+	margin-right:0;
+}
+.modal-body input {
+	font-weight:normal;
+}
+.modal-footer {
+	text-align:left;
+}
+#discount {
+	display:inline !important;
+}
+.name {
+	font-weight:bold;
+	padding-bottom: 10px;
+}
+#modalfactory .col-sm-4 {
+	padding:0 5px;
+}
+.addpict {
+	background-color: #f1f1f1;
+	background-image: url('UploadLight.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	display:inline-block;
+	cursor:pointer;
+	width:100px;
+	height:175px;
+	vertical-align:middle;
+}
+.addpict:hover {
+	
+    background-image: url("UploadDark.png");
+}
+
 /* end modal window*/
 
 /*****cropper styles*****/

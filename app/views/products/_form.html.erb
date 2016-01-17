@@ -1,34 +1,39 @@
-<%= form_for(@product, remote: true, :html => { :role => "form" }) do |f| %>
+<%= form_for(@product, remote:true, :html => { :role => "form" }) do |f| %>
 <div id="error_explanation" class="bg-danger text-danger"></div>
   
   <div class="row">
-    <div class="col-sm-8">
-  <div class="form-group" id="factory">
-    <%= fields_for(@brand_model) do |u| %>
-      <%= u.select :factory_id,
-          @factories.map { |o| 
-          [o.brand, o.id, {"id" => o.id}]},
-          { include_blank: true },
-          { id: 'factories_select',
-          class: 'chosen-select' }
-      %>
-      <%= u.select :name,
-          @brand_models.map { |o| 
-          [o.name, o.name, {"id" => o.id}]},
-          { include_blank: true },
-          { id: 'products_select',
-          class: 'chosen-select' }
-      %>
-    <% end %>
-  </div>
-  <div class="form-group" id="brand_model">
+    <div class="col-sm-4">
+      <div class="form-group" id="factory">
+        <%= fields_for(@brand_model) do |u| %>
+          <div class="form-group" id="type_furniture">
+            <%= u.label 'Фабрика', :class => "control-label" %><br>
+            <%= u.select :factory_id,
+                @factories.map { |o| 
+                [o.brand, o.id, {"id" => o.id}]},
+                { include_blank: true },
+                { id: 'factories_select',
+                class: 'chosen-select' }
+            %>
+          </div>
+          <div class="form-group" id="brand_model">
+            <%= u.label 'Модель', :class => "control-label" %><br>
+            <%= u.select :name,
+                @brand_models.map { |o| 
+                [o.name, o.name, {"id" => o.id}]},
+                { include_blank: true },
+                { id: 'products_select',
+                class: 'chosen-select' }
+            %>
+          </div>
+        <% end %>
+          <div class="form-group" id="type_furniture">
+            <%= f.label 'Тип мебели', :class => "control-label" %><br>
+            <%= f.collection_select :type_furniture_id, TypeFurniture.all,:id,:name, {include_blank: false}, {class: 'chosen-select', selected: 1} %>
+          </div>
+      </div>
 
-  </div>
   <div class="form-group">
     <%= f.text_field :article, :class => "form-control" %>
-  </div>
-  <div class="form-group" id="type_furniture">
-
   </div>
   <div class="v">
     <div class="form-group col-xs-3">
@@ -52,17 +57,25 @@
       <%= f.text_field :price, :class => "form-control" %>
     </div>
     <div class="form-group">
-      <%= f.hidden_field :type_furniture_id, :class => "form-control" %>
     </div>
     <div class="form-group">
       <%= f.hidden_field :brand_model_id, :class => "form-control" %>
     </div>
   </div>
-  
+
+  <p>Photos</p>
+  <div class="photo" id="photos">
+    <div class="addpict"></div> 
+  </div>
+  <p>Size Images</p>
+  <div id="size_images">  
+    <div class="addpict"></div>
+  </div>
+    <%= f.hidden_field :photo_base64_form %>
   </div>
 
   </div>
   <div class="actions">
-     <%= f.submit %>
+    <%= f.submit %>
   </div>
 <% end %>

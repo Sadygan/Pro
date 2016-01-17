@@ -45,8 +45,6 @@ if isNaN(unit_v) && shvg == 0
     .append('<a class="shvg invoker" href="#">ШВГ</a>')
   $('#table_specification_percent_v').val("")
 
-
-
 # add record to list search in model field
 # add record to list search in model field
 select = undefined

@@ -17,6 +17,8 @@ class Product < ActiveRecord::Base
 
 	accepts_nested_attributes_for :assets
 
+  attr_accessor :photo_base64, :photo_base64_form, :size_image_base64, :size_image_base64_form
+
   def default_values
     self.price ||= 0
   end

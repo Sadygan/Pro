@@ -39,19 +39,13 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(product_params)
-    # @brand_model = BrandModel.new(brand_model_params)
-    p @brand_model
     brand_model = BrandModel.where(name: params[:brand_model][:name]).last
-    p "=======>"
-    p brand_model
 
     respond_to do |format|
       if brand_model.nil?
         @brand_model = BrandModel.new(brand_model_params)
           if @brand_model.save
             if @product.save
-              p "save product"
-
               @product.brand_model_id = @brand_model.id
               @product.save
               format.json { head :no_content }
@@ -149,6 +143,7 @@ class ProductsController < ApplicationController
         :unit_v, 
         :brand_model_id, 
         :type_furniture_id, 
+        :photo_base64_form
         # :factory_brand, 
         # :type_furniture_name
         )
