@@ -3,7 +3,7 @@
 
   <h2><%= t('products.products') %></h2>
   <div class="well">
-    <%= link_to t('products.new_product'), new_product_path, class: "btn btn-primary" %>
+    <%= link_to t('products.new_product'), new_product_path, remote: true, class: "btn btn-primary" %>
   </div>
   <div class="new-product"></div>
   <table class="table table-bordered table-striped table-hover">

@@ -1,13 +1,13 @@
 # Add the dialog title
-#$('#dialog h3').html '<i class="glyphicon glyphicon-plus"></i><%= t("products.new_product") %>'
+$('#dialog h3').html '<i class="glyphicon glyphicon-plus"></i><%= t("products.new_product") %>'
 # Render the new form
-#$('.modal-body').html '<%= j render("form") %>'
+$('.modal-body').html '<%= j render("form") %>'
 # Show the dynamic dialog
-#$('#dialog').modal 'show'
+$('#dialog').modal 'show'
 # Set focus to the first element
-#$('#dialog').on 'shown.bs.modal', ->
-#  $('.first_input').focus()
-#  return
+$('#dialog').on 'shown.bs.modal', ->
+  $('.first_input').focus()
+  return
 
 $('.chosen-select').chosen
   allow_single_deselect: false
