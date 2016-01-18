@@ -14,8 +14,6 @@ $('.chosen-select').chosen
   no_results_text: 'Add to Data Base'
   width: '100%'
 
-$('.addpict').simpleCropper()
-
 $ ->
   $(document).on 'change', '#factories_select', (evt) ->
     $.ajax 'products/product/update_brand_models',
@@ -43,3 +41,6 @@ $ ->
         product_id: $("#articles_select option:selected").attr("id")
         console.log("Dynamic country select OK!3333")
     return false
+
+$(document).ready ->
+  $('.addpict').simpleCropper()
