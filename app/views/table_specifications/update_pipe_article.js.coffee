@@ -67,7 +67,7 @@ chosen.dropdown.find('input').on 'keyup', (e) ->
     # trigger the update
     select.trigger 'chosen:updated'
     # updating article list
-    $.ajax 'table_specification/update_articles',
+    $.ajax 'table_specifications/table_specification/update_articles',
       type: 'GET'
       dataType: 'script'
       data: {
