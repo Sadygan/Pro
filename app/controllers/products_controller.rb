@@ -25,7 +25,7 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
     @brand_model = BrandModel.new
-    
+
     @factories = Factory.all
     @brand_models = BrandModel.all
     @type_furnitures = TypeFurniture.all
@@ -40,6 +40,7 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     brand_model = BrandModel.where(name: params[:brand_model][:name]).last
+    # photo_split =  @product.photo_base64_form.split(',')
 
     respond_to do |format|
       if brand_model.nil?
@@ -62,6 +63,7 @@ class ProductsController < ApplicationController
           if @product.save
               @product.brand_model_id = brand_model.id
               @product.save
+
               format.json { head :no_content }
               format.js
             else
@@ -74,6 +76,23 @@ class ProductsController < ApplicationController
     end
 
   end
+  
+# может даже прибить
+  # def create_img
+  #   @product = Product.last
+  #   p '--->'
+  #   p product = Product.find(params[:product_last_id])
+
+  #   save_img product, params[:image_base64], Photo
+
+
+  #   respond_to do |format|
+      
+  #     format.json { head :no_content }
+  #   end
+
+  # end
+
   def brand_model_params
     params.require(:brand_model).permit(:name, :factory_id)
   end
@@ -117,6 +136,25 @@ class ProductsController < ApplicationController
   end
   
   private
+    # Save photo
+    def save_img product, base64, model
+      p "--->"
+      p base64
+      
+      # if model_id.nil? 
+        photo = Paperclip.io_adapters.for(base64) 
+        photo.original_filename = product.article+'_photo.jpeg'
+        @photo = model.new(img: photo)
+        if @photo.save
+          @photo.product_id = product.id
+          p '==>'
+          @photo.save
+        else
+          p '--==>'
+
+        end
+      # end
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Product.find(params[:id])

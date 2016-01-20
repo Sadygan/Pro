@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     get 'update_articles', as: 'update_articles'
     get :autocomplete_type_furniture_name, :on => :collection
     get :autocomplete_factory_brand, :on => :collection
+    # post 'create_img', as: 'create_img' 
     resources :photos
     resources :size_images
   end
