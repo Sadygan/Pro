@@ -1,7 +1,7 @@
 <tr id="product_<%= product.id %>">
   <td>
   	<% if Photo.where(product_id: product.id).first %>  
-  		<% unless Photo.where(product_id: product.id).exists?(:thumb) %>  
+  		<% if Photo.where(product_id: product.id).first(params[:thumb]) %>  
   			<%= image_tag Photo.where(product_id: product.id).first.img.url(:thumb) %>
   		<% else %>
   			<%= image_tag Photo.where(product_id: product.id).first.img.url(:original) %>
