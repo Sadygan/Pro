@@ -31,4 +31,8 @@ class Product < ActiveRecord::Base
   	shvg_
   end
 
+  def first_photo id
+    photo = Photo.where(product_id: id).first
+  end
+
 end

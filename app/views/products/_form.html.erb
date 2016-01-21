@@ -5,7 +5,7 @@
       <div class="form-group col-sm-6" id="factory">
         <%= fields_for(@brand_model) do |u| %>
           <div class="form-group" id="type_furniture">
-            <%= u.label 'Фабрика', :class => "control-label" %><br>
+            <%= u.label :factory_id, 'Фабрика', :class => "control-label" %><br>
             <%= u.select :factory_id,
                 @factories.map { |o| 
                 [o.brand, o.id, {"id" => o.id}]},
@@ -15,7 +15,7 @@
             %>
           </div>
           <div class="form-group" id="brand_model">
-            <%= u.label 'Модель', :class => "control-label" %><br>
+            <%= u.label :name,'Модель', :class => "control-label" %><br>
             <%= u.select :name,
                 @brand_models.map { |o| 
                 [o.name, o.name, {"id" => o.id}]},
@@ -26,37 +26,37 @@
           </div>
         <% end %>
           <div class="form-group" id="type_furniture">
-            <%= f.label 'Тип мебели', :class => "control-label" %><br>
+            <%= f.label :type_furniture_id, 'Тип мебели', :class => "control-label" %><br>
             <%= f.collection_select :type_furniture_id, TypeFurniture.all,:id,:name, {include_blank: false}, {class: 'chosen-select', selected: 1} %>
           </div>
       </div>
   <div class="col-sm-6">
     <div class="form-group">
-      <%= f.label 'Артикул', :class => "control-label" %><br>
+      <%= f.label :article, 'Артикул', :class => "control-label" %><br>
       <%= f.text_field :article, :class => "form-control" %>
     </div>
       <div class="v">
        <fieldset>
         <legend>Размер упаковки</legend>  
         <div class="form-group col-xs-3">
-          <%= f.label 'Объем', :class => "control-label" %><br>
+          <%= f.label :unit_v, 'Объем', :class => "control-label" %><br>
           <%= f.text_field :unit_v, :class => "form-control" %>
         </div>
         <div class="form-group col-xs-3">
-          <%= f.label 'Ширина', :class => "control-label" %><br>
+          <%= f.label :width, 'Ширина', :class => "control-label" %><br>
           <%= f.text_field :width, :class => "form-control" %>
         </div>
         <div class="form-group col-xs-3">
-          <%= f.label 'Высота', :class => "control-label" %><br>
+          <%= f.label :height, 'Высота', :class => "control-label" %><br>
           <%= f.text_field :height, :class => "form-control" %>
         </div>
         <div class="form-group col-xs-3">
-          <%= f.label 'Глубина', :class => "control-label" %><br>
+          <%= f.label :depth, 'Глубина', :class => "control-label" %><br>
           <%= f.text_field :depth, :class => "form-control" %>
         </div>
        </fieldset>
        <div class="form-group">
-         <%= f.label t('products.price'), :class => "control-label" %><br>
+         <%= f.label :price, t('products.price'), :class => "control-label" %><br>
          <%= f.text_field :price, :class => "form-control" %>
        </div>
        <div class="form-group">
