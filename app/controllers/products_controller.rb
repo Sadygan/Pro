@@ -40,15 +40,24 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     brand_model = BrandModel.where(name: params[:brand_model][:name]).last
-    # photo_split =  @product.photo_base64_form.split(',')
+    @product.photo_base64_form
+    photos_split =  @product.photo_base64_form.split('.')
+    size_images_split =  @product.size_image_base64_form.split('.')
 
     respond_to do |format|
       if brand_model.nil?
         @brand_model = BrandModel.new(brand_model_params)
           if @brand_model.save
             if @product.save
+              for i in photos_split
+                save_img @product, i, Photo
+              end
+              for i in size_images_split
+                save_img @product, i, SizeImage
+              end
               @product.brand_model_id = @brand_model.id
               @product.save
+              
               format.json { head :no_content }
               format.js
             else
@@ -61,15 +70,21 @@ class ProductsController < ApplicationController
         @brand_model = BrandModel.new(brand_model_params)
         if @brand_model.save
           if @product.save
-              @product.brand_model_id = brand_model.id
-              @product.save
-
-              format.json { head :no_content }
-              format.js
-            else
-              format.json { render json: @style.errors.full_messages,
-                                         status: :unprocessable_entity }
+            for i in photos_split
+              save_img @product, i, Photo
             end
+            for i in size_images_split
+              save_img @product, i, SizeImage
+            end              
+            @product.brand_model_id = brand_model.id
+            @product.save
+
+            format.json { head :no_content }
+            format.js
+          else
+            format.json { render json: @style.errors.full_messages,
+                                       status: :unprocessable_entity }
+          end
         end
         format.js
       end
@@ -129,7 +144,6 @@ class ProductsController < ApplicationController
     p params[:factory_id]
     @factory = Factory.find(params[:factory_id])
 
-
     respond_to do |format|
       format.js
     end
@@ -140,7 +154,6 @@ class ProductsController < ApplicationController
     def save_img product, base64, model
       p "--->"
       p base64
-      
       # if model_id.nil? 
         photo = Paperclip.io_adapters.for(base64) 
         photo.original_filename = product.article+'_photo.jpeg'
@@ -181,7 +194,8 @@ class ProductsController < ApplicationController
         :unit_v, 
         :brand_model_id, 
         :type_furniture_id, 
-        :photo_base64_form
+        :photo_base64_form,
+        :size_image_base64_form
         # :factory_brand, 
         # :type_furniture_name
         )

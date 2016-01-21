@@ -1,9 +1,8 @@
 <%= form_for(@product, remote:true, :html => { :role => "form" }) do |f| %>
 <div id="error_explanation" class="bg-danger text-danger"></div>
   
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="form-group" id="factory">
+    <div class="row">
+      <div class="form-group col-sm-6" id="factory">
         <%= fields_for(@brand_model) do |u| %>
           <div class="form-group" id="type_furniture">
             <%= u.label 'Фабрика', :class => "control-label" %><br>
@@ -31,49 +30,54 @@
             <%= f.collection_select :type_furniture_id, TypeFurniture.all,:id,:name, {include_blank: false}, {class: 'chosen-select', selected: 1} %>
           </div>
       </div>
-
-  <div class="form-group">
-    <%= f.text_field :article, :class => "form-control" %>
+  <div class="col-sm-6">
+    <div class="form-group">
+      <%= f.label 'Артикул', :class => "control-label" %><br>
+      <%= f.text_field :article, :class => "form-control" %>
+    </div>
+    <div class="v">
+      <div class="form-group col-xs-3">
+        <%= f.label 'Объем', :class => "control-label" %><br>
+        <%= f.text_field :unit_v, :class => "form-control" %>
+      </div>
+      <div class="form-group col-xs-3">
+        <%= f.label 'Ширина', :class => "control-label" %><br>
+        <%= f.text_field :width, :class => "form-control" %>
+      </div>
+      <div class="form-group col-xs-3">
+        <%= f.label 'Высота', :class => "control-label" %><br>
+        <%= f.text_field :height, :class => "form-control" %>
+      </div>
+      <div class="form-group col-xs-3">
+        <%= f.label 'Глубина', :class => "control-label" %><br>
+        <%= f.text_field :depth, :class => "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label t('products.price'), :class => "control-label" %><br>
+        <%= f.text_field :price, :class => "form-control" %>
+      </div>
+      <div class="form-group">
+      </div>
+      <div class="form-group">
+        <%= f.hidden_field :brand_model_id, :class => "form-control" %>
+      </div>
+    </div>
   </div>
-  <div class="v">
-    <div class="form-group col-xs-3">
-      <%= f.label 'Объем', :class => "control-label" %><br>
-      <%= f.text_field :unit_v, :class => "form-control" %>
-    </div>
-    <div class="form-group col-xs-3">
-      <%= f.label 'Ширина', :class => "control-label" %><br>
-      <%= f.text_field :width, :class => "form-control" %>
-    </div>
-    <div class="form-group col-xs-3">
-      <%= f.label 'Высота', :class => "control-label" %><br>
-      <%= f.text_field :height, :class => "form-control" %>
-    </div>
-    <div class="form-group col-xs-3">
-      <%= f.label 'Глубина', :class => "control-label" %><br>
-      <%= f.text_field :depth, :class => "form-control" %>
-    </div>
-    <div class="form-group">
-      <%= f.label t('products.price'), :class => "control-label" %><br>
-      <%= f.text_field :price, :class => "form-control" %>
-    </div>
-    <div class="form-group">
-    </div>
-    <div class="form-group">
-      <%= f.hidden_field :brand_model_id, :class => "form-control" %>
-    </div>
-  </div>
 
+<div class="row">
   <p>Photos</p>
   <div class="photo" id="photos">
     <div class="addpict"></div> 
   </div>
+</div>
+<div class="row">
   <p>Size Images</p>
   <div id="size_images">  
     <div class="addpict"></div>
   </div>
-    <%= f.hidden_field :photo_base64_form %>
-    <%= f.hidden_field :size_image_base64_form %>
-  </div>
+</div>
+  <%= f.hidden_field :photo_base64_form %>
+  <%= f.hidden_field :size_image_base64_form %>
 
   </div>
   <div class="actions">
