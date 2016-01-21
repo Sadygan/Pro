@@ -1,4 +1,4 @@
-console.log('sss')
+
 #p = '<%= @product.id %>'
 #photo_obj = $('.photo img')
 #photo_obj.map (value, i) -> 
@@ -25,6 +25,12 @@ console.log('sss')
 #	  error: (jqXHR, textStatus, errorThrown) ->
 #	    console.log("AJAX Error: #{textStatus}")
 #	  success: (data, textStatus, jqXHR) ->
+
+$(document).on "ajax:success", "form", (xhr, data, response) ->
+	location.reload(false)
+	if data.error
+		for message of data
+			$('#errors ul').append '<li>' + data.error[message] + '</li>'
 
 $('#dialog').modal('toggle');
 $('#products').append('<%= j render (@product) %>')

@@ -42,5 +42,5 @@ $ ->
         console.log("Dynamic country select OK!3333")
     return false
 
-#$(document).ready ->
-#  $('.addpict').simpleCropper()
+$(document).ready ->
+  $('.addpict').simpleCropper()
