@@ -11,12 +11,6 @@
 		font-weight:bold;
 		color:#000;
 	}
-	td,th {
-		border:1px solid black;
-		text-align:center;
-		vertical-align:middle;
-		padding: 5px 0px 5px 0px;
-	}
 	input[type=text],input[type=number],textarea {
 		box-sizing:border-box;
 		border:none;
@@ -161,6 +155,12 @@
 	}
 }
 /* table */
+td,th {
+	border:1px solid black;
+	text-align:center;
+	vertical-align:middle;
+	padding: 5px 0px 5px 0px;
+}
 thead.tableFloatingHeaderOriginal {
 	background-color: #FFF;
 }

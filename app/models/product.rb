@@ -14,6 +14,7 @@ class Product < ActiveRecord::Base
   # validates :width, numericality: true
   # validates :height, numericality: true
   # validates :depth, numericality: true
+  validates :depth, numericality: true, presence: true
 
 	accepts_nested_attributes_for :assets
 
