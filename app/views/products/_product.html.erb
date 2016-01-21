@@ -1,7 +1,7 @@
 <tr id="product_<%= product.id %>">
   <td>
   	<% if Photo.where(product_id: product.id).first %>  
-		<%= image_tag Photo.where(product_id: product.id).first.img.url(:original) %>
+		<%= image_tag Photo.where(product_id: product.id).first.img.url(:thumb) %>
   	<% end %>
   </td>
   <td><%= product.brand_model.factory.brand %></td>
