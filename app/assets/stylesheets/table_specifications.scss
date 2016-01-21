@@ -46,9 +46,6 @@
 	a:hover {
 		text-decoration:none;
 	}
-	thead.tableFloatingHeaderOriginal {
-		background-color: #FFF;
-	}
 	.chosen-container-single .chosen-single {
 		background:none;
 		border:0;
@@ -163,6 +160,11 @@
 		 border-color: #999;
 	}
 }
+/* table */
+thead.tableFloatingHeaderOriginal {
+	background-color: #FFF;
+}
+/* --- */
 /* add pict */
 #modaldelivery button {
 		margin-left:50px;
