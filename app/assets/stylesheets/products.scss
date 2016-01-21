@@ -17,7 +17,10 @@ fieldset label {
  font-weight: normal;
  margin-left: -8px;
 }
-.modal-body a.chosen-single{
+#dialog a {
+ margin-right:30px;
+}
+#dialog a.chosen-single{
  margin: 0;
 }
 .modal-body #factory .form-group {
@@ -36,6 +39,6 @@ fieldset label {
 #dialog .row .row {
  margin: 0;
 }
-#dialog #photos {
+#dialog #photos, #dialog #size_images {
  margin-bottom: 20px;
 }
