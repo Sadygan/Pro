@@ -14,7 +14,7 @@ class Asset < ActiveRecord::Base
 				      :storage => :dropbox,
 				      :dropbox_credentials => Rails.root.join("config/dropbox.yml"),
 
-					  styles: {thumb: "100x100#"},
+					  styles: {thumb: "190"},
 								 
 					# :processors => [:papercrop, :rotator],  
 				      # :path => "product/:product_article/:class/:filename"
