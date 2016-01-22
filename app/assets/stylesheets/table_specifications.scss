@@ -158,7 +158,7 @@
 td,th {
 	border:1px solid black;
 	text-align:center;
-	vertical-align:middle;
+	vertical-align:middle !important;
 	padding: 5px 0px 5px 0px;
 }
 thead.tableFloatingHeaderOriginal {

@@ -43,6 +43,12 @@ $ ->
     return false
 
 $(document).ready ->
+  $('.chosen-select').on 'change', ->
+    if $('#factories_select option:selected').val() and $('#products_select option:selected').val() and $('#product_type_furniture_id option:selected').val()
+      $('input[name=commit]').prop 'disabled', false
+    else
+      $('input[name=commit]').prop 'disabled', true
+    return
   $('#modalIns .col-xs-3 input').on 'change keyup', ->
     if $('#product_unit_v').val() > 0
       $('#product_width').prop 'disabled', true
