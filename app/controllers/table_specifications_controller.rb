@@ -1,4 +1,4 @@
-class TableSpecificationsController < ApplicationController
+ class TableSpecificationsController < ApplicationController
   # before_action :check_role
   before_action :set_table_specification, only: [:show, :edit, :update, :destroy, :add_photos]
   before_action :set_project_specification

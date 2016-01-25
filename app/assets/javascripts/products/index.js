@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	
 	console.log('product-ready')
 	$('#modalIns .col-xs-3 input').on('change keyup',function() {
 		if($('#product_unit_v').val() > 0 ){

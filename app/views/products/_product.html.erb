@@ -9,5 +9,7 @@
   <td><%= link_to product.article, product %></td>
   <td><%= product.type_furniture.name %></td>
   <td><%= product.price %></td>
-  <td><%= link_to t('delete'), product, remote: true, :method => :delete, data: {confirm: "Delete Customer: #{product.article}"}, :class => 'btn btn-sm btn-danger' %></td>
+  <td>
+  	<%= link_to t('edit'), edit_product_path(product), remote: true, class: "btn btn-sm btn-info" %>
+  	<%= link_to t('delete'), product, remote: true, :method => :delete, data: {confirm: "Delete Customer: #{product.article}"}, :class => 'btn btn-sm btn-danger' %></td>
 </tr>
