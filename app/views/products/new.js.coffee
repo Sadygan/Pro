@@ -43,6 +43,7 @@ $ ->
     return false
 
 $(document).ready ->
+  $('.addpict').simpleCropper()
   $('.chosen-select').on 'change', ->
     if $('#factories_select option:selected').val() and $('#products_select option:selected').val() and $('#product_type_furniture_id option:selected').val()
       $('input[name=commit]').prop 'disabled', false
@@ -62,6 +63,5 @@ $(document).ready ->
       $('#product_unit_v').prop 'disabled', true
     else
       $('#product_unit_v').prop 'disabled', false
-    return
-  $('.addpict').simpleCropper()
+    return    
 

@@ -121,23 +121,60 @@ class ProductsController < ApplicationController
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
   def update
-    # photos_split =  @product.photo_base64_form.split('.')
-    # size_images_split =  @product.size_image_base64_form.split('.')
+    p "==>photo"
+    @product_ = Product.new(product_params)
+    p @product.id
+    photos_split = @product_.photo_base64_form.split('.')
+    size_images_split =  @product_.size_image_base64_form.split('.')
     p "==>"
     p @brand_model = BrandModel.where(name: params[:brand_model][:name]).last
     respond_to do |format|
-      if @brad_model.id == 0
+      if @brand_model.nil?
+        @brand_model = BrandModel.new(brand_model_params)
+        if @brand_model.save
+          if @product.update(product_params)
+            if @product.update(brand_model_id: @brand_model.id)
+              for i in photos_split
+                save_img @product, i, Photo
+              end
+              for i in size_images_split
+                save_img @product, i, SizeImage
+              end 
+              format.js
+            else
+              p "errors-brand-model"
+            end
+            format.js
+          end
+        end
+      else
         if @brand_model.update(brand_model_params)
           if @product.update(product_params)
-            format.html { redirect_to products_path, notice: 'Product was successfully updated.' }
-            format.json { render :show, status: :ok, location: @product }
+            if @product.update(brand_model_id: @brand_model.id)
+              for i in photos_split
+                save_img @product, i, Photo
+              end
+              for i in size_images_split
+                save_img @product, i, SizeImage
+              end 
+              format.js
+            else
+              p "errors-brand-model"
+            end
             format.js
-          else
-            format.html { render :edit }
-            format.json { render json: @product.errors, status: :unprocessable_entity }
           end
         end
       end
+        
+        #   if @product.update(product_params)
+        #     format.html { redirect_to products_path, notice: 'Product was successfully updated.' }
+        #     format.json { render :show, status: :ok, location: @product }
+        #     format.js
+        #   else
+        #     format.html { render :edit }
+        #     format.json { render json: @product.errors, status: :unprocessable_entity }
+        #   end
+        # end
       format.js
     end
   end

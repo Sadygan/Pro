@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-sm-12">
+  <p>Добавить фотографии товара</p>
+    <div class="photo" id="photos">
+      <% unless @photos.nil? %>  
+        <% @photos.each do |photo| %>
+          <%= image_tag photo.img.url(:thumb) %>
+        <% end %>
+      <% end %>
+      <div class="addpict"></div> 
+   </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+   <p>Добавить изображения размеров товара</p>
+   <div id="size_images">
+    <% unless @size_images.nil? %>
+     <% @size_images.each do |size_image| %>
+        <%= image_tag size_image.img.url(:thumb) %>
+      <% end %>  
+    <% end %>  
+    <div class="addpict"></div>
+   </div>
+  </div>
+</div>

@@ -59,7 +59,7 @@ chosen.dropdown.find('input').on 'keyup', (e) ->
     select.find(option).prop 'selected', true
     # trigger the update
     select.trigger 'chosen:updated'
-$('.addpict').simpleCropper()
+    select.trigger 'change'
 
 $(document).ready ->
   $('.chosen-select').on 'change', ->
@@ -82,3 +82,4 @@ $(document).ready ->
     else
       $('#product_unit_v').prop 'disabled', false
     return
+  #$('.addpict').simpleCropper()

@@ -85,3 +85,6 @@ $('input[name="create_ts"]').on('click', function(evt){
 	console.log('loader')
 	loader(true)
 });
+// $(document).ready(function(){
+	// $('.addpict').simpleCropper();
+// })
