@@ -7,8 +7,7 @@
       <tbody> 
       <%= form_for(@brand_model) do |u| %>
       <tr>
-        <td class="photo" id="photos"> 
-        </td>
+        <td class="photo" id="photos"></td>
           <%= f.hidden_field :photo_id, value: 0 %>
           <%= f.hidden_field :photo_base64_form %>
         <td class="factory">
@@ -53,22 +52,22 @@
           
           <td class="type_furniture">
             <%= j.collection_select :type_furniture_id, TypeFurniture.all,:id,:name, {include_blank: false}, {class: 'chosen-select', selected: 1} %>
-            </td>
-        <td class="size">
-          <div id="size_images">
-          </div>
-          <%= f.hidden_field :size_image_id %>
-          <%= f.hidden_field :size_image_base64_form %>
-          <div>
-            <%= f.text_area :size %>
-          </div>
-        </td>
-        <td class="unit_price_factory">
-          <%= f.number_field :unit_price_factory, {value: 0, class: "price"} %>
-         <td class="factory-sum">0</td>
-        <td class="number_of">
-          <%= f.number_field :number_of, {value: 1, class: "number"} %>
-        <td class="interest">
+          </td>
+          <td class="size">
+            <div id="size_images">
+            </div>
+            <%= f.hidden_field :size_image_id %>
+            <%= f.hidden_field :size_image_base64_form %>
+            <div>
+              <%= f.text_area :size %>
+            </div>
+          </td>
+          <td class="unit_price_factory">
+            <%= f.number_field :unit_price_factory, {value: 0, class: "price"} %>
+          <td class="factory-sum">0</td>
+          <td class="number_of">
+            <%= f.number_field :number_of, {value: 1, class: "number"} %>
+          <td class="interest">
           <p>
           <%= f.number_field :interest_percent, {value: 30, class: "interest"} %> %
           </p>
@@ -113,9 +112,9 @@
         <% end %>
       </ul>
     <% end %>
-  <div class="actions">
-    <%= f.submit :value => t('table.add_to'), name: "create_ts", disabled: true, class: "btn btn-primary" %>
-  </div>
+    <div class="actions">
+      <%= f.submit :value => t('table.add_to'), name: "create_ts", disabled: true, class: "btn btn-primary" %>
+    </div>
   </div>
     
 <% end %>

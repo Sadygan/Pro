@@ -1,0 +1,36 @@
+<tr id="project_<%= project.id %>">
+  <td><%= project.user.name %></td>
+  <td><%= project.user.email %></td>
+  <td><%= link_to project.object_name, project %></td>
+  <td><%= project.city.name %></td>
+  <td><%= project.style.name %></td>
+  <td><%= project.client.name %></td>
+  <td><%= project.type_furniture %></td>
+  <td><%= project.created_at %></td>
+  <% if project.status != @last_status %>
+    <td><%= link_to project.status, new_project_status_path(project), remote: true %></td>  
+  <% else %>
+    <td><%= project.status %></td>
+  <% end %>
+  <td><%= project.status_description %></td>
+  <td><%= project.deadline %></td>
+  <td><%= best_in_place [project], :planned_budget %></td>
+  <td class="datapic"><input name="<%= project.id %>" data-attribute="date_delivery_client" value="<%= project.date_delivery_client%>" class="form-control" id="dp_<%= project.id %>" /></td>
+  <td><%= best_in_place [project], :amount_contract %></td>
+  <td><%= Project::sum_specifications(project.specifications, "sum") %></td>
+  <td><%= best_in_place [project], :client_prepayment %></td>
+  <td><%= best_in_place [project], :client_surcharge %></td>
+  <td><%= best_in_place [project], :status_transaction %></td>
+  <td><%= best_in_place [project], :delivery_status %></td>
+
+  <td>
+
+  	<% if can? :update, project %>
+    <%= link_to t('edit'), edit_project_path(project), remote: true, :class => 'btn btn-sm btn-info' %>
+    <% end %>
+
+    <% if can? :destroy, project %>
+    <%= link_to t('delete'), project, remote: true, :method => :delete, data: {confirm: "Delete Customer: #{project.object_name} #{project.client}"}, :class => 'btn btn-sm btn-danger' %>
+    <% end %>
+  </td>
+</tr>

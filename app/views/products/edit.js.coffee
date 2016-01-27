@@ -62,6 +62,7 @@ chosen.dropdown.find('input').on 'keyup', (e) ->
     select.trigger 'change'
 
 $(document).ready ->
+  $('.addpict').simpleCropper()
   $('.chosen-select').on 'change', ->
     if $('#factories_select option:selected').val() and $('#products_select option:selected').val() and $('#product_type_furniture_id option:selected').val()
       $('input[name=commit]').prop 'disabled', false

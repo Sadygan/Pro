@@ -36,8 +36,6 @@ class TableSpecification < Table
     self.additional_packaging ||= 0
   end
 
-  attr_accessor :photo_base64, :photo_base64_form, :size_image_base64, :size_image_base64_form, :ts_id
-
   def calculate_percent_bank_delivery summa_netto, cost, execution_document, check_factory,  bank_service, bank_percent, v_sum, additional_deliver
     summa_netto+bank_service+(summa_netto+bank_service)*bank_percent/100+execution_document+check_factory+(cost+additional_deliver)*v_sum
   end

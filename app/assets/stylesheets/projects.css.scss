@@ -1,0 +1,75 @@
+// Place all the styles related to the projects controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+table#project {
+
+th, td {
+	text-align: center;
+	vertical-align: middle !important;
+	border: 0;
+}
+.column1 {
+	width: 10%;
+}
+.column2 {
+	width: 10%;
+}
+.column3 {
+	width: 10%;
+}
+.column4 {
+	width: 10%;
+}
+.column5 {
+	width: 10%;
+}
+.column6 {
+	width: 10%;
+}
+.column7 {
+	width: 10%;
+}
+.column8 {
+	width: 10%;
+}
+.column9 {
+	width: 10%;
+}
+.hider td {
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+	vertical-align: baseline !important;
+}
+.hider td .in {
+	padding-top: 10px;
+}
+.accordion-toggle {
+	cursor:pointer;
+}
+.accordion-body div {
+	font-weight: normal;
+}
+.accordion-body div:first-child {
+	padding-bottom: 20px;
+	//font-size: 1.1em;
+	font-style: italic;
+}
+.accordion-body div:last-child {
+	padding-bottom: 20px;
+	font-size: 1.1em;
+	color: #333;
+}
+td.column9 {
+	vertical-align: middle !important;
+	font-style: normal;
+}
+.column9 .btn-info {
+	margin-bottom: 5px;
+}
+.hasDatepicker {
+	text-align: center;
+}
+}

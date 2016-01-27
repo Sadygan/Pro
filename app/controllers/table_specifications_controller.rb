@@ -65,7 +65,7 @@
   def delivery_data
     p params[:delivery_id]
     @delivery_data = Delivery.find(params[:delivery_id])
-      @table_specification = TableSpecification.new
+    @table_specification = TableSpecification.new
 
     respond_to do |format|
       format.js

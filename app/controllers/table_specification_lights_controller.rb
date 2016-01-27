@@ -36,6 +36,14 @@ class TableSpecificationLightsController < ApplicationController
   # GET /table_specification_lights/new
   def new
     @table_specification_light = TableSpecificationLight.new
+    @brand_model = BrandModel.new
+    @product = Product.new
+    @photo = Photo.new
+    
+    @factories = Factory.all
+    @brand_models = BrandModel.all
+    @type_furnitures = TypeFurniture.all
+    @articles = Product.all
   end
 
   # GET /table_specification_lights/1/edit

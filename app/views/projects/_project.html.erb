@@ -1,36 +1,76 @@
-<tr id="project_<%= project.id %>">
-  <td><%= project.user.name %></td>
-  <td><%= project.user.email %></td>
-  <td><%= link_to project.object_name, project %></td>
-  <td><%= project.city.name %></td>
-  <td><%= project.style.name %></td>
-  <td><%= project.client.name %></td>
-  <td><%= project.type_furniture %></td>
-  <td><%= project.created_at %></td>
-  <% if project.status != @last_status %>
-    <td><%= link_to project.status, new_project_status_path(project), remote: true %></td>  
-  <% else %>
-    <td><%= project.status %></td>
-  <% end %>
-  <td><%= project.status_description %></td>
-  <td><%= project.deadline %></td>
-  <td><%= best_in_place [project], :planned_budget %></td>
-  <td class="datapic"><input name="<%= project.id %>" data-attribute="date_delivery_client" value="<%= project.date_delivery_client%>" class="form-control" id="dp_<%= project.id %>" /></td>
-  <td><%= best_in_place [project], :amount_contract %></td>
-  <td><%= Project::sum_specifications(project.specifications, "sum") %></td>
-  <td><%= best_in_place [project], :client_prepayment %></td>
-  <td><%= best_in_place [project], :client_surcharge %></td>
-  <td><%= best_in_place [project], :status_transaction %></td>
-  <td><%= best_in_place [project], :delivery_status %></td>
+<tr data-toggle="collapse" data-target=".hidden<%= project.id %>" data-parent="table" class="accordion-toggle" id="project_<%= project.id %>">
+	<td class="column1"><%= link_to project.object_name, project %></td>
+	<td class="column2"><%= project.client.name %></td>
+	<td class="column3"><%= project.created_at %></td>
+	<% if project.status != @last_status %>
+    	<td class="column4"><%= link_to project.status, new_project_status_path(project), remote: true %></td>  
+	<% else %>
+		<td class="column4"><%= project.status %></td>
+	<% end %>
+	<td class="column5"><%= project.status_description %></td>
+	<td class="column6"><%= project.deadline %></td>
+	<td class="column7"><%= best_in_place [project], :planned_budget %></td>
+	<td class="column8"><%= Project::sum_specifications(project.specifications, "sum") %></td>
+	<td class="column9"><%= best_in_place [project], :amount_contract %></td>
+</tr>
+<tr class="hider">
+	<td class="column1">
+		<div class="accordion-body collapse hidden<%= project.id %>">
+			<div>Город</div>
+			<div><%= project.city.name %></div>
+		</div>
+	</td>
+	<td class="column2">
+		<div class="accordion-body collapse hidden<%= project.id %>">
+			<div>Стиль</div>
+			<div><%= project.style.name %></div>
+		</div>
+	</td>
+	<td class="column3">
+		<div class="accordion-body collapse hidden<%= project.id %>">
+			<div>Тип мебели</div>
+			<div><%= project.type_furniture %></div>
+		</div>
+	</td>
+	<td class="column4">
+		<div class="accordion-body collapse hidden<%= project.id %>">
+			<div>Дата отгрузки</div>
+			<div class="datapic"><input name="<%= project.id %>" data-attribute="date_delivery_client" value="<%= project.date_delivery_client%>" class="form-control" id="dp_<%= project.id %>" /></td>
+		</div>
+	</td>
+	<td class="column5">
+		<div class="accordion-body collapse hidden<%= project.id %>">
+			<div>Предоплата</div>
+			<div><%= best_in_place [project], :client_prepayment %></div>
+		</div>
+	</td>
+	<td class="column6">
+		<div class="accordion-body collapse hidden<%= project.id %>">
+			<div>Доплата</div>
+			<div><%= best_in_place [project], :client_surcharge %></div>
+		</div>
+	</td>
+	<td class="column7">
+		<div class="accordion-body collapse hidden<%= project.id %>">
+			<div>Статус сделки</div>
+			<div><%= best_in_place [project], :status_transaction %></div>
+		</div>
+	</td>
+	<td class="column8">
+		<div class="accordion-body collapse hidden<%= project.id %>">
+			<div>Статус доставки</div>
+			<div><%= best_in_place [project], :delivery_status %></div>
+		</div>
+	</td>
+	<td class="column9 actions">
+		<div class="accordion-body collapse hidden<%= project.id %>">
+			<% if can? :update, project %>
+		    <%= link_to t('edit'), edit_project_path(project), remote: true, :class => 'btn btn-sm btn-info' %>
+		    <% end %>
 
-  <td>
-
-  	<% if can? :update, project %>
-    <%= link_to t('edit'), edit_project_path(project), remote: true, :class => 'btn btn-sm btn-info' %>
-    <% end %>
-
-    <% if can? :destroy, project %>
-    <%= link_to t('delete'), project, remote: true, :method => :delete, data: {confirm: "Delete Customer: #{project.object_name} #{project.client}"}, :class => 'btn btn-sm btn-danger' %>
-    <% end %>
-  </td>
+		    <% if can? :destroy, project %>
+		    <%= link_to t('delete'), project, remote: true, :method => :delete, data: {confirm: "Delete Customer: #{project.object_name} #{project.client}"}, :class => 'btn btn-sm btn-danger' %>
+		    <% end %>
+		</div>
+	</td>
 </tr>
