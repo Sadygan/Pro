@@ -1,3 +1,4 @@
+<%= javascript_include_tag "factories/index" %>
 <div class="container">
   <%= flash[:alert] %>
   <h2><%= t('brand.brands') %></h2>
@@ -8,7 +9,7 @@
   </div>
   <div class="new-brand"></div>
  
-  <table class="table table-striped">
+  <table class="table table-striped" id="factory">
     <thead>
     <tr>
         <th class="column1">Имя бренда</th>
