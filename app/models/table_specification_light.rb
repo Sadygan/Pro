@@ -10,7 +10,7 @@ class TableSpecificationLight < Table
   end
 
   def unit_price_factor
-  	multiplication(unit_price_factory, product.factory.light_factor)
+  	multiplication(unit_price_factory, product.brand_model.factory.light_factor)
   end
 
   def price_from_nil

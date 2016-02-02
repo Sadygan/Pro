@@ -73,23 +73,10 @@ table#factory {
 	.hasDatepicker {
 		text-align: center;
 	}
-	.accordion-toggle .column7{
-	    border-left: 1px dashed grey !important;
+	.accordion-toggle .column7, th.column7{
+    	border-left: 1px dashed grey !important;
 	}
-	.accordion-toggle .column9{
+	.accordion-toggle .column9, th.column9{
 	    border-right: 1px dashed grey !important;
-	}
-	.accordion-toggle .column9{
-	    border-right: 1px dashed grey !important;
-	}
-	tr:first-child .column7,
-	tr:first-child .column8,
-	tr:first-child .column9{
-	 border-top: 1px dashed grey !important;
-	}
-	tr:last-child .column7,
-	tr:last-child .column8,
-	tr:last-child .column9{
-	 border-bottom: 1px dashed grey !important;
 	}
 }

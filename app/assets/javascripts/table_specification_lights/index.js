@@ -2,6 +2,7 @@ jQuery(function() {
   return $('.best_in_place').best_in_place();
 });
 function calculateLight(td){
+	console.log('ts')
 	var price = td.closest('tr').find('input.price').val();
 	var coefficient = td.closest('tr').find('#number_factor span').text();
 	var number = td.closest('tr').find('input.number').val();
@@ -34,9 +35,10 @@ function calculateLight(td){
 }
 
 $(document).ready(function() {
-	console.log('qwe')
-	calculate($('input:first'));
-	$('input').on('change keyup', function(){
-		calculate($(this));
+	calculateLight($('input:first'));
+	$('body').on('change keyup','input', function(){
+		calculateLight($(this));
+		console.log($(this))
+		
 	});
 });
