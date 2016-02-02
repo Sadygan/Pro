@@ -17,6 +17,10 @@ class TableSpecificationLight < Table
   	multiplication(unit_price_factor, number_of)
   end
 
+  def summa
+    with_interest
+  end
+
   def unit_with_interest_light
     with_interest/number_of
   end

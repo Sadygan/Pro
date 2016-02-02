@@ -513,14 +513,15 @@ class TableSpecification < Table
     no_group_sum = 0
     group_sum = 0
     g = []
+    j = 0
+    
     table_specifications = TableSpecification.where(specification_id: specification)
     
-    j = 0
     table_specifications.each do |i|
       
       if arg === "sum"
         if i.group.nil?
-          no_group_sum += i.with_interest
+          no_group_sum += i.summa
         end
       end
 

@@ -54,7 +54,8 @@ $ ->
         console.log("AJAX Error: #{textStatus}")
       success: (data, textStatus, jqXHR) ->
         $('#table_specification_product_id').val(article)
-        $('#table_specification_photo_id').val($("#photos img").attr('value'))
+        $('#table_specification_light_photo_id').val($("#photos img").attr('value'))
+        $('#table_specification_light_size_image_id').val($("#size_images img").attr('value'))
         $('input[name=create_ts]').prop('disabled', false)     
 $ ->
   $(document).on 'click', '#number_discount a', (evt) ->

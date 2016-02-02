@@ -8,7 +8,7 @@
 	  <%= check_box("print", "sum", {checked: @specification.print_sum}, "sit") %>
 	  <%= render 'table' %>
 
-	  <%= link_to t('table.new_row'), new_project_specification_table_specification_light_path, remote: true , class: "table-button btn btn-primary" %>
+	  <%= link_to t('table.new_row'), new_project_specification_table_specification_light_path, remote: true , class: "table-button btn btn-primary", id: "form_button_light", style: "hidden" %>
 	  
 	  <%= render 'tables/general_methods/photo/dialog' %>
 	  <%= render 'tables/general_methods/photo/dialog_table' %>

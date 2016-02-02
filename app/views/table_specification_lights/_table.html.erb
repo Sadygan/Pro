@@ -1,20 +1,59 @@
 <div id="webtable">
   <table width="100%" id="table_specification">
-    <tr>
-      <th class="photo">Изображение</th>
-      <th class="factory">Фабрика</th>
-      <th class="model">Модель</th>
-      <th class="article">Артикул</th>
-      <th class="finishing_for_client">Отделка</th>
-      <th class="type_furniture">Описание</th>
-      <th class="size">Размер</th>
-      <th class="unit_price_factory">Цена фаб-ки</th>
-      <th class="factory-sum">Сумма фаб-ки</th>
-      <th class="number_of">Кол-во</th>
-      <th class="interest">Интерес</th>
-      <th class="full_price">Цена, &euro;</th>
-      <th class="full_sum">Сумма, &euro;</th>
-      <th class="architector">Архитектор</th>
-    </tr>
+     <thead>
+      <tr>
+        <th class="photo">Изображение</th>
+        <th class="factory">Фабрика</th>
+        <th class="model">Модель</th>
+        <th class="article">Артикул</th>
+        <th class="finishing_for_client">Отделка</th>
+        <th class="type_furniture">Описание</th>
+        <th class="size">Размер</th>
+        <th class="unit_price_factory">Цена фаб-ки</th>
+        <th class="factory-sum">Сумма в 0</th>
+        <th class="number_of">Кол-во</th>
+        <th class="interest">Интерес</th>
+        <th class="full_price">Цена, &euro;</th>
+        <th class="full_sum">Сумма, &euro;</th>
+        <th class="architector">Архитектор</th>
+      </tr>
+     </thead>
+     <tbody>
+       <% @table_specification_lights.each do |ts| %>
+         <% pst = [@project, @specification, ts] %>
+         <tr row-id="<%= ts.id %>" product-id="<%= ts.product_id %>">
+          <td class="photos"><%= render "tables/general_methods/photo/first_in_table", ts: ts %></td>
+          <td class="factory"><%= ts.product.brand_model.factory.brand %></br>
+          <%= ts.product.brand_model.factory.light_factor %>
+          </td>
+          <td><%= ts.product.brand_model.name %></td>
+          <td><%= ts.product.article %></td>
+          <td><%= best_in_place pst, :finishing_for_client %></td>
+          <td><%= ts.product.type_furniture.name %></td>
+          <td class="size_images">
+            <%= render "tables/general_methods/size_image/first_in_table", ts: ts %>
+            <br>
+            <%= best_in_place pst, :size %></td>
+          <td><%= best_in_place pst, :unit_price_factory %></td>
+          <td><%= ts.price_from_nil %></td>
+          <td><%= best_in_place pst, :number_of %></td>
+          <td>
+            <p><%= best_in_place pst, :interest_percent %> %</p>
+            <p style="white-space:nowrap;"><span class="interest-e"><%= ts.company_interest %></span> €</p>
+          </td>
+          <td><%= ts.unit_with_interest_light %></td>
+          <td><%= ts.with_interest %></td>
+          <td>
+            <p style="white-space:nowrap;">Интерес %: <br> <%= best_in_place pst, :arhitec_percent %>
+            </p>
+            <p>От заказа %: <span class="arh-order-percent"><%= ts.architector_percent_from_order %></span><br>Интерес €: <span class="arh-interest-e"><%= ts.architector_interest %></span></p>
+            <p>
+            <%= link_to 'Удалить запись', pst, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %>
+            </p>
+          </td>
+         </tr>
+
+       <% end %>
+     </tbody> 
   </table>
 </div>

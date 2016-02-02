@@ -111,7 +111,7 @@ class TableSpecificationPdf < Prawn::Document
 				unit_price = item.unit_price
 			end
 		elsif (item.class.name === "TableSpecificationLight")
-			# unit_price = item.unit_with_interest_light
+			unit_price = item.unit_with_interest_light
 		end
 		
 		if item.size_image_id
@@ -186,7 +186,7 @@ class TableSpecificationPdf < Prawn::Document
 	def total_sum_project
 		# total_sum = []
 		if @project.print_sum
-			data = [[{colspan: 1}, "Сумма проекта", {content: "#{Project::sum_specifications(@project.specifications)}"}]]
+			data = [[{colspan: 1}, "Сумма проекта", {content: "#{Project::sum_specifications(@project.specifications, 'sum')}"}]]
 			table(data, :column_widths => {0=>436, 1=>96, 2=>60})
 		end
 	end

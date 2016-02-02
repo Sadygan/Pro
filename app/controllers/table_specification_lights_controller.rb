@@ -122,7 +122,7 @@ class TableSpecificationLightsController < ApplicationController
                 p "-------"
                 p "-------"
                 save_img @table_specification_light, @table_specification_light.photo_id, product, @table_specification_light.photo_base64_form, Photo
-                save_img @table_specification_light, @table_specification_light.size_image_id, @product, @table_specification_light.size_image_base64_form, SizeImage
+                save_img @table_specification_light, @table_specification_light.size_image_id, product, @table_specification_light.size_image_base64_form, SizeImage
                 
                 @table_specification_light.product_id = product.id
                 @table_specification_light.save
@@ -157,7 +157,7 @@ class TableSpecificationLightsController < ApplicationController
   def destroy
     @table_specification_light.destroy
     respond_to do |format|
-      format.html { redirect_to table_specification_lights_url, notice: 'Table specification light was successfully destroyed.' }
+      format.html { redirect_to project_specification_table_specification_lights_path, notice: 'Table specification light was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -180,6 +180,28 @@ class TableSpecificationLightsController < ApplicationController
     else
       redirect_to main_page_index_path
     end
+  end
+  
+  # Save photo
+  def save_img table_specification, model_id, product, base64, model
+
+    # if model_id.nil? 
+      photo = Paperclip.io_adapters.for(base64) 
+      photo.original_filename = product.article+'_photo.jpeg'
+      @photo = model.new(img: photo)
+      if @photo.save
+        @photo.product_id = product.id
+        @photo.save
+
+        if model == Photo
+          table_specification.photo_id = @photo.id
+        elsif model == SizeImage
+          table_specification.size_image_id = @photo.id
+        end
+        
+        table_specification.save
+      end
+    # end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

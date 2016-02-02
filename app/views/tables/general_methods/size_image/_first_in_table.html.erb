@@ -3,7 +3,7 @@
 <% else %>
 	<%= link_to image_tag('UploadDark.png'), "#", {class: "invoker", id: "upload_dark"} %> 
 <% end %>
-<%= form_for [@project, @specification, @table_specification], remote: true do |f| %>
+<%= form_for [@project, @specification, ts], remote: true do |f| %>
 	<%= f.hidden_field :ts_id, class: "id_table" %>
 	<%= f.hidden_field :product_id, class: "product_id_table" %>
 	<%= f.hidden_field :size_image_base64, class: "base64_table" %>
