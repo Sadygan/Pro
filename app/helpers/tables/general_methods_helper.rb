@@ -1,0 +1,2 @@
+module Tables::GeneralMethodsHelper
+end

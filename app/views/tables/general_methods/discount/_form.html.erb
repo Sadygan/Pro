@@ -1,0 +1,22 @@
+<div class="col-sm-4">
+	<div class="name">Скидка фабрики %</div>
+	<% if @discounts.length  <= 1 %>
+		<span value="<%= @discounts.first.id %>" id="disc"><%= @discounts.first.percent %></span>
+	<% else %>
+
+		<%= select("discount","collect", options_for_select(@discounts.collect {|p| [ p.percent, p.id ] }, @table_specification.discount_id), {}, {class: "discounts"}) %>
+	<% end %> 
+</div>
+<div class="col-sm-4">
+	<div class="name">Дополнительная скидка %</div>
+	<div class="value"><%= @factory.additional_discount %></div>
+</div>
+<div class="col-sm-4">
+	<div class="field">
+		Добавить к прайсу <br>
+		<input type="number" class="increment_discount_modal" value="<%= @table_specification.increment_discount %>">
+	</div>
+</div>
+<div class="col-sm-12 modal-description">
+	<p><%= @factory.note %></p>
+</div>

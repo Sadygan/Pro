@@ -1,0 +1,5 @@
+<% if type_furniture.id == @type_furniture.id %>
+	<option value="<%= type_furniture.id %>" id="" selected="selected" ><%= @type_furniture.name %></option>
+<% else %>
+  <option value="<%= type_furniture.id %>" id=""><%= type_furniture.name %></option>
+<% end %>

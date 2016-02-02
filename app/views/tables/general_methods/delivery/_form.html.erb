@@ -1,0 +1,18 @@
+<div class="col-sm-4">
+	<div class="name">Направление</div>
+	<% if @deliveries.length  <= 1 %>
+		<%= @deliveries.first.direction %>
+	<% else %>
+		<%= select("post", "delivery_id", options_for_select(@deliveries.collect {|p| [ p.direction, p.id ] }, @table_specification.delivery_id), {}, class: "deliveries") %>
+
+	<% end %> 
+</div>
+<div class="col-sm-4">
+	<div class="name">Стоимость упаковки</div>
+	<%= number_field_tag :additional_packing, @table_specification.additional_packaging, {name: "packingPrice", class: "packingPrice"} %>
+</div>
+<div class="col-sm-4">
+	<div class="name">Добавить к доставке</div>
+
+	<%= number_field_tag :additional_delivery, @table_specification.additional_delivery, {name: "addToDelivery", class: "addToDelivery" } %>
+</div>

@@ -1,0 +1,22 @@
+<div class="col-sm-3">
+	<div class="name">Ширина</div>
+	<span id="w"><%= @product.width %></span>
+
+</div>
+<div class="col-sm-3">
+	<div class="name">Высота</div>
+	<span id="h"><%= @product.height %></span>
+</div>
+<div class="col-sm-3">
+	<div class="name">Глубина</div>
+	<span id="d"><%= @product.depth %></span>
+</div>
+<div class="col-sm-3">
+	<div class="name">Упаковка %</div>
+	<% if @percent_v %>
+		<%= number_field_tag :unit_v, @percent_v, {name: "pack", id: "pack"} %>
+	<% else %>
+		<%= number_field_tag :unit_v, 10, {name: "pack", id: "pack"} %>
+	<% end %>
+
+</div>
