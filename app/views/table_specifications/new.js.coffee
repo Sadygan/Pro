@@ -60,7 +60,7 @@ $ ->
       success: (data, textStatus, jqXHR) ->
         $('#table_specification_product_id').val(article)
         $('#table_specification_photo_id').val($("#photos img").attr('value'))
-        $('input[name=create_ts]').prop('disabled', false);
+        $('input[name=create_ts]').prop('disabled', false)
 $ ->
   $(document).on 'click', '#number_discount a', (evt) ->
     $.ajax 'table_specifications/table_specification/discounts',
@@ -119,7 +119,6 @@ $ ->
         product_id: $("#articles_select option:selected").attr("id")
         console.log("Dynamic country select OK!3333")
     return false
-
 $ ->
   $(document).on 'click', '#size_images a', (evt) ->
     $.ajax 'table_specifications/table_specification/size_images',
@@ -133,7 +132,6 @@ $ ->
       success: (data, textStatus, jqXHR) ->
         product_id: $("#articles_select option:selected").attr("id")
     return false
-
 $ ->
   $(document).on 'click', '#modaldelivery .btn-primary', (evt) ->
     $.ajax 'table_specifications/table_specification/delivery_data',
@@ -148,7 +146,6 @@ $ ->
         console.log(invoker)
         calculate(invoker)
     return false
-
 $ ->
   $(document).on 'change', '.chosen-select', (evt) ->
     console.log 'change'

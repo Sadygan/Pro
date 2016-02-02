@@ -376,17 +376,17 @@
         redirect_to main_page_index_path
       end
     end
-        # Never trust parameters from the scary internet, only allow the white list through.
-    def brand_model_params
-      params.require(:brand_model).permit(:name, :factory_id)
-    end
-
     def photo_params
        params.require(:photo).permit(
         :type, 
         :img, 
         :product_id
       )
+    end
+   
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def brand_model_params
+      params.require(:brand_model).permit(:name, :factory_id)
     end
 
     def product_params

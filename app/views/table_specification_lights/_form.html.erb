@@ -1,82 +1,61 @@
-<%= form_for([@project, @specification, @table_specification_light]) do |f| %>
-  <% if @table_specification_light.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@table_specification_light.errors.count, "error") %> prohibited this table_specification_light from being saved:</h2>
+<%= form_for([@project, @specification, @table_specification_light], remote: true, :html=>{:onsubmit=>"return loader(true);"}) do |f| %>
+  <%= f.hidden_field :product_id %>
 
-      <ul>
-      <% @table_specification_light.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
   <div id="webtable">
     <table width="100%">
-      <thead>
-        <tr>
-          <th class="photo">Изображение</th>
-          <th class="factory">Фабрика</th>
-          <th class="model">Модель</th>
-          <th class="article">Артикул</th>
-          <th class="finishing_for_client">Отделка</th>
-          <th class="type_furniture">Описание</th>
-          <th class="size">Размер</th>
-          <th class="unit_price_factory">Цена фаб-ки</th>
-          <th class="factory-sum">Сумма фаб-ки</th>
-          <th class="number_of">Кол-во</th>
-          <th class="interest">Интерес</th>
-          <th class="full_price">Цена, &euro;</th>
-          <th class="full_sum">Сумма, &euro;</th>
-          <th class="architector">Архитектор</th>
-        </tr>
-      </thead>
-    <tbody>
+      <tbody> 
+      <%= form_for(@brand_model) do |u| %>
       <tr>
         <td class="photo" id="photos"></td>
           <%= f.hidden_field :photo_id, value: 0 %>
-          <%= f.hidden_field :photo_base64_form %> 
-          <td class="factory">
-          <%= form_for(@brand_model) do |u| %>
-            <%= u.select :factory_id,
-                        @factories.map { |o| [o.brand, o.id] },
-                        { include_blank: true },
-                        { id: 'factories_select',
-                        class: 'chosen-select' }
+          <%= f.hidden_field :photo_base64_form %>
+        <td class="factory">
+        <%= u.select :factory_id,
+                  @factories.map { |o| [o.brand, o.id] },
+                  { include_blank: true },
+                  { id: 'factories_select',
+                  class: 'chosen-select' }
+          %>
+          <br>
+          <div id="number_factor"></div>
+          <%= f.hidden_field :increment_discount, value: 0 %>
+        </td>
+        
+        <td class="model">
+        <%= u.select :name,
+                  @brand_models.map { |o| 
+                  [o.name, o.name, {"id" => o.id}]},
+                  { include_blank: true },
+                  { id: 'products_select',
+                  class: 'chosen-select' }
+          %>
+        </td>
+        <td class="article">
+          <%= form_for(@product) do |j| %>
+          <%= j.select :article,
+                  @articles.map { |o| 
+                    [o.article, o.article, {'id' => o.id}]},
+                    { include_blank: true },
+                    { id: 'articles_select',
+                    class: 'chosen-select' }
             %>
           </td>
-          <td class="model">
-            <%= u.select :name,
-                        @brand_models.map { |o| 
-                        [o.name, o.name, {"id" => o.id}]},
-                        { include_blank: true },
-                        { id: 'products_select',
-                        class: 'chosen-select' }
-            %>
-          </td>
-          <% end %>
-          <td class="article">
-            <%= form_for(@product) do |j| %>
-            <%= j.select :article,
-                        @articles.map { |o| 
-                        [o.article, o.article, {'id' => o.id}]},
-                        { include_blank: true },
-                        { id: 'articles_select',
-                        class: 'chosen-select' }
-            %>
-          </td>
+          
           <td class="finishing_for_client">
             <%= f.text_area :finishing_for_client %>
           </td>
-
+          
           <td class="type_furniture">
             <%= j.collection_select :type_furniture_id, TypeFurniture.all,:id,:name, {include_blank: false}, {class: 'chosen-select', selected: 1} %>
           </td>
-          <% end %>
           <td class="size">
-            <div id="size_images"></div>
+            <div id="size_images">
+            </div>
             <%= f.hidden_field :size_image_id %>
             <%= f.hidden_field :size_image_base64_form %>
-            <div><%= f.text_area :size %></div>
+            <div>
+              <%= f.text_area :size %>
+            </div>
           </td>
           <td class="unit_price_factory">
             <%= f.number_field :unit_price_factory, {value: 0, class: "price"} %>
@@ -84,25 +63,35 @@
           <td class="number_of">
             <%= f.number_field :number_of, {value: 1, class: "number"} %>
           <td class="interest">
-            <p><%= f.number_field :interest_percent, {value: 30, class: "interest"} %> %</p>
-            <p style="white-space:nowrap;"><span class="interest-e">0</span> &euro;</p>
-          </td>
-          <td class="full_price">0</td>
-          <td class="full_sum">0</td>
-          <td class="architector"><p style="white-space:nowrap;">Интерес %: 
-            <%= f.number_field :arhitec_percent, {value: 50, class: "arh-interest"}%>
-            </p>
-            <p>От заказа %: <span class="arh-order-percent">15</span><br>Интерес &euro;: <span class="arh-
-            interest-e">0</span></p>
-          </td>
+          <p>
+          <%= f.number_field :interest_percent, {value: 30, class: "interest"} %> %
+          </p>
+          <p style="white-space:nowrap;"><span class="interest-e">0</span> &euro;</p>
+        </td>
+        <td class="full_price">0</td>
+        <td class="full_sum">0</td>
+         <% end %>
+      <% end %>
+        <td class="architector"><p style="white-space:nowrap;">Интерес %: 
+          <%= f.number_field :arhitec_percent, {value: 50, class: "arh-interest"}%>
+          </p>
+          <p>От заказа %: <span class="arh-order-percent">15</span><br>Интерес &euro;: <span class="arh-interest-e">0</span></p>
+        </td>
 
       </tr>
     </tbody>
-  </table>
+    </table>
 
- <div class="actions">
-    <%= f.submit :value => t('table.add_to'), name: "create_ts", disabled: true, class: "btn btn-primary" %>
+    <% if @table_specification_light.errors.any? %>
+      <ul>
+        <% @table_specification_light.errors.full_massages.each do |message|  %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <div class="actions">
+      <%= f.submit :value => t('table.add_to'), name: "create_ts", disabled: true, class: "btn btn-primary" %>
+    </div>
   </div>
-  </div>
-
+    
 <% end %>

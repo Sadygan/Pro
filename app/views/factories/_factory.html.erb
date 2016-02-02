@@ -1,30 +1,55 @@
-<tr id="factory_<%= factory.id %>">
-  <td><%= factory.brand %></td>
-  <td><%= factory.web %></td>
-  <td><%= factory.autorification %></td>
-  <td><%= factory.style %></td>
-  <td><%= factory.line_product %></td>
-  <td><%= factory.catalog %></td>
-  <td>
-    <% factory.discounts.each do |company| %>
-      <%= company.percent %>
-    <% end %>
-  </td>
-  <td><%= factory.additional_discount %></td>
-  <td><%= factory.delivery_terms %></td>
-  <td><%= factory.minimum_order %></td>
-  <td><%= factory.delivery_time %></td>
-  <td><%= factory.light_factor %></td>
-  <td><%= factory.delivery_time %></td>
-  <td><%= factory.group_brend %></td>
-  <td><%= factory.note %></td>
-  <td>
-    <% if can? :update, factory %>
-    <%= link_to t('edit'), edit_factory_path(factory), remote: true, :class => 'btn btn-sm btn-info' %>
-    <% end %>
-    
-    <% if can? :destroy, factory %>
-    <%= link_to t('delete'), factory, remote: true, :method => :delete, data: {confirm: "Delete Factory: #{factory.brand}"}, :class => 'btn btn-sm btn-danger' %>
-    <% end %> 
-  </td>
+<tr id="factory_<%= factory.id %>" data-toggle="collapse" data-target=".hidden1" data-parent="table" class="accordion-toggle">
+	<td class="column1"><%= factory.brand %></td>
+	<td class="column2"><%= factory.line_product %>/td>
+	<td class="column3">
+		<% factory.discounts.each do |company| %>
+	      <%= company.percent %>
+	    <% end %>
+	</td>
+	<td class="column4"><%= factory.additional_discount %></td>
+	<td class="column5"><%= factory.delivery_terms %></td>
+	<td class="column6"><%= factory.minimum_order %></td>
+	<td class="column7"><%= factory.light_factor %></td>
+	<td class="column8"><%= factory.group_brend %></td>
+	<td class="column9"><%= factory.delivery_time %></td>
 </tr>
+<tr class="hider">
+	<td class="column1">
+		<div class="accordion-body collapse hidden1">
+				<div>Сайт</div>
+				<div><%= factory.web %></div>
+		</div>
+	</td>
+	<td class="column2">
+		<div class="accordion-body collapse hidden1">
+			<div>Стиль</div>
+			<div><%= factory.style %></div>
+		</div>
+	</td>
+	<td class="column3">
+		<div class="accordion-body collapse hidden1">
+			<div>Авторизация</div>
+			<div><%= factory.autorification %></div>
+		</div>
+	</td>
+	<td class="column4">
+		<div class="accordion-body collapse hidden1">
+			<div><%= factory.catalog %></div>
+			<div></div>
+		</div>
+	</td>
+	<td class="column5-8" colspan="4">
+		<div class="accordion-body collapse hidden1">
+			<div><%= factory.note %></div>
+			<div>заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки</div>
+		</div>
+	</td>
+	<td class="column9 actions">
+		<div class="accordion-body collapse hidden1">
+			
+				<a class="btn btn-sm btn-info" href="/projects/2/edit" data-remote="true">Редактировать</a>
+				<a class="btn btn-sm btn-danger" href="/projects/2" data-method="delete" rel="nofollow" data-remote="true" data-confirm="Delete Customer: fdgh #<Client:0x007f8defe0c6b0>">Удалить</a>
+		</div>
+	</td>
+</tr>
+

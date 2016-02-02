@@ -35,23 +35,35 @@ Rails.application.routes.draw do
     get "delete"
     get "client", on: :collection
   end
-  
+
+  namespace :tables do
+    get 'update_brand_models', as: 'update_brand_models', to: 'general_methods#update_brand_models'
+    get 'update_articles', as: 'update_articles', to: 'general_methods#update_articles'
+    get 'update_pipe_article', as: 'update_pipe_article', to: 'general_methods#update_pipe_article'
+  end
+
   resources :projects do
     resources :statuses
     resources :specifications do
+      # namespace :table do
+      #   resources :general_methods, only: [] do
+      #     get 'general_methods/update_brand_models', as: 'general_methods/update_brand_models'
+      #   end
+      # end
+      # match '/tables/general_methods' => "tables/general_methods#update_brand_models", via: [:get, :post]
       resources :table_specifications do
-        get "update_print_sum", as: "update_print_sum"
         get "edit_image", :edit
         get :autocomplete_product_article, :on => :collection
+        get "update_print_sum",    as: "update_print_sum"
         get 'update_brand_models', as: 'update_brand_models'
-        get 'update_articles', as: 'update_articles'
+        get 'update_articles',     as: 'update_articles'
         get 'update_pipe_article', as: 'update_pipe_article'
-        get 'photos', as: 'photos'
-        get 'size_images', as: 'size_images'
-        get 'discounts', as: 'discounts'
-        get 'deliveries', as: 'deliveries'
-        get 'packing_sizes', as: 'packing_sizes'
-        get 'delivery_data', as: 'delivery_data'
+        get 'photos',              as: 'photos'
+        get 'size_images',         as: 'size_images'
+        get 'discounts',           as: 'discounts'
+        get 'deliveries',          as: 'deliveries'
+        get 'packing_sizes',       as: 'packing_sizes'
+        get 'delivery_data',       as: 'delivery_data'
       end
       resources :table_specification_lights do
         get "edit_image", :edit

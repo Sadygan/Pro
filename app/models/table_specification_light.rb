@@ -1,9 +1,9 @@
 class TableSpecificationLight < Table
   
-  validates :unit_price_factory, presence: true, numericality: true
-  validates :number_of, presence: true, numericality: {only_integer: true}
-  validates :interest_percent, presence: true, numericality: { only_integer: true }
-  validates :arhitec_percent, presence: true, numericality: { only_integer: true }
+  # validates :unit_price_factory, presence: true, numericality: true
+  # validates :number_of, presence: true, numericality: {only_integer: true}
+  # validates :interest_percent, presence: true, numericality: { only_integer: true }
+  # validates :arhitec_percent, presence: true, numericality: { only_integer: true }
 
   def upn
   	unit_price_factory
