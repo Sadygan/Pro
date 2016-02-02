@@ -1,4 +1,4 @@
-<tr id="factory_<%= factory.id %>" data-toggle="collapse" data-target=".hidden1" data-parent="table" class="accordion-toggle">
+<tr id="factory_<%= factory.id %>" data-toggle="collapse" data-target=".hidden<%= factory.id %>" data-parent="table" class="accordion-toggle">
 	<td class="column1"><%= factory.brand %></td>
 	<td class="column2"><%= factory.line_product %></td>
 	<td class="column3">
@@ -15,40 +15,45 @@
 </tr>
 <tr class="hider">
 	<td class="column1">
-		<div class="accordion-body collapse hidden1">
+		<div class="accordion-body collapse hidden<%= factory.id %>">
 				<div>Сайт</div>
 				<div><%= factory.web %></div>
 		</div>
 	</td>
 	<td class="column2">
-		<div class="accordion-body collapse hidden1">
+		<div class="accordion-body collapse hidden<%= factory.id %>">
 			<div>Стиль</div>
 			<div><%= factory.style %></div>
 		</div>
 	</td>
 	<td class="column3">
-		<div class="accordion-body collapse hidden1">
+		<div class="accordion-body collapse hidden<%= factory.id %>">
 			<div>Авторизация</div>
 			<div><%= factory.autorification %></div>
 		</div>
 	</td>
 	<td class="column4">
-		<div class="accordion-body collapse hidden1">
+		<div class="accordion-body collapse hidden<%= factory.id %>">
 			<div><%= factory.catalog %></div>
 			<div></div>
 		</div>
 	</td>
 	<td class="column5-8" colspan="4">
-		<div class="accordion-body collapse hidden1">
+		<div class="accordion-body collapse hidden<%= factory.id %>">
+			<div>Заметки</div>
 			<div><%= factory.note %></div>
-			<div>заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки заметки</div>
 		</div>
 	</td>
 	<td class="column9 actions">
-		<div class="accordion-body collapse hidden1">
+		<div class="accordion-body collapse hidden<%= factory.id %>">
 			
-				<a class="btn btn-sm btn-info" href="/projects/2/edit" data-remote="true">Редактировать</a>
-				<a class="btn btn-sm btn-danger" href="/projects/2" data-method="delete" rel="nofollow" data-remote="true" data-confirm="Delete Customer: fdgh #<Client:0x007f8defe0c6b0>">Удалить</a>
+	 	<% if can? :update, factory %>
+		    <%= link_to t('edit'), edit_factory_path(factory), remote: true, :class => 'btn btn-sm btn-info' %>
+		    <% end %>
+		    
+		    <% if can? :destroy, factory %>
+		    <%= link_to t('delete'), factory, remote: true, :method => :delete, data: {confirm: "Delete Factory: #{factory.brand}"}, :class => 'btn btn-sm btn-danger' %>
+	    <% end %> 
 		</div>
 	</td>
 </tr>
