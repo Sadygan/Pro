@@ -93,7 +93,7 @@ $ ->
         $('.deliveries [value='+current_delivery_id+']').attr('selected', 'selected')
     return false
 $ ->
-  $(document).on 'click', 'form a.shvg, a.shvg_percent', (evt) ->
+  $(document).on 'click', 'form a.shvg', (evt) ->
     $.ajax 'table_specifications/table_specification/packing_sizes',
       type: 'GET'
       dataType: 'script'

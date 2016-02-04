@@ -24,7 +24,7 @@
          <tr row-id="<%= ts.id %>" product-id="<%= ts.product_id %>">
           <td class="photos"><%= render "tables/general_methods/photo/first_in_table", ts: ts %></td>
           <td class="factory"><%= ts.product.brand_model.factory.brand %></br>
-          <%= ts.product.brand_model.factory.light_factor %>
+            <span class="light_factor"><%= ts.product.brand_model.factory.light_factor %></span>
           </td>
           <td><%= ts.product.brand_model.name %></td>
           <td><%= ts.product.article %></td>
@@ -35,7 +35,7 @@
             <br>
             <%= best_in_place pst, :size %></td>
           <td><%= best_in_place pst, :unit_price_factory %></td>
-          <td><%= ts.price_from_nil %></td>
+          <td class="factory-sum"><%= ts.price_from_nil %></td>
           <td><%= best_in_place pst, :number_of %></td>
           <td>
             <p><%= best_in_place pst, :interest_percent %> %</p>

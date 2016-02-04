@@ -1,369 +1,248 @@
-var invoker;
-
-function trueValue(input, text) {
-	var trval;
-	if (input === undefined) {
-		trval = text;
-	} else {
-		trval = input;
-	}
-	return trval;	
-}
-/***функция пересчета***/
-function calculate(td){
-	var price_input = td.closest('tr').find('input.price').val();
-	var price_text = td.closest('tr').find('[data-attribute="unit_price_factory"] input').val() || td.closest('tr').find('[data-attribute="unit_price_factory"]').text();
-	var price = trueValue(price_input, price_text)
-	
-	var discount = td.closest('tr').find('span.discount-value').text() * price / 100;
-	var additional_discount = td.closest('tr').find('input.table_specification_additional_discount').val();
-	additional_discount = (price - discount) * additional_discount / 100;
-	var price_with_discount = price - discount - additional_discount;
-	
-	var number_input = td.closest('tr').find('input.number').val();
-	var number_text = td.closest('tr').find('[data-attribute="number_of"]').text() || td.closest('tr').find('[data-attribute="number_of"] input').val();
-	var number = trueValue(number_input, number_text)
-	console.log(number)
-
-	/* Сумма фабрики */
-	var factory_sum = Math.round(price_with_discount * number * 100) / 100;
-	td.closest('tr').find('.factory-sum').text(factory_sum);
-	
-	/* Доставка */
-	var ajax_delivery_cost = td.closest('tr').find('.delivery_data .cost').val()*1;
-	var add_to_delivery = td.closest('tr').find('input.add_to_delivery').val()*1;
-	
-	var v_input = td.closest('tr').find('input.unit_v').val();
-	var v_text = td.closest('tr').find('span.unv').text() || td.closest('tr').find('span.unit_v').text();
-	
-	var v;
-	console.log(v_text)
-	if (v_input === undefined) {
-		v = v_text * number;
-	} else {
-		v = v_input * number;
-	}
-	td.closest('tr').find('.unv').text(v);
-	var packing = td.closest('tr').find('input.packing').val()*1;
-	var delivery = (ajax_delivery_cost + add_to_delivery) * v + packing;
-	
-	/* Сумма в ноль */
-	var ajax_bank_service = td.closest('tr').find('.delivery_data .bank_service').val()*1;
-	var ajax_bank_percent = td.closest('tr').find('.delivery_data .bank_percent').val()*1;
-	ajax_bank_percent = (factory_sum + ajax_bank_service) * ajax_bank_percent / 100;
-	var ajax_documents = td.closest('tr').find('.delivery_data .execution_document').val()*1;
-	var ajax_check_factory = td.closest('tr').find('.delivery_data .check_factory').val()*1;
-	var zero_sum = factory_sum + ajax_bank_service + ajax_bank_percent + ajax_documents + ajax_check_factory + delivery;
-	//alert(zero_sum);
-	
-	/* Полная сумма */
-	var interest_percent_input = td.closest('tr').find('input.interest').val();
-	var interest_percent_text = td.closest('tr').find('[data-attribute="interest_percent"] input').val() || td.closest('tr').find('[data-attribute="interest_percent"]').text();
-	var interest_percent = trueValue(interest_percent_input, interest_percent_text)
-	console.log(interest_percent)
-	var full_sum = Math.round(zero_sum * 100 / (100 - interest_percent)*100)/100;
-	td.closest('tr').find('.full_sum').text(full_sum);
-	
-	/* Полная цена */
-	var coefficient = full_sum/factory_sum;
-	var full_price = Math.round(price_with_discount*coefficient*100)/100;
-	td.closest('tr').find('.full_price').text(full_price);
-	
-	/* Интерес */
-	var architector_percent_input = td.closest('tr').find('input.arh-interest').val();
-	var architector_percent_text = td.closest('tr').find('[data-attribute="arhitec_percent"] input').val() || td.closest('tr').find('[data-attribute="arhitec_percent"]').text();
-	var architector_percent = trueValue(architector_percent_input, architector_percent_text)
-
-	var profit = full_sum - zero_sum;
-	var interest = Math.round((profit - profit/100*architector_percent)*100)/100;
-	td.closest('tr').find('.interest-e').text(interest);
-	console.log(architector_percent)
-	
-	/* Интерес архитектора */
-	var arch_interest = Math.round((profit - interest)*100)/100;
-	var arh_order_percent = Math.round(100 - (full_sum - arch_interest) / full_sum * 100);
-	td.closest('tr').find('.arh-interest-e').text(arch_interest);
-	td.closest('tr').find('.arh-order-percent').text(arh_order_percent);
-}
-
-function activateBestInPlace(data_attribute) {
-    $('body').on('keyup', data_attribute, function() {
-    	invoker = $(this);
-    	calculate(invoker);
-    });
-}
-
 $(document).ready(function() {
-	$('#form_button').click();
-	
-	var client = new Dropbox.Client({
-	  key:    "oqe1u2h3676wzpc", // App key
-	  secret: "6d38819v60m67c1", // App secret
-	  token:  "yza6vaucz0yy8eeb", // Generated access token
-	  user:   "489572075",
-	  sandbox: false
-	});
+	// $('#form_button').click();
+		
+		var client = new Dropbox.Client({
+		  key:    "oqe1u2h3676wzpc", // App key
+		  secret: "6d38819v60m67c1", // App secret
+		  token:  "yza6vaucz0yy8eeb", // Generated access token
+		  user:   "489572075",
+		  sandbox: false
+		});
+		client.isAuthenticated();
 
-    client.isAuthenticated();
+ //    activateBestInPlace('[data-attribute="unit_price_factory"]')
+ //    activateBestInPlace('[data-attribute="number_of"]')
+ //    activateBestInPlace('[data-attribute="interest_percent"]')
+ //    activateBestInPlace('[data-attribute="arhitec_percent"]')
 
-    activateBestInPlace('[data-attribute="unit_price_factory"]')
-    activateBestInPlace('[data-attribute="number_of"]')
-    activateBestInPlace('[data-attribute="interest_percent"]')
-    activateBestInPlace('[data-attribute="arhitec_percent"]')
-
-	$(document).on('click', 'a.invoker', function(){
-		invoker = $(this);
-	});
-	$('body').on('click','#modalpict a',function(){
-		$('#modalpict').modal('hide');
-		var imgsrc = $(this).find('img').attr('src');
-		$(invoker).find('img').attr('src',imgsrc);
+	// $('body').on('click','#modalpict a',function(){
+	// 	$('#modalpict').modal('hide');
+	// 	var imgsrc = $(this).find('img').attr('src');
+	// 	$(invoker).find('img').attr('src',imgsrc);
 
 
-		// Change value in photo_id and base64
-		var imgval = $(this).find('img').attr('value');
-		if (imgsrc.substring(0, 10) != "data:image") {
+	// 	// Change value in photo_id and base64
+	// 	var imgval = $(this).find('img').attr('value');
+	// 	if (imgsrc.substring(0, 10) != "data:image") {
 
-			$(invoker).find('img').attr('value', imgval);
-		  	$('#table_specification_photo_id').val(imgval)
-		  	$('#table_specification_photo_base64_form').val('');
-		} else {
-			// Add photos in this product
-			var row_id = $(invoker).closest('tr').attr("row-id") 
-			var product_id = $(invoker).closest('tr').attr("product-id")
-			if (product_id != undefined) {	
-				$(invoker).closest('tr').find('.id_table').val(row_id)		
-				$(invoker).closest('tr').find('.product_id_table').val(product_id)		
-				$(invoker).closest('tr').find('.base64_table').val(imgsrc)		
-				$(invoker).closest('tr').find('input[name=add_photos]').trigger('click')		
-			}
-		  	$(invoker).find('img').attr('value', '');
-		  	$('#table_specification_photo_base64_form').val(imgsrc);
-		  	$('#table_specification_photo_id').val('');
-		}
+	// 		$(invoker).find('img').attr('value', imgval);
+	// 	  	$('#table_specification_photo_id').val(imgval)
+	// 	  	$('#table_specification_photo_base64_form').val('');
+	// 	} else {
+	// 		// Add photos in this product
+	// 		var row_id = $(invoker).closest('tr').attr("row-id") 
+	// 		var product_id = $(invoker).closest('tr').attr("product-id")
+	// 		if (product_id != undefined) {	
+	// 			$(invoker).closest('tr').find('.id_table').val(row_id)		
+	// 			$(invoker).closest('tr').find('.product_id_table').val(product_id)		
+	// 			$(invoker).closest('tr').find('.base64_table').val(imgsrc)		
+	// 			$(invoker).closest('tr').find('input[name=add_photos]').trigger('click')		
+	// 		}
+	// 	  	$(invoker).find('img').attr('value', '');
+	// 	  	$('#table_specification_photo_base64_form').val(imgsrc);
+	// 	  	$('#table_specification_photo_id').val('');
+	// 	}
 		  
-		return false;
-	});
+	// 	return false;
+	// });
 	 
-	$('body').on('click','#modalsize a',function(){
-		$('#modalsize').modal('hide');
-		var imgsrc = $(this).find('img').attr('src');
-		$(invoker).find('img').attr('src',imgsrc);
-		$('#table_specification_size_image_base64').val(imgsrc);
+	// $('body').on('click','#modalsize a',function(){
+	// 	$('#modalsize').modal('hide');
+	// 	var imgsrc = $(this).find('img').attr('src');
+	// 	$(invoker).find('img').attr('src',imgsrc);
+	// 	$('#table_specification_size_image_base64').val(imgsrc);
 		
-		// Change value in photo_id and base64
-		var imgval = $(this).find('img').attr('value');
-		if (imgsrc.substring(0, 10) != "data:image") {
-		  	$('#table_specification_size_image_id').val(imgval)
-		  	$('#table_specification_size_image_base64').val('');
-		} else {
-			// Add size image in this product
-			var product_id = $(invoker).closest('tr').attr("product-id")
-			var row_id = $(invoker).closest('tr').attr("row-id") 
-			if (product_id !== undefined) {	
-				$(invoker).closest('tr').find('.id_table').val(row_id)		
-				$(invoker).closest('tr').find('.product_id_table').val(product_id)		
-				$(invoker).closest('tr').find('.base64_table').val(imgsrc)		
-				$(invoker).closest('tr').find('input[name=add_size_images]').trigger('click')		
-			}
-		  	$(invoker).find('img').attr('value', imgval);
-		  	// $(invoker).find('img').attr('value', '');
-		  	$('#table_specification_size_image_base64_form').val(imgsrc);
-		  	$('#table_specification_size_image_id').val('');
-		}
-	    return false;
-	});
+	// 	// Change value in photo_id and base64
+	// 	var imgval = $(this).find('img').attr('value');
+	// 	if (imgsrc.substring(0, 10) != "data:image") {
+	// 	  	$('#table_specification_size_image_id').val(imgval)
+	// 	  	$('#table_specification_size_image_base64').val('');
+	// 	} else {
+	// 		// Add size image in this product
+	// 		var product_id = $(invoker).closest('tr').attr("product-id")
+	// 		var row_id = $(invoker).closest('tr').attr("row-id") 
+	// 		if (product_id !== undefined) {	
+	// 			$(invoker).closest('tr').find('.id_table').val(row_id)		
+	// 			$(invoker).closest('tr').find('.product_id_table').val(product_id)		
+	// 			$(invoker).closest('tr').find('.base64_table').val(imgsrc)		
+	// 			$(invoker).closest('tr').find('input[name=add_size_images]').trigger('click')		
+	// 		}
+	// 	  	$(invoker).find('img').attr('value', imgval);
+	// 	  	// $(invoker).find('img').attr('value', '');
+	// 	  	$('#table_specification_size_image_base64_form').val(imgsrc);
+	// 	  	$('#table_specification_size_image_id').val('');
+	// 	}
+	//     return false;
+	// });
 
-	function modalSelect(modal, c_modal) {
-		var selected = $('#'+modal+c_modal+' select :selected').val();
-		var single = $('#'+modal+c_modal+' span').attr('value');
-		var selected_discount = $('#'+modal+c_modal+' select :selected').text(); // Поменял переменные
-		var single_discount = $('#'+modal+c_modal+' span').text(); // Добавил переменную
-		var current_discount = 0;
-		var current_discount_val = 0;
-		var cdv = [0, 1]
-		if (selected_discount == ""){ // Добавил условие для изменения скидки в ДОМ
-			// discount percent
-			cdv[0] = current_discount = single_discount;
-			//value
-			cdv[1] = current_discount_val = single;
-		} else {
-			// discount percent
-			cdv[0] = selected_discount;
-			//value
-			cdv[1] = selected;
-		}
-		return cdv;
-	}
+	// $('body').on('click','#modalfactory .btn-primary, #modalfactory_table .btn-primary', function(){
+	// 	console.log('111')
+	// 	var change_modal = $(invoker).closest('td');
+	// 	var row_id = $(invoker).closest('tr').attr('row-id');
+	// 	// Логика для таблицы 
+	// 	if ($(change_modal).hasClass('factory')) {
+	// 		var current_discount = modalSelect("modalfactory", "_table")
+	// 		$('#modalfactory_table').modal('hide');
+	// 		$(invoker).find('span').html(current_discount[0]);
+	// 		var increment = $('.increment_discount_modal').val();
 
-	$('body').on('click','#modalfactory .btn-primary, #modalfactory_table .btn-primary', function(){
-		var change_modal = $(invoker).closest('td');
-		var row_id = $(invoker).closest('tr').attr('row-id');
-		// Логика для таблицы 
-		if ($(change_modal).hasClass('factory')) {
-			var current_discount = modalSelect("modalfactory", "_table")
-			$('#modalfactory_table').modal('hide');
-			$(invoker).find('span').html(current_discount[0]);
-			var increment = $('.increment_discount_modal').val();
+	// 		var set_discount = {'table_specification': 
+	// 			{'discount_id': current_discount[1], 
+	// 			'increment_discount': increment 
+	// 			}
+	// 		}
+	// 		$.ajax({
+	// 			url: row_id,
+	// 			type: 'PUT',
+	// 			dataType: 'JSON',
+	// 			data: set_discount, 
+	// 			success: function (data) {
 
-			var set_discount = {'table_specification': 
-				{'discount_id': current_discount[1], 
-				'increment_discount': increment 
-				}
-			}
-			$.ajax({
-				url: row_id,
-				type: 'PUT',
-				dataType: 'JSON',
-				data: set_discount, 
-				success: function (data) {
+	// 			}
+	// 		})
+	// 		calculate(invoker);
+	// 	} else {
+	// 		current_discount = modalSelect("modalfactory","")
+	// 		$('#modalfactory').modal('hide');
+	// 		$(invoker).find('span').html(current_discount[0]);
+	// 		var increment = $('.increment_discount_modal').val();
+	// 		$('#table_specification_discount_id').val(current_discount[1]);
+	// 		$(invoker).closest('tr').find('.table_specification_increment_discount').val(increment);
+	// 		$('#table_specification_increment_discount').val(increment);
+	// 		calculate(invoker);
+	// 	}
+	// });
 
-				}
-			})
-			calculate(invoker);
-		} else {
-			// ТУТ РАБОТАЕТ
+	// $('body').on('click','#modalv .btn-primary',function(){
+	// 	$('#modalv').modal('hide');
+	// 	var w = $('#w').val();
+	// 	var h = $('#h').val();
+	// 	var d = $('#d').val();
+	// 	var pack = $('#pack').val();
+	// 	var v = w*h*d;
+	// 	v += v/100*pack;
+	// 	// $(invoker).siblings('input').val(v);
+	// 	$('#uv').html(v);
+	// 	// $('#table_specification_percent_v').remove();
 
-			current_discount = modalSelect("modalfactory","")
-			$('#modalfactory').modal('hide');
-			$(invoker).find('span').html(current_discount[0]);
-			var increment = $('.increment_discount_modal').val();
-			$('#table_specification_discount_id').val(current_discount[1]);
-			$(invoker).closest('tr').find('.table_specification_increment_discount').val(increment);
-			$('#table_specification_increment_discount').val(increment);
-			calculate(invoker);
-		}
-	});
+	// 	// $('#product_unit_v').val(v);
+	// 	$('#product_width').val(w);
+	// 	$('#product_height').val(h);
+	// 	$('#product_depth').val(d);
+	// 	$('#table_specification_percent_v').val(pack);
+	// 	calculate(invoker);
+	// });
+	// $('body').on('click','#modalv_table .btn-primary',function(){
+	// 	var row_id = $(invoker).closest('tr').attr('row-id');
+	// 	var w = $('#w').text();
+	// 	var h = $('#h').text();
+	// 	var d = $('#d').text();
+	// 	var pack = $('#pack').val();
+	// 	var v = w*h*d;
+	// 	v += v/100*pack;
+	// 	console.log(w)
+	// 	console.log(h)
+	// 	console.log(d)
+	// 	console.log(pack)
+	// 	console.log(row_id)
+	// 	console.log(v)
 
-	$('body').on('click','#modalv .btn-primary',function(){
-		$('#modalv').modal('hide');
-		var w = $('#w').val();
-		var h = $('#h').val();
-		var d = $('#d').val();
-		var pack = $('#pack').val();
-		var v = w*h*d;
-		v += v/100*pack;
-		// $(invoker).siblings('input').val(v);
-		$('#uv').html(v);
-		// $('#table_specification_percent_v').remove();
+	// 	if (row_id != undefined) {
+	// 		var set_percent_v = {'table_specification': 
+	// 			{ 'percent_v': pack }
+	// 		}
+	// 		$.ajax({
+	// 			url: row_id,
+	// 			type: 'PUT',
+	// 			dataType: 'JSON',
+	// 			data: set_percent_v, 
+	// 			success: function (data) {
 
-		// $('#product_unit_v').val(v);
-		$('#product_width').val(w);
-		$('#product_height').val(h);
-		$('#product_depth').val(d);
-		$('#table_specification_percent_v').val(pack);
-		calculate(invoker);
-	});
-	$('body').on('click','#modalv_table .btn-primary',function(){
-		var row_id = $(invoker).closest('tr').attr('row-id');
-		var w = $('#w').text();
-		var h = $('#h').text();
-		var d = $('#d').text();
-		var pack = $('#pack').val();
-		var v = w*h*d;
-		v += v/100*pack;
-		console.log(w)
-		console.log(h)
-		console.log(d)
-		console.log(pack)
-		console.log(row_id)
-		console.log(v)
-
-		if (row_id != undefined) {
-			var set_percent_v = {'table_specification': 
-				{ 'percent_v': pack }
-			}
-			$.ajax({
-				url: row_id,
-				type: 'PUT',
-				dataType: 'JSON',
-				data: set_percent_v, 
-				success: function (data) {
-
-				}
-			})
+	// 			}
+	// 		})
 		
-			console.log(v)
-			$(invoker).siblings('input.unit_v').val(v);
-		} else {
-			$(invoker).siblings('.packing').html(pack);
-			// $('span').html(v)
-			$('#uv').html(v)
+	// 		console.log(v)
+	// 		$(invoker).siblings('input.unit_v').val(v);
+	// 	} else {
+	// 		$(invoker).siblings('.packing').html(pack);
+	// 		// $('span').html(v)
+	// 		$('#uv').html(v)
 			
-			$('#table_specification_percent_v').val(pack);
-			// $(invoker).siblings('input').val(v);
-			$('#product_unit_v').val("");
-			$('#product_width').val(w);
-			$('#product_height').val(h);
-			$('#product_depth').val(d);
-		}
+	// 		$('#table_specification_percent_v').val(pack);
+	// 		// $(invoker).siblings('input').val(v);
+	// 		$('#product_unit_v').val("");
+	// 		$('#product_width').val(w);
+	// 		$('#product_height').val(h);
+	// 		$('#product_depth').val(d);
+	// 	}
 
-		$('#modalv_table').modal('hide');
-		calculate(invoker);
-	});
+	// 	$('#modalv_table').modal('hide');
+	// 	calculate(invoker);
+	// });
 
-	$('body').on('click','#modaldelivery .btn-primary, #modaldelivery_table .btn-primary',function(){
-		var change_modal = $(invoker).closest('td');
-		var row_id = $(invoker).closest('tr').attr('row-id');
-		// Логика для таблицы 
-		if ($(change_modal).hasClass('v_table')) {
-			var delivery_id = modalSelect("modaldelivery", "_table")
-			var additional_packaging = $('.packingPrice').val()
-			var additional_delivery = $('.addToDelivery').val()
-			console.log(additional_packaging)
-			console.log(additional_delivery)
-			$('#modaldelivery_table').modal('hide');
-			var set_delivery = {'table_specification': 
-				{'delivery_id': delivery_id[1],
-				 'additional_packaging': additional_packaging,
-				 'additional_delivery': additional_delivery 
-				}
-			}
-			$.ajax({
-				url: row_id,
-				type: 'PUT',
-				dataType: 'JSON',
-				data: set_delivery, 
-				success: function (data) {
+	// $('body').on('click','#modaldelivery .btn-primary, #modaldelivery_table .btn-primary',function(){
+	// 	console.log(invoker)
+	// 	var change_modal = $(invoker).closest('td');
+	// 	var row_id = $(invoker).closest('tr').attr('row-id');
+	// 	// Логика для таблицы 
+	// 	if ($(change_modal).hasClass('v_table')) {
+	// 		var delivery_id = modalSelect("modaldelivery", "_table")
+	// 		var additional_packaging = $('.packingPrice').val()
+	// 		var additional_delivery = $('.addToDelivery').val()
+	// 		console.log(additional_packaging)
+	// 		console.log(additional_delivery)
+	// 		$('#modaldelivery_table').modal('hide');
+	// 		var set_delivery = {'table_specification': 
+	// 			{'delivery_id': delivery_id[1],
+	// 			 'additional_packaging': additional_packaging,
+	// 			 'additional_delivery': additional_delivery 
+	// 			}
+	// 		}
+	// 		$.ajax({
+	// 			url: row_id,
+	// 			type: 'PUT',
+	// 			dataType: 'JSON',
+	// 			data: set_delivery, 
+	// 			success: function (data) {
 
-				}
-			})
+	// 			}
+	// 		})
 
-			$.ajax({
-				url: '/deliveries/'+delivery_id[1],
-				type: 'GET',
-				dataType: 'JSON',
-				success: function (data) {
-					$('.cost').val(data.cost)
-					$('.execution_document').val(data.execution_document)
-					$('.check_factory').val(data.check_factory)
-					$('.bank_service').val(data.bank_service)
-					$('.bank_percent').val(data.bank_percent)
-				}
-			})
-			calculate(invoker);
-		} else {
-			current_discount = modalSelect("modaldelivery","")
-			$('#modaldelivery').modal('hide');
-			$('#table_specification_delivery_id').val($('#modaldelivery select :selected').val());
-			$('#table_specification_additional_packaging').val($('.packingPrice').val());
-			$('#table_specification_additional_delivery').val($('.addToDelivery').val());
-			$(invoker).closest('tr').find('.delivery_id').val($('#modaldelivery select :selected').val());
-			$(invoker).closest('tr').find('.packing').val($('#packingPrice').val());
-			$(invoker).closest('tr').find('.add_to_delivery').val($('#addToDelivery').val()); 
-			calculate(invoker);
-		}
-	});
+	// 		$.ajax({
+	// 			url: '/deliveries/'+delivery_id[1],
+	// 			type: 'GET',
+	// 			dataType: 'JSON',
+	// 			success: function (data) {
+	// 				$('.cost').val(data.cost)
+	// 				$('.execution_document').val(data.execution_document)
+	// 				$('.check_factory').val(data.check_factory)
+	// 				$('.bank_service').val(data.bank_service)
+	// 				$('.bank_percent').val(data.bank_percent)
+	// 			}
+	// 		})
+	// 		calculate(invoker);
+	// 	} else {
+	// 		current_discount = modalSelect("modaldelivery","")
+	// 		$('#modaldelivery').modal('hide');
+	// 		$('#table_specification_delivery_id').val($('#modaldelivery select :selected').val());
+	// 		$('#table_specification_additional_packaging').val($('.packingPrice').val());
+	// 		$('#table_specification_additional_delivery').val($('.addToDelivery').val());
+	// 		$(invoker).closest('tr').find('.delivery_id').val($('#modaldelivery select :selected').val());
+	// 		$(invoker).closest('tr').find('.packing').val($('#packingPrice').val());
+	// 		$(invoker).closest('tr').find('.add_to_delivery').val($('#addToDelivery').val()); 
+	// 		calculate(invoker);
+	// 	}
+	// });
 
- 	$('input').on('change keyup', function(){
-		calculate($(this));
-	});
+ // 	$('input').on('change keyup', function(){
+	// 	calculate($(this));
+	// });
 
-	/*****навешивание плагинов jquery******/
-	$('textarea').autoResize({
-	     extraSpace : 0
-	});
-	$("table").stickyTableHeaders();
-	// $('.addpict').simpleCropper();
+	// /*****навешивание плагинов jquery******/
+	// $('textarea').autoResize({
+	//      extraSpace : 0
+	// });
+	// $("table").stickyTableHeaders();
+	// // $('.addpict').simpleCropper();
 
 });

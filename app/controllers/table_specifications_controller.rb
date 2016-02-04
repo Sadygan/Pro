@@ -30,6 +30,7 @@ class TableSpecificationsController < ApplicationController
 
   def packing_sizes
     @deliveries = Delivery.all
+    p '----->'
     p params[:id]
     if params[:id]
       table_specification = TableSpecification.find(params[:id])

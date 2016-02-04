@@ -10,19 +10,19 @@ class TableSpecificationLight < Table
   end
 
   def unit_price_factor
-  	multiplication(unit_price_factory, product.brand_model.factory.light_factor)
+  	multiplication(unit_price_factory, product.brand_model.factory.light_factor).round(2)
   end
 
   def price_from_nil
-  	multiplication(unit_price_factor, number_of)
+  	multiplication(unit_price_factor, number_of).round(2)
   end
 
   def summa
-    with_interest
+    with_interest.round(2)
   end
 
   def unit_with_interest_light
-    with_interest/number_of
+    (with_interest/number_of).round(2)
   end
 
   def self.specification_sum_all(specification, arg)

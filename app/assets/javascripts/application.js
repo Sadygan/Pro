@@ -31,7 +31,8 @@
 //= require autoresize.jquery
 //= require jquery.stickytableheaders.min
 //= require jquery.simple_cropper
-//= require_directory .
+
+var invoker;
 
 $.datepicker.setDefaults({
     dateFormat: 'dd-mm-yy'
@@ -85,6 +86,25 @@ $('input[name="create_ts"]').on('click', function(evt){
 	console.log('loader')
 	loader(true)
 });
+
+// BestInPlace activate row calculate in table_specificationlight
+function activateBestInPlace(data_attribute, type) {
+    $('body').on('keyup', data_attribute, function() {
+    	invoker = $(this);
+    	console.log(type)
+    	if (type == 'light_table') {
+    		calculateLight(invoker)
+    	} else if (type == 'main_table') {
+    		calculate(invoker)
+    	}
+    });
+}
+
 $(document).ready(function(){
 	$('.addpict').simpleCropper();
+	
+	$(document).on('click', 'a.invoker', function(){
+		invoker = $(this);
+	});
+
 })
