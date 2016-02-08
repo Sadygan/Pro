@@ -1,0 +1,5 @@
+<% if @project.status != @last_status %>
+	<%= link_to @project.status, new_project_status_path(@project), remote: true %>  
+<% else %>
+	<%= @project.status %>
+<% end %>

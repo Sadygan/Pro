@@ -1,4 +1,5 @@
-
+$('#dialog').modal('toggle');
+$('#products').append('<%= j render (@product) %>')
 #p = '<%= @product.id %>'
 #photo_obj = $('.photo img')
 #photo_obj.map (value, i) -> 

@@ -8,13 +8,15 @@ class Product < ActiveRecord::Base
 	belongs_to :brand_model
 	has_many :table_specifications
 
+  validates_presence_of :factory, :factory_id
+  validates_presence_of :type_furniture
+  validates_presence_of :brand_model
+
 	validates :article, presence: true
-	# validates_presence_of :type_furniture, presence: true
-  # validates :unit_v, numericality: true
-  # validates :width, numericality: true
-  # validates :height, numericality: true
-  # validates :depth, numericality: true
-  # validates :depth, numericality: true, presence: true
+  validates :width, numericality: true, presence: true
+  validates :height, numericality: true, presence: true
+  validates :depth, numericality: true, presence: true
+  validates :price, numericality: true, presence: true
 
 	accepts_nested_attributes_for :assets
 

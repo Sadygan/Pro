@@ -23,7 +23,6 @@ class StatusesController < ApplicationController
     else
      respond_to do |format|
         format.html { redirect_to projects_path, notice: 'Status was not successfully create.' }
-        format.json { render :show, status: :ok, location: @status }
       end
     end
   end
@@ -39,18 +38,19 @@ class StatusesController < ApplicationController
    
     last_status = @project.statuses.last.name
     status_name = Status.new.change(last_status)
-   
+    @last_status = Status.new.array_status.last
+    
     @status = @project.statuses.new(name: status_name)
 
     @status.update(status_params)
 
     respond_to do |format|
       if @status.save
-        format.html { redirect_to projects_path, notice: 'Status was successfully created.' }
-        format.json { render :show, status: :created, location: @status }
+        format.json { head :no_content }
+        format.js
       else
-        format.html { render :new }
-        format.json { render json: @status.errors, status: :unprocessable_entity }
+        format.json { render json: @status.errors.full_messages, 
+                            status: :unprocessable_entity }
       end
     end
   end
@@ -60,11 +60,11 @@ class StatusesController < ApplicationController
   def update
     respond_to do |format|
       if @status.update(status_params)
-        format.html { redirect_to @status, notice: 'Status was successfully updated.' }
-        format.json { render :show, status: :ok, location: @status }
+        # format.html { redirect_to @status, notice: 'Status was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @status }
       else
-        format.html { render :edit }
-        format.json { render json: @status.errors, status: :unprocessable_entity }
+        # format.html { render :edit }
+        # format.json { render json: @status.errors, status: :unprocessable_entity }
       end
     end
   end

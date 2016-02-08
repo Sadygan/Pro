@@ -1,6 +1,7 @@
 class Status < ActiveRecord::Base
 	belongs_to :project
 
+	# validates :description, presence: true, length: { minimum: 15 }
 	# Массив статусов 
 	def array_status
 		status = ["Обрабатываеться", "Отправлен", "Корректируется", "Выполнен"]
@@ -20,6 +21,4 @@ class Status < ActiveRecord::Base
 			array_status[i+1]
 		end
 	end
-
-
 end

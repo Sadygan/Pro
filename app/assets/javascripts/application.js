@@ -21,8 +21,6 @@
 //= require bootstrap-filestyle
 //= require best_in_place
 //= require jquery.purr
-//= require jquery.validate
-//= require jquery.validate.additional-methods
 //= require best_in_place.purr
 //= require turbolinks
 //= require bootstrap
@@ -105,6 +103,9 @@ $(document).ready(function(){
 	
 	$(document).on('click', 'a.invoker', function(){
 		invoker = $(this);
+	});
+	jQuery(function() {
+	  return $('.best_in_place').best_in_place();
 	});
 
 })

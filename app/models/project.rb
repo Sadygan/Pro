@@ -24,10 +24,10 @@ class Project < ActiveRecord::Base
 
   validates :object_name, presence: true, uniqueness: true
   validates :type_furniture, presence: true
-  validates :planned_budget, numericality: { only_integer: false }, on: :update
-  validates :amount_contract, numericality: { only_integer: false }, on: :update
+  validates :planned_budget, numericality:    { only_integer: false }, on: :update
+  validates :amount_contract, numericality:   { only_integer: false }, on: :update
   validates :client_prepayment, numericality: { only_integer: false }, on: :update
-  validates :client_surcharge, numericality: { only_integer: false }, on: :update
+  validates :client_surcharge, numericality:  { only_integer: false }, on: :update
   validates :deadline, presence: true
   
   # validates :client, presence: true

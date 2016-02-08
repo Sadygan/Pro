@@ -41,26 +41,3 @@ $ ->
         product_id: $("#articles_select option:selected").attr("id")
         console.log("Dynamic country select OK!3333")
     return false
-
-$(document).ready ->
-  $('.chosen-select').on 'change', ->
-    if $('#factories_select option:selected').val() and $('#products_select option:selected').val() and $('#product_type_furniture_id option:selected').val()
-      $('input[name=commit]').prop 'disabled', false
-    else
-      $('input[name=commit]').prop 'disabled', true
-    return
-  $('#modalIns .col-xs-3 input').on 'change keyup', ->
-    if $('#product_unit_v').val() > 0
-      $('#product_width').prop 'disabled', true
-      $('#product_height').prop 'disabled', true
-      $('#product_depth').prop 'disabled', true
-    else
-      $('#product_width').prop 'disabled', false
-      $('#product_height').prop 'disabled', false
-      $('#product_depth').prop 'disabled', false
-    if $('#product_width').val() > 0 or $('#product_height').val() > 0 or $('#product_depth').val() > 0
-      $('#product_unit_v').prop 'disabled', true
-    else
-      $('#product_unit_v').prop 'disabled', false
-    return    
-

@@ -1,5 +1,6 @@
 <%= form_for(@product, remote:true, :html => { :role => "form" }) do |f| %>
-<div id="error_explanation" class="bg-danger text-danger"></div>
+<p><%= t('window_errors') %></p>
+<div id="error_explanation" class="alert alert-danger" role="alert" display="none"></div>
   
     <div class="row">
       <div class="form-group col-sm-6" id="factory">
@@ -97,6 +98,6 @@
 
   </div>
   <div class="actions">
-    <%= f.submit  @product.new_record? ? t('create') : t('update'), class: 'btn btn-primary',  disabled: true %>
+    <%= f.submit  @product.new_record? ? t('create') : t('update'), class: 'btn btn-primary' %>
   </div>
 <% end %>

@@ -1,21 +1,27 @@
-<%= form_for([@project, @status], :html => { :role => "form" }) do |f| %>
-  <% if @status.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@status.errors.count, "error") %> prohibited this status from being saved:</h2>
-
-      <ul>
-      <% @status.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= form_for([@project, @status], :html => { :role => "form" }, remote: true) do |f| %>
+  <p><%=  t('window_errors') %></p>
+  <div id="error_explanation" class="alert alert-danger" role="alert" display="none"></div>
+  <p class="label label-info">Текущий статус: <%= @project.status %></p>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <%= f.label :description, class: "control-label" %><br>
+        <%= f.text_area :description, class: 'form-control', rows: 12, resize: "vertical" %>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
+    <div class="col-sm-6">
+      <p>Статусы: </p>
+      <p><small><span class="label label-danger">Обрабатываеться</span> - находиться в режиме подбора первого предложения клиенту, до отправки </small></p>
+      <p><small><span class="label label-warning">Отпавлен</span> - находиться в режиме ожидания первого предложения клиенту, до первой обратной связи со внесением корректировок </small></p>
+      <p><small><span class="label label-primary">Корректируется</span> - находиться в режиме корректировки предложения до завершения проекта </small></p>
+      <p><small><span class="label label-success">Выполнен</span> - Договор подписан </small></p>
+    </div>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <%= f.submit t('status.change')+ @status.change(@project.status), class: "btn btn-primary" %>
+    </div>
+   </div>
   </div>
 <% end %>

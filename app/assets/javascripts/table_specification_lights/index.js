@@ -1,8 +1,4 @@
 //= require tables/general_methods.js
-jQuery(function() {
-  return $('.best_in_place').best_in_place();
-});
-
 $(document).ready(function() {
 	$('#form_button_light').click();
     

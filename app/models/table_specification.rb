@@ -10,8 +10,8 @@ class TableSpecification < Table
   default_scope { order(:group => :ASC) }
 
     # validates_presence_of :product
-    validates_numericality_of :unit_price_factory, greater_than_or_equal_to: 20
-    validates_numericality_of :number_of, greater_than_or_equal_to: 1
+    validates_numericality_of :unit_price_factory, greater_than_or_equal_to: 20, on: :update
+    validates_numericality_of :number_of, greater_than_or_equal_to: 1, on: :update
     # validates :product_id, presence: true
 
     # validates :unit_price_factory, presence: true, numericality: true

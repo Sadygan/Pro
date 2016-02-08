@@ -1,49 +1,49 @@
 <%= form_for(@project, remote: true, :html => { :role => "form" }) do |f| %>
-<div id="error_explanation" class="bg-danger text-danger">
-</div>
- 
+<p><%=  t('window_errors') %></p>
+<div id="error_explanation" class="alert alert-danger" role="alert" display="none"></div>
 <div class="row">
  <div class="col-sm-6">
 
   <div class="form-group">
-    <%= f.label t('project.object_name'), :class => "control-label" %>
-    <%= f.text_field :object_name, :class => "form-control" %>
+    <%= f.label :object_name, class: "control-label" %>
+    <%= f.text_field :object_name, class: 'form-control' %>
   </div>
   
   <div class="form-group">
-    <%= f.label t('project.style'), :class => "control-label" %>
+    <%= f.label :style, class: "control-label" %>
     <%= f.collection_select :style_id, Style.order(:name),:id,:name, {include_blank: false}, {class: :"form-control"} %>
   </div>
 
   <div class="form-group">
-    <%= f.label t('client.name'), :class => "control-label" %>
+    <%= f.label :client, class: "control-label" %>
     <%= f.collection_select :client_id, Client.order(:name),:id,:name, {include_blank: false}, {class: :"form-control"} %>
   </div>
-
   <div class="form-group">
-    <%= f.label t('project.city'), :class => "control-label" %>
-    <%= f.collection_select :city_id, City.order(:name),:id,:name, {include_blank: false}, {class: :"form-control"} %>
+    <%= f.label :city, class: "control-label" %>
+    <%= f.collection_select :city_id, City.order(:name),:id,:name, {include_blank: false}, {class: "form-control"} %>
+  </div>
+ </div>
+ <div class="col-sm-6">
+  <div class="form-group">
+    <%= f.label :type_furniture, class: "control-label" %>
+    <%= f.text_field :type_furniture, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= f.label t('project.type_furniture'), :class => "control-label" %>
-    <%= f.text_field :type_furniture, :class => "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label t('project.deadline'), :class => "control-label" %>
+    <%= f.label :deadline, class: "control-label" %>
     <%= f.date_field :deadline, class: 'form-control', data: { date_format: 'YYYY/MM/DD' } %>
   </div>
 
   <div class="form-group">
-    <%= f.label t('project.planned_budget'), :class => "control-label" %>
-    <%= f.text_field :planned_budget, :class => "form-control" %>
+    <%= f.label :planned_budget, class: "control-label" %>
+    <%= f.text_field :planned_budget, class: 'form-control' %>
   </div>
-
-  <div class="col-sm-6">
+</div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
     <div class="form-group">
-      <%= f.submit  @project.new_record? ? t('project.create_project') : t('project.update'), :class => "btn btn-primary" %>
-  </div>
+      <%= f.submit  @project.new_record? ? t('project.create') : t('project.update'), :class => "btn btn-primary" %>
   </div>
  </div>
 </div>

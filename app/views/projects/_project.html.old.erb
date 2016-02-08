@@ -24,7 +24,6 @@
   <td><%= best_in_place [project], :delivery_status %></td>
 
   <td>
-
   	<% if can? :update, project %>
     <%= link_to t('edit'), edit_project_path(project), remote: true, :class => 'btn btn-sm btn-info' %>
     <% end %>

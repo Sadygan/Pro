@@ -20,6 +20,14 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  activerecord:
+    errors:
+      messages:
+      template:
+        project:
+          attributes:
+            client_prepayment:
+              not_a_number: "ghghgth"
   date:
     formats:
       default: "%d/%m/%Y"

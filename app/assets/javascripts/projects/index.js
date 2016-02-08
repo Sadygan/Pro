@@ -1,4 +1,12 @@
 $(document).ready(function() { 
+	$('body').on('click', '.accordion-toggle', function(){
+		if($(this).hasClass('glyphicon-menu-down')) {
+			$(this).removeClass('glyphicon-menu-down').addClass('glyphicon-menu-up');
+		} else {
+			$(this).removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down');
+		}
+	});
+
 	var isDateInputSupported = function(){
 	var elem = document.createElement('input');
 	elem.setAttribute('type','date');

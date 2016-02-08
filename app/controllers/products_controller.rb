@@ -68,10 +68,9 @@ class ProductsController < ApplicationController
             format.json { head :no_content }
             format.js
           else
-            format.json { render json: @style.errors.full_messages,
+            format.json { render json: @product.errors.full_messages,
                                        status: :unprocessable_entity }
           end
-        format.js
         end          
       else
         # @brand_model = BrandModel.new(brand_model_params)
@@ -91,33 +90,15 @@ class ProductsController < ApplicationController
             format.json { head :no_content }
             format.js 
           else
-            format.json { render json: @style.errors.full_messages,
+            format.json { render json: @product.errors.full_messages,
                                        status: :unprocessable_entity }
           end
         # end
-        format.js
       end
     end
 
   end
   
-# может даже прибить
-  # def create_img
-  #   @product = Product.last
-  #   p '--->'
-  #   p product = Product.find(params[:product_last_id])
-
-  #   save_img product, params[:image_base64], Photo
-
-
-  #   respond_to do |format|
-      
-  #     format.json { head :no_content }
-  #   end
-
-  # end
-
-
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
   def update
