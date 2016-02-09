@@ -13,9 +13,9 @@
 			<div class="double-bounce2"></div>
 		</div>
 	</div>
-  <%= yield %>
   <%if user_signed_in? %>
     <%= render 'blocks/menu' %>
   <% end %>
+  <%= yield %>
 </body>
 </html>
