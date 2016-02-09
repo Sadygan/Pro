@@ -1,0 +1,12 @@
+<span>
+	<strong><%= t('project.project') %>:</strong>
+	<%= project.object_name %> | 
+	<strong><%= t('clients.client') %>:</strong>
+	<%= project.client.name %> | 
+	<strong><%= t('clients.telephone') %>:</strong>
+	<%= project.client.telephone %> 	| 
+</span>
+<span class="pull-right">
+	<%= link_to '', project_path(@project, format: "pdf"), class: "glyphicon glyphicon-floppy-disk btn btn-primary" %>
+	<%= link_to '', project_path(@project, format: "pdf"), class: "glyphicon glyphicon-print btn btn-primary" %>
+</span>
