@@ -13,15 +13,9 @@
 			<div class="double-bounce2"></div>
 		</div>
 	</div>
-
-
   <%if user_signed_in? %>
-  <%= render 'blocks/menu' %>
-  <p> Hello, <%= current_user.email %> -  <%= current_user.roles.first.name %> - <%= link_to "Sign_out", destroy_user_session_path, :method => 'delete' %></p>
-  <br>
+    <%= render 'blocks/menu' %>
+    <%= yield %>
   <% end %>
-
-<%= yield %>
-
 </body>
 </html>

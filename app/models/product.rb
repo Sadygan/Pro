@@ -8,7 +8,6 @@ class Product < ActiveRecord::Base
 	belongs_to :brand_model
 	has_many :table_specifications
 
-  validates_presence_of :factory, :factory_id
   validates_presence_of :type_furniture
   validates_presence_of :brand_model
 

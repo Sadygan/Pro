@@ -3,6 +3,7 @@
   <h2><%= t('specification.specifications') %></h2>
   <div class="well">
     <%= link_to t('specification.new_specification'), new_project_specification_path(@project), remote: true, class: "btn btn-primary" %>
+  <%= render 'blocks/info_header', {project: @project} %>
   </div>
   <div class="new-specification"></div>
   <table id class="table table-bordered table-striped">
