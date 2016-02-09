@@ -8,8 +8,8 @@ class Product < ActiveRecord::Base
 	belongs_to :brand_model
 	has_many :table_specifications
 
-  validates_presence_of :type_furniture
-  validates_presence_of :brand_model
+  # validates_presence_of :type_furniture
+  # validates_presence_of :brand_model
 
 	validates :article, presence: true
   validates :width, numericality: true, presence: true

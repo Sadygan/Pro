@@ -44,7 +44,8 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(product_params)
-    brand_model = BrandModel.where(name: params[:brand_model][:name]).last
+    # brand_model = BrandModel.where(name: params[:brand_model][:name]).last
+    brand_model = @product.brand_model.new()
     @product.photo_base64_form
     photos_split =  @product.photo_base64_form.split('.')
     size_images_split =  @product.size_image_base64_form.split('.')
