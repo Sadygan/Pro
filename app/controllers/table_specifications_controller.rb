@@ -229,12 +229,14 @@ class TableSpecificationsController < ApplicationController
     if params[:create_ts]
       @brand_model = BrandModel.new(brand_model_params)
       @product = Product.new(product_params)
-      
+      p "product"
+      p @product
       respond_to do |format|
         if @table_specification.save
           brand_model = BrandModel.where(name: params[:brand_model][:name]).last
-
+          p brand_model
           if brand_model.nil?
+            p "brand model"
             brand_model = BrandModel.new
             brand_model.id = 0
           end 
@@ -258,6 +260,7 @@ class TableSpecificationsController < ApplicationController
           else
             # @table_specification = TableSpecification.find()
             product = Product.where(article: params[:product][:article]).last
+            p "product_2"
             p product
             # Сценарий если есть модель но нет продукта
             if product.nil?
@@ -274,7 +277,8 @@ class TableSpecificationsController < ApplicationController
 
                 save_img @table_specification, @table_specification.photo_id, @product, @table_specification.photo_base64_form, Photo
                 save_img @table_specification, @table_specification.size_image_id, @product, @table_specification.size_image_base64_form, SizeImage
-                
+              else
+                p 'errors'
               end
             # Сценарий если есть модель и продукт
             else

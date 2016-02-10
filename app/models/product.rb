@@ -11,11 +11,11 @@ class Product < ActiveRecord::Base
   # validates_presence_of :type_furniture
   # validates_presence_of :brand_model
 
-	validates :article, presence: true
-  validates :width, numericality: true, presence: true
-  validates :height, numericality: true, presence: true
-  validates :depth, numericality: true, presence: true
-  validates :price, numericality: true, presence: true
+	# validates :article, presence: true
+ #  validates :width, numericality: true, presence: true
+ #  validates :height, numericality: true, presence: true
+ #  validates :depth, numericality: true, presence: true
+ #  validates :price, numericality: true, presence: true
 
 	accepts_nested_attributes_for :assets
 
