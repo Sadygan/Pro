@@ -7,7 +7,7 @@ class TableSpecification < Table
   # validates :product_id, presence: true
   # validates :product, presence: true, if: -> { product_id.present? }
   
-  default_scope { order(:group => :ASC) }
+  # default_scope { order(:group => :ASC) }
 
     # validates_presence_of :product
     validates_numericality_of :unit_price_factory, greater_than_or_equal_to: 20, on: :update
