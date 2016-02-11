@@ -33,7 +33,11 @@ class ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
+    
     @brand_model = @product.brand_model
+    @product.brand_model_name = @brand_model.name
+    @product.factory_id = @brand_model.factory_id
+
     @factories = Factory.all
     @brand_models = BrandModel.all
     @photos = Photo.where(product_id: @product.id)
@@ -44,120 +48,103 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(product_params)
-    # brand_model = BrandModel.where(name: params[:brand_model][:name]).last
-    brand_model = @product.brand_model.new()
+    brand_model = BrandModel.where(name: @product.brand_model_name).last
+    
     @product.photo_base64_form
     photos_split =  @product.photo_base64_form.split('.')
     size_images_split =  @product.size_image_base64_form.split('.')
-    p '+++++++++'
-    p brand_model
 
     respond_to do |format|
-      if brand_model.nil?
-        @brand_model = BrandModel.new(brand_model_params)
+      if @product.save && brand_model.nil?
+        @brand_model = BrandModel.new(name: @product.brand_model_name, factory_id: @product.factory_id)
         if @brand_model.save
           if @product.save
+            @product.brand_model_id = @brand_model.id
+            @product.save
             for i in photos_split
               save_img @product, i, Photo
             end
             for i in size_images_split
               save_img @product, i, SizeImage
             end
-            @product.brand_model_id = @brand_model.id
-            @product.save
             
             format.json { head :no_content }
             format.js
           else
             format.json { render json: @product.errors.full_messages,
-                                       status: :unprocessable_entity }
+                                        status: :unprocessable_entity }
           end
-        end          
-      else
-        # @brand_model = BrandModel.new(brand_model_params)
-        # if @brand_model.save
-          if @product.save
-            for i in photos_split
-              save_img @product, i, Photo
-            end
-            for i in size_images_split
-              save_img @product, i, SizeImage
-            end      
-            p '--->'
-            p brand_model.id
-            @product.brand_model_id = brand_model.id
-            @product.save
+        end
+      elsif @product.save && brand_model.present?
+        for i in photos_split
+          save_img @product, i, Photo
+        end
+        
+        for i in size_images_split
+          save_img @product, i, SizeImage
+        end      
+        @product.brand_model_id = brand_model.id
+        @product.save
 
-            format.json { head :no_content }
-            format.js 
-          else
-            format.json { render json: @product.errors.full_messages,
-                                       status: :unprocessable_entity }
-          end
-        # end
+        format.json { head :no_content }
+        format.js 
+
+      else  
+          format.json { render json: @product.errors.full_messages,
+                                      status: :unprocessable_entity }
       end
     end
-
   end
   
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
   def update
-    p "==>photo"
     @product_ = Product.new(product_params)
-    p @product.id
+    brand_model = BrandModel.where(name: @product.brand_model_name).last
+    
+    p brand_model
+
     photos_split = @product_.photo_base64_form.split('.')
     size_images_split =  @product_.size_image_base64_form.split('.')
-    p "==>"
-    p @brand_model = BrandModel.where(name: params[:brand_model][:name]).last
+    p "before"
+    p @product
+
     respond_to do |format|
-      if @brand_model.nil?
-        @brand_model = BrandModel.new(brand_model_params)
+      if @product.update(product_params) && brand_model.nil?
+        p "after"
+        p @product
+        @brand_model = BrandModel.new(name: @product.brand_model_name, factory_id: @product.factory_id)
+        p @brand_model
         if @brand_model.save
-          if @product.update(product_params)
-            if @product.update(brand_model_id: @brand_model.id)
-              for i in photos_split
-                save_img @product, i, Photo
-              end
-              for i in size_images_split
-                save_img @product, i, SizeImage
-              end 
-              format.js
-            else
-              p "errors-brand-model"
-            end
-            format.js
+          @product.brand_model_id = @brand_model.id
+          p "------->"
+          p @brand_model
+          for i in photos_split
+            save_img @product, i, Photo
           end
+          for i in size_images_split
+            save_img @product, i, SizeImage
+          end
+          
+          format.json { head :no_content }
+          format.js 
+        else
+          format.json { render json: 'brand_model',
+                                    status: :unprocessable_entity }           
         end
+      elsif @product.update(product_params) && brand_model.present?
+        for i in photos_split
+          save_img @product, i, Photo
+        end
+        for i in size_images_split
+          save_img @product, i, SizeImage
+        end
+        format.json { head :no_content }
+        format.js            
       else
-        if @brand_model.update(brand_model_params)
-          if @product.update(product_params)
-            if @product.update(brand_model_id: @brand_model.id)
-              for i in photos_split
-                save_img @product, i, Photo
-              end
-              for i in size_images_split
-                save_img @product, i, SizeImage
-              end 
-              format.js
-            else
-              p "errors-brand-model"
-            end
-            format.js
-          end
-        end
+        format.json { render json: @product.errors.full_messages,
+                                    status: :unprocessable_entity } 
       end
-        
-        #   if @product.update(product_params)
-        #     format.html { redirect_to products_path, notice: 'Product was successfully updated.' }
-        #     format.json { render :show, status: :ok, location: @product }
-        #     format.js
-        #   else
-        #     format.html { render :edit }
-        #     format.json { render json: @product.errors, status: :unprocessable_entity }
-        #   end
-        # end
-      format.js
     end
   end
 
@@ -228,7 +215,10 @@ class ProductsController < ApplicationController
       :brand_model_id, 
       :type_furniture_id, 
       :photo_base64_form,
-      :size_image_base64_form
+      :size_image_base64_form,
+      :factory_id, 
+      :brand_model_name
+
       # :factory_brand, 
       # :type_furniture_name
       )

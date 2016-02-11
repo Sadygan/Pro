@@ -25,7 +25,7 @@ $ ->
       error: (jqXHR, textStatus, errorThrown) ->
         console.log("AJAX Error: #{textStatus}")
       success: (data, textStatus, jqXHR) ->
-        console.log('okxxx')
+        console.log($("#factories_select option:selected").val())
         #$('input[name=commit]').prop('disabled', true);
 $ ->
   $(document).on 'click', '#photos a', (evt) ->

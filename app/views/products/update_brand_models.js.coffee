@@ -1,3 +1,6 @@
+$("#products_select").empty()
+  .append("<%= escape_javascript(render(partial: 'tables/general_methods/brand_model/form', collection: @brand_models, as: 'brand_model')) %>")
+
 # reseting model chosen after change factory
 $("#products_select").prepend("<option value='' selected='selected'></option>");
 $('#products_select').trigger('chosen:updated')
@@ -24,7 +27,6 @@ chosen.dropdown.find('input').on 'keyup', (e) ->
     select.trigger 'chosen:updated'
     # updating article list
     $.ajax 'update_brand_models',
-
       type: 'GET'
       dataType: 'script'
       data: {

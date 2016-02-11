@@ -295,6 +295,7 @@ ru:
     deadline: "Дедлайн"
     planned_budget: "Планируемый бюджет"
     description: "Описание"
+    article: "Артикул"
   errors:
     format: "%{attribute} %{message}"
     messages:

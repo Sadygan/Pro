@@ -8,18 +8,23 @@ class Product < ActiveRecord::Base
 	belongs_to :brand_model
 	has_many :table_specifications
 
-  # validates_presence_of :type_furniture
+  validates_presence_of :type_furniture
   # validates_presence_of :brand_model
 
-	# validates :article, presence: true
- #  validates :width, numericality: true, presence: true
- #  validates :height, numericality: true, presence: true
- #  validates :depth, numericality: true, presence: true
- #  validates :price, numericality: true, presence: true
+  validates :article, presence: true
+  validates :factory_id, presence: true
+	validates :brand_model_name, presence: true
+  validates :width, numericality: true, presence: true
+  validates :height, numericality: true, presence: true
+  validates :depth, numericality: true, presence: true
+  validates :price, numericality: true, presence: true
 
 	accepts_nested_attributes_for :assets
 
-  attr_accessor :photo_base64, :photo_base64_form, :size_image_base64, :size_image_base64_form
+  attr_accessor :photo_base64_form,
+                :size_image_base64_form,
+                :brand_model_name,
+                :factory_id
 
   def default_values
     self.price ||= 0
