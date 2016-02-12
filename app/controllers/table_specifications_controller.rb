@@ -262,6 +262,9 @@ class TableSpecificationsController < ApplicationController
             product = Product.where(article: params[:product][:article]).last
             p "product_2"
             p product
+            p "@product_2"
+            p @product
+
             # Сценарий если есть модель но нет продукта
             if product.nil?
               if @product.save
