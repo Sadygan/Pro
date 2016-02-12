@@ -10,7 +10,7 @@
 	<td class="column5"><%= project.status_description %></td>
 	<td class="column6"><%= project.deadline %></td>
 	<td class="column7"><%= best_in_place [project], :planned_budget %></td>
-	<td class="column8"><%= Project::sum_specifications(project.specifications, "sum") %></td>
+	<td class="column8"></td>
 	<td class="column9"><%= best_in_place [project], :amount_contract %>&nbsp;&nbsp;&nbsp;&nbsp;<span class="accordion-toggle glyphicon glyphicon-menu-down" data-toggle="collapse" data-target=".hidden<%= project.id %>" data-parent="table"></td>
 
 </tr>
