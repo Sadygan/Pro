@@ -9,19 +9,19 @@ class TableSpecification < Table
   
   default_scope { order(:id => :ASC) }
 
-    # validates_presence_of :product
-    validates_numericality_of :unit_price_factory, greater_than_or_equal_to: 20, on: :update
-    validates_numericality_of :number_of, greater_than_or_equal_to: 1, on: :update
-    # validates :product_id, presence: true
+  # validates_presence_of :product
+  validates_numericality_of :unit_price_factory, greater_than_or_equal_to: 20, on: :update
+  validates_numericality_of :number_of, greater_than_or_equal_to: 1, on: :update
+  # validates :product_id, presence: true
 
-    # validates :unit_price_factory, presence: true, numericality: true
-    validates :increment_discount, presence: true, numericality: true
+  # validates :unit_price_factory, presence: true, numericality: true
+  validates :increment_discount, presence: true, numericality: true
+
+  validates :interest_percent, presence: true, numericality: { only_integer: true }
+  validates :arhitec_percent, presence: true, numericality: { only_integer: true }
+  validates :additional_delivery, presence: true, numericality: true
   
-    validates :interest_percent, presence: true, numericality: { only_integer: true }
-    validates :arhitec_percent, presence: true, numericality: { only_integer: true }
-    validates :additional_delivery, presence: true, numericality: true
-    
-    validates :additional_packaging, presence: true, numericality: true
+  validates :additional_packaging, presence: true, numericality: true
   
   # validates :group, numericality: { only_integer: true }
   
