@@ -54,8 +54,8 @@ group :production do
 end
 
 gem 'responders'
-gem 'best_in_place', github: 'aaronchi/best_in_place'
-# gem 'best_in_place', '~> 3.0.1'
+# gem 'best_in_place', github: 'aaronchi/best_in_place'
+gem 'best_in_place'
 gem 'jquery-ui-rails'
 
 #Bootstrap

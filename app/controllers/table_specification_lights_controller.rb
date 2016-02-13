@@ -228,7 +228,8 @@ class TableSpecificationLightsController < ApplicationController
         :size_image_id,
         :product_id,
         :photo_base64_form,
-        :size_image_base64_form
+        :size_image_base64_form,
+        :order
         )
     end
   end

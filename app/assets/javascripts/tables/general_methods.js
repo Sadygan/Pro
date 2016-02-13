@@ -11,7 +11,7 @@ function trueValue(input, text) {
 /***функция пересчета***/
 function calculate(td){
 	var price_input = td.closest('tr').find('input.price').val();
-	var price_text = td.closest('tr').find('[data-attribute="unit_price_factory"] input').val() || td.closest('tr').find('[data-attribute="unit_price_factory"]').text();
+	var price_text = td.closest('tr').find('[data-bip-attribute="unit_price_factory"] input').val() || td.closest('tr').find('[data-bip-attribute="unit_price_factory"]').text();
 	var price = trueValue(price_input, price_text)
 	
 	var discount = td.closest('tr').find('span.discount-value').text() * price / 100;
@@ -20,7 +20,7 @@ function calculate(td){
 	var price_with_discount = price - discount - additional_discount;
 	
 	var number_input = td.closest('tr').find('input.number').val();
-	var number_text = td.closest('tr').find('[data-attribute="number_of"]').text() || td.closest('tr').find('[data-attribute="number_of"] input').val();
+	var number_text = td.closest('tr').find('[data-bip-attribute="number_of"]').text() || td.closest('tr').find('[data-bip-attribute="number_of"] input').val();
 	var number = trueValue(number_input, number_text)
 
 	/* Сумма фабрики */
@@ -55,7 +55,7 @@ function calculate(td){
 	
 	/* Полная сумма */
 	var interest_percent_input = td.closest('tr').find('input.interest').val();
-	var interest_percent_text = td.closest('tr').find('[data-attribute="interest_percent"] input').val() || td.closest('tr').find('[data-attribute="interest_percent"]').text();
+	var interest_percent_text = td.closest('tr').find('[data-bip-attribute="interest_percent"] input').val() || td.closest('tr').find('[data-bip-attribute="interest_percent"]').text();
 	var interest_percent = trueValue(interest_percent_input, interest_percent_text);
 	var full_sum = Math.round(zero_sum * 100 / (100 - interest_percent)*100)/100;
 	td.closest('tr').find('.full_sum').text(full_sum);
@@ -67,7 +67,7 @@ function calculate(td){
 	
 	/* Интерес */
 	var architector_percent_input = td.closest('tr').find('input.arh-interest').val();
-	var architector_percent_text = td.closest('tr').find('[data-attribute="arhitec_percent"] input').val() || td.closest('tr').find('[data-attribute="arhitec_percent"]').text();
+	var architector_percent_text = td.closest('tr').find('[data-bip-attribute="arhitec_percent"] input').val() || td.closest('tr').find('[data-bip-attribute="arhitec_percent"]').text();
 	var architector_percent = trueValue(architector_percent_input, architector_percent_text)
 
 	var profit = full_sum - zero_sum;
@@ -84,13 +84,13 @@ function calculate(td){
 
 function calculateLight(td){
 	var price_input = td.closest('tr').find('input.price').val();
-	var price_text = td.closest('tr').find('[data-attribute="unit_price_factory"] input').val() || td.closest('tr').find('[data-attribute="unit_price_factory"]').text();
+	var price_text = td.closest('tr').find('[data-bip-attribute="unit_price_factory"] input').val() || td.closest('tr').find('[data-bip-attribute="unit_price_factory"]').text();
 	var price = trueValue(price_input, price_text);
 
 	var coefficient = td.closest('tr').find('.light_factor').text();
 	console.log(coefficient)
 	var number_input = td.closest('tr').find('input.number').val();
-	var number_text = td.closest('tr').find('[data-attribute="number_of"]').text() || td.closest('tr').find('[data-attribute="number_of"] input').val();
+	var number_text = td.closest('tr').find('[data-bip-attribute="number_of"]').text() || td.closest('tr').find('[data-bip-attribute="number_of"] input').val();
 	var number = trueValue(number_input, number_text)
 	console.log(number)
 	
@@ -101,7 +101,7 @@ function calculateLight(td){
 	/* Полная цена */
 	//var coefficient = full_sum/factory_sum;
 	var interest_percent_input = td.closest('tr').find('input.interest').val();
-	var interest_percent_text = td.closest('tr').find('[data-attribute="interest_percent"] input').val() || td.closest('tr').find('[data-attribute="interest_percent"]').text();
+	var interest_percent_text = td.closest('tr').find('[data-bip-attribute="interest_percent"] input').val() || td.closest('tr').find('[data-bip-attribute="interest_percent"]').text();
 	var interest_percent = trueValue(interest_percent_input, interest_percent_text);
 	var full_price = Math.round(price * coefficient  * 100 / (100 - interest_percent) * 100) / 100;
 	td.closest('tr').find('.full_price').text(full_price);
@@ -113,7 +113,7 @@ function calculateLight(td){
 	
 	/* Интерес */
 	var architector_percent_input = td.closest('tr').find('input.arh-interest').val();
-	var architector_percent_text = td.closest('tr').find('[data-attribute="arhitec_percent"] input').val() || td.closest('tr').find('[data-attribute="arhitec_percent"]').text();
+	var architector_percent_text = td.closest('tr').find('[data-bip-attribute="arhitec_percent"] input').val() || td.closest('tr').find('[data-bip-attribute="arhitec_percent"]').text();
 	var architector_percent = trueValue(architector_percent_input, architector_percent_text);
 	var profit = full_sum - factory_sum;
 	var interest = Math.round((profit - profit/100*architector_percent)*100)/100;

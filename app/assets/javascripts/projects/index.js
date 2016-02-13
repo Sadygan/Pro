@@ -17,8 +17,8 @@ $(document).ready(function() {
 	if (!isDateInputSupported())  // or.. !Modernizr.inputtypes.date
 	  $('input[type="date"]').datepicker();
 
-	$(".datapic").on('click keyup focus', '[data-attribute="date_delivery_client"]', function () {
-		$('[data-attribute="date_delivery_client"]').datepicker({
+	$(".datapic").on('click keyup focus', '[data-bip-attribute="date_delivery_client"]', function () {
+		$('[data-bip-attribute="date_delivery_client"]').datepicker({
 
 		    onSelect: function(date, instance) {
 		    	// console.log(this.name)

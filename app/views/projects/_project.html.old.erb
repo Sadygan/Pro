@@ -15,7 +15,7 @@
   <td><%= project.status_description %></td>
   <td><%= project.deadline %></td>
   <td><%= best_in_place [project], :planned_budget %></td>
-  <td class="datapic"><input name="<%= project.id %>" data-attribute="date_delivery_client" value="<%= project.date_delivery_client%>" class="form-control" id="dp_<%= project.id %>" /></td>
+  <td class="datapic"><input name="<%= project.id %>" data-bip-attribute="date_delivery_client" value="<%= project.date_delivery_client%>" class="form-control" id="dp_<%= project.id %>" /></td>
   <td><%= best_in_place [project], :amount_contract %></td>
   <td><%= Project::sum_specifications(project.specifications, "sum") %></td>
   <td><%= best_in_place [project], :client_prepayment %></td>

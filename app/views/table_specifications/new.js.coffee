@@ -8,6 +8,7 @@ $('input').on 'change keyup',(evt) ->
 $('.chosen-select').chosen
   allow_single_deselect: false
   no_results_text: 'Add to Data Base'
+  placeholder_text_single: 'Добавить'
   width: '110px'
 
 $('textarea').autoResize

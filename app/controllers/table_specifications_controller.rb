@@ -452,7 +452,8 @@ class TableSpecificationsController < ApplicationController
           :photo_base64_form,
           :size_image_base64,
           :size_image_base64_form,
-          :ts_id
+          :ts_id,
+          :order
           )
       end
     end

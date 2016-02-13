@@ -2,10 +2,10 @@
 $(document).ready(function() {
 	$('#form_button_light').click();
     
-    activateBestInPlace('[data-attribute="unit_price_factory"]', 'light_table')
-    activateBestInPlace('[data-attribute="number_of"]', 		 'light_table')
-    activateBestInPlace('[data-attribute="interest_percent"]', 	 'light_table')
-    activateBestInPlace('[data-attribute="arhitec_percent"]', 	 'light_table')
+    activateBestInPlace('[data-bip-attribute="unit_price_factory"]', 'light_table')
+    activateBestInPlace('[data-bip-attribute="number_of"]', 		 'light_table')
+    activateBestInPlace('[data-bip-attribute="interest_percent"]', 	 'light_table')
+    activateBestInPlace('[data-bip-attribute="arhitec_percent"]', 	 'light_table')
 
 	calculateLight($('input:first'));
 	$('body').on('change keyup','input', function(){

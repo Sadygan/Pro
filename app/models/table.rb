@@ -8,8 +8,9 @@ class Table < ActiveRecord::Base
 
   attr_accessor :photo_base64, :photo_base64_form, :size_image_base64, :size_image_base64_form, :ts_id
 
-
- def add_row specification
+  default_scope { order(:order => :ASC) }
+  
+  def add_row specification
     # ar = specification.table_specifications.pluck(:group)
     ar = TableSpecification.where(specification_id: specification).pluck(:group)
     h = Hash.new(0)

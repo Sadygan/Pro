@@ -2,6 +2,7 @@
   <table width="100%" id="table_specification">
     <thead>
       <tr>
+        <th class="npp">п/п</th>
         <th class="photo">Изображение</th>
         <th class="factory">Фабрика</th>
         <th class="model">Модель</th>
@@ -25,18 +26,19 @@
       <% @table_specifications.each do |ts| %>
         <% pst = [@project, @specification, ts] %>
         <tr row-id="<%= ts.id %>" product-id="<%= ts.product_id %>">
+          <td class="npp"><%= best_in_place pst, :order%></td>
           <td class="photos"><%= render "table_specifications/photo/first_in_table", ts: ts %></td>
           <td class="factory"><%= ts.product.brand_model.factory.brand %></br>
           <%= render "table_specifications/discount/percent", :"@discount" => ts.discount %>
           </td>
           <td><%= ts.product.brand_model.name %></td>
           <td><%= ts.product.article %></td>
-          <td><%= best_in_place pst, :finishing_for_client %></td>
+          <td><%= best_in_place pst, :finishing_for_client, as: :textarea %></td>
           <td><%= ts.product.type_furniture.name %></td>
           <td class="size_images">
             <%= render "table_specifications/size_image/first_in_table", ts: ts %>
             <br>
-            <%= best_in_place pst, :size %></td>
+            <%= best_in_place pst, :size, as: :textarea %></td>
           <td><%= best_in_place pst, :unit_price_factory %></td>
           <td><%= ts.summ_netto %></td>
           <td><%= best_in_place pst, :number_of %></td>

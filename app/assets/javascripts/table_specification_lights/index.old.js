@@ -61,7 +61,7 @@ $(document).ready(function(){
 		printSum(p, specification_id, url);
 	});
 
-	$("#assets").on('click focus keyup','[data-attribute="unit_price_factory"], [data-attribute="number_of"], [data-attribute="interest_percent"], [data-attribute="arhitec_percent"]', function(){
+	$("#assets").on('click focus keyup','[data-bip-attribute="unit_price_factory"], [data-bip-attribute="number_of"], [data-bip-attribute="interest_percent"], [data-bip-attribute="arhitec_percent"]', function(){
 		var id = parseInt($(this).attr('id').replace(/\D+/g,""));
 		
 		var unit_price_factory, number_of, interest_percent, arhitec_percent,

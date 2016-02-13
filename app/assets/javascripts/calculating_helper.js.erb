@@ -148,7 +148,7 @@ function tableCheckSize(width, height, depth, percent_v, unit_v_t, id, group_id,
             if(isNaN(group_id)) {
                 group_id = 0
             }
-            $(temp).replaceWith('<span class="best_in_place" id="best_in_place_table_specification_'+id+'_unit_v" data-url="/projects/'+project_id+'/specifications/'+specification_id+'/table_specifications/'+id+'" data-object="table_specification" data-attribute="unit_v" data-type="input" data-html-attrs="'+group_id+'">'+unitV+'</span>')
+            $(temp).replaceWith('<span class="best_in_place" id="best_in_place_table_specification_'+id+'_unit_v" data-url="/projects/'+project_id+'/specifications/'+specification_id+'/table_specifications/'+id+'" data-object="table_specification" data-bip-attribute="unit_v" data-type="input" data-html-attrs="'+group_id+'">'+unitV+'</span>')
 
 	   	}
     }

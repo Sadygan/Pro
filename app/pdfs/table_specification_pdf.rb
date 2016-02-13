@@ -12,7 +12,7 @@ class TableSpecificationPdf < Prawn::Document
 		# font "#{Rails.root}/app/assets/fonts/Ubuntu-M.ttf"
 		font_families.update("Ubuntu" => { :bold => "#{Rails.root}/app/assets/fonts/Ubuntu-B.ttf",
 		 								   :normal => "#{Rails.root}/app/assets/fonts/Ubuntu-M.ttf"
-		 })
+		})
 		font_families.update("helvetica-ultra-light" => { :normal => "#{Rails.root}/app/assets/fonts/helvetica-neue-ultra-light.ttf" })
 		font_size 8
 		header
@@ -35,6 +35,7 @@ class TableSpecificationPdf < Prawn::Document
 				name_specification
 				line_items
 				total_price
+
 			i+=1
 			end
 			total_sum_project
@@ -76,80 +77,80 @@ class TableSpecificationPdf < Prawn::Document
 	end
 
 	def line_items
-		move_down 0
+		move_down 0 
 		font "Ubuntu", style: :normal
-
 		items = [["Изображение", "Наименование", "Отделка", "Размер", "Цена за 1шт.", "Ко-во", "Сумма"]]
+
 		@specification.tables.each_with_index.map do |item, i|
 		
 		# require "open-uri"
 		# require "prawn/gmagick"
 		
-		if item.photo_id
-			current_photo = Photo.find(item.photo_id)
-			image_photo = open(current_photo.img.url(:original))
+			if item.photo_id
+				current_photo = Photo.find(item.photo_id)
+				image_photo = open(current_photo.img.url(:original))
 
-		else
-			# image = "#{Rails.root}/public/no_image/no_image.png"
-		end
-
-		sum = 0
-		if item.add_row(@specification)[item.group] > 1
-			sum = item.groupDataSum(item.group, "gp_sum_number")
-			summa = {content: "#{sum}", rowspan: 2, valign: :center, align: :center}
-		else	
-			sum = item.summa
-			summa = {content: "#{sum}", rowspan: 2, valign: :center, align: :center}
-		end
-
-		unit_price = 0
-
-		if (item.class.name === "TableSpecification")
-			if item.add_row(@specification)[item.group] > 1
-				unit_price = item.groupDataSum(item.group, "gp_unit_sum")
-			else	
-				unit_price = item.unit_price
+			else
+				# image = "#{Rails.root}/public/no_image/no_image.png"
 			end
-		elsif (item.class.name === "TableSpecificationLight")
-			unit_price = item.unit_with_interest_light
-		end
-		
-		if item.size_image_id
-			current_photo = SizeImage.find(item.size_image_id)
-			image_size1 = open(current_photo.img.url)
-			image_size = {:image => image_size1, image_width: 100, rowspan: 1, :border_bottom_color => "FFFFFF"}
+
+			sum = 0
+			if item.add_row(@specification)[item.group] > 1
+				sum = item.groupDataSum(item.group, "gp_sum_number")
+				summa = {content: "#{sum}", rowspan: 2, valign: :center}
+			else	
+				sum = item.summa
+				summa = {content: "#{sum}", rowspan: 2, valign: :center}
+			end
+
+			unit_price = 0
+
+			if (item.class.name === "TableSpecification")
+				if item.add_row(@specification)[item.group] > 1
+					unit_price = item.groupDataSum(item.group, "gp_unit_sum")
+				else	
+					unit_price = item.unit_price
+				end
+			elsif (item.class.name === "TableSpecificationLight")
+				unit_price = item.unit_with_interest_light
+			end
 			
-			items << [
-				{:image => image_photo, image_width: 150, rowspan: 1, :border_bottom_color => "FFFFFF"},
-				{content: "\n#{item.product.article}", rowspan: 1, :border_bottom_color => "FFFFFF", valign: :center, align: :center}, 
-				{content: "\n#{item.finishing_for_client}", rowspan: 1, :border_bottom_color => "FFFFFF", valign: :center}, 
-				image_size, 
-				{content: "\n#{unit_price}", rowspan: 1, :border_bottom_color => "FFFFFF", valign: :center, align: :center}, 
-				{content: "\n#{item.number_of}", rowspan: 1, :border_bottom_color => "FFFFFF", valign: :center, align: :center}, 
-				summa
-			]
-		items << [ 
-			{:border_top_color => "FFFFFF"},
-			{:border_top_color => "FFFFFF"},
-			{:border_top_color => "FFFFFF"},
-			{content: "#{item.size}", :border_top_color => "FFFFFF", valign: :center, align: :center},
-			{:border_top_color => "FFFFFF"},
-			{:border_top_color => "FFFFFF"},
-		  	]
-		else
-			# image_size = {content: "", rowspan: 2}
-			items << [
-				{:image => image_photo, image_width: 150, rowspan: 2},
-				{content: "#{item.product.article}", rowspan: 2, valign: :center, align: :center}, 
-				{content: "#{item.finishing_for_client}", rowspan: 2, valign: :center, align: :center}, 
-				{content: "#{item.size}", rowspan: 2, valign: :center, align: :center},
-				{content: "#{unit_price}", rowspan: 2, valign: :center, align: :center},
-				{content: "#{item.number_of}", rowspan: 2, valign: :center, align: :center}, 
-				summa
-			]
-		items << [	]
-			# image_size1 = "#{Rails.root}/public/no_image/no_image.png"
-		end
+			if item.size_image_id
+				current_photo = SizeImage.find(item.size_image_id)
+				image_size1 = open(current_photo.img.url)
+				image_size = {:image => image_size1, image_width: 100, rowspan: 1, :border_bottom_color => "cccccc", :vposition => :center}
+				
+				items << [
+					{:image => image_photo, image_width: 150, rowspan: 1, :border_bottom_color => "FFFFFF", :vposition => :center},
+					{content: "\n#{item.product.article}", rowspan: 1, :border_bottom_color => "FFFFFF", valign: :center, align: :center}, 
+					{content: "\n#{item.finishing_for_client}", rowspan: 1, :border_bottom_color => "FFFFFF", valign: :center}, 
+					image_size, 
+					{content: "\n#{unit_price}", rowspan: 1, :border_bottom_color => "FFFFFF", valign: :center, align: :center}, 
+					{content: "\n#{item.number_of}", rowspan: 1, :border_bottom_color => "FFFFFF", valign: :center, align: :center}, 
+					summa
+				]
+			items << [ 
+				{:border_top_color => "FFFFFF"},
+				{:border_top_color => "FFFFFF"},
+				{:border_top_color => "FFFFFF"},
+				{content: "#{item.size}", :border_top_color => "FFFFFF"},
+				{:border_top_color => "FFFFFF"},
+				{:border_top_color => "FFFFFF"},
+			  	]
+			else
+				# image_size = {content: "", rowspan: 2}
+				items << [
+					{:image => image_photo, image_width: 150, rowspan: 2, :vposition => :center},
+					{content: "#{item.product.article}", rowspan: 2 }, 
+					{content: "#{item.finishing_for_client}", rowspan: 2 }, 
+					{content: "#{item.size}", rowspan: 2 },
+					{content: "#{unit_price}", rowspan: 2 },
+					{content: "#{item.number_of}", rowspan: 2}, 
+					summa
+				]
+			items << [	]
+				# image_size1 = "#{Rails.root}/public/no_image/no_image.png"
+			end
 		
 		
 		# items << [
@@ -166,9 +167,9 @@ class TableSpecificationPdf < Prawn::Document
 		end
 		items += total_price
 
-
-		table items, :header => true, 
-		:column_widths => { 0 => 160, 1 => 68, 2 => 98, 3 => 110, 4 => 60, 5 => 36, 6 => 60}
+		table items, :header => true,
+		:column_widths => { 0 => 160, 1 => 68, 2 => 98, 3 => 110, 4 => 60, 5 => 36, 6 => 60}, 
+		:cell_style => { valign: :center, align: :center }
 	end
 		
 	def total_price

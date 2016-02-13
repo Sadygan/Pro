@@ -70,10 +70,10 @@ $ ->
 
 $(document).ready ->
   $("#form_button").click()
-  activateBestInPlace "[data-attribute='unit_price_factory']", 'main_table'
-  activateBestInPlace "[data-attribute='number_of']"         , 'main_table'
-  activateBestInPlace "[data-attribute='interest_percent']"  , 'main_table'
-  activateBestInPlace "[data-attribute='arhitec_percent']"   , 'main_table'
+  activateBestInPlace "[data-bip-attribute='unit_price_factory']", 'main_table'
+  activateBestInPlace "[data-bip-attribute='number_of']"         , 'main_table'
+  activateBestInPlace "[data-bip-attribute='interest_percent']"  , 'main_table'
+  activateBestInPlace "[data-bip-attribute='arhitec_percent']"   , 'main_table'
   $(document).on "click", "a.invoker", ->
     invoker = $(this)
 
