@@ -1,4 +1,5 @@
 https://github.com/stomita/heroku-buildpack-phantomjs
 https://github.com/ello/heroku-buildpack-imagemagick-cedar-14
 https://github.com/packetmonkey/heroku-buildpack-graphicsmagick
-https://github.com/heroku/heroku-buildpack-ruby
+https://github.com/heroku/heroku-buildpack-rubyhttps://github.com/heroku/heroku-buildpack-ruby.git
+https://github.com/dscout/wkhtmltopdf-buildpack.git
