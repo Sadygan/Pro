@@ -32,6 +32,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'wkhtmltopdf-binary-edge'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -46,7 +47,6 @@ group :development, :test do
   gem 'sqlite3'
 
   # gem "prawn-gmagick"
-  gem 'wkhtmltopdf-binary-edge'
 
 end
 
@@ -55,7 +55,6 @@ group :production do
 	gem 'rails_12factor'
   gem 'wkhtmltopdf-heroku'
   gem 'rmagick'
-  gem 'wkhtmltopdf-binary'
 end
 
 gem 'responders'
