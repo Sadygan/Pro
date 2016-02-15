@@ -99,6 +99,3 @@ gem "compass-rails", github: "Compass/compass-rails", branch: "master"
 gem 'dynamic_form'
 
 gem 'wicked_pdf'
-
-gem 'figaro', github: "laserlemon/figaro"
-gem 'Indirizzo', git: 'https://github.com/daveworth/Indirizzo.git'
