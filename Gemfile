@@ -46,11 +46,15 @@ group :development, :test do
   gem 'sqlite3'
 
   gem "prawn-gmagick"
+  gem 'wkhtmltopdf-binary-edge'
+
 end
 
 group :production do
 	gem 'pg'
 	gem 'rails_12factor'
+  gem 'wkhtmltopdf-heroku'
+
 end
 
 gem 'responders'
@@ -93,3 +97,7 @@ gem 'chosen-rails'
 gem "compass-rails", github: "Compass/compass-rails", branch: "master"
 
 gem 'dynamic_form'
+
+gem 'wicked_pdf'
+
+gem "figaro"

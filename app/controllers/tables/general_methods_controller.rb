@@ -1,4 +1,18 @@
  class Tables::GeneralMethodsController < ApplicationController
+      # UPDATE PRINT SUM IN SPECIFICATION 
+  def update_print_sum
+    @specification = Specification.find(params[:specification_id])
+    @specification.print_sum = params[:print_sum]
+    respond_to do |format|
+      if @specification.save
+       format.json { head :no_content }
+       format.js
+      else
+        format.json { respond_with_bip(@table_specification) }
+      end
+    end
+  end
+  
   def update_brand_models
     @brand_models = BrandModel.where("factory_id = ?", params[:factory_id])
     @brand_model = @brand_models.first

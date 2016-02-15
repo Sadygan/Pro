@@ -19,11 +19,19 @@ class TableSpecificationsController < ApplicationController
     respond_to do |format|
         format.json
         format.html
-        format.pdf do 
-          pdf = TableSpecificationPdf.new(@project, @specification, @table_specifications, @user)
-          send_data pdf.render, filename: "specification_#{@specification.id}.pdf",
-                                type: "application/pdf",
-                                disposition: "inline"
+        format.pdf do
+
+          render  pdf:        "unit_specification",
+                  template:   "tables/pdfs/unit_specification.pdf.erb",
+                  # header: { html: { template: 'tables/pdfs/header.html' }}, # Dont work with wkhtmltopdf-binary-edge gem
+                  encoding:   'utf8',
+                  margin:  {  top:             5,                     # default 10 (mm)
+                              bottom:          35,
+                              left:            3,
+                              right:           3 }
+
+
+          # pdf = TableSpecificationPdf.new(@project, @specification, @table_specifications, @user)
       end
     end
   end
@@ -348,20 +356,6 @@ class TableSpecificationsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to project_specification_table_specifications_path, notice: 'Table specification was successfully destroyed.' }
       format.json { head :no_content }
-    end
-  end
-
-    # UPDATE PRINT SUM IN SPECIFICATION 
-  def update_print_sum
-    @specification = Specification.find(params[:specification_id])
-    @specification.print_sum = params[:print_sum]
-    respond_to do |format|
-      if @specification.save
-       format.json { head :no_content }
-       format.js
-      else
-        format.json { respond_with_bip(@table_specification) }
-      end
     end
   end
 

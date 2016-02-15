@@ -67,6 +67,20 @@ $ ->
         console.log("articles change")
         console.log($(invoker).closest('tr').attr("product-id"))
     return false
+$ ->
+  $(document).on 'click', '#print_sum', (evt) ->
+    $.ajax '/tables/update_print_sum',
+      type: 'GET'
+      dataType: 'script'
+      data: {
+        print_sum: $('#print_sum').prop('checked');
+        specification_id: $('#print_sum').val();
+      }
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log('<%= @specification.id %>')
+      success: (data, textStatus, jqXHR) ->
+
+    return false
 
 $(document).ready ->
   $("#form_button").click()

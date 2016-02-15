@@ -38,8 +38,9 @@ Rails.application.routes.draw do
 
   namespace :tables do
     get 'update_brand_models', as: 'update_brand_models', to: 'general_methods#update_brand_models'
-    get 'update_articles', as: 'update_articles', to: 'general_methods#update_articles'
+    get 'update_articles',     as: 'update_articles',     to: 'general_methods#update_articles'
     get 'update_pipe_article', as: 'update_pipe_article', to: 'general_methods#update_pipe_article'
+    get 'update_print_sum',    as: 'update_print_sum',    to: 'general_methods#update_print_sum'
   end
 
   resources :projects do

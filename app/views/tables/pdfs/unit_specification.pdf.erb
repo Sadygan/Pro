@@ -1,0 +1,55 @@
+<%= wicked_pdf_stylesheet_link_tag "pdf" %>
+<div class="header">
+	<div class="logo"><span id="dizaap">DIZAAP </span><br>
+	<span id="upgrade">UPGRADE THE WORLD</span>
+	</div>
+	<div class="specification_id">
+		<span id="specification_id">#<%= @specification.id %></span> <br>
+		<span id="data_manager"><%= @user.name %> | <%= @user.email %> | <%= @user.telephone %></span>
+	</div>
+</div>
+<table>
+	<thead>
+		<tr>
+			<th colspan="7" class="specification_name"><span><%= @specification.name %></span></td>	
+		</tr>
+		<tr>
+			<th class="photo">Изображение</th>
+			<th class="brand_model">Модель</th>
+			<th class="finishing_for_client">Отделка</th>
+			<th class="size">Размер</th>
+			<th class="number_of">Ко-во</th>
+			<th class="price">Цена 1шт.</th>
+			<th class="sum">Сумма</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @table_specifications.each do |ts| %>
+		<tr>
+			<td class="photo"><%= image_tag (ts.image(ts.photo_id)).gsub('https', 'http') %></td>
+			<td class="brand_model"><%= ts.product.brand_model.name %></td>
+			<td class="finishing_for_client"><%= ts.finishing_for_client%></td>
+			<td class="size">
+				<%= image_tag ts.image_pdf(ts.size_image_id)  %>
+				<br>
+				<%= ts.finishing_for_client %>
+			</td>
+			<td class="number_of"><%= ts.number_of %></td>
+			<% if ts.group.nil? %>
+				<td class="price"><%= ts.unit_price %></td>
+				<td class="sum"><%= ts.summa %></td>
+			<% else %>
+				<td class="price"><%= ts.groupDataSum(ts.group, "gp_unit_sum") %></td>
+				<td class="sum"><%= ts.groupDataSum(ts.group, "gp_sum_number") %></td>
+			<% end %>
+		</tr>
+		<% end %>
+		<tr>
+		<% if @specification.print_sum %>
+			<td colspan="6"></td>
+			<td class="sum"><%= TableSpecification::specification_sum_all(@specification, "sum") %></td>
+		<% end %>
+		</tr>
+	</tbody>
+</table>
+<p> text text text text text text  text text  text text  text text  text text  text text  text text  text text  text text  text text  text text  text text  text text  text text  text text  text text  text text  text text  text text  text text  text text  text text  text text  text text 	 </p>

@@ -86,6 +86,7 @@ class Table < ActiveRecord::Base
     end
   end
 
+
   def photo_select id
     Photo.where(product_id: id)
   end
@@ -93,5 +94,24 @@ class Table < ActiveRecord::Base
   def size_image_select id
     SizeImage.where(product_id: id)
   end
- # ----
+  # ----
+  
+  # PDF
+  def image_pdf id 
+    unless id.nil? || id == 0 
+      Asset.find(id).img.url(:thumb).gsub('https', 'http')
+    end
+  end
+
+  # def summa_pdf
+  #   sum = 0
+  #   if add_row(@specification)[group] > 1
+  #     sum = item.groupDataSum(group, "gp_sum_number")
+  #     summa = {content: "#{sum}", rowspan: 2, valign: :center}
+  #   else  
+  #     sum = item.summa
+  #     summa = {content: "#{sum}", rowspan: 2, valign: :center}
+  #   end
+  # end
+
 end
