@@ -45,7 +45,7 @@ group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
 
-  gem "prawn-gmagick"
+  # gem "prawn-gmagick"
   gem 'wkhtmltopdf-binary-edge'
 
 end
@@ -54,6 +54,7 @@ group :production do
 	gem 'pg'
 	gem 'rails_12factor'
   gem 'wkhtmltopdf-heroku'
+  gem 'rmagick'
 
 end
 
