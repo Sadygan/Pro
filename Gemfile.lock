@@ -8,19 +8,6 @@ GIT
       sass-rails (< 5.1)
       sprockets (< 4.0)
 
-GIT
-  remote: git://github.com/laserlemon/figaro.git
-  revision: 5191084e16cf5cd5c2cc8a98df9071dbac9b4cba
-  specs:
-    figaro (1.1.1)
-      thor (~> 0.14)
-
-GIT
-  remote: https://github.com/daveworth/Indirizzo.git
-  revision: 2dd0890801d3b9ce7304bca778a044af7fa2198e
-  specs:
-    Indirizzo (0.1.7)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -265,7 +252,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  Indirizzo!
   acts-as-taggable-on (~> 3.4)
   best_in_place
   bootstrap-filestyle-rails
@@ -277,7 +263,6 @@ DEPENDENCIES
   compass-rails!
   devise
   dynamic_form
-  figaro!
   jbuilder (~> 2.0)
   jquery-rails
   jquery-ui-rails
