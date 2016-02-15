@@ -101,4 +101,5 @@ gem 'dynamic_form'
 
 gem 'wicked_pdf'
 
-# gem "figaro"
+gem 'figaro', github: "laserlemon/figaro"
+gem 'Indirizzo', git: 'https://github.com/daveworth/Indirizzo.git'
