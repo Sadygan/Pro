@@ -100,4 +100,4 @@ gem 'dynamic_form'
 
 gem 'wicked_pdf'
 
-gem "figaro"
+# gem "figaro"
