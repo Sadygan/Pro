@@ -160,3 +160,20 @@ function ajaxCall(url, type, dataType, data) {
 		}
 	})
 }
+// $(function() {
+//   return $(document).on('click', '.print_sum input', function(evt) {
+//     $.ajax('/tables/update_print_sum', {
+//       type: 'GET',
+//       dataType: 'script',
+//       data: {
+//         print_sum: $(this).prop('checked'),
+//         specification_id: $(this).val()
+//       },
+//       error: function(jqXHR, textStatus, errorThrown) {},
+//       success: function(data, textStatus, jqXHR) {
+//       	console.log($(this).val())
+//       }
+//     });
+//     return false;
+//   });
+});
