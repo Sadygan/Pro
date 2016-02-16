@@ -29,9 +29,6 @@ class TableSpecificationsController < ApplicationController
                               bottom:          35,
                               left:            3,
                               right:           3 }
-
-
-          # pdf = TableSpecificationPdf.new(@project, @specification, @table_specifications, @user)
       end
     end
   end

@@ -13,16 +13,21 @@ class TableSpecificationLightsController < ApplicationController
     # @table_specification_lights = @specification.table_specification_lights.all
     @table_specification_lights = @specification.table_specification_lights.all
 
-        respond_to do |format|
-          format.json
-          format.html
-          format.pdf do 
-            pdf = TableSpecificationPdf.new(@project, @specification, @table_specification_lights, @user)
-            send_data pdf.render, filename: "specification_#{@specification.id}.pdf",
-                                  type: "application/pdf",
-                                  disposition: "inline"
-        end
+    respond_to do |format|
+        format.json
+        format.html
+        format.pdf do
+
+          render  pdf:        "unit_specification",
+                  template:   "tables/pdfs/unit_specification.pdf.erb",
+                  # header: { html: { template: 'tables/pdfs/header.html' }}, # Dont work with wkhtmltopdf-binary-edge gem
+                  encoding:   'utf8',
+                  margin:  {  top:             5,                     # default 10 (mm)
+                              bottom:          35,
+                              left:            3,
+                              right:           3 }
       end
+    end
   end
 
   # GET /table_specification_lights/1

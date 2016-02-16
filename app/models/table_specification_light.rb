@@ -21,7 +21,7 @@ class TableSpecificationLight < Table
     with_interest.round(2)
   end
 
-  def unit_with_interest_light
+  def unit_price
     (with_interest/number_of).round(2)
   end
 
