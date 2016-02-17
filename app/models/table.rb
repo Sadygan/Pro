@@ -103,15 +103,15 @@ class Table < ActiveRecord::Base
     end
   end
 
-  # def summa_pdf
-  #   sum = 0
-  #   if add_row(@specification)[group] > 1
-  #     sum = item.groupDataSum(group, "gp_sum_number")
-  #     summa = {content: "#{sum}", rowspan: 2, valign: :center}
-  #   else  
-  #     sum = item.summa
-  #     summa = {content: "#{sum}", rowspan: 2, valign: :center}
-  #   end
-  # end
-
+  def total_price
+    total_sum = []
+    if @specification.print_sum
+      if @specification.light
+        total_sum = [[{colspan: 5}, "Сумма", {content: "#{TableSpecificationLight::specification_sum_all(@specification, "sum")}"}]]
+      else
+        total_sum = [[{colspan: 5}, "Сумма", {content: "#{TableSpecification::specification_sum_all(@specification, "sum")}"}]]
+      end
+    end
+    total_sum
+  end
 end
