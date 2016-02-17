@@ -55,7 +55,11 @@ class TableSpecification < Table
   end
  
   def upn
-    unit_price_netto(discount.percent, unit_price_factory, product.brand_model.factory.additional_discount, increment_discount).round(2)
+    unless product.brand_model?
+      unit_price_netto(discount.percent, unit_price_factory, product.brand_model.factory.additional_discount, increment_discount).round(2)
+    else
+      0
+    end
   end
 
   def unit_v
