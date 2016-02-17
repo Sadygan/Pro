@@ -28,13 +28,13 @@
         <tr row-id="<%= ts.id %>" product-id="<%= ts.product_id %>">
           <td class="npp"><%= best_in_place pst, :order%></td>
           <td class="photos"><%= render "table_specifications/photo/first_in_table", ts: ts %></td>
-          <td class="factory"><%= ts.product.brand_model.factory.brand %></br>
+          <td class="factory"><%= ts.product.brand_model.factory.brand if ts.product %></br>
           <%= render "table_specifications/discount/percent", :"@discount" => ts.discount %>
           </td>
-          <td><%= ts.product.brand_model.name %></td>
-          <td><%= ts.product.article %></td>
+          <td><%= ts.product.brand_model.name if ts.product %></td>
+          <td><%= ts.product.article if ts.product %></td>
           <td><%= best_in_place pst, :finishing_for_client, as: :textarea %></td>
-          <td><%= ts.product.type_furniture.name %></td>
+          <td><%= ts.product.type_furniture.name if ts.product %></td>
           <td class="size_images">
             <%= render "table_specifications/size_image/first_in_table", ts: ts %>
             <br>
