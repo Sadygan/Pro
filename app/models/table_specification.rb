@@ -72,12 +72,15 @@ class TableSpecification < Table
   end
   
   def v_sum
-    if product.width && product.height && product.depth
-  # || (product.width != 0.0 && product.height != 0.0 && product.depth != 0.0) || (product.width != 0 && product.height != 0 && product.depth != 0)
-      multiplication(calculatingSize, number_of).round(2)
+    if product
+      if product.width && product.height && product.depth
+        multiplication(calculatingSize, number_of).round(2)
+      else
+        multiplication(product.unit_v, number_of).round(2)
+      end 
     else
-      multiplication(product.unit_v, number_of).round(2)
-    end  
+      0
+    end 
   end
 
 
