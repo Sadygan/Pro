@@ -69,7 +69,7 @@
             <div class="delivery_data">
               <%= render 'table_specifications/delivery/data', :"@delivery_data" => Delivery.find(ts.delivery_id) %>
             </div>
-            <% if ts.product.width && ts.product.height && ts.product.depth && ts.product %>
+            <% if ts.product then ts.product.width && ts.product.height && ts.product.depth  %>
               <span class="unv"><%= ts.v_sum %></span>
               <br>
               <a class="shvg_percent invoker" href="#">ШВГ</a>
