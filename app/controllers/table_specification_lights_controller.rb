@@ -50,6 +50,8 @@ class TableSpecificationLightsController < ApplicationController
 
   # GET /table_specification_lights/1/edit
   def edit
+    @table_specification_light = @specification.table_specification_lights.new(table_specification_light_params)
+    
   end
 
   # POST /table_specification_lights
@@ -57,6 +59,18 @@ class TableSpecificationLightsController < ApplicationController
   def create
     @table_specification_lights = @specification.table_specifications.all
     @table_specification_light = @specification.table_specification_lights.new(table_specification_light_params)
+    
+    if params[:add_photos]
+      ts = TableSpecificationLight.find(@table_specification_light.ts_id)
+      product = Product.find(@table_specification_light.product_id)
+      save_img ts, ts.photo_id, product, @table_specification_light.photo_base64, Photo
+    end
+
+    if params[:add_size_images]
+      ts = TableSpecificationLight.find(@table_specification_light.ts_id)
+      product = Product.find(@table_specification_light.product_id)
+      save_img ts, ts.size_image_id, product, @table_specification_light.size_image_base64, SizeImage
+    end
 
     if params[:create_ts]
       @brand_model = BrandModel.new(brand_model_params)
@@ -135,28 +149,12 @@ class TableSpecificationLightsController < ApplicationController
   # PATCH/PUT /table_specification_lights/1
   # PATCH/PUT /table_specification_lights/1.json
   def update
-    @table_specification_light = @specification.table_specification_lights.new(table_specification_light_params)
-    
-    if params[:add_photos]
-      ts = TableSpecificationLight.find(@table_specification_light.ts_id)
-      product = Product.find(@table_specification_light.product_id)
-      save_img ts, ts.photo_id, product, @table_specification_light.photo_base64, Photo
-    end
-
-    if params[:add_size_images]
-      ts = TableSpecificationLight.find(@table_specification_light.ts_id)
-      product = Product.find(@table_specification_light.product_id)
-      save_img ts, ts.size_image_id, product, @table_specification_light.size_image_base64, SizeImage
-    end
-    
-    if params[:update]
-      respond_to do |format|
-        if @table_specification_light.update(table_specification_light_params)
-          format.json { head :no_content }
-          format.js
-        else
-          format.json { respond_with_bip(@table_specification_light) }
-        end
+    respond_to do |format|
+      if @table_specification_light.update(table_specification_light_params)
+        format.json { head :no_content }
+        format.js
+      else
+        format.json { respond_with_bip(@table_specification_light) }
       end
     end
     

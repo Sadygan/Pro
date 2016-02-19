@@ -233,8 +233,6 @@ class TableSpecificationsController < ApplicationController
     if params[:create_ts]
       @brand_model = BrandModel.new(brand_model_params)
       @product = Product.new(product_params)
-      p "product"
-      p @product
       respond_to do |format|
         if @table_specification.save
           brand_model = BrandModel.where(name: params[:brand_model][:name]).last
