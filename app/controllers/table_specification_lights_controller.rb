@@ -9,9 +9,8 @@ class TableSpecificationLightsController < ApplicationController
     # authorize! :index, @table_specification
     @user = current_user
     authorize! :show, @project
-    # @table_specification_lights = TableSpecificationLight.all
-    # @table_specification_lights = @specification.table_specification_lights.all
     @table_specification_lights = @specification.table_specification_lights.all
+    @table_specification_light = TableSpecificationLight.new
 
     respond_to do |format|
         format.json
