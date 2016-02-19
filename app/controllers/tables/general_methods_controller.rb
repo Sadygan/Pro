@@ -93,6 +93,7 @@
 
   def photos
     @photos = Photo.where("product_id = ?", params[:product_id])
+    p @photos
     respond_to do |format|
       format.js
     end

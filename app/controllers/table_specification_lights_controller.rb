@@ -58,18 +58,6 @@ class TableSpecificationLightsController < ApplicationController
     @table_specification_lights = @specification.table_specifications.all
     @table_specification_light = @specification.table_specification_lights.new(table_specification_light_params)
 
-    if params[:add_photos]
-      ts = TableSpecification.find(@table_specification_light.ts_id)
-      product = Product.find(@table_specification_light.product_id)
-      save_img ts, ts.photo_id, product, @table_specification_light.photo_base64, Photo
-    end
-
-    if params[:add_size_images]
-      ts = TableSpecification.find(@table_specification_light.ts_id)
-      product = Product.find(@table_specification_light.product_id)
-      save_img ts, ts.size_image_id, product, @table_specification_light.size_image_base64, SizeImage
-    end
-
     if params[:create_ts]
       @brand_model = BrandModel.new(brand_model_params)
       @product = Product.new(product_params)
@@ -147,14 +135,31 @@ class TableSpecificationLightsController < ApplicationController
   # PATCH/PUT /table_specification_lights/1
   # PATCH/PUT /table_specification_lights/1.json
   def update
-    respond_to do |format|
-      if @table_specification_light.update(table_specification_light_params)
-        format.json { head :no_content }
-        format.js
-      else
-        format.json { respond_with_bip(@table_specification_light) }
+    @table_specification_light = @specification.table_specification_lights.new(table_specification_light_params)
+    
+    if params[:add_photos]
+      ts = TableSpecificationLight.find(@table_specification_light.ts_id)
+      product = Product.find(@table_specification_light.product_id)
+      save_img ts, ts.photo_id, product, @table_specification_light.photo_base64, Photo
+    end
+
+    if params[:add_size_images]
+      ts = TableSpecificationLight.find(@table_specification_light.ts_id)
+      product = Product.find(@table_specification_light.product_id)
+      save_img ts, ts.size_image_id, product, @table_specification_light.size_image_base64, SizeImage
+    end
+    
+    if params[:update]
+      respond_to do |format|
+        if @table_specification_light.update(table_specification_light_params)
+          format.json { head :no_content }
+          format.js
+        else
+          format.json { respond_with_bip(@table_specification_light) }
+        end
       end
     end
+    
   end
 
   # DELETE /table_specification_lights/1
@@ -189,7 +194,8 @@ class TableSpecificationLightsController < ApplicationController
   
   # Save photo
   def save_img table_specification, model_id, product, base64, model
-
+    p '--->'
+    p base64
     # if model_id.nil? 
       photo = Paperclip.io_adapters.for(base64) 
       photo.original_filename = product.article+'_photo.jpeg'
@@ -232,8 +238,11 @@ class TableSpecificationLightsController < ApplicationController
         :photo_id,
         :size_image_id,
         :product_id,
+        :photo_base64,
         :photo_base64_form,
+        :size_image_base64,
         :size_image_base64_form,
+        :ts_id,
         :order
         )
     end

@@ -1,4 +1,4 @@
-//= require tables/general_methods.js
+//= require tables/general_methods
 
 jQuery ->
   $('.best_in_place').best_in_place()

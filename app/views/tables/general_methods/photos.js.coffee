@@ -1,5 +1,5 @@
 # Render the new form
-$('.modal-photo').html '<%= j render("table_specifications/photo/form") %>'
+$('.modal-photo').html '<%= j render("tables/general_methods/photo/form") %>'
 # Show the dynamic dialog
 $('#modalpict').modal 'show'
 # Set focus to the first element

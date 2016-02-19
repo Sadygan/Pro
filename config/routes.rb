@@ -41,6 +41,8 @@ Rails.application.routes.draw do
     get 'update_articles',     as: 'update_articles',     to: 'general_methods#update_articles'
     get 'update_pipe_article', as: 'update_pipe_article', to: 'general_methods#update_pipe_article'
     get 'update_print_sum',    as: 'update_print_sum',    to: 'general_methods#update_print_sum'
+    get 'photos',              as: 'photos',              to: 'general_methods#photos'
+    get 'size_images',         as: 'size_images',         to: 'general_methods#size_images'
   end
 
   resources :projects do
