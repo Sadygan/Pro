@@ -26,7 +26,7 @@
       <% @table_specifications.each do |ts| %>
         <% pst = [@project, @specification, ts] %>
         <tr row-id="<%= ts.id %>" product-id="<%= ts.product_id %>">
-          <td class="npp"><%= best_in_place pst, :order%></td>
+          <td class="npp"><%= best_in_place pst, :order %></td>
           <td class="photos"><%= render "table_specifications/photo/first_in_table", ts: ts %></td>
           <td class="factory"><%= ts.product.brand_model.factory.brand if ts.product %></br>
           <%= render "table_specifications/discount/percent", :"@discount" => ts.discount %>
