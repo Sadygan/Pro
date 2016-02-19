@@ -1,0 +1,204 @@
+var ajaxCall, calculate, calculateLight, modalSelect, trueValue;
+
+trueValue = function(input, text) {
+  var trval;
+  trval = void 0;
+  if (input === void 0) {
+    trval = text;
+  } else {
+    trval = input;
+  }
+  return trval;
+};
+
+
+/***функция пересчета** */
+
+calculate = function(td) {
+  var add_to_delivery, additional_discount, ajax_bank_percent, ajax_bank_service, ajax_check_factory, ajax_delivery_cost, ajax_documents, arch_interest, architector_percent, architector_percent_input, architector_percent_text, arh_order_percent, coefficient, delivery, discount, factory_sum, full_price, full_sum, interest, interest_percent, interest_percent_input, interest_percent_text, number, number_input, number_text, packing, price, price_input, price_text, price_with_discount, profit, v, v_input, v_text, zero_sum;
+  price_input = td.closest('tr').find('input.price').val();
+  price_text = td.closest('tr').find('[data-bip-attribute="unit_price_factory"] input').val() || td.closest('tr').find('[data-bip-attribute="unit_price_factory"]').text();
+  price = trueValue(price_input, price_text);
+  discount = td.closest('tr').find('span.discount-value').text() * price / 100;
+  additional_discount = td.closest('tr').find('input.table_specification_additional_discount').val();
+  additional_discount = (price - discount) * additional_discount / 100;
+  price_with_discount = price - discount - additional_discount;
+  number_input = td.closest('tr').find('input.number').val();
+  number_text = td.closest('tr').find('[data-bip-attribute="number_of"]').text() || td.closest('tr').find('[data-bip-attribute="number_of"] input').val();
+  number = trueValue(number_input, number_text);
+
+  /*Сумма фабрики */
+  factory_sum = Math.round(price_with_discount * number * 100) / 100;
+  td.closest('tr').find('.factory-sum').text(factory_sum);
+
+  /*Доставка */
+  ajax_delivery_cost = td.closest('tr').find('.delivery_data .cost').val() * 1;
+  add_to_delivery = td.closest('tr').find('input.add_to_delivery').val() * 1;
+  v_input = td.closest('tr').find('input.unit_v').val();
+  v_text = td.closest('tr').find('span.unv').text() || td.closest('tr').find('span.unit_v').text();
+  v = void 0;
+  if (v_input === void 0) {
+    v = v_text * number;
+  } else {
+    v = v_input * number;
+  }
+  td.closest('tr').find('.unv').text(v);
+  packing = td.closest('tr').find('input.packing').val() * 1;
+  delivery = (ajax_delivery_cost + add_to_delivery) * v + packing;
+
+  /*Сумма в ноль */
+  ajax_bank_service = td.closest('tr').find('.delivery_data .bank_service').val() * 1;
+  ajax_bank_percent = td.closest('tr').find('.delivery_data .bank_percent').val() * 1;
+  ajax_bank_percent = (factory_sum + ajax_bank_service) * ajax_bank_percent / 100;
+  ajax_documents = td.closest('tr').find('.delivery_data .execution_document').val() * 1;
+  ajax_check_factory = td.closest('tr').find('.delivery_data .check_factory').val() * 1;
+  zero_sum = factory_sum + ajax_bank_service + ajax_bank_percent + ajax_documents + ajax_check_factory + delivery;
+
+  /*Полная сумма */
+  interest_percent_input = td.closest('tr').find('input.interest').val();
+  interest_percent_text = td.closest('tr').find('[data-bip-attribute="interest_percent"] input').val() || td.closest('tr').find('[data-bip-attribute="interest_percent"]').text();
+  interest_percent = trueValue(interest_percent_input, interest_percent_text);
+  full_sum = Math.round(zero_sum * 100 / (100 - interest_percent) * 100) / 100;
+  td.closest('tr').find('.full_sum').text(full_sum);
+
+  /*Полная цена */
+  coefficient = full_sum / factory_sum;
+  full_price = Math.round(price_with_discount * coefficient * 100) / 100;
+  td.closest('tr').find('.full_price').text(full_price);
+
+  /*Интерес */
+  architector_percent_input = td.closest('tr').find('input.arh-interest').val();
+  architector_percent_text = td.closest('tr').find('[data-bip-attribute="arhitec_percent"] input').val() || td.closest('tr').find('[data-bip-attribute="arhitec_percent"]').text();
+  architector_percent = trueValue(architector_percent_input, architector_percent_text);
+  profit = full_sum - zero_sum;
+  interest = Math.round((profit - (profit / 100 * architector_percent)) * 100) / 100;
+  td.closest('tr').find('.interest-e').text(interest);
+  console.log(architector_percent);
+
+  /*Интерес архитектора */
+  arch_interest = Math.round((profit - interest) * 100) / 100;
+  arh_order_percent = Math.round(100 - ((full_sum - arch_interest) / full_sum * 100));
+  td.closest('tr').find('.arh-interest-e').text(arch_interest);
+  td.closest('tr').find('.arh-order-percent').text(arh_order_percent);
+};
+
+calculateLight = function(td) {
+  var arch_interest, architector_percent, architector_percent_input, architector_percent_text, arh_order_percent, coefficient, factory_sum, full_price, full_sum, interest, interest_percent, interest_percent_input, interest_percent_text, number, number_input, number_text, price, price_input, price_text, profit;
+  price_input = td.closest('tr').find('input.price').val();
+  price_text = td.closest('tr').find('[data-bip-attribute="unit_price_factory"] input').val() || td.closest('tr').find('[data-bip-attribute="unit_price_factory"]').text();
+  price = trueValue(price_input, price_text);
+  coefficient = td.closest('tr').find('.light_factor').text();
+  console.log(coefficient);
+  number_input = td.closest('tr').find('input.number').val();
+  number_text = td.closest('tr').find('[data-bip-attribute="number_of"]').text() || td.closest('tr').find('[data-bip-attribute="number_of"] input').val();
+  number = trueValue(number_input, number_text);
+  console.log(number);
+
+  /*Сумма фабрики */
+  factory_sum = Math.round(price * coefficient * number * 100) / 100;
+  td.closest('tr').find('.factory-sum').text(factory_sum);
+
+  /*Полная цена */
+  interest_percent_input = td.closest('tr').find('input.interest').val();
+  interest_percent_text = td.closest('tr').find('[data-bip-attribute="interest_percent"] input').val() || td.closest('tr').find('[data-bip-attribute="interest_percent"]').text();
+  interest_percent = trueValue(interest_percent_input, interest_percent_text);
+  full_price = Math.round(price * coefficient * 100 / (100 - interest_percent) * 100) / 100;
+  td.closest('tr').find('.full_price').text(full_price);
+  console.log(interest_percent);
+
+  /*Полная сумма */
+  full_sum = Math.round(full_price * number * 100) / 100;
+  td.closest('tr').find('.full_sum').text(full_sum);
+
+  /*Интерес */
+  architector_percent_input = td.closest('tr').find('input.arh-interest').val();
+  architector_percent_text = td.closest('tr').find('[data-bip-attribute="arhitec_percent"] input').val() || td.closest('tr').find('[data-bip-attribute="arhitec_percent"]').text();
+  architector_percent = trueValue(architector_percent_input, architector_percent_text);
+  profit = full_sum - factory_sum;
+  interest = Math.round((profit - (profit / 100 * architector_percent)) * 100) / 100;
+  td.closest('tr').find('.interest-e').text(interest);
+  console.log(interest_percent);
+
+  /*Интерес архитектора */
+  arch_interest = Math.round((profit - interest) * 100) / 100;
+  arh_order_percent = Math.round(100 - ((full_sum - arch_interest) / full_sum * 100));
+  td.closest('tr').find('.arh-interest-e').text(arch_interest);
+  td.closest('tr').find('.arh-order-percent').text(arh_order_percent);
+};
+
+modalSelect = function(modal, c_modal) {
+  var cdv, current_discount, current_discount_val, selected, selected_discount, single, single_discount;
+  selected = $('#' + modal + c_modal + ' select :selected').val();
+  single = $('#' + modal + c_modal + ' span').attr('value');
+  selected_discount = $('#' + modal + c_modal + ' select :selected').text();
+  single_discount = $('#' + modal + c_modal + ' span').text();
+  current_discount = 0;
+  current_discount_val = 0;
+  cdv = [0, 1];
+  if (selected_discount === '') {
+    cdv[0] = current_discount = single_discount;
+    cdv[1] = current_discount_val = single;
+  } else {
+    cdv[0] = selected_discount;
+    cdv[1] = selected;
+  }
+  return cdv;
+};
+
+ajaxCall = function(url, type, dataType, data) {
+  $.ajax({
+    url: url,
+    type: type,
+    dataType: dataType,
+    data: data,
+    success: function(data) {}
+  });
+};
+
+$(document).ready(function() {
+  $('.print_sum').on('click', 'input', function(evt) {
+    $.ajax('/tables/update_print_sum', {
+      type: 'GET',
+      dataType: 'script',
+      data: {
+        print_sum: $(this).prop('checked'),
+        specification_id: $(this).val()
+      },
+      error: function(jqXHR, textStatus, errorThrown) {},
+      success: function(data, textStatus, jqXHR) {}
+    });
+    return false;
+  });
+
+  $(document).on('click', '.photos a', function(evt) {
+    $.ajax('/tables/photos', {
+      type: 'GET',
+      dataType: 'script',
+      data: {
+        product_id: $(invoker).closest('tr').attr("product-id")
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        return console.log("AJAX Error: " + textStatus);
+      },
+      success: function(data, textStatus, jqXHR) {}
+    });
+    return false;
+  });
+  
+  $(document).on('click', '.size_images a', function(evt) {
+    $.ajax('/tables/size_images', {
+      type: 'GET',
+      dataType: 'script',
+      data: {
+        product_id: $(invoker).closest('tr').attr("product-id")
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        return console.log("AJAX Error: " + textStatus);
+      },
+      success: function(data, textStatus, jqXHR) {}
+    });
+    return false;
+  });
+});
+// ---
+// generated by coffee-script 1.9.2
