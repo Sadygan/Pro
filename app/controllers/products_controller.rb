@@ -8,8 +8,11 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    # @products = Product.all
-    @products = Product.paginate(:page => params[:page]).per_page(5)
+    get_and_show_products
+  end
+
+  def index_with_button
+    get_and_show_products
   end
 
   # GET /products/1
@@ -172,6 +175,16 @@ class ProductsController < ApplicationController
   end
   
   private
+  
+  def get_and_show_products
+    @poducts = Product.paginate(page: params[:page], per_page: 5).order('created_at DESC')
+    # @products = Product.paginate(:page => params[:page]).per_page(5)
+
+    respond_to do |format|
+        format.html
+        format.js
+    end
+  end
   # Save photo
   def save_img product, base64, model
     # if model_id.nil? 

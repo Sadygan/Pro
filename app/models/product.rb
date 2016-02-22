@@ -3,13 +3,15 @@ class Product < ActiveRecord::Base
   
   before_save :default_values
 
+  default_scope { order('created_at DESC') }
+
 	belongs_to :factory
 	belongs_to :type_furniture
 	belongs_to :brand_model
 	
   has_many :table_specifications
 
- validates_presence_of :type_furniture
+  validates_presence_of :type_furniture
 
   validates :article, presence: true
  #  validates :factory_id, presence: true
