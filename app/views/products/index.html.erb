@@ -19,7 +19,9 @@
       </tr>
     </thead>
 
+    <%= will_paginate @products, renderer: BootstrapPagination::Rails %>
     <tbody id="products">
+      
       <%= render @products %>      
     </tbody>
   </table>

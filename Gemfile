@@ -99,3 +99,6 @@ gem "compass-rails", github: "Compass/compass-rails", branch: "master"
 gem 'dynamic_form'
 
 gem 'wicked_pdf'
+
+gem 'will_paginate', '~> 3.0.5'
+gem 'will_paginate-bootstrap'

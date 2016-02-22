@@ -30,6 +30,7 @@
 //= require jquery.stickytableheaders.min
 //= require jquery.simple_cropper
 
+
 var invoker;
 
 $.datepicker.setDefaults({
