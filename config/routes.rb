@@ -6,14 +6,11 @@ Rails.application.routes.draw do
   resources :light_factories do
     get :autocomplete_factory_brand, :on => :collection
   end
-  get '/posts_with_button', to: 'posts#index_with_button', as: 'posts_with_button'
-
+  
   resources :type_furnitures
   resources :products do
     get 'update_brand_models', as: 'update_brand_models'
     get 'update_articles', as: 'update_articles'
-    get 'products_with_button', as: 'products_with_button'
-
     get :autocomplete_type_furniture_name, :on => :collection
     get :autocomplete_factory_brand, :on => :collection
     # post 'create_img', as: 'create_img' 
