@@ -9,7 +9,14 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
     # @products = Product.all
-    @products = Product.paginate(:page => params[:page]).per_page(5)
+    # @products = Product.paginate(:page => params[:page]).per_page(5)
+
+    @products = Product.paginate(page: params[:page])
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @products }
+      format.js
+    end
   end
 
   # GET /products/1

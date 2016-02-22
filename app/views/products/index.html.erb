@@ -19,12 +19,13 @@
       </tr>
     </thead>
 
-    <%= will_paginate @products, renderer: BootstrapPagination::Rails %>
     <tbody id="products">
       
-      <%= render @products %>      
+      <%= render @products %>
     </tbody>
   </table>
+  <%= link_to 'Больше продуктов', products_path(page: @products.next_page), class: 'load-more-products btn btn-success center-block', remote: true if @products.next_page %>    
   <br>
   <%= render 'dialog' %>
 </div>
+

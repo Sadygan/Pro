@@ -9,7 +9,7 @@ class Product < ActiveRecord::Base
 	
   has_many :table_specifications
 
- validates_presence_of :type_furniture
+  validates_presence_of :type_furniture
 
   validates :article, presence: true
  #  validates :factory_id, presence: true
@@ -21,6 +21,8 @@ class Product < ActiveRecord::Base
 
 	accepts_nested_attributes_for :assets
 
+  self.per_page = 5
+  
   attr_accessor :photo_base64_form,
                 :size_image_base64_form,
                 :brand_model_name,

@@ -29,6 +29,7 @@
 //= require autoresize.jquery
 //= require jquery.stickytableheaders.min
 //= require jquery.simple_cropper
+//= require products
 
 
 var invoker;
