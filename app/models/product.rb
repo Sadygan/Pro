@@ -3,7 +3,8 @@ class Product < ActiveRecord::Base
     default_filter_params: { sorted_by: 'created_at_desc' },
     available_filters: [
       :sorted_by,
-      :search_query
+      :search_query,
+      :with_brand_model_id
     ]
   )
 
@@ -30,8 +31,12 @@ class Product < ActiveRecord::Base
   # validates :depth, numericality: true, presence: true
 #  validates :price, numericality: true, presence: true
 
-	accepts_nested_attributes_for :assets
+  accepts_nested_attributes_for :assets
   
+  scope :with_brand_model_id, lambda { |brand_model_ids|
+    where(brand_model_id: [*brand_model_ids])
+  }
+
   scope :search_query, lambda { |query|
     # Searches the students table on the 'first_name' and 'last_name' columns.
     # Matches using LIKE, automatically appends '%' to each term.
@@ -39,10 +44,8 @@ class Product < ActiveRecord::Base
     # sensitive with PostGreSQL. To make it work in both worlds,
     # we downcase everything.
     return nil  if query.blank?
-    p "--->"
-    p query
-    query = query.to_s
 
+    query = query.to_s
     # condition query, parse into individual keywords
     terms = query.downcase.split(/\s+/)
 
@@ -63,9 +66,6 @@ class Product < ActiveRecord::Base
     )
   }
 
-  scope :with_brand_model_id, lambda { |brand_model_ids|
-    where(brand_model_id: [*brand_model_ids])
-  }
  
 
   scope :sorted_by, lambda { |sort_option|

@@ -9,11 +9,23 @@
   
   <%= form_for_filterrific @filterrific do |f| %>
     <div>
-      Search
+      Поиск
       <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
       <%= f.text_field(
         :search_query,
         class: 'filterrific-periodically-observed'
+      ) %>
+    </div>
+      <div>
+      Сортировка
+      <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by]) %>
+    </div>
+    <div>
+      Страна
+      <%= f.select(
+        :with_brand_model_id,
+        @filterrific.select_options[:with_brand_model_id],
+        { include_blank: '- Any -' }
       ) %>
     </div>
     <div>
