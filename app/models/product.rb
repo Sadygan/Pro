@@ -9,7 +9,7 @@ class Product < ActiveRecord::Base
   )
 
   # default for will_paginate
-  self.per_page = 10
+  self.per_page = 5
 
   has_many :assets
   

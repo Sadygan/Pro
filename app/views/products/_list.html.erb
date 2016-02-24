@@ -1,19 +1,24 @@
 <div id="filterrific_results">
-
-
-  <table>
-    <tr>
-      <th>Article</th>
-      <th>Country</th>
-      <th>Registered at</th>
-    </tr>
-    <% products.each do |product| %>
+ <div class="new-product"></div>
+  <table class="table table-bordered table-striped table-hover">
+    <thead>
       <tr>
-        <td><%= product.article %></td>
-        <td><%= product.brand_model.name %></td>
+        <th><%= 'Изображение' %></th>
+        <th><%= 'Фабрика' %></th>
+        <th><%= t('products.model') %></th>
+        <th><%= t('products.article') %></th>
+        <th><%= t('type_furnitures.type_furniture') %></th>
+        <th><%= t('products.price') %></th>
+        <th> Действие </th>
       </tr>
-    <% end %>
+    </thead>
+
+    <tbody id="products">
+      
+      <%= render @products %>
+    </tbody>
   </table>
+  <%= link_to 'Больше продуктов', products_path(page: @products.next_page), class: 'load-more-products btn btn-success center-block', remote: true if @products.next_page %>   
 </div>
 
 <%= will_paginate products %>
