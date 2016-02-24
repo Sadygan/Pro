@@ -1,4 +1,12 @@
 <% js = escape_javascript(
   render(partial: 'products/list', locals: { products: @products })
 ) %>
+
 $("#filterrific_results").html("<%= js %>");
+
+$('#products').append('#{escape_javascript(render partial: "products/product", collection: @products, as: "product")}');
+$('a.load-more-products').attr('href', '#{products_path page: @products.next_page}');
+
+<% unless @products.next_page %>
+  $('a.load-more-products').remove();
+<% end %>
