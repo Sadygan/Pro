@@ -30,6 +30,7 @@
 //= require jquery.stickytableheaders.min
 //= require jquery.simple_cropper
 //= require products
+//= require filterrific/filterrific-jquery
 
 
 var invoker;

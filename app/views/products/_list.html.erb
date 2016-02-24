@@ -1,0 +1,19 @@
+<div id="filterrific_results">
+
+
+  <table>
+    <tr>
+      <th>Article</th>
+      <th>Country</th>
+      <th>Registered at</th>
+    </tr>
+    <% products.each do |product| %>
+      <tr>
+        <td><%= product.article %></td>
+        <td><%= product.brand_model.name %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<%= will_paginate products %>

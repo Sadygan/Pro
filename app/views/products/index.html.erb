@@ -6,25 +6,29 @@
     <%= link_to t('products.new_product'), new_product_path, remote: true, class: "btn btn-primary" %>
   </div>
   <div class="new-product"></div>
-  <table class="table table-bordered table-striped table-hover">
-    <thead>
-      <tr>
-        <th><%= 'Изображение' %></th>
-        <th><%= 'Фабрика' %></th>
-        <th><%= t('products.model') %></th>
-        <th><%= t('products.article') %></th>
-        <th><%= t('type_furnitures.type_furniture') %></th>
-        <th><%= t('products.price') %></th>
-        <th> Действие </th>
-      </tr>
-    </thead>
-
-    <tbody id="products">
-      
-      <%= render @products %>
-    </tbody>
-  </table>
-  <%= link_to 'Больше продуктов', products_path(page: @products.next_page), class: 'load-more-products btn btn-success center-block', remote: true if @products.next_page %>    
+  
+  <%= form_for_filterrific @filterrific do |f| %>
+    <div>
+      Search
+      <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
+      <%= f.text_field(
+        :search_query,
+        class: 'filterrific-periodically-observed'
+      ) %>
+    </div>
+    <div>
+      <%= link_to(
+        'Reset filters',
+        reset_filterrific_url,
+      ) %>
+    </div>
+    <%# add an automated spinner to your form when the list is refreshed %>
+    <%= render_filterrific_spinner %>
+  <% end %>
+  <%= render(
+    partial: 'products/list',
+    locals: { products: @products }
+  ) %>
   <br>
   <%= render 'dialog' %>
 </div>

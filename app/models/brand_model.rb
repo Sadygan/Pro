@@ -6,4 +6,7 @@ class BrandModel < ActiveRecord::Base
 
 	validates :name, presence: true
 	# validates_associated :products
+	def self.options_for_select
+	  order('LOWER(name)').map { |e| [e.name, e.id] }
+	end
 end

@@ -10,13 +10,24 @@ class ProductsController < ApplicationController
   def index
     # @products = Product.all
     # @products = Product.paginate(:page => params[:page]).per_page(5)
+      @filterrific = initialize_filterrific(
+        Product,
+        params[:filterrific]
+      ) or return
+      @products = @filterrific.find.page(params[:page])
+      p @products
 
-    @products = Product.paginate(page: params[:page])
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @products }
-      format.js
-    end
+      respond_to do |format|
+        format.html
+        format.js
+      end
+
+    # @products = Product.paginate(page: params[:page])
+    # respond_to do |format|
+    #   format.html # index.html.erb
+    #   format.json { render json: @products }
+    #   format.js
+    # end
   end
 
   # GET /products/1

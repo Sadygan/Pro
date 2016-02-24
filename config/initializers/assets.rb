@@ -15,3 +15,4 @@ Rails.application.config.assets.precompile += %w( table_specifications/index.js 
 Rails.application.config.assets.precompile += %w( table_specification_lights/index.js )
 Rails.application.config.assets.precompile += %w( projects/show.js )
 Rails.application.config.assets.precompile += %w( projects/index.js )
+Rails.application.config.assets.precompile += %w( filterrific/filterrific-spinner.gif )
