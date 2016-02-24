@@ -4,6 +4,7 @@
 		<%= image_tag Photo.where(product_id: product.id).first.img.url(:thumb) %>
   	<% end %>
   </td>
+  <% p product.id %>
   <td><%= product.brand_model.factory.brand %></td>
   <td><%= product.brand_model.name %></td>
   <td><%= link_to product.article, product %></td>
