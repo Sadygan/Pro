@@ -56,9 +56,8 @@ class ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
-    
     @brand_model = @product.brand_model
-    @product.brand_model_name = @brand_model.name
+    @product.brand_model.name = @brand_model.name
     @product.factory_id = @brand_model.factory_id
 
     @factories = Factory.all

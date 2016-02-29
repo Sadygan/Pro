@@ -9,7 +9,7 @@ class Product < ActiveRecord::Base
               ]
 
   # default for will_paginate
-  self.per_page = 5
+  self.per_page = 10
 
   belongs_to :brand_model, -> { includes :factory }
   belongs_to :type_furniture
