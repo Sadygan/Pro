@@ -1,7 +1,9 @@
 <div class="container">
   <p id="notice"><%= notice %></p>
 
+  <div class="new-product">
     <%= link_to t('products.new_product'), new_product_path, remote: true, class: "btn btn-primary" %>
+  </div>
 
   <h2><%= t('products.products') %></h2>
   <div class="well">
@@ -35,16 +37,9 @@
           <%= label_tag :search_query, 'Поиск по артикулу', class: "control-label" %><br>
           <%= f.text_field :search_query, class: "form-control"  %>
         </div>
-        <div class="form-group">
-          <%= label_tag nil, '', class: "control-label" %><br>
-          <%= link_to 'Сбросить фильтры', reset_filterrific_url, class: "btn btn-primary" %>
-        </div>
       </div>
-      <%# add an automated spinner to your form when the list is refreshed %>
-      <%= render_filterrific_spinner %>
     <% end %>
   </div>
-  <div class="new-product"></div>
   
   <%= render(
     partial: 'products/list',

@@ -1,8 +1,15 @@
-<div id="filterrific_results">
+<div id="results">
   <div>
-    <%= page_entries_info products %>
   </div>
- <div class="new-product"></div>
+  <div class="well well-sm">
+    <%= page_entries_info products %>
+    <%# add an automated spinner to your form when the list is refreshed %>
+    <%= render_filterrific_spinner %>
+    <div class="pull-right">
+      <%= link_to 'Сбросить фильтры', reset_filterrific_url, class: "btn btn-default btn-xs" %>
+    </div>
+  </div>
+  
   <table class="table table-bordered table-striped table-hover">
     <thead>
       <tr>
@@ -21,6 +28,5 @@
       <%= render @products %>
     </tbody>
   </table>
+  <%= will_paginate @products, renderer: BootstrapPagination::Rails %>
 </div>
-
-<%= will_paginate products, renderer: BootstrapPagination::Rails %>

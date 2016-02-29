@@ -2,6 +2,6 @@
   render(partial: 'products/list', locals: { products: @products })
 ) %>
 
-$("#filterrific_results").html("<%= js %>");
+$("#results").html("<%= js %>");
 
 
