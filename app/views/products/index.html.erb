@@ -1,46 +1,56 @@
 <div class="container">
   <p id="notice"><%= notice %></p>
 
+    <%= link_to t('products.new_product'), new_product_path, remote: true, class: "btn btn-primary" %>
+
   <h2><%= t('products.products') %></h2>
   <div class="well">
-    <%= link_to t('products.new_product'), new_product_path, remote: true, class: "btn btn-primary" %>
+      <div class="row">
+      <%= form_for_filterrific @filterrific, html: {class: "form-inline"} do |f| %>
+        <div class="form-group">
+          <%= label_tag :sorted_by, 'Сортировка', class: "control-label" %><br>
+          <%= f.select :sorted_by,
+              @filterrific.select_options[:sorted_by],
+              { include_blank: true },
+              { id: 'products_select',
+              class: 'chosen-select' } %>
+        </div>
+        <div class="form-group">
+          <%= label_tag :with_factory_id, 'Фабрика', class: "control-label" %><br>
+          <%= f.select :with_factory_id,
+              @filterrific.select_options[:with_factory_id],
+              { include_blank: true },
+              { id: 'products_select',
+              class: 'chosen-select' } %>
+        </div>
+        <div class="form-group">
+          <%= label_tag :with_brand_model_id, 'Модель', class: "control-label" %><br>
+          <%= f.select :with_brand_model_id,
+              @filterrific.select_options[:with_brand_model_id],
+              { include_blank: true },
+              { id: 'products_select',
+              class: 'chosen-select' } %>
+        </div>
+        <div class="form-group">
+          <%= label_tag :search_query, 'Поиск по артикулу', class: "control-label" %><br>
+          <%= f.text_field :search_query, class: "form-control"  %>
+        </div>
+        <div class="form-group">
+          <%= label_tag nil, '', class: "control-label" %><br>
+          <%= link_to 'Сбросить фильтры', reset_filterrific_url, class: "btn btn-primary" %>
+        </div>
+      </div>
+      <%# add an automated spinner to your form when the list is refreshed %>
+      <%= render_filterrific_spinner %>
+    <% end %>
   </div>
   <div class="new-product"></div>
   
-  <%= form_for_filterrific @filterrific do |f| %>
-    <div>
-      Поиск
-      <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
-      <%= f.text_field(
-        :search_query,
-        class: 'filterrific-periodically-observed'
-      ) %>
-    </div>
-      <div>
-      Сортировка
-      <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by]) %>
-    </div>
-    <div>
-      Страна
-      <%= f.select(
-        :with_brand_model_id,
-        @filterrific.select_options[:with_brand_model_id],
-        { include_blank: '- Any -' }
-      ) %>
-    </div>
-    <div>
-      <%= link_to(
-        'Reset filters',
-        reset_filterrific_url,
-      ) %>
-    </div>
-    <%# add an automated spinner to your form when the list is refreshed %>
-    <%= render_filterrific_spinner %>
-  <% end %>
   <%= render(
     partial: 'products/list',
     locals: { products: @products }
   ) %>
+  
   <br>
   <%= render 'dialog' %>
 </div>

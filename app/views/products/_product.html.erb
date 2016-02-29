@@ -1,3 +1,4 @@
+<%= javascript_include_tag "products/index" %>
 <tr id="product_<%= product.id %>">
   <td>
   	<% if Photo.where(product_id: product.id).first %>  
@@ -6,8 +7,8 @@
   </td>
   <% p product.id %>
   <td><%= product.brand_model.factory.brand %></td>
-  <td><%= product.brand_model.name %></td>
-  <td><%= link_to product.article, product %></td>
+  <td><%= product.brand_model_name %></td>
+  <td><%= product.article %></td>
   <td><%= product.type_furniture.name %></td>
   <td><%= product.price %></td>
   <td>

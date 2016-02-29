@@ -16,6 +16,7 @@ class ProductsController < ApplicationController
         select_options: {
           sorted_by: Product.options_for_sorted_by,
           with_brand_model_id: BrandModel.options_for_select,
+          with_factory_id: Factory.options_for_select
         }
       ) or return
       @products = @filterrific.find.page(params[:page])
@@ -25,13 +26,13 @@ class ProductsController < ApplicationController
         format.js
       end
 
-    # @products = Product.paginate(page: params[:page])
-    # respond_to do |format|
-    #   format.html # index.html.erb
-    #   format.json { render json: @products }
-    #   format.js
-    # end
   end
+
+  # def product_more
+  #   respond_to do |format|
+  #     format.js
+  #   end
+  # end
 
   # GET /products/1
   # GET /products/1.json
@@ -238,8 +239,8 @@ class ProductsController < ApplicationController
       :type_furniture_id, 
       :photo_base64_form,
       :size_image_base64_form,
-      :factory_id, 
-      :brand_model_name
+      :factory_id
+      # :brand_model_name
 
       # :factory_brand, 
       # :type_furniture_name

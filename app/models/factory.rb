@@ -1,6 +1,6 @@
 class Factory < ActiveRecord::Base
 	has_many :discounts
-	has_many :brand_models
+	has_many :brand_models, -> { order(:brand) }, through: :products
 	has_one  :light_factory
 
 	belongs_to :user
@@ -14,4 +14,8 @@ class Factory < ActiveRecord::Base
 	validates :light_factor, numericality: true, length: {maximum: 5}
 	validates :minimum_order, numericality: true, length: {maximum: 5}
 	validates :delivery_time, numericality: { only_integer: true }, length: {maximum: 3}
+
+	def self.options_for_select
+	  order('LOWER(brand)').map { |e| [e.brand, e.id] }
+	end
 end
