@@ -16,7 +16,8 @@ class ProductsController < ApplicationController
         select_options: {
           sorted_by: Product.options_for_sorted_by,
           with_brand_model_id: BrandModel.options_for_select,
-          with_factory_id: Factory.options_for_select
+          with_factory_id: Factory.options_for_select,
+          with_type_furniture_id: TypeFurniture.options_for_select
         }
       ) or return
       @products = @filterrific.find.page(params[:page])

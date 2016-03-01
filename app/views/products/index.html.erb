@@ -14,7 +14,7 @@
           <%= f.select :sorted_by,
               @filterrific.select_options[:sorted_by],
               { include_blank: true },
-              { id: 'products_select',
+              { id: 'sorted_by_select',
               class: 'chosen-select' } %>
         </div>
         <div class="form-group">
@@ -22,7 +22,15 @@
           <%= f.select :with_factory_id,
               @filterrific.select_options[:with_factory_id],
               { include_blank: true },
-              { id: 'products_select',
+              { id: 'factory_select',
+              class: 'chosen-select' } %>
+        </div>
+        <div class="form-group">
+          <%= label_tag :with_type_furniture_id, 'Тип мебели', class: "control-label" %><br>
+          <%= f.select :with_type_furniture_id,
+              @filterrific.select_options[:with_type_furniture_id],
+              { include_blank: '- Any -' },
+              { id: 'type_furniture_select',
               class: 'chosen-select' } %>
         </div>
         <div class="form-group">
@@ -30,7 +38,7 @@
           <%= f.select :with_brand_model_id,
               @filterrific.select_options[:with_brand_model_id],
               { include_blank: true },
-              { id: 'products_select',
+              { id: 'brand_model_select',
               class: 'chosen-select' } %>
         </div>
         <div class="form-group form-group-sm">

@@ -6,6 +6,7 @@ class Product < ActiveRecord::Base
                 search_query
                 with_brand_model_id
                 with_factory_id
+                with_type_furniture_id
               ]
 
   # default for will_paginate
@@ -68,6 +69,10 @@ class Product < ActiveRecord::Base
 
   scope :with_brand_model_id, lambda { |brand_model_ids|
     where(brand_model_id: [*brand_model_ids])
+  }
+
+  scope :with_type_furniture_id, lambda { |type_furniture_ids|
+    where(type_furniture_id: [*type_furniture_ids])
   }
 
   scope :with_factory_id, lambda { |factory_ids|
