@@ -47,7 +47,6 @@ class PhotosController < ApplicationController
   def update
     respond_to do |format|
       if @photo.send model_update_method, photo_params
-        format.html { redirect_to @product, notice: 'Photo was successfully updated.' }
         format.json { render :show, status: :ok, location: @photo }
         format.js
       else
@@ -62,7 +61,7 @@ class PhotosController < ApplicationController
   def destroy
     @photo.destroy
     respond_to do |format|
-      format.html { redirect_to @product, notice: 'Photo was successfully destroyed.' }
+      format.js
       format.json { head :no_content }
     end
   end

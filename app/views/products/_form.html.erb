@@ -67,10 +67,13 @@
   <div class="row">
     <div class="col-sm-12">
     <p>Добавить фотографии товара</p>
-      <div class="photo" id="photos">
+      <div id="photos">
         <% unless @photos.nil? %>  
           <% @photos.each do |photo| %>
-            <%= image_tag photo.img.url(:thumb) %>
+            <div id="image_<%= photo.id %>" class="image">
+              <%= image_tag photo.img.url(:thumb) %><br>
+              <%= link_to 'X', product_photo_path(@product, photo.id), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>          
+            </div>
           <% end %>
         <% end %>
         <div class="addpict"></div> 
@@ -83,7 +86,10 @@
      <div id="size_images">
       <% unless @size_images.nil? %>
        <% @size_images.each do |size_image| %>
-          <%= image_tag size_image.img.url(:thumb) %>
+          <div id="image_<%= size_image.id %>" class="image">
+            <%= image_tag size_image.img.url(:thumb) %>
+            <%= link_to 'X', product_size_image_path(@product, size_image.id), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>          
+          </div>
         <% end %>  
       <% end %>  
       <div class="addpict"></div>

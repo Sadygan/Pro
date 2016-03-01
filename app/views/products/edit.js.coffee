@@ -27,20 +27,20 @@ $ ->
       success: (data, textStatus, jqXHR) ->
         console.log('okxxx')
         #$('input[name=commit]').prop('disabled', true);
-$ ->
-  $(document).on 'click', '#photos a', (evt) ->
-    $.ajax 'table_specifications/table_specification/photos',
-      type: 'GET'
-      dataType: 'script'
-      data: {
-        product_id: $("#articles_select option:selected").attr("id")
-      }
-      error: (jqXHR, textStatus, errorThrown) ->
-        console.log("AJAX Error: #{textStatus}")
-      success: (data, textStatus, jqXHR) ->
-        product_id: $("#articles_select option:selected").attr("id")
-        console.log("Dynamic country select OK!3333")
-    return false
+#$ ->
+#  $(document).on 'click', '#photos a', (evt) ->
+#    $.ajax 'table_specifications/table_specification/photos',
+#      type: 'GET'
+#      dataType: 'script'
+#      data: {
+#        product_id: $("#articles_select option:selected").attr("id")
+#      }
+#      error: (jqXHR, textStatus, errorThrown) ->
+#        console.log("AJAX Error: #{textStatus}")
+#      success: (data, textStatus, jqXHR) ->
+#        product_id: $("#articles_select option:selected").attr("id")
+#        console.log("Dynamic country select OK!3333")
+#    return false
 
 # cache the select element as we'll be using it a few times
 select = $('#products_select')
