@@ -4,7 +4,8 @@ class FactoriesController < ApplicationController
 
   def index
     # check_role
-    @factorys = Factory.all
+    # @factorys = Factory.all
+    @factorys, @alphaParams = Factory.all.alpha_paginate(params[:letter], {bootstrap3: true}){|factory| factory.brand}
     
     if user_signed_in?
       # redirect_to factories_path 
