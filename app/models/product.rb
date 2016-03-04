@@ -43,7 +43,6 @@ class Product < ActiveRecord::Base
       *terms.map { |e| [e] * num_or_conds }.flatten
     )
   }
-  delegate :name, :to => :brand_model, :prefix => true
 
   scope :sorted_by, lambda { |sort_option|
     p "--->"
@@ -110,9 +109,15 @@ class Product < ActiveRecord::Base
 
   attr_accessor :photo_base64_form,
                 :size_image_base64_form,
-                # :brand_model_name,
+                :brand_model_name,
                 :factory_id
 
+  validates :factory_id, presence: true
+  validates :brand_model_name, presence: true
+
+  def validate!
+    errors.add(:factory_id, "cannot be nil") if factory_id == ""
+  end
   def default_values
     self.price ||= 0
   end

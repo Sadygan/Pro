@@ -125,8 +125,6 @@ class ProductsController < ApplicationController
     @product_ = Product.new(product_params)
     brand_model = BrandModel.where(name: @product.brand_model_name).last
     
-    p brand_model
-
     photos_split = @product_.photo_base64_form.split('.')
     size_images_split =  @product_.size_image_base64_form.split('.')
     p "before"
@@ -239,8 +237,8 @@ class ProductsController < ApplicationController
       :type_furniture_id, 
       :photo_base64_form,
       :size_image_base64_form,
-      :factory_id
-      # :brand_model_name
+      :factory_id,
+      :brand_model_name
 
       # :factory_brand, 
       # :type_furniture_name
