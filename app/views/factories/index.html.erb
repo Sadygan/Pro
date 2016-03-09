@@ -7,8 +7,8 @@
     <%= link_to t('brand.new_brand'), new_factory_path, remote: true, class: "btn btn-primary" %>
   <% end -%>
   </div>
-  <div class="new-brand"></div>
- <%= alphabetical_paginate @alphaParams %> 
+  <div class="new-brand"> <%= alphabetical_paginate @alphaParams %></div>
+ 
   <table class="table table-striped" id="factory">
     <thead>
     <tr>

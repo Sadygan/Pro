@@ -18,4 +18,6 @@ class Factory < ActiveRecord::Base
 	def self.options_for_select
 	  order('LOWER(brand)').map { |e| [e.brand, e.id] }
 	end
+
+	self.per_page = 1
 end
