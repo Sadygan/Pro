@@ -200,8 +200,9 @@ class TableSpecificationsController < ApplicationController
     @brand_model = BrandModel.new
     @product = Product.new
     @photo = Photo.new
-    
+
     @factories = Factory.all
+    # @factories = Factory.where("light_factor <= 0 ")
     @brand_models = BrandModel.all
     @type_furnitures = TypeFurniture.all
     @articles = Product.all
@@ -270,18 +271,23 @@ class TableSpecificationsController < ApplicationController
             # Сценарий если есть модель но нет продукта
             if product.nil?
               if @product.save
-                format.js
                 p "---++++"
                 p "---++++"
                 p "---++++"
                 @product.brand_model_id = brand_model.id
                 @product.save
                 
+                p "--->>"
+                p @product.id
+                
                 @table_specification.product_id = @product.id
+                p "--->>"
+                p @table_specification.product_id
                 @table_specification.save
 
                 save_img @table_specification, @table_specification.photo_id, @product, @table_specification.photo_base64_form, Photo
                 save_img @table_specification, @table_specification.size_image_id, @product, @table_specification.size_image_base64_form, SizeImage
+                format.js
               else
                 p 'errors'
               end

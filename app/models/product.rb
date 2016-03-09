@@ -93,11 +93,11 @@ class Product < ActiveRecord::Base
 
   before_save :default_values
 
-  validates_presence_of :type_furniture
+  # validates_presence_of :type_furniture
 
   validates :article, presence: true
  
- #  validates :factory_id, presence: true
+  # validates :factory_id, presence: true
   # validates :brand_model_name, presence: true
   # validates :width, numericality: true, presence: true
   # validates :height, numericality: true, presence: true
@@ -106,18 +106,17 @@ class Product < ActiveRecord::Base
 
   accepts_nested_attributes_for :assets
 
-
   attr_accessor :photo_base64_form,
                 :size_image_base64_form,
                 :brand_model_name,
                 :factory_id
 
-  validates :factory_id, presence: true
-  validates :brand_model_name, presence: true
+  # validates :factory_id, presence: true
+  # validates :brand_model_name, presence: true
 
-  def validate!
-    errors.add(:factory_id, "cannot be nil") if factory_id == ""
-  end
+  # def validate!
+  #   errors.add(:factory_id, "cannot be nil") if factory_id == ""
+  # end
   def default_values
     self.price ||= 0
   end
