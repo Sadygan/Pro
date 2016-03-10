@@ -23,7 +23,11 @@
        <% @table_specification_lights.each do |ts| %>
          <% pst = [@project, @specification, ts] %>
          <tr row-id="<%= ts.id %>" product-id="<%= ts.product_id %>">
-          <td class="npp"><%= best_in_place pst, :order %></td>
+          <td class="npp">
+            <%= best_in_place pst, :order %>
+            <br>
+            <%= check_box("required", ts.id, {checked: ts.required}, ts.id) %>
+          </td>
           <td class="photos"><%= render "tables/general_methods/photo/first_in_table", ts: ts %></td>
           <td class="factory"><%= ts.product.brand_model.factory.brand %></br>
             <span class="light_factor"><%= ts.product.brand_model.factory.light_factor %></span>
@@ -54,8 +58,19 @@
             </p>
           </td>
          </tr>
-
        <% end %>
+        <tr>
+          <td colspan="12"> Сумма</td>
+          <td><%= TableSpecificationLight::specification_sum_all(@specification, "sum") %></td>
+          <td></td>
+          <td><%= TableSpecificationLight::specification_sum_all(@specification, "architector_interest") %></td>
+        </tr>
+        <tr>
+          <td colspan="12"> Сумма выделенных</td>
+          <td><%= TableSpecificationLight::specification_sum_all(@specification, "sum", "selected") %></td>
+          <td></td>
+          <td><%= TableSpecificationLight::specification_sum_all(@specification, "architector_interest", "selected") %></td>
+        </tr>
      </tbody> 
   </table>
 </div>

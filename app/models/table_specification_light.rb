@@ -25,14 +25,32 @@ class TableSpecificationLight < Table
     (with_interest/number_of).round(2)
   end
 
-  def self.specification_sum_all(specification, arg)
+  def self.specification_sum_all(specification, arg, flag=0)
   	table_specification_lights = TableSpecificationLight.where(specification_id: specification)
   	sum = 0
+    selected_sum = 0
 
   	table_specification_lights.each do |i|
-  		sum += i.with_interest
+      if arg === "sum"
+        if i.required == true
+          selected_sum += i.with_interest
+        end
+        sum += i.with_interest
+      end
+
+      if arg === "architector_interest"
+        if i.required == true
+          selected_sum += i.architector_interest
+        end
+        sum += i.architector_interest
+      end
   	end
-  sum
+
+    if flag == "selected"
+      selected_sum.round(2)
+    else
+      sum.round(2)
+    end
   end
 
 end

@@ -49,7 +49,7 @@
 		<% if @specification.print_sum %>
 			<td colspan="6"></td>
 			<td class="sum">
-				<%= @selected ? TableSpecification::specification_sum_all(@specification, "sum", "selected") :  TableSpecification::specification_sum_all(@specification, "sum") %>
+				<%= @selected ? @Model::specification_sum_all(@specification, "sum", "selected") : @Model::specification_sum_all(@specification, "sum") %>
 			</td>
 		<% end %>
 		</tr>

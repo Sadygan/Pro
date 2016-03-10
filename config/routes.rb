@@ -50,6 +50,7 @@ Rails.application.routes.draw do
     resources :statuses
     resources :specifications do
         get "index_selected_pdf", as: "index_selected_pdf", to: 'table_specifications#index_selected_pdf'
+        get "index_selected_light_pdf", as: "index_selected_light_pdf", to: 'table_specification_lights#index_selected_light_pdf'
       resources :table_specifications do
         get "edit_image", :edit
         get :autocomplete_product_article, :on => :collection

@@ -114,15 +114,15 @@
         <% end %>
         <tr>
           <td colspan="13"> Сумма</td>
-          <td><%= TableSpecification::specification_sum_all(@specification, "sum") %></td>
+          <td><%= @Model::specification_sum_all(@specification, "sum") %></td>
           <td></td>
-          <td><%= TableSpecification::specification_sum_all(@specification, "architector_interest") %></td>
+          <td><%= @Model::specification_sum_all(@specification, "architector_interest") %></td>
         </tr>
         <tr>
           <td colspan="13"> Сумма выделенных</td>
-          <td><%= TableSpecification::specification_sum_all(@specification, "sum", "selected") %></td>
+          <td><%= @Model::specification_sum_all(@specification, "sum", "selected") %></td>
           <td></td>
-          <td><%= TableSpecification::specification_sum_all(@specification, "architector_interest", "selected") %></td>
+          <td><%= @Model::specification_sum_all(@specification, "architector_interest", "selected") %></td>
         </tr>
     </tbody>
   </table>

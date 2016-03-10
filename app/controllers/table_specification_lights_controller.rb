@@ -11,6 +11,7 @@ class TableSpecificationLightsController < ApplicationController
     authorize! :show, @project
     @table_specification_lights = @specification.table_specification_lights.all
     @table_specification_light = TableSpecificationLight.new
+    @Model = TableSpecificationLight
 
     respond_to do |format|
         format.json
@@ -29,6 +30,27 @@ class TableSpecificationLightsController < ApplicationController
     end
   end
 
+  def index_selected_light_pdf
+    # authorize! :index, @table_specification
+    @user = current_user
+    authorize! :show, @project
+    @table_specification_lights = @specification.table_specification_lights.where(required: true)
+    @selected = true
+    @Model = TableSpecificationLight
+
+    respond_to do |format|
+        format.pdf do
+          render  pdf:        "unit_specification",
+                  template:   "tables/pdfs/unit_specification.pdf.erb",
+                  # header: { html: { template: 'tables/pdfs/header.html' }}, # Dont work with wkhtmltopdf-binary-edge gem
+                  encoding:   'utf8',
+                  margin:  {  top:             5,                     # default 10 (mm)
+                              bottom:          35,
+                              left:            3,
+                              right:           3 }
+      end
+    end
+  end
   # GET /table_specification_lights/1
   # GET /table_specification_lights/1.json
   def show
@@ -228,6 +250,7 @@ class TableSpecificationLightsController < ApplicationController
         :number_of,
         :interest_percent,
         :arhitec_percent,
+        :required,
 
         :specification_id, 
         :factory_brand,

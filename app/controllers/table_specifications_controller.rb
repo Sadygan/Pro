@@ -15,6 +15,7 @@ class TableSpecificationsController < ApplicationController
     authorize! :show, @project
     @table_specifications = @specification.table_specifications.all
     @table_specification = TableSpecification.new
+    @Model = TableSpecification
 
     respond_to do |format|
         format.json
@@ -39,7 +40,7 @@ class TableSpecificationsController < ApplicationController
     authorize! :show, @project
     @table_specifications = @specification.table_specifications.where(required: true)
     @selected = true
-
+    @Model = TableSpecification
     respond_to do |format|
         format.pdf do
           render  pdf:        "unit_specification",
