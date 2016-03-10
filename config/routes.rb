@@ -43,17 +43,13 @@ Rails.application.routes.draw do
     get 'update_print_sum',    as: 'update_print_sum',    to: 'general_methods#update_print_sum'
     get 'photos',              as: 'photos',              to: 'general_methods#photos'
     get 'size_images',         as: 'size_images',         to: 'general_methods#size_images'
+    get 'required',            as: 'required',            to: 'general_methods#required'
   end
 
   resources :projects do
     resources :statuses
     resources :specifications do
-      # namespace :table do
-      #   resources :general_methods, only: [] do
-      #     get 'general_methods/update_brand_models', as: 'general_methods/update_brand_models'
-      #   end
-      # end
-      # match '/tables/general_methods' => "tables/general_methods#update_brand_models", via: [:get, :post]
+        get "index_selected_pdf", as: "index_selected_pdf", to: 'table_specifications#index_selected_pdf'
       resources :table_specifications do
         get "edit_image", :edit
         get :autocomplete_product_article, :on => :collection

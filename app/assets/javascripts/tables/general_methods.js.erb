@@ -1,5 +1,4 @@
 var ajaxCall, calculate, calculateLight, modalSelect, trueValue;
-
 trueValue = function(input, text) {
   var trval;
   trval = void 0;
@@ -196,6 +195,23 @@ $(document).ready(function() {
         return console.log("AJAX Error: " + textStatus);
       },
       success: function(data, textStatus, jqXHR) {}
+    });
+    return false;
+  });
+
+  $('.npp').on('click', 'input:checkbox', function(evt) {
+    $.ajax('/tables/required', {
+      type: 'GET',
+      dataType: 'script',
+      data: {
+        row_id: $(this).closest('tr').attr("row-id"),
+        required: $(this).prop('checked')
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        return console.log("AJAX Error: " + textStatus);
+      },
+      success: function(data, textStatus, jqXHR) {
+      }
     });
     return false;
   });

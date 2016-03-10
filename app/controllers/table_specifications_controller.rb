@@ -33,6 +33,27 @@ class TableSpecificationsController < ApplicationController
     end
   end
 
+  def index_selected_pdf
+    # authorize! :index, @table_specification
+    @user = current_user
+    authorize! :show, @project
+    @table_specifications = @specification.table_specifications.where(required: true)
+    @selected = true
+
+    respond_to do |format|
+        format.pdf do
+          render  pdf:        "unit_specification",
+                  template:   "tables/pdfs/unit_specification.pdf.erb",
+                  # header: { html: { template: 'tables/pdfs/header.html' }}, # Dont work with wkhtmltopdf-binary-edge gem
+                  encoding:   'utf8',
+                  margin:  {  top:             5,                     # default 10 (mm)
+                              bottom:          35,
+                              left:            3,
+                              right:           3 }
+      end
+    end
+  end
+
   def packing_sizes
     @deliveries = Delivery.all
     p '----->'

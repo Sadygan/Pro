@@ -515,49 +515,57 @@ class TableSpecification < Table
 
 # -------- SUMMING
 # Sum All
-  def self.specification_sum_all(specification, arg)
+  def self.specification_sum_all(specification, arg, flag=0)
 
     no_group_sum = 0
     group_sum = 0
+    no_group_select_sum = 0
+    group_select_sum = 0
     g = []
     j = 0
     
+
     table_specifications = TableSpecification.where(specification_id: specification)
     
     table_specifications.each do |i|
+        if arg === "sum"
+          if i.group.nil?
+            no_group_sum += i.summa
+            if i.required == true
+              no_group_select_sum += i.summa
+            end
+          end
+        end
+
+        if arg === "architector_interest"
+          if i.group.nil?
+            no_group_sum += i.architector_interest
+            if i.required == true
+              no_group_select_sum += i.architector_interest
+            end
+          end
+        end
+
+        if !i.group.nil?
+          j = j + 1
+        if i.add_row(specification)[i.group] >= 1 
+          if i.add_row(specification)[i.group] == j
+              group_sum += i.groupDataSum(i.group, arg)
+            if i.required == true
+              group_select_sum += i.groupDataSum(i.group, arg)
+            end
+          g.push(i.groupDataSum(i.group, arg))
+          j = 0
+          end
+        end
+      end
+    end
+    if flag == "selected" 
+      (no_group_select_sum+group_select_sum).round(2)
+    else
+      (group_sum+no_group_sum).round(2)
+    end
       
-      if arg === "sum"
-        if i.group.nil?
-          no_group_sum += i.summa
-        end
-      end
-
-      if arg === "architector_interest"
-        if i.group.nil?
-          no_group_sum += i.architector_interest
-        end
-      end
-
-      if !i.group.nil?
-        j = j + 1
-      if i.add_row(specification)[i.group] >= 1 
-        if i.add_row(specification)[i.group] == j
-        group_sum += i.groupDataSum(i.group, arg)
-        g.push(i.groupDataSum(i.group, arg))
-        j = 0
-        end
-      end
-    end
-
-    end
-    (group_sum+no_group_sum).round(2)
   end
-
-  # Sum interest_architector
-  def self.specification_architector_sum_all(specification)
-
-  end
-
-
 
 end

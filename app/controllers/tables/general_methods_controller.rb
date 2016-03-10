@@ -105,5 +105,18 @@
       format.js
     end
   end
+
+  def required
+    @table = Table.find(params[:row_id])
+    @table.required = params[:required]
+    respond_to do |format|
+      if @table.save
+       format.json { head :no_content }
+       format.js
+      else
+        format.json { respond_with_bip(@table_specification) }
+      end
+    end
+  end
 end
 
