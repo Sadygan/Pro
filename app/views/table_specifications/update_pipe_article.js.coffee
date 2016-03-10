@@ -15,10 +15,6 @@ if $("#products_select option").length == 0
   $("#products_select").append('<option value="<%= @br %>" id="0" selected="selected" ><%= @br %></option>')
 $('#products_select').trigger('chosen:updated')
 
-$("#product_type_furniture_id").empty()
-  .append("<%= escape_javascript(render(partial: 'table_specifications/type_furniture/form', collection: @type_furnitures, as: 'type_furniture')) %>")
-$('#product_type_furniture_id').trigger('chosen:updated')
-
 $("#number_discount").empty()
   .append("<%= escape_javascript(render(partial: 'table_specifications/discount/percent', as: 'discount')) %>")
 
@@ -27,7 +23,7 @@ shvg = parseFloat("<%= @product.shvg %>")
 unit_v = parseFloat("<%= @product.unit_v %>")
 if isNaN(unit_v)
   $("#uv").empty()
-    .append('<input step="0.01" class="unit_v" value="0" type="number" name="product[unit_v]" id="product_unit_v">')
+    .append('<input step="0.001" class="unit_v" value="0" type="number" name="product[unit_v]" id="product_unit_v">')
 if unit_v > 0
   $("#uv").empty()
     .append("<%= @product.unit_v %>")
@@ -40,7 +36,7 @@ if shvg > 0
   $('#table_specification_percent_v').val(PERCENT_PACK)
 if isNaN(unit_v) && shvg == 0
   $("#uv").empty()
-    .append('<input step="0.01" class="unit_v" value="0" type="number" name="product[unit_v]" id="product_unit_v">')
+    .append('<input step="0.001" class="unit_v" value="0" type="number" name="product[unit_v]" id="product_unit_v">')
   $("#shvg").empty()
     .append('<a class="shvg invoker" href="#">ШВГ</a>')
   $('#table_specification_percent_v').val("")

@@ -26,13 +26,12 @@ class TableSpecification < Table
   # validates :group, numericality: { only_integer: true }
   
   def default_values
-    
-    self.unit_price_factory ||= 0
-    self.increment_discount ||= 0
-    self.number_of ||= 0
-    self.interest_percent ||= 0
-    self.arhitec_percent ||= 0
-    self.additional_delivery ||= 0
+    self.unit_price_factory   ||= 0
+    self.increment_discount   ||= 0
+    self.number_of            ||= 0
+    self.interest_percent     ||= 0
+    self.arhitec_percent      ||= 0
+    self.additional_delivery  ||= 0
     self.additional_packaging ||= 0
   end
 
@@ -82,7 +81,6 @@ class TableSpecification < Table
       0
     end 
   end
-
 
   def price_from_nil
     calculate_percent_bank_delivery(summ_netto, delivery.cost, delivery.execution_document, delivery.check_factory,  delivery.bank_service, delivery.bank_percent, v_sum, additional_delivery).round(2)
@@ -565,7 +563,5 @@ class TableSpecification < Table
     else
       (group_sum+no_group_sum).round(2)
     end
-      
   end
-
 end
