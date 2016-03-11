@@ -8,4 +8,8 @@ class BrandModel < ActiveRecord::Base
 	def self.options_for_select
 	  order('LOWER(name)').map { |e| [e.name, e.id] }
 	end
+
+	scope :filter_list, -> { where(factory: Factory.filter_list) }
+	scope :filter_list_light, -> { where(factory: Factory.filter_list_light) }
+
 end

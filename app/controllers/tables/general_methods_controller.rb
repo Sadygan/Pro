@@ -52,7 +52,7 @@
     @size_image = @size_images.first
     
     @type_furnitures = TypeFurniture.all
-    @factories = Factory.all
+    @factories = Factory.filter_list_light
     product_id = params[:product_id]
     if product_id.to_i != 0
       @product = Product.find(params[:product_id])

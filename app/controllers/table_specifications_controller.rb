@@ -139,7 +139,7 @@ class TableSpecificationsController < ApplicationController
     @size_image = @size_images.first
     
     @type_furnitures = TypeFurniture.all
-    @factories = Factory.all
+    @factories = Factory.filter_list
 
     product_id = params[:product_id]
 
@@ -223,11 +223,11 @@ class TableSpecificationsController < ApplicationController
     @product = Product.new
     @photo = Photo.new
 
-    @factories = Factory.all
+    @factories = Factory.filter_list
     # @factories = Factory.where("light_factor <= 0 ")
-    @brand_models = BrandModel.all
+    @brand_models = BrandModel.filter_list
     @type_furnitures = TypeFurniture.all
-    @articles = Product.all
+    @articles = Product.filter_list
 
   end
 

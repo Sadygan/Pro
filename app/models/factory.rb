@@ -19,5 +19,11 @@ class Factory < ActiveRecord::Base
 	  order('LOWER(brand)').map { |e| [e.brand, e.id] }
 	end
 
+	discount_arr = []
+	Discount.all.each { |e| discount_arr.push(e.factory_id) if e.percent != 0 }
+
+	scope :filter_list, -> { where(id: discount_arr) }
+	scope :filter_list_light, -> { where('light_factor != 0') }
+
 	self.per_page = 1
 end

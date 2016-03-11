@@ -63,10 +63,10 @@ class TableSpecificationLightsController < ApplicationController
     @product = Product.new
     @photo = Photo.new
     
-    @factories = Factory.all
-    @brand_models = BrandModel.all
+    @factories = Factory.filter_list_light
+    @brand_models = BrandModel.filter_list_light
     @type_furnitures = TypeFurniture.all
-    @articles = Product.all
+    @articles = Product.filter_list_light
   end
 
   # GET /table_specification_lights/1/edit

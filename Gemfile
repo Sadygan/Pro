@@ -46,6 +46,7 @@ group :development, :test do
   gem 'sqlite3'
 
   # gem "prawn-gmagick"
+  gem 'pry-rails'
 
 end
 

@@ -78,6 +78,8 @@ class Product < ActiveRecord::Base
     joins(:brand_model).where(brand_models: {factory_id: [*factory_ids]})
   }
 
+  scope :filter_list, -> { where(brand_model_id: BrandModel.filter_list) }
+  scope :filter_list_light, -> { where(brand_model_id: BrandModel.filter_list_light) }
 
   def self.options_for_sorted_by
     [
