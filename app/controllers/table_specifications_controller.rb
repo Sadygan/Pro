@@ -15,21 +15,25 @@ class TableSpecificationsController < ApplicationController
     authorize! :show, @project
     @table_specifications = @specification.table_specifications.all
     @table_specification = TableSpecification.new
+    # @specification.sum_
+    @css_print = @specification.percent_css_width
+
     @Model = TableSpecification
 
     respond_to do |format|
-        format.json
-        format.html
-        format.pdf do
+      format.json
+      format.html
+      format.pdf do
 
-          render  pdf:        "unit_specification",
-                  template:   "tables/pdfs/unit_specification.pdf.erb",
-                  # header: { html: { template: 'tables/pdfs/header.html' }}, # Dont work with wkhtmltopdf-binary-edge gem
-                  encoding:   'utf8',
-                  margin:  {  top:             5,                     # default 10 (mm)
-                              bottom:          35,
-                              left:            3,
-                              right:           3 }
+      render  pdf:        "unit_specification",
+              template:   "tables/pdfs/unit_specification.pdf.erb",
+              # header: { html: { template: 'tables/pdfs/header.html' }}, # Dont work with wkhtmltopdf-binary-edge gem
+              orientation: @specification.orientation(@specification.sum_pixels),
+              encoding:   'utf8',
+              margin:  {  top:             5,                     # default 10 (mm)
+                          bottom:          35,
+                          left:            3,
+                          right:           3 }
       end
     end
   end
@@ -41,23 +45,23 @@ class TableSpecificationsController < ApplicationController
     @table_specifications = @specification.table_specifications.where(required: true)
     @selected = true
     @Model = TableSpecification
+    @specification.checks_to_print
     respond_to do |format|
-        format.pdf do
-          render  pdf:        "unit_specification",
-                  template:   "tables/pdfs/unit_specification.pdf.erb",
-                  # header: { html: { template: 'tables/pdfs/header.html' }}, # Dont work with wkhtmltopdf-binary-edge gem
-                  encoding:   'utf8',
-                  margin:  {  top:             5,                     # default 10 (mm)
-                              bottom:          35,
-                              left:            3,
-                              right:           3 }
+      format.pdf do
+        render  pdf:        "unit_specification",
+                template:   "tables/pdfs/unit_specification.pdf.erb",
+                # header: { html: { template: 'tables/pdfs/header.html' }}, # Dont work with wkhtmltopdf-binary-edge gem
+                encoding:   'utf8',
+                margin:  {  top:             5,                     # default 10 (mm)
+                            bottom:          35,
+                            left:            3,
+                            right:           3 }
       end
     end
   end
 
   def packing_sizes
     @deliveries = Delivery.all
-    p '----->'
     p params[:id]
     if params[:id]
       table_specification = TableSpecification.find(params[:id])

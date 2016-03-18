@@ -7,49 +7,120 @@
 	<div class="specification_id">
 		<span id="specification_id">#<%= @specification.id %></span> <br>
 		<span id="data_manager"><%= @user.name %> | <%= @user.email %> | <%= @user.telephone %></span>
+		<br>
+		<br>
+		<br>
 	</div>
 </div>
 <table>
 	<thead>
 		<tr>
-			<th colspan="7" class="specification_name"><span><%= @specification.name %></span></td>	
+			<th colspan="<%= @specification.checks_print_count %>" class="specification_name"><span><%= @specification.name %></span></td>	
 		</tr>
 		<tr>
-			<th class="photo">Изображение</th>
-			<th class="brand_model">Модель</th>
-			<th class="finishing_for_client">Отделка</th>
-			<th class="size">Размер</th>
-			<th class="number_of">Ко-во</th>
-			<th class="price">Цена 1шт.</th>
-			<th class="sum">Сумма</th>
+			<% if @specification.photo %>				
+				<th width="<%= @css_print["photo"] %>%">Изображение</th> <% end %>
+			<% if @specification.factory %> 		
+				<th width="<%= @css_print["factory"] %>%">Фабрика</th> <% end %>
+			<% if @specification.brand_model %> 
+				<th width="<%= @css_print["brand_model"] %>%">Модель</th> <% end %>
+			<% if @specification.article %> 		
+				<th width="<%= @css_print["article"] %>">Артикул</th> <% end %>
+			<% if @specification.finishing %> 	
+				<th width="<%= @css_print["finishing"] %>%">Отделка</th> <% end %>
+			<% if @specification.description %> 
+				<th width="<%= @css_print["description"] %>%">Описание</th> <% end %>
+			<% if @specification.size %>	 			
+				<th width="<%= @css_print["size"] %>%">Размер</th> <% end %>
+			<% if @specification.upf %> 				
+				<th width="<%= @css_print["upf"] %>%">1шт. Фарики</th> <% end %>
+			<% if @specification.sum_factory %> 
+				<th width="<%= @css_print["sum_factory"] %>%">Сумма фабрики</th> <% end %>
+			<% if @specification.number_of %>	  
+				<th width="<%= @css_print["number_of"] %>%">Ко-во</th> <% end %>
+			<% if @specification.interest %>	  
+				<th width="<%= @css_print["interest"] %>%">Интерес</th> <% end %>
+			<% if @specification.full_price %>	
+				<th width="<%= @css_print["full_price"] %>%">Цена 1шт.</th> <% end %>
+			<% if @specification.full_sum %>		
+				<th width="<%= @css_print["full_sum"] %>%">Сумма</th> <% end %>
+			<% if @specification.v %>						
+				<th width="<%= @css_print["v"] %>%">Объем</th> <% end %>
+			<% if @specification.architector %>	
+				<th width="<%= @css_print["architector"] %>%">Архитектор</th> <% end %>
 		</tr>
 	</thead>
 	<tbody>
 		<% tables.each do |ts| %>
 		<tr>
-			<td class="photo"><%= image_tag (ts.image(ts.photo_id)).gsub('https', 'http') %></td>
-			<td class="brand_model"><%= ts.product.brand_model.name %></td>
-			<td class="finishing_for_client"><%= ts.finishing_for_client%></td>
-			<td class="size">
-				<%= image_tag ts.image_pdf(ts.size_image_id)  %>
-				<br>
-				<%= ts.size %>
-			</td>
-			<td class="number_of"><%= ts.number_of %></td>
-			<% if ts.group.nil? %>
-				<td class="price"><%= ts.unit_price %></td>
-				<td class="sum"><%= ts.summa %></td>
-			<% else %>
-				<td class="price"><%= ts.groupDataSum(ts.group, "gp_unit_sum") %></td>
-				<td class="sum"><%= ts.groupDataSum(ts.group, "gp_sum_number") %></td>
+			<% if @specification.photo %>
+				<td width="<%= @css_print["photo"] %>%"><%= image_tag (ts.image(ts.photo_id)).gsub('https', 'http'), width: @css_print["size"] * 10 %></td>
 			<% end %>
-		</tr>
+			<% if @specification.factory %>
+				<td ><%= ts.product.brand_model.factory.brand %></td>
+			<% end %>
+			<% if @specification.brand_model %>
+				<td ><%= ts.product.brand_model.name %></td>
+			<% end %>
+			<% if @specification.article %>
+				<td ><%= ts.product.article %></td>
+			<% end %>
+			<% if @specification.finishing %>
+				<td ><%= ts.finishing_for_client%></td>
+			<% end %>
+			<% if @specification.description %>
+				<td ><%= ts.product.type_furniture.name %></td>
+			<% end %>
+			<% if @specification.size %>
+				<td width="<%= @css_print["size"] %>%">
+					<%= image_tag ts.image_pdf(ts.size_image_id), width: @css_print["size"] * 10 %>
+					<br>
+					<%= ts.size %>
+				</td>
+			<% end %>
+			<% if @specification.upf %>
+				<td ><%= ts.unit_price_factory %></td>
+			<% end %>
+			<% if @specification.sum_factory %>
+				<td ><%= ts.summ_netto %></td>
+			<% end %>
+			<% if @specification.number_of %>
+				<td ><%= ts.number_of %></td>
+			<% end %>
+			<% if @specification.interest %>
+				<td ><%= ts.company_interest %></td>
+			<% end %>
+			<% if ts.group.nil? %>
+				<% if @specification.full_price %>
+					<td ><%= ts.unit_price %></td>
+				<% end %>
+				<% if @specification.full_sum %>
+					<td ><%= ts.summa %></td>
+				<% end %>
+				<% else %>
+					<% if @specification.full_price %>
+						<td ><%= ts.groupDataSum(ts.group, "gp_unit_sum") %></td>
+					<% end %>
+					<% if @specification.full_sum %>
+						<td ><%= ts.groupDataSum(ts.group, "gp_sum_number") %></td>
+					<% end %>
+				<% end %>
+			<% if @specification.v %>
+				<td ><%= ts.product.unit_v %></td>
+			<% end %>
+			<% if @specification.architector %>
+				<td class="unit_v"><%= ts.architector_interest %></td>
+			<% end %>
 		<% end %>
+		</tr>
 		<tr>
-		<% if @specification.print_sum %>
-			<td colspan="6"></td>
-			<td class="sum">
-				<%= @selected ? @Model::specification_sum_all(@specification, "sum", "selected") : @Model::specification_sum_all(@specification, "sum") %>
+			<% if @specification.print_sum %>
+				<td colspan="<%= @specification.colspan_sum[:before] %>"></td>
+				<td class="sum">
+					<%= @selected ? @Model::specification_sum_all(@specification, "sum", "selected") : @Model::specification_sum_all(@specification, "sum") %>
+				<% if @specification.colspan_sum[:after] != 0 %>
+					<td colspan="<%= @specification.colspan_sum[:after] %>"></td>
+				<% end %>
 			</td>
 		<% end %>
 		</tr>

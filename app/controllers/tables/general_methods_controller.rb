@@ -118,5 +118,51 @@
       end
     end
   end
-end
 
+  def check_column
+    specification = Specification.find(params[:specification_id])
+    @id = params[:id]
+    
+    case params[:value]
+      when "photo" 
+        @specification_value = specification.photo        = params[:required]
+      when "factory" 
+        @specification_value = specification.factory      = params[:required]
+      when "brand_model" 
+        @specification_value = specification.brand_model  = params[:required]
+      when "article" 
+        @specification_value = specification.article      = params[:required]
+      when "finishing" 
+        @specification_value = specification.finishing    = params[:required]
+      when "description" 
+        @specification_value = specification.description  = params[:required]
+      when "size" 
+        @specification_value = specification.size         = params[:required]
+      when "upf" 
+        @specification_value = specification.upf          = params[:required]
+      when "sum_factory" 
+        @specification_value = specification.sum_factory  = params[:required]
+      when "number_of" 
+        @specification_value = specification.number_of    = params[:required]                                                                
+      when "interest" 
+        @specification_value = specification.interest     = params[:required]                                                                
+      when "full_price" 
+        @specification_value = specification.full_price   = params[:required]                                                                
+      when "full_sum" 
+        @specification_value = specification.full_sum     = params[:required]                                                                
+      when "v" 
+        @specification_value = specification.v            = params[:required]                                                                
+      when "architector" 
+        @specification_value = specification.architector  = params[:required]                                                                
+    end
+
+    respond_to do |format|
+      if specification.save
+        format.json { head :no_content }
+        format.js
+      else
+        format.json { respond_with_bip(@specification) }
+      end    
+    end
+  end
+end

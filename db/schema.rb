@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160212123506) do
+ActiveRecord::Schema.define(version: 20160314160600) do
 
   create_table "assets", force: :cascade do |t|
     t.string   "type"
@@ -167,8 +167,24 @@ ActiveRecord::Schema.define(version: 20160212123506) do
     t.boolean  "light"
     t.boolean  "print_sum"
     t.integer  "project_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "check"
+    t.boolean  "photo"
+    t.boolean  "factory"
+    t.boolean  "brand_model"
+    t.boolean  "article"
+    t.boolean  "finishing"
+    t.boolean  "description"
+    t.boolean  "size"
+    t.boolean  "upf"
+    t.boolean  "sum_factory"
+    t.boolean  "number_of"
+    t.boolean  "interest"
+    t.boolean  "full_price"
+    t.boolean  "full_sum"
+    t.boolean  "v"
+    t.boolean  "architector"
   end
 
   add_index "specifications", ["project_id"], name: "index_specifications_on_project_id"

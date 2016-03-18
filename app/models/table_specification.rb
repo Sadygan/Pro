@@ -521,7 +521,6 @@ class TableSpecification < Table
     group_select_sum = 0
     g = []
     j = 0
-    
 
     table_specifications = TableSpecification.where(specification_id: specification)
     

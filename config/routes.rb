@@ -10,8 +10,8 @@ Rails.application.routes.draw do
   resources :type_furnitures
   resources :products do
     get 'update_brand_models', as: 'update_brand_models'
-    get 'update_articles', as: 'update_articles'
-    get :autocomplete_type_furniture_name, :on => :collection
+    get 'update_articles',     as: 'update_articles'
+    get :autocomplete_type_furniture_name,  :on => :collection
     get :autocomplete_factory_brand, :on => :collection
     # post 'create_img', as: 'create_img' 
     resources :photos
@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     get 'photos',              as: 'photos',              to: 'general_methods#photos'
     get 'size_images',         as: 'size_images',         to: 'general_methods#size_images'
     get 'required',            as: 'required',            to: 'general_methods#required'
+    get 'check_column',        as: 'check_column',        to: 'general_methods#check_column'
   end
 
   resources :projects do
