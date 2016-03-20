@@ -1,6 +1,23 @@
 <div id="webtable">
   <table width="100%" id="table_specification">
      <thead>
+      <tr class="check_column" id="<%= @specification.id %>">
+        <th></th>
+        <th><%= check_box("photo", @specification.id, {checked: @specification.photo, column: "photo"}) %></th>
+        <th><%= check_box("factory", @specification.id, {checked: @specification.factory, column: "factory"}) %></th>
+        <th><%= check_box("brand_model", @specification.id, {checked: @specification.brand_model, column: "brand_model"}) %></th>
+        <th><%= check_box("article", @specification.id, {checked: @specification.article, column: "article"}) %></th>
+        <th><%= check_box("finishing", @specification.id, {checked: @specification.finishing, column: "finishing"}) %></th>
+        <th><%= check_box("description", @specification.id, {checked: @specification.description, column: "description"}) %></th>
+        <th><%= check_box("size", @specification.id, {checked: @specification.size, column: "size"}) %></th>
+        <th><%= check_box("upf", @specification.id, {checked: @specification.upf, column: "upf"}) %></th>
+        <th><%= check_box("sum_factory", @specification.id, {checked: @specification.sum_factory, column: "sum_factory"}) %></th>
+        <th><%= check_box("number_of", @specification.id, {checked: @specification.number_of, column: "number_of"}) %></th>
+        <th><%= check_box("interest", @specification.id, {checked: @specification.interest, column: "interest"}) %></th>
+        <th><%= check_box("full_price", @specification.id, {checked: @specification.full_price, column: "full_price"}) %></th>
+        <th><%= check_box("full_sum", @specification.id, {checked: @specification.full_sum, column: "full_sum"}) %></th>
+        <th><%= check_box("architector", @specification.id, {checked: @specification.architector, column: "architector"}) %></th>
+      </tr>
       <tr>
         <th class="npp">п/п</th>
         <th class="photo">Изображение</th>
@@ -60,15 +77,13 @@
          </tr>
        <% end %>
         <tr>
-          <td colspan="12"> Сумма</td>
+          <td colspan="13"> Сумма</td>
           <td><%= TableSpecificationLight::specification_sum_all(@specification, "sum") %></td>
-          <td></td>
           <td><%= TableSpecificationLight::specification_sum_all(@specification, "architector_interest") %></td>
         </tr>
         <tr>
-          <td colspan="12"> Сумма выделенных</td>
+          <td colspan="13"> Сумма выделенных</td>
           <td><%= TableSpecificationLight::specification_sum_all(@specification, "sum", "selected") %></td>
-          <td></td>
           <td><%= TableSpecificationLight::specification_sum_all(@specification, "architector_interest", "selected") %></td>
         </tr>
      </tbody> 

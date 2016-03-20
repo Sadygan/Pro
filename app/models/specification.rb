@@ -13,21 +13,22 @@ class Specification < ActiveRecord::Base
   FULL_PERCENT = 100
 
 	COLUMN_SIZE = {
-		"photo" 			=> 1.5,
-		"factory" 		=> 0.8,
-		"brand_model"	=> 0.8,
-		"article"			=> 0.8,
+		"photo" 		=> 1.5,
+		"factory" 		=> 0.7,
+		"brand_model"	=> 0.7,
+		"article"		=> 0.7,
 		"finishing" 	=> 1.3,
 		"description"	=> 1.0,
-		"size" 				=> 1.3,
-		"upf" 				=> 0.8,
-		"sum_factory"	=> 0.8,
+		"size" 			=> 1.4,
+		"upf" 			=> 0.6,
+		"sum_factory"	=> 0.6,
 		"number_of"		=> 0.1,
-		"interest" 		=> 0.8,
-		"full_price" 	=> 0.8,
-		"full_sum" 		=> 0.8,
-		"v" 					=> 0.2,
-		"architector" => 0.8
+		"interest" 		=> 0.6,
+		"full_price" 	=> 0.6,
+		"full_sum" 		=> 0.6,
+		"v" 			=> 0.1,
+		"photo_px" 		=> 0,
+		"size_px" 		=> 0
 	}
 
 	def checks_print_arr_size_factor column_size
@@ -65,7 +66,14 @@ class Specification < ActiveRecord::Base
 		checks_print_arr_size_factor(COLUMN_SIZE).each do |i|
 			percent_css_widths[i[0]] = (i[1] * 10000 / sum_pixels).round(3)
 		end
-		colspan_sum
+		# p "---><>"
+		# p percent_css_width["photo_img_px"]
+		# percent_css_width["photo_img_px"] = percent_css_width["photo"]
+		# percent_css_width["size_img_px"] = 
+		p "----<><>"
+		p percent_css_widths["photo"] / sum_pixels * 100
+		percent_css_widths["photo_px"] = sum_pixels * percent_css_widths["photo"] / 100
+		percent_css_widths["size_px"] = sum_pixels * percent_css_widths["size"] / 100
 		p percent_css_widths
 	end
 

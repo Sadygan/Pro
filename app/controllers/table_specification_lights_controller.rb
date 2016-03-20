@@ -11,6 +11,7 @@ class TableSpecificationLightsController < ApplicationController
     authorize! :show, @project
     @table_specification_lights = @specification.table_specification_lights.all
     @table_specification_light = TableSpecificationLight.new
+    @css_print = @specification.percent_css_width
     @Model = TableSpecificationLight
 
     respond_to do |format|
@@ -21,6 +22,7 @@ class TableSpecificationLightsController < ApplicationController
           render  pdf:        "unit_specification",
                   template:   "tables/pdfs/unit_specification.pdf.erb",
                   # header: { html: { template: 'tables/pdfs/header.html' }}, # Dont work with wkhtmltopdf-binary-edge gem
+                  orientation: @specification.orientation(@specification.sum_pixels),
                   encoding:   'utf8',
                   margin:  {  top:             5,                     # default 10 (mm)
                               bottom:          35,
@@ -36,6 +38,7 @@ class TableSpecificationLightsController < ApplicationController
     authorize! :show, @project
     @table_specification_lights = @specification.table_specification_lights.where(required: true)
     @selected = true
+    @css_print = @specification.percent_css_width
     @Model = TableSpecificationLight
 
     respond_to do |format|
@@ -43,6 +46,7 @@ class TableSpecificationLightsController < ApplicationController
           render  pdf:        "unit_specification",
                   template:   "tables/pdfs/unit_specification.pdf.erb",
                   # header: { html: { template: 'tables/pdfs/header.html' }}, # Dont work with wkhtmltopdf-binary-edge gem
+                  orientation: @specification.orientation(@specification.sum_pixels),
                   encoding:   'utf8',
                   margin:  {  top:             5,                     # default 10 (mm)
                               bottom:          35,

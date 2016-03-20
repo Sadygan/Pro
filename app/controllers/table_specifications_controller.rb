@@ -15,9 +15,7 @@ class TableSpecificationsController < ApplicationController
     authorize! :show, @project
     @table_specifications = @specification.table_specifications.all
     @table_specification = TableSpecification.new
-    # @specification.sum_
     @css_print = @specification.percent_css_width
-
     @Model = TableSpecification
 
     respond_to do |format|
@@ -44,13 +42,15 @@ class TableSpecificationsController < ApplicationController
     authorize! :show, @project
     @table_specifications = @specification.table_specifications.where(required: true)
     @selected = true
+    @css_print = @specification.percent_css_width
     @Model = TableSpecification
-    @specification.checks_to_print
+
     respond_to do |format|
       format.pdf do
         render  pdf:        "unit_specification",
                 template:   "tables/pdfs/unit_specification.pdf.erb",
                 # header: { html: { template: 'tables/pdfs/header.html' }}, # Dont work with wkhtmltopdf-binary-edge gem
+                orientation: @specification.orientation(@specification.sum_pixels),
                 encoding:   'utf8',
                 margin:  {  top:             5,                     # default 10 (mm)
                             bottom:          35,
