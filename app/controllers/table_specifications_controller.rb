@@ -62,7 +62,6 @@ class TableSpecificationsController < ApplicationController
 
   def packing_sizes
     @deliveries = Delivery.all
-    p params[:id]
     if params[:id]
       table_specification = TableSpecification.find(params[:id])
       @percent_v = table_specification.percent_v
@@ -95,7 +94,6 @@ class TableSpecificationsController < ApplicationController
   end
 
   def delivery_data
-    p params[:delivery_id]
     @delivery_data = Delivery.find(params[:delivery_id])
     @table_specification = TableSpecification.new
 
@@ -143,7 +141,8 @@ class TableSpecificationsController < ApplicationController
     @size_image = @size_images.first
     
     @type_furnitures = TypeFurniture.all
-    @factories = Factory.filter_list
+    p "--<><>---<><>--"
+    p @factories = Factory.filter_list
 
     product_id = params[:product_id]
 
@@ -152,9 +151,7 @@ class TableSpecificationsController < ApplicationController
       @brand_model = BrandModel.find(@product.brand_model_id)
       @factory = Factory.find(@brand_model.factory_id)
       @brand_models = BrandModel.where(factory: @factory)
-      p "-1---"
-      p @type_furniture = @product.type_furniture
-      p "-1---"
+      @type_furniture = @product.type_furniture
 
     else
       brand_model_id = params[:brand_model_id]
@@ -168,9 +165,6 @@ class TableSpecificationsController < ApplicationController
         @brand_model = BrandModel.new()
         @brand_model.id = params[:brand_model_id]
         @br = @brand_model.name = params[:brand_model_val]
-        p @br
-        p "-2---"
-        p product_id
         if product_id.to_i != 0
           @product = Product.find(product_id)
         else
@@ -182,13 +176,7 @@ class TableSpecificationsController < ApplicationController
         else
           @type_furniture = TypeFurniture.first
         end 
-        p "-2---"
-        # if @type_furniture.nil?
-        #   @type_furniture.id = 1
-        # end
-
       end
-
     end
     
     @discounts = Discount.where("factory_id = ?", @factory)
@@ -226,7 +214,6 @@ class TableSpecificationsController < ApplicationController
     @brand_model = BrandModel.new
     @product = Product.new
     @photo = Photo.new
-
     @factories = Factory.filter_list
     # @factories = Factory.where("light_factor <= 0 ")
     @brand_models = BrandModel.filter_list
@@ -289,11 +276,6 @@ class TableSpecificationsController < ApplicationController
           else
             # @table_specification = TableSpecification.find()
             product = Product.where(article: params[:product][:article]).last
-            p "product_2"
-            p product
-            p "@product_2"
-            p @product
-
             # Сценарий если есть модель но нет продукта
             if product.nil?
               if @product.save

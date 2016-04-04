@@ -41,7 +41,6 @@ class Specification < ActiveRecord::Base
 					arr_size_factor.push(column_size[cs[0]])
 					arr_size_name.push(column_size[cs[1]])
 					try_list[cs[0]] = column_size[cs[0]]
-					p cs[0]
 					column_size.include?(cs[0])
 				end
 			end
@@ -82,15 +81,10 @@ class Specification < ActiveRecord::Base
 				break
 			end
 		end
-		p count
-		p after
-		p before
 		if count == before
 			after = 0
-			p "-1"
 		else
 			after = count - before
-			p "+1"
 		end
 
 		{before: before, after: after}
