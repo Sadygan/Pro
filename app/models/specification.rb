@@ -10,6 +10,8 @@ class Specification < ActiveRecord::Base
   
   validates :name, presence: true, length: {minimum: 2}
 
+  before_save :default_values
+
   FULL_PERCENT = 100
 
 	COLUMN_SIZE = {
@@ -30,6 +32,17 @@ class Specification < ActiveRecord::Base
 		"photo_px" 		=> 0,
 		"size_px" 		=> 0
 	}
+
+	def default_values
+		self.photo 		 ||= true
+		self.brand_model ||= true 
+		self.finishing 	 ||= true
+		self.description ||= true
+		self.size 		 ||= true 
+		self.number_of 	 ||= true 
+		self.full_price  ||= true 
+		self.full_sum 	 ||= true 
+	end
 
 	def checks_print_arr_size_factor column_size
 		arr_size_factor = []
@@ -67,7 +80,6 @@ class Specification < ActiveRecord::Base
 		end
 		percent_css_widths["photo_px"] = sum_pixels * percent_css_widths["photo"].to_i / 100
 		percent_css_widths["size_px"] = sum_pixels * percent_css_widths["size"].to_i / 100
-		p percent_css_widths
 	end
 
 	def colspan_sum
@@ -90,10 +102,6 @@ class Specification < ActiveRecord::Base
 		{before: before, after: after}
 	end
 
-	def checks_print_size_css checks_to_print
-		 # checks_to_print
-	end
-	
 	def orientation sum_pixels
 		if sum_pixels > 670
 			'Landscape'

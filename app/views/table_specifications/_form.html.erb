@@ -11,16 +11,16 @@
           <%= f.hidden_field :photo_id, value: 0 %>
           <%= f.hidden_field :photo_base64_form %>
         <td class="factory">
-        <%= u.select :factory_id,
-                  @factories.map { |o| [o.brand, o.id] },
-                  { include_blank: true },
-                  { id: 'factories_select',
-                  class: 'chosen-select' }
+          <%= u.select :factory_id,
+                    @factories.map { |o| [o.brand, o.id] },
+                    { include_blank: true },
+                    { id: 'factories_select',
+                    class: 'chosen-select' }
           %>
           <br>
           <%= f.hidden_field :discount_id %>
           <div id="number_discount"></div>
-          <%= f.hidden_field :increment_discount, value: 0 %>
+            <%= f.hidden_field :increment_discount, value: 0 %>
           <input type="hidden" class="table_specification_additional_discount" value="0">
           <input type="hidden" class="table_specification_increment_discount" value="0">
         </td>
