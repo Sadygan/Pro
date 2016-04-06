@@ -4,7 +4,6 @@ $("#products_select").empty()
 # reseting model chosen after change factory
 $("#products_select").prepend("<option value='' selected='selected'></option>");
 $('#products_select').trigger('chosen:updated')
-
 # add record to list search in model field
 select = undefined
 chosen = undefined

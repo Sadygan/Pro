@@ -127,15 +127,11 @@ class ProductsController < ApplicationController
     
     photos_split = @product_.photo_base64_form.split('.')
     size_images_split =  @product_.size_image_base64_form.split('.')
-    p "before"
-    p @product
 
     respond_to do |format|
       if @product.update(product_params) && brand_model.nil?
-        p "after"
-        p @product
+        p "this is a"
         @brand_model = BrandModel.new(name: @product.brand_model_name, factory_id: @product.factory_id)
-        p @brand_model
         if @brand_model.save
           @product.brand_model_id = @brand_model.id
           p "------->"
@@ -153,7 +149,10 @@ class ProductsController < ApplicationController
           format.json { render json: 'brand_model',
                                     status: :unprocessable_entity }           
         end
+        format.json { head :no_content }
+        format.js
       elsif @product.update(product_params) && brand_model.present?
+        p "this is b"
         for i in photos_split
           save_img @product, i, Photo
         end
@@ -163,6 +162,7 @@ class ProductsController < ApplicationController
         format.json { head :no_content }
         format.js            
       else
+        format.js            
         format.json { render json: @product.errors.full_messages,
                                     status: :unprocessable_entity } 
       end

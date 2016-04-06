@@ -1,4 +1,3 @@
-<%= javascript_include_tag "products/index" %>
 <tr id="product_<%= product.id %>">
   <td>
   	<% if Photo.where(product_id: product.id).first %>  
