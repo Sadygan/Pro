@@ -36,7 +36,7 @@ class Asset < ActiveRecord::Base
 	end
 
 	# Get path url current image 
-	def img_url
+	def img_url 
       img.url(:original)
  	end
 

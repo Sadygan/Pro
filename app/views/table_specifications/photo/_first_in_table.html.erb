@@ -1,4 +1,4 @@
-<% unless ts.photo.nil? %>
+<% if ts.photo && Asset.exists?(ts.photo) %>
 	<%= link_to image_tag(ts.image(ts.photo_id)), "#", class: "invoker" %>
 <% else %>
 	<%= link_to image_tag('UploadDark.png'), "#", {class: "invoker", id: "upload_dark"} %> 
