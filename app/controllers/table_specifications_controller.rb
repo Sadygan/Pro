@@ -215,6 +215,7 @@ class TableSpecificationsController < ApplicationController
     @product = Product.new
     @photo = Photo.new
     @factories = Factory.filter_list
+    @factories = Factory.all
     # @factories = Factory.where("light_factor <= 0 ")
     @brand_models = BrandModel.filter_list
     @type_furnitures = TypeFurniture.all
