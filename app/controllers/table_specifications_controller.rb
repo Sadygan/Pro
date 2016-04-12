@@ -141,8 +141,8 @@ class TableSpecificationsController < ApplicationController
     @size_image = @size_images.first
     
     @type_furnitures = TypeFurniture.all
-    p "--<><>---<><>--"
-    p @factories = Factory.filter_list
+    # p @factories = Factory.filter_list
+    @factories = Factory.all
 
     product_id = params[:product_id]
 
