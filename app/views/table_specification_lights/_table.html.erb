@@ -52,7 +52,11 @@
           <td><%= ts.product.brand_model.name %></td>
           <td><%= ts.product.article %></td>
           <td><%= best_in_place pst, :finishing_for_client, as: :textarea %></td>
-          <td><%= ts.product.type_furniture.name %></td>
+          <td>
+            <%= ts.product.type_furniture.name %>
+            <br>
+            <%= best_in_place pst, :description, as: :textarea %>
+          </td>
           <td class="size_images">
             <%= render "tables/general_methods/size_image/first_in_table", ts: ts %>
             <br>

@@ -441,6 +441,7 @@ class TableSpecificationsController < ApplicationController
           :additional_delivery,
           :additional_packaging,
           :required,
+          :description,
           # :packing, 
           # :add_to_delivery,
 

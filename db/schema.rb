@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160314160600) do
+ActiveRecord::Schema.define(version: 20160412132642) do
 
   create_table "assets", force: :cascade do |t|
     t.string   "type"
@@ -260,6 +260,7 @@ ActiveRecord::Schema.define(version: 20160314160600) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "order"
+    t.string   "description"
   end
 
   add_index "tables", ["delivery_id"], name: "index_tables_on_delivery_id"

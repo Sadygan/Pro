@@ -51,6 +51,8 @@
           
           <td class="type_furniture">
             <%= j.collection_select :type_furniture_id, TypeFurniture.all,:id,:name, {include_blank: false}, {class: 'chosen-select', selected: 1} %>
+            <br>
+            <%= f.text_area :description %>
           </td>
           <td class="size">
             <div id="size_images">

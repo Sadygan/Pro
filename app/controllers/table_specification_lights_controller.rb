@@ -255,6 +255,7 @@ class TableSpecificationLightsController < ApplicationController
         :interest_percent,
         :arhitec_percent,
         :required,
+        :description,
 
         :specification_id, 
         :factory_brand,
