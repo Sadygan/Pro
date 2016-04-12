@@ -72,7 +72,11 @@
 				<td ><%= ts.finishing_for_client%></td>
 			<% end %>
 			<% if @specification.description %>
-				<td ><%= ts.product.type_furniture.name %></td>
+				<td >
+					<%= ts.product.type_furniture.name %>
+					<br>
+					<%= ts.description %>
+				</td>
 			<% end %>
 			<% if @specification.size %>
 				<td width="<%= @css_print["size"] %>%">
