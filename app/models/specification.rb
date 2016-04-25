@@ -10,7 +10,7 @@ class Specification < ActiveRecord::Base
   
   validates :name, presence: true, length: {minimum: 2}
 
-  before_save :default_values
+  after_save :default_values
 
   FULL_PERCENT = 100
 
