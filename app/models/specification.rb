@@ -15,7 +15,7 @@ class Specification < ActiveRecord::Base
   FULL_PERCENT = 100
 
 	COLUMN_SIZE = {
-		"photo" 		=> 1.5,
+		"photo" 		=> 2.5,
 		"factory" 		=> 0.7,
 		"brand_model"	=> 0.7,
 		"article"		=> 0.7,
