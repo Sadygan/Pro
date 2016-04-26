@@ -214,10 +214,9 @@ class TableSpecificationsController < ApplicationController
     @brand_model = BrandModel.new
     @product = Product.new
     @photo = Photo.new
-    @factories = Factory.filter_list
 
-    @factories = Factory.filter_list
-    # @factories = Factory.all
+    # @factories = Factory.filter_list
+    @factories = Factory.all
     
     @brand_models = BrandModel.filter_list
     @type_furnitures = TypeFurniture.all
