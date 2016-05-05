@@ -70,7 +70,7 @@
           <td><%= ts.summ_netto %></td>
           <td>
             <%= best_in_place pst, :number_of %>
-            <%= Table.type_of_size[ts.type_of_size_id] %>
+            <%= ts.type_of_size_id.nil? ? Table.type_of_size[1] : Table.type_of_size[ts.type_of_size_id] %>
           </td>
           <td>
             <p><%= best_in_place pst, :interest_percent %> %</p>
