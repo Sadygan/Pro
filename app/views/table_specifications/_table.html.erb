@@ -12,7 +12,8 @@
         <th><%= check_box("size", @specification.id, {checked: @specification.size, column: "size"}) %></th>
         <th><%= check_box("upf", @specification.id, {checked: @specification.upf, column: "upf"}) %></th>
         <th><%= check_box("sum_factory", @specification.id, {checked: @specification.sum_factory, column: "sum_factory"}) %></th>
-        <th><%= check_box("number_of", @specification.id, {checked: @specification.number_of, column: "number_of"}) %></th>
+        <th><%= check_box("number_of", @specification.id, {checked: @specification.number_of, column: "number_of"}) %>
+        </th>
         <th><%= check_box("interest", @specification.id, {checked: @specification.interest, column: "interest"}) %></th>
         <th><%= check_box("full_price", @specification.id, {checked: @specification.full_price, column: "full_price"}) %></th>
         <th><%= check_box("full_sum", @specification.id, {checked: @specification.full_sum, column: "full_sum"}) %></th>
@@ -67,7 +68,10 @@
             <%= best_in_place pst, :size, as: :textarea %></td>
           <td><%= best_in_place pst, :unit_price_factory %></td>
           <td><%= ts.summ_netto %></td>
-          <td><%= best_in_place pst, :number_of %></td>
+          <td>
+            <%= best_in_place pst, :number_of %>
+            <%= Table.type_of_size[ts.type_of_size_id] %>
+          </td>
           <td>
             <p><%= best_in_place pst, :interest_percent %> %</p>
             <p style="white-space:nowrap;"><span class="interest-e"><%= ts.company_interest %></span> €</p>

@@ -16,10 +16,15 @@ class Table < ActiveRecord::Base
     h = Hash.new(0)
     ar.each{ | v | h.store(v, h[v]+1)}
     h.delete(nil)
-    p "=====>"
-    p h
     h
   end
+  
+  def self.type_of_size 
+    {1 => 'шт.', 2 => 'м', 3 => 'м²', 4 => 'м³', 5 => 'м.п.', 6 => 'кг.'}
+  end
+  # def type_of_size 
+  #   {1 => 'шт.', 2 => 'м', 3 => 'м²', 4 => 'м³', 5 => 'м.п.', 6 => 'кг.'}
+  # end
 
   def multiplication a, b
     a * b

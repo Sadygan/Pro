@@ -94,7 +94,10 @@
 				<td ><%= ts.summ_netto %></td>
 			<% end %>
 			<% if @specification.number_of %>
-				<td ><%= ts.number_of %></td>
+				<td >
+					<%= ts.number_of %>
+					<%= Table.type_of_size[ts.type_of_size_id] %>
+				</td>
 			<% end %>
 			<% if @specification.interest %>
 				<td ><%= ts.company_interest %></td>

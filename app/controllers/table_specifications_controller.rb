@@ -460,7 +460,8 @@ class TableSpecificationsController < ApplicationController
           :size_image_base64,
           :size_image_base64_form,
           :ts_id,
-          :order
+          :order,
+          :type_of_size_id
           )
       end
     end

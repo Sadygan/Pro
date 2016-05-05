@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160412132642) do
+ActiveRecord::Schema.define(version: 20160505124423) do
 
   create_table "assets", force: :cascade do |t|
     t.string   "type"
@@ -117,10 +117,6 @@ ActiveRecord::Schema.define(version: 20160412132642) do
     t.string   "type_furniture_name"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
-    t.string   "text_size"
-    t.float    "real_width"
-    t.float    "real_height"
-    t.float    "real_depth"
   end
 
   add_index "products", ["brand_model_id"], name: "index_products_on_brand_model_id"
@@ -169,7 +165,6 @@ ActiveRecord::Schema.define(version: 20160412132642) do
     t.integer  "project_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.string   "check"
     t.boolean  "photo"
     t.boolean  "factory"
     t.boolean  "brand_model"
@@ -261,6 +256,7 @@ ActiveRecord::Schema.define(version: 20160412132642) do
     t.datetime "updated_at",           null: false
     t.integer  "order"
     t.string   "description"
+    t.integer  "type_of_size_id"
   end
 
   add_index "tables", ["delivery_id"], name: "index_tables_on_delivery_id"
