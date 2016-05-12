@@ -90,7 +90,7 @@
 			<% if @specification.upf %>
 				<td ><%= ts.unit_price_factory.round(2) %></td>
 			<% end %>
-			<% if @specification.sum_factory.round(2) %>
+			<% if @specification.sum_factory %>
 				<td ><%= ts.summ_netto.round(2) %></td>
 			<% end %>
 			<% if @specification.number_of %>
