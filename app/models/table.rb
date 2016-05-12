@@ -47,7 +47,7 @@ class Table < ActiveRecord::Base
   end
 
   def our_interest summ_netto, percent
-    summ_netto*100/(100-percent)
+    summ_netto*100/(100-percent).round(2)
   end
 
   def devision with_interest, summa_netto
@@ -71,7 +71,7 @@ class Table < ActiveRecord::Base
   end
 
   def company_interest
-    calculatePercentMinus(interest, arhitec_percent)
+    calculatePercentMinus(interest, arhitec_percent).round(2)
   end
 
   def architector_interest

@@ -88,10 +88,10 @@
 				</td>
 			<% end %>
 			<% if @specification.upf %>
-				<td ><%= ts.unit_price_factory %></td>
+				<td ><%= ts.unit_price_factory.round(2) %></td>
 			<% end %>
-			<% if @specification.sum_factory %>
-				<td ><%= ts.summ_netto %></td>
+			<% if @specification.sum_factory.round(2) %>
+				<td ><%= ts.summ_netto.round(2) %></td>
 			<% end %>
 			<% if @specification.number_of %>
 				<td >
@@ -100,28 +100,28 @@
 				</td>
 			<% end %>
 			<% if @specification.interest %>
-				<td ><%= ts.company_interest %></td>
+				<td ><%= ts.company_interest.round(2) %></td>
 			<% end %>
 			<% if ts.group.nil? %>
 				<% if @specification.full_price %>
-					<td ><%= ts.unit_price %></td>
+					<td ><%= ts.unit_price.round(2) %></td>
 				<% end %>
 				<% if @specification.full_sum %>
-					<td ><%= ts.summa %></td>
+					<td ><%= ts.summa.round(2) %></td>
 				<% end %>
 				<% else %>
 					<% if @specification.full_price %>
-						<td ><%= ts.groupDataSum(ts.group, "gp_unit_sum") %></td>
+						<td ><%= ts.groupDataSum(ts.group, "gp_unit_sum").round(2) %></td>
 					<% end %>
 					<% if @specification.full_sum %>
-						<td ><%= ts.groupDataSum(ts.group, "gp_sum_number") %></td>
+						<td ><%= ts.groupDataSum(ts.group, "gp_sum_number").round(2) %></td>
 					<% end %>
 				<% end %>
 			<% if @specification.v %>
 				<td ><%= ts.product.unit_v %></td>
 			<% end %>
 			<% if @specification.architector %>
-				<td class="unit_v"><%= ts.architector_interest %></td>
+				<td class="unit_v"><%= ts.architector_interest.round(2) %></td>
 			<% end %>
 		<% end %>
 		</tr>
@@ -129,7 +129,7 @@
 			<% if @specification.print_sum && @specification.full_sum %>
 				<td colspan="<%= @specification.colspan_sum[:before] %>"></td>
 				<td class="sum">
-					<%= @selected ? @Model::specification_sum_all(@specification, "sum", "selected") : @Model::specification_sum_all(@specification, "sum") %>
+					<%= @selected ? @Model::specification_sum_all(@specification, "sum", "selected").round(2) : @Model::specification_sum_all(@specification, "sum").round(2) %>
 				<% if @specification.colspan_sum[:after] != 0 %>
 					<td colspan="<%= @specification.colspan_sum[:after] %>"></td>
 				<% end %>
