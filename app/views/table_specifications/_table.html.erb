@@ -129,7 +129,7 @@
                 <% i = 0 %>
                 <tr>
                   <td colspan="13"> Сумма за группу</td>
-                  <td class="sum_group"><span id="group_summa_<%= ts.group %>" data-html-attrs="<%= ts.group %>"><%= ts.groupDataSum(ts.group, "sum") %></td>
+                  <td class="sum_group"><span id="group_summa_<%= ts.group %>" data-html-attrs="<%= ts.group %>"><%= ts.groupDataSum(ts.group, "sum").round(2) %></td>
                   <td></td>
                   <td></td>
                   

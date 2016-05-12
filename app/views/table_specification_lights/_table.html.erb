@@ -46,11 +46,11 @@
             <%= check_box("required", ts.id, {checked: ts.required}, ts.id) %>
           </td>
           <td class="photos"><%= render "tables/general_methods/photo/first_in_table", ts: ts %></td>
-          <td class="factory"><%= ts.product.brand_model.factory.brand %></br>
-            <span class="light_factor"><%= ts.product.brand_model.factory.light_factor %></span>
+          <td class="factory"><%= ts.product.brand_model.factory.brand if ts.product %></br>
+            <span class="light_factor"><%= ts.product.brand_model.factory.light_factor if ts.product %></span>
           </td>
-          <td><%= ts.product.brand_model.name %></td>
-          <td><%= ts.product.article %></td>
+          <td><%= ts.product.brand_model.name if ts.product %></td>
+          <td><%= ts.product.article if ts.product %></td>
           <td><%= best_in_place pst, :finishing_for_client, as: :textarea %></td>
           <td>
             <%= ts.product.type_furniture.name %>
