@@ -24,7 +24,7 @@
 	<td class="column2">
 		<div class="accordion-body collapse hidden<%= project.id %>">
 			<div>Стиль</div>
-			<div><%= project.style.name %></div>
+			<div><%= project.style.name if project.style.name %></div>
 		</div>
 	</td>
 	<td class="column3">
