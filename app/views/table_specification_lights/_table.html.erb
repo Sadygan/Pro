@@ -39,6 +39,7 @@
      <tbody>
        <% @table_specification_lights.each do |ts| %>
          <% pst = [@project, @specification, ts] %>
+         <% p ts.id %>
          <tr row-id="<%= ts.id %>" product-id="<%= ts.product_id %>">
           <td class="npp">
             <%= best_in_place pst, :order %>
