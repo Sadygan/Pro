@@ -59,27 +59,27 @@ class Table < ActiveRecord::Base
   end
 # --- calculate
   def summ_netto
-    multiplication(upn, number_of).round(2)
+    multiplication(upn, number_of)
   end
 
   def with_interest
-    our_interest(price_from_nil, interest_percent).round(2)
+    our_interest(price_from_nil, interest_percent)
   end
 
   def interest
-    minus(with_interest, price_from_nil).round(2)
+    minus(with_interest, price_from_nil)
   end
 
   def company_interest
-    calculatePercentMinus(interest, arhitec_percent).round(2)
+    calculatePercentMinus(interest, arhitec_percent)
   end
 
   def architector_interest
-    (interest - company_interest).round(2)
+    (interest - company_interest)
   end
 
   def architector_percent_from_order
-    architector_percent(with_interest, architector_interest).round(2)
+    architector_percent(with_interest, architector_interest)
   end
 
 # Select image in form

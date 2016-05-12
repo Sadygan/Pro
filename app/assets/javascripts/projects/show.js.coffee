@@ -9,5 +9,4 @@ $ ->
       }
       error: (jqXHR, textStatus, errorThrown) ->
       success: (data, textStatus, jqXHR) ->
-
     return false
