@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160505124423) do
+ActiveRecord::Schema.define(version: 20160513111001) do
 
   create_table "assets", force: :cascade do |t|
     t.string   "type"
@@ -71,6 +71,15 @@ ActiveRecord::Schema.define(version: 20160505124423) do
     t.datetime "updated_at",         null: false
   end
 
+  create_table "discount_lights", force: :cascade do |t|
+    t.integer  "factor"
+    t.integer  "factory_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "discount_lights", ["factory_id"], name: "index_discount_lights_on_factory_id"
+
   create_table "discounts", force: :cascade do |t|
     t.integer  "percent"
     t.integer  "factory_id"
@@ -95,12 +104,10 @@ ActiveRecord::Schema.define(version: 20160505124423) do
     t.integer  "delivery_time"
     t.string   "group_brend"
     t.integer  "user_id"
-    t.integer  "light_factory_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
   end
 
-  add_index "factories", ["light_factory_id"], name: "index_factories_on_light_factory_id"
   add_index "factories", ["user_id"], name: "index_factories_on_user_id"
 
   create_table "products", force: :cascade do |t|
