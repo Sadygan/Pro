@@ -1,10 +1,11 @@
 class Factory < ActiveRecord::Base
 	has_many :discounts
+	has_many :discount_lights
 	has_many :brand_models, -> { order(:brand) }, through: :products
-	has_one  :light_factory
 
 	belongs_to :user
 	
+	accepts_nested_attributes_for :discount_lights, allow_destroy: true
 	accepts_nested_attributes_for :discounts, allow_destroy: true
 	accepts_nested_attributes_for :brand_models
 
