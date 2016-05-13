@@ -18,7 +18,7 @@
       </div>
       <div class="form-group">
         <%= f.label t('deliveries.cost'), :class => "control-label" %><br>
-        <%= f.number_field :cost, :class => "form-control" %>
+        <%= f.number_field :cost, step: 0.001, :class => "form-control" %>
       </div>
       <div class="form-group">
         <%= f.label t('deliveries.execution_document'), :class => "control-label" %><br>
