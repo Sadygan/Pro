@@ -29,7 +29,7 @@ class TableSpecificationsController < ApplicationController
               orientation: @specification.orientation(@specification.sum_pixels),
               encoding:   'utf8',
               margin:  {  top:             5,                     # default 10 (mm)
-                          bottom:          50,
+                          bottom:          1,
                           left:            3,
                           right:           3 }
       end
