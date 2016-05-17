@@ -17,7 +17,9 @@
     @brand_models = BrandModel.where("factory_id = ?", params[:factory_id])
     @brand_model = @brand_models.first
     @factory = Factory.find(params[:factory_id])
+    p "_____>>>"
     @discounts = Discount.where("factory_id = ?", params[:factory_id])
+    @discount_lights = DiscountLight.where(factory_id: params[:factory_id]) 
     @discount = @discounts.first
 
     respond_to do |format|

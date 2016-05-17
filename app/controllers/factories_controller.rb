@@ -108,6 +108,8 @@ private
       :minimum_order,
       :delivery_time,
       :group_brend,
-      discounts_attributes:[:percent, :_destroy, :id])
+      discounts_attributes:[:percent, :_destroy, :id],
+      discount_lights_attributes:[:factor, :_destroy, :id],
+      )
   end
 end

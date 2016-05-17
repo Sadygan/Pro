@@ -53,16 +53,25 @@
     <%= f.nested_fields_for :discounts do |ff| %>
       <%= ff.remove_nested_fields_link %>
       
-      <%= ff.text_field :percent, :class => "form-control"  %>
+      <%= ff.number_field :percent, :class => "form-control"  %>
     <% end %>
     <%= f.add_nested_fields_link :discounts, t('brand.add_discount') %>
   </div>
   <h2>Свет</h2>
   <div class="col-sm-4">
-    <div class="form-group">
+    <div class="form-group" >
       <%= f.label t('brand.light_factor'), :class => "control-label" %>
-      <%= f.text_field :light_factor, :class => "form-control" %>
+      <%= f.number_field :light_factor, :class => "form-control", disabled: "disabled"%>
     </div>
+  <div class="form-group">
+    <%= f.label "Коэффициент", :class => "control-label" %>
+    <%= f.nested_fields_for :discount_lights do |ff| %>
+      <%= ff.remove_nested_fields_link %>
+      
+      <%= ff.text_field :factor, :class => "form-control"  %>
+    <% end %>
+    <%= f.add_nested_fields_link :discount_lights, 'Добавить коэффициент' %>
+  </div>
     <div class="form-group">
       <%= f.label t('brand.minimum_order'), :class => "control-label" %>
       <%= f.text_field :minimum_order, :class => "form-control" %>

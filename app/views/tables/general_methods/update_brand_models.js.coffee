@@ -9,6 +9,10 @@ unless $("#number_discount") != []
 $("#products_select").prepend("<option value='' selected='selected'></option>");
 $('#products_select').trigger('chosen:updated')
 
+# Show Brand -> factory_light in select preview
+$("#list_factor").empty()
+  .append("<%= escape_javascript(render(partial: 'tables/general_methods/list_factor/form', collection: @discount_lights, as: 'discount_light')) %>")
+
 # add record to list search in model field
 select = undefined
 chosen = undefined

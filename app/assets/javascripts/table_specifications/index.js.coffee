@@ -3,6 +3,9 @@
 jQuery ->
   $('.best_in_place').best_in_place()
 $ ->
+  $('#list_factor').change ->
+    console.log('ok, lets GO')
+
   $(document).on 'click', '.photos a', (evt) ->
     $.ajax 'table_specifications/table_specification/photos',
       type: 'GET'

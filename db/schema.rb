@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20160513122433) do
-=======
-ActiveRecord::Schema.define(version: 20160513111001) do
->>>>>>> push_light_factor
+ActiveRecord::Schema.define(version: 20160516084617) do
 
   create_table "assets", force: :cascade do |t|
     t.string   "type"
@@ -76,7 +72,7 @@ ActiveRecord::Schema.define(version: 20160513111001) do
   end
 
   create_table "discount_lights", force: :cascade do |t|
-    t.integer  "factor"
+    t.float    "factor"
     t.integer  "factory_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -268,6 +264,7 @@ ActiveRecord::Schema.define(version: 20160513111001) do
     t.integer  "order"
     t.string   "description"
     t.integer  "type_of_size_id"
+    t.float    "factor_light"
   end
 
   add_index "tables", ["delivery_id"], name: "index_tables_on_delivery_id"

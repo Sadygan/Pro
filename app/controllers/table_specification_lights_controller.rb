@@ -67,7 +67,8 @@ class TableSpecificationLightsController < ApplicationController
     @product = Product.new
     @photo = Photo.new
     
-    @factories = Factory.filter_list_light
+    # @factories = Factory.filter_list_light
+    @factories = Factory.all
     @brand_models = BrandModel.filter_list_light
     @type_furnitures = TypeFurniture.all
     @articles = Product.filter_list_light
@@ -268,7 +269,8 @@ class TableSpecificationLightsController < ApplicationController
         :size_image_base64,
         :size_image_base64_form,
         :ts_id,
-        :order
+        :order,
+        :factor_light
         )
     end
   end
