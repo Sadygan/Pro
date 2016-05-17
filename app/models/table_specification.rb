@@ -35,8 +35,9 @@ class TableSpecification < Table
     self.additional_packaging ||= 0
   end
   
-  def calculate_percent_bank_delivery summa_netto, cost, execution_document, check_factory,  bank_service, bank_percent, v_sum, additional_deliver
-    summa_netto+bank_service+(summa_netto+bank_service)*bank_percent/100+execution_document+check_factory+(cost+additional_deliver)*v_sum
+  def calculate_percent_bank_delivery summa_netto, cost, execution_document, check_factory,  bank_service, bank_percent, v_sum, additional_delivery
+    d1 = summa_netto+bank_service+(summa_netto+bank_service)*bank_percent/100+execution_document+check_factory+cost*v_sum
+    additional_delivery + d1
   end
 
   def unit_price_netto percent, upf, add_discount, incr_discount
