@@ -506,6 +506,7 @@ class TableSpecification < Table
   end
 
   def gp_sum_number data_group, ln
+    additional_delivery = data_group[:additional_delivery].last
     gp_unit_sum = (gp_unit_sum(data_group, ln)).to_f
     (gp_unit_sum * number_of)
     
