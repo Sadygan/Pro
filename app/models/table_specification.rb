@@ -296,8 +296,7 @@ class TableSpecification < Table
   end
 
   def unit_price_with_delivery_nil data_group, ln
-    upg_nil = (group_first_price_from_nil_sum(data_group, ln)/100)*percent_of_number(data_group, ln)
-    upg_nil
+    (group_first_price_from_nil_sum(data_group, ln)/100)*percent_of_number(data_group, ln)
   end
 
   def unit_price_with_percent data_group, ln
@@ -365,7 +364,7 @@ class TableSpecification < Table
     bank_percent = data_group[:delivery].last.bank_percent
     additional_delivery = data_group[:additional_delivery].last
 
-    calculate_percent_bank_delivery(group_sum, cost, execution_document, check_factory,  bank_service, bank_percent, v_sum, additional_delivery)
+    calculate_percent_bank_delivery(group_sum, cost, execution_document, check_factory,  bank_service, bank_percent, v_sum)
   end
 
   def group_unit_price_from_nil data_group, ln
@@ -428,7 +427,8 @@ class TableSpecification < Table
   def group_sum_ data_group, ln 
     price_from_nil = group_first_price_from_nil_sum(data_group, ln)
     intrest_percent = group_first_interest_percent(data_group, ln)
-    our_interest(price_from_nil, interest_percent)
+   p "!!@!!@!!"
+   p our_interest(price_from_nil, interest_percent)
   end
 
   # def group_factor data_group, ln
@@ -488,7 +488,7 @@ class TableSpecification < Table
     bank_percent = data_group[:delivery].last.bank_percent
     additional_delivery = data_group[:additional_delivery].last
 
-    calculate_percent_bank_delivery(gp_sum_netto, cost, execution_document, check_factory,  bank_service, bank_percent, gp_v_sum, additional_delivery)
+    calculate_percent_bank_delivery(gp_sum_netto, cost, execution_document, check_factory,  bank_service, bank_percent, gp_v_sum)
   end
 
   def gp_sum_with_interest data_group, ln
