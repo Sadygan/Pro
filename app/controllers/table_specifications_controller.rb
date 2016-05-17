@@ -28,8 +28,8 @@ class TableSpecificationsController < ApplicationController
               # header: { html: { template: 'tables/pdfs/header.html' }}, # Dont work with wkhtmltopdf-binary-edge gem
               orientation: @specification.orientation(@specification.sum_pixels),
               encoding:   'utf8',
-              margin:  {  top:             5,                     # default 10 (mm)
-                          bottom:          35,
+              margin:  {  top:             10,                     # default 10 (mm)
+                          bottom:          10,
                           left:            3,
                           right:           3 }
       end
