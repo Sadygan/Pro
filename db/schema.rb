@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160516084617) do
+ActiveRecord::Schema.define(version: 20160518104507) do
 
   create_table "assets", force: :cascade do |t|
     t.string   "type"
@@ -74,8 +74,9 @@ ActiveRecord::Schema.define(version: 20160516084617) do
   create_table "discount_lights", force: :cascade do |t|
     t.float    "factor"
     t.integer  "factory_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "name_parthner"
   end
 
   add_index "discount_lights", ["factory_id"], name: "index_discount_lights_on_factory_id"

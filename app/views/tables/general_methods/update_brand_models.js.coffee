@@ -45,3 +45,7 @@ chosen.dropdown.find('input').on 'keyup', (e) ->
   
     $('#articles_select').trigger('chosen:updated')
   return
+$ ->
+  $('#list_factor').on 'click', (event) ->
+    $('#factor_light').val($(this).val())
+
