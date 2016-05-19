@@ -69,7 +69,8 @@
       <%= ff.remove_nested_fields_link %>
       
         <%= ff.label "Название партнера", :class => "control-label" %>
-        <%= ff.select :name_parthner, :class => "form-control"  %>
+        <%= ff.select :name_parthner, options_for_select(["Профимпорт", "Интерио"]), :class => "form-control"  %>
+        <br>
         <%= ff.label "Значение", :class => "control-label" %>
         <%= ff.text_field :factor, :class => "form-control"  %>
     <% end %>
