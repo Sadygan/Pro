@@ -10,7 +10,12 @@ class TableSpecificationLight < Table
   end
 
   def unit_price_factor
-  	multiplication(unit_price_factory, product.brand_model.factory.light_factor).round(2)
+    # multiplication(unit_price_factory, product.brand_model.factory.light_factor).round(2)
+    if factor_light.nil?
+      multiplication(unit_price_factory, product.brand_model.factory.light_factor).round(2)
+    else
+      multiplication(unit_price_factory, factor_light).round(2)
+    end
   end
 
   def price_from_nil

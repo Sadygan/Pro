@@ -48,7 +48,22 @@
           </td>
           <td class="photos"><%= render "tables/general_methods/photo/first_in_table", ts: ts %></td>
           <td class="factory"><%= ts.product.brand_model.factory.brand if ts.product %></br>
-            <span class="light_factor"><%= ts.product.brand_model.factory.light_factor if ts.product %></span>
+            <span class="light_factor">
+              <% if ts.factor_light.nil? %>
+                <span style="color:red">ТЕКУЩИЙ КОЭФФИЦИЕНТ! ПОМЕНЯТЬ!</span>
+                <br>
+                <span style="color:red"><%= ts.product.brand_model.factory.light_factor %></span>
+                <br>
+                <span style="color:red">ОБНОВИТЬ В ПОЛЕ С ПРОЧЕРКОМ!</span>
+              <% end %>
+                <br>
+                <span>
+                  <%= select_tag "factor_#{ts.id}", options_from_collection_for_select(ts.product.brand_model.factory.discount_lights, "id", "factor") %>
+                  <div id="number_factor_<%= ts.id %>"></div>
+                </span>
+              <br>
+              <%= best_in_place pst, :factor_light %>
+            </span>
           </td>
           <td><%= ts.product.brand_model.name if ts.product %></td>
           <td><%= ts.product.article if ts.product %></td>
