@@ -6,6 +6,7 @@
 	</div>
 	<div class="specification_id">
 		<span id="specification_id">#<%= @specification.id %></span> <br>
+		<span id="data_manager"><%= @user.name %> | <%= @user.email %> | <%= @user.telephone %></span>
 		<br>
 		<br>
 		<br>
@@ -32,7 +33,7 @@
 			<% if @specification.size %>	 			
 				<th width="<%= @css_print["size"] %>%">Размер</th> <% end %>
 			<% if @specification.upf %> 				
-				<th width="<%= @css_print["upf"] %>%">Фарики</th> <% end %>
+				<th width="<%= @css_print["upf"] %>%">Цена Фа-ки</th> <% end %>
 			<% if @specification.sum_factory %> 
 				<th width="<%= @css_print["sum_factory"] %>%">Сумма фабрики</th> <% end %>
 			<% if @specification.number_of %>	  
