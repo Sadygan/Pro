@@ -1,0 +1,64 @@
+<%= ts.id %>
+ <% pst = [@project, @specification, ts] %>
+ <tr row-id="<%= ts.id %>" product-id="<%= ts.product_id %>">
+  <td class="npp">
+    Поз.
+    <br>
+    <%= best_in_place pst, :order %>
+    <br>
+    <%= check_box("required", ts.id, {checked: ts.required}, ts.id) %>
+    <br>
+    Гр.
+    <br>
+    <% p @group_lines_all %>
+    <%= best_in_place pst, :group_line_id, as: :select, collection: @group_lines_all.map{|i|[i.id, i.name]}, include_blank: true %>
+  </td>
+  <td class="photos"><%= render "tables/general_methods/photo/first_in_table", ts: ts %></td>
+  <td class="factory"><%= ts.product.brand_model.factory.brand if ts.product %></br>
+    <span class="light_factor">
+      <% if ts.factor_light.nil? %>
+        <span style="color:red">ТЕКУЩИЙ КОЭФФИЦИЕНТ!</span>
+        <br>
+        <span style="color:red"><%= ts.product.brand_model.factory.light_factor %></span>
+        <br>
+        <span style="color:red">ОБНОВИТЬ В ПОЛЕ С ПРОЧЕРКОМ!</span>
+      <% end %>
+        <br>
+        <span>
+          <%= select_tag "factor_#{ts.id}", options_from_collection_for_select(ts.product.brand_model.factory.discount_lights, "id", "factor") %>
+          <div id="number_factor_<%= ts.id %>"></div>
+        </span>
+      <br>
+      <%= best_in_place pst, :factor_light %>
+    </span>
+  </td>
+  <td><%= ts.product.brand_model.name if ts.product %></td>
+  <td><%= ts.product.article if ts.product %></td>
+  <td><%= best_in_place pst, :finishing_for_client, as: :textarea %></td>
+  <td>
+    <%= ts.product.type_furniture.name if ts.product %>
+    <br>
+    <%= best_in_place pst, :description, as: :textarea %>
+  </td>
+  <td class="size_images">
+    <%= render "tables/general_methods/size_image/first_in_table", ts: ts %>
+    <br>
+    <%= best_in_place pst, :size, as: :textarea %></td>
+  <td><%= best_in_place pst, :unit_price_factory %></td>
+  <td class="factory-sum"><%= ts.price_from_nil.round(2) %></td>
+  <td><%= best_in_place pst, :number_of %></td>
+  <td>
+    <p><%= best_in_place pst, :interest_percent %> %</p>
+    <p style="white-space:nowrap;"><span class="interest-e"><%= ts.company_interest.round(2) %></span> €</p>
+  </td>
+  <td><%= ts.unit_price.round(2) %></td>
+  <td><%= ts.with_interest.round(2) %></td>
+  <td>
+    <p style="white-space:nowrap;">Интерес %: <br> <%= best_in_place pst, :arhitec_percent %>
+    </p>
+    <p>От заказа %: <span class="arh-order-percent"><%= ts.architector_percent_from_order.round(2) %></span><br>Интерес €: <span class="arh-interest-e"><%= ts.architector_interest.round(2) %></span></p>
+    <p>
+    <%= link_to 'Удалить запись', pst, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %>
+    </p>
+  </td>
+ </tr>

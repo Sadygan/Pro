@@ -1,0 +1,24 @@
+<%= form_for([@specification, @group_line], remote: true, :html => { :role => "form" }) do |f| %>
+ssds
+<div id="error_explanation" class="bg-danger text-danger"></div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <%= f.label :name %><br>
+          <%= f.text_field :name, :class => "form-control" %>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <%= f.label :note %><br>
+          <%= f.text_field :note, :class => "form-control" %>
+        </div>
+      </div>
+        <div class="actions">
+          <%= f.number_field :specification_id, value: params[:specification_id] %>
+          <%= f.submit  @group_line.new_record? ? 'Создать' : ' Обновить', :class => "btn btn-primary" %>
+        </div>
+    </div>
+  </div>
+<% end %>
