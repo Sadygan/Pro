@@ -44,7 +44,11 @@ class TableSpecificationsController < ApplicationController
     # authorize! :index, @table_specification
     @user = current_user
     authorize! :show, @project
-    @table_specifications = @specification.table_specifications.where(required: true)
+    # @table_specifications = @specification.table_specifications.where(required: true)
+
+    @no_group_lines = @specification.table_specifications.where(required: true)
+    @group_lines = []
+    
     @selected = true
     @css_print = @specification.percent_css_width
     @Model = TableSpecification
