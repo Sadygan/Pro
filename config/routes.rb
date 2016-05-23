@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  # match 'group_lines/new', as: 'group_lines', to: 'group_lines#new', via: [:get, :post]
+  # post
+  # get 'group_lines/destroy'
+
+  resources :group_lines
+
   resources :brand_models
   get 'main_page/index'
 

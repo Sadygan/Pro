@@ -5,9 +5,10 @@ $("#photos").empty()
 $("#size_images").empty()
   .append("<%= escape_javascript(render(partial: 'tables/general_methods/size_image/first', layout: 'tables/general_methods/size_image/first')) %>")
 
-$("#factories_select").empty()
-  .append("<%= escape_javascript(render(partial: 'tables/general_methods/factory/form', collection: @factories, as: 'factory')) %>")
-$('#factories_select').trigger('chosen:updated')
+# Обновление фабрик
+#$("#factories_select").empty()
+#  .append("<%= escape_javascript(render(partial: 'tables/general_methods/factory/form', collection: @factories, as: 'factory')) %>")
+#$('#factories_select').trigger('chosen:updated')
 
 $("#products_select").empty()
   .append("<%= escape_javascript(render(partial: 'tables/general_methods/brand_model/form', collection: @brand_models, as: 'brand_model')) %>")

@@ -13,10 +13,14 @@ class TableSpecificationsController < ApplicationController
     # authorize! :index, @table_specification
     @user = current_user
     authorize! :show, @project
+    # Костыль, переписать во вьюхе по типу @table_specification_light
     @table_specifications = @specification.table_specifications.all
+    @no_group_lines = @table_specifications
+    @group_lines = []
     @table_specification = TableSpecification.new
     @css_print = @specification.percent_css_width
     @Model = TableSpecification
+
 
     respond_to do |format|
       format.json

@@ -5,6 +5,7 @@ class Table < ActiveRecord::Base
   belongs_to :delivery
   belongs_to :product
   belongs_to :photo
+  belongs_to :group_line
 
   attr_accessor :photo_base64, :photo_base64_form, :size_image_base64, :size_image_base64_form, :ts_id
 
@@ -22,9 +23,6 @@ class Table < ActiveRecord::Base
   def self.type_of_size 
     {1 => 'шт.', 2 => 'м', 3 => 'м²', 4 => 'м³', 5 => 'м.п.', 6 => 'кг.'}
   end
-  # def type_of_size 
-  #   {1 => 'шт.', 2 => 'м', 3 => 'м²', 4 => 'м³', 5 => 'м.п.', 6 => 'кг.'}
-  # end
 
   def multiplication a, b
     a * b

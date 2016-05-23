@@ -18,7 +18,7 @@
           %>
           <br>
           <select id="list_factor"></select>
-          <%= f.number_field :factor_light, id: 'factor_light', step: 0.0001 %>         
+          <%= f.number_field :factor_light, id: 'factor_light', step: 0.0001, required: true %>         
           <br>
           <div id="number_factor"></div>
           <%= f.hidden_field :increment_discount, value: 0 %>

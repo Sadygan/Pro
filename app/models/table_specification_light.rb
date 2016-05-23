@@ -6,6 +6,9 @@ class TableSpecificationLight < Table
   # validates :arhitec_percent, presence: true, numericality: { only_integer: true }
   validates :factor_light, presence: true, length: {maximum: 6}
 
+  belongs_to :group_line
+  
+
   def upn
   	unit_price_factory
   end

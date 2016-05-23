@@ -3,10 +3,13 @@ class Specification < ActiveRecord::Base
   has_many :table_specifications, dependent: :destroy
   has_many :table_specification_lights, dependent: :destroy
   has_many :tables, dependent: :destroy
+  has_many :group_lines
+
 
   accepts_nested_attributes_for :table_specifications
   accepts_nested_attributes_for :table_specification_lights
   accepts_nested_attributes_for :tables
+  accepts_nested_attributes_for :group_lines
   
   validates :name, presence: true, length: {minimum: 2}
 

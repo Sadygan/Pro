@@ -1,5 +1,6 @@
 <%= wicked_pdf_stylesheet_link_tag "pdf" %>
-<% tables = @table_specifications || @table_specification_lights %>
+<% group_line_table = @group_lines || @group_line_lights %>
+<% no_group_lines = @no_group_lines || @no_group_line_lights %>
 <div class="header">
 	<div class="logo"><span id="dizaap">DIZAAP </span><br>
 	<span id="upgrade">UPGRADE THE WORLD</span>
@@ -51,80 +52,18 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% tables.each do |ts| %>
-		<tr>
-			<% if @specification.photo %>
-				<td width="<%= @css_print["photo"] %>%">
-				<% if Asset.exists?(ts.photo_id) %>
-					<%= image_tag (ts.image(ts.photo_id)).gsub('https', 'http'), width: @css_print["photo_px"] %></td>
-				<% end %>
-			<% end %>
-			<% if @specification.factory %>
-				<td ><%= ts.product.brand_model.factory.brand %></td>
-			<% end %>
-			<% if @specification.brand_model %>
-				<td ><%= ts.product.brand_model.name %></td>
-			<% end %>
-			<% if @specification.article %>
-				<td ><%= ts.product.article %></td>
-			<% end %>
-			<% if @specification.finishing %>
-				<td ><%= ts.finishing_for_client%></td>
-			<% end %>
-			<% if @specification.description %>
-				<td >
-					<%= ts.product.type_furniture.name %>
-					<br>
-					<%= ts.description %>
-				</td>
-			<% end %>
-			<% if @specification.size %>
-				<td width="<%= @css_print["size"] %>%">
-					<% if Asset.exists?(ts.size_image_id) %>
-						<%= image_tag ts.image_pdf(ts.size_image_id), width: @css_print["size_px"] %>
-					<% end %>
-					<br>
-					<%= ts.size %>
-				</td>
-			<% end %>
-			<% if @specification.upf %>
-				<td ><%= ts.unit_price_factory.round(2) %></td>
-			<% end %>
-			<% if @specification.sum_factory %>
-				<td ><%= ts.summ_netto.round(2) %></td>
-			<% end %>
-			<% if @specification.number_of %>
-				<td >
-					<%= ts.number_of %>
-					<%= Table.type_of_size[ts.type_of_size_id] %>
-				</td>
-			<% end %>
-			<% if @specification.interest %>
-				<td ><%= ts.company_interest.round(2) %></td>
-			<% end %>
-			<% if ts.group.nil? %>
-				<% if @specification.full_price %>
-					<td ><%= ts.unit_price.round(2) %></td>
-				<% end %>
-				<% if @specification.full_sum %>
-					<td ><%= ts.summa.round(2) %></td>
-				<% end %>
-				<% else %>
-					<% if @specification.full_price %>
-						<td ><%= ts.groupDataSum(ts.group, "gp_unit_sum").round(2) %></td>
-					<% end %>
-					<% if @specification.full_sum %>
-						<td ><%= ts.groupDataSum(ts.group, "gp_sum_number").round(2) %></td>
-					<% end %>
-				<% end %>
-			<% if @specification.v %>
-				<td ><%= ts.product.unit_v %></td>
-			<% end %>
-			<% if @specification.architector %>
-				<td class="unit_v"><%= ts.architector_interest.round(2) %></td>
-			<% end %>
-		<% end %>
-		</tr>
+	<!-- OUTPUT GROUP -->
+      <% group_line_table.each do |gr| %>
+        <tr>
+          <td class="group_label" colspan="<%= @specification.checks_print_count %>"><%= gr.name %></td>
+        </tr>
+        <% gr.tables.each do |ts| %>
+         <%= render 'tables/pdfs/table_each', ts: ts %>
+        <% end %>
+      <% end %>
+      <% no_group_lines.each do |ts| %>
+        <%= render 'tables/pdfs/table_each', ts: ts %>
+      <% end %>
 		<tr>
 			<% if @specification.print_sum && @specification.full_sum %>
 				<td colspan="<%= @specification.colspan_sum[:before] %>"></td>

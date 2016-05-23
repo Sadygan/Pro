@@ -13,7 +13,10 @@ class TableSpecificationLightsController < ApplicationController
     @table_specification_light = TableSpecificationLight.new
     @css_print = @specification.percent_css_width
     @Model = TableSpecificationLight
-
+    @group_line_lights = GroupLine.where(id: @table_specification_lights.pluck(:group_line_id).uniq)
+    @no_group_line_lights = @table_specification_lights.where(group_line_id: nil)
+    @group_lines_all = @specification.group_lines
+    # @group_lines_all = group_lines_all
     respond_to do |format|
         format.json
         format.html
@@ -97,10 +100,10 @@ class TableSpecificationLightsController < ApplicationController
       product = Product.find(@table_specification_light.product_id)
       save_img ts, ts.size_image_id, product, @table_specification_light.size_image_base64, SizeImage
     end
-
     if params[:create_ts]
       @brand_model = BrandModel.new(brand_model_params)
       @product = Product.new(product_params)
+
       
       respond_to do |format|
         if @table_specification_light.save
@@ -218,9 +221,6 @@ class TableSpecificationLightsController < ApplicationController
   
   # Save photo
   def save_img table_specification, model_id, product, base64, model
-    p '--->'
-    p base64
-    # if model_id.nil? 
       photo = Paperclip.io_adapters.for(base64) 
       photo.original_filename = product.article+'_photo.jpeg'
       @photo = model.new(img: photo)
@@ -270,7 +270,8 @@ class TableSpecificationLightsController < ApplicationController
         :size_image_base64_form,
         :ts_id,
         :order,
-        :factor_light
+        :factor_light,
+        :group_line_id
         )
     end
   end

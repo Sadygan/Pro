@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160518104507) do
+ActiveRecord::Schema.define(version: 20160523111201) do
 
   create_table "assets", force: :cascade do |t|
     t.string   "type"
@@ -110,6 +110,16 @@ ActiveRecord::Schema.define(version: 20160518104507) do
   end
 
   add_index "factories", ["user_id"], name: "index_factories_on_user_id"
+
+  create_table "group_lines", force: :cascade do |t|
+    t.string   "name"
+    t.string   "note"
+    t.integer  "specification_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "group_lines", ["specification_id"], name: "index_group_lines_on_specification_id"
 
   create_table "products", force: :cascade do |t|
     t.string   "article"
@@ -266,10 +276,12 @@ ActiveRecord::Schema.define(version: 20160518104507) do
     t.string   "description"
     t.integer  "type_of_size_id"
     t.float    "factor_light"
+    t.integer  "group_line_id"
   end
 
   add_index "tables", ["delivery_id"], name: "index_tables_on_delivery_id"
   add_index "tables", ["discount_id"], name: "index_tables_on_discount_id"
+  add_index "tables", ["group_line_id"], name: "index_tables_on_group_line_id"
   add_index "tables", ["photo_id"], name: "index_tables_on_photo_id"
   add_index "tables", ["product_id"], name: "index_tables_on_product_id"
   add_index "tables", ["size_image_id"], name: "index_tables_on_size_image_id"
