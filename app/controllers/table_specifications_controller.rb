@@ -26,8 +26,8 @@ class TableSpecificationsController < ApplicationController
     @group_lines_all = @specification.group_lines
     # @group_lines = GroupLine.where(id: @table_specifications.where(required: true).pluck(:group_line_id).uniq)
 
-    # @i = 0
-    # @j = 0
+    @i = 0
+    @j = 0
 
     respond_to do |format|
       format.json

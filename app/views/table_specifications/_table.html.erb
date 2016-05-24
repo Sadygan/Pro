@@ -42,7 +42,7 @@
     <tbody>
 
      <!-- OUTPUT GROUP -->
-      <% @group_line.each do |gr| %>
+      <% @group_lines.each do |gr| %>
        <% psg = [@project, @specification, gr] %>
         <tr>
           <td class="group_label" colspan="16"><%= best_in_place gr, :name %></td>
