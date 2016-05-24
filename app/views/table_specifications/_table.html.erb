@@ -67,7 +67,7 @@
             <br>
             <%= best_in_place pst, :size, as: :textarea %></td>
           <td><%= best_in_place pst, :unit_price_factory %></td>
-          <td><%= ts.summ_netto %></td>
+          <td><%= ts.summ_netto.round(2) %></td>
           <td>
             <%= best_in_place pst, :number_of %>
             <%= ts.type_of_size_id.nil? ? Table.type_of_size[1] : Table.type_of_size[ts.type_of_size_id] %>

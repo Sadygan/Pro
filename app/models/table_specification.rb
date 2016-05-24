@@ -36,6 +36,19 @@ class TableSpecification < Table
   end
   
   def calculate_percent_bank_delivery summa_netto, cost, execution_document, check_factory,  bank_service, bank_percent, v_sum
+    # p 'summa_netto:' + summa_netto.to_s
+    # p 'cost:' + cost.to_s
+    # p 'execution_document:' + execution_document.to_s
+    # p 'check_factory:' + check_factory.to_s
+    # p 'bank_service:' + bank_service.to_s
+    # p 'bank_percent:' + bank_percent.to_s
+    # p 'v_sum:' + v_sum.to_s
+
+    # event 2
+    # p ev2 = summa_netto + check_factory
+    
+    # event 3
+
     d1 = summa_netto+bank_service+(summa_netto+bank_service)*bank_percent/100+execution_document+check_factory+cost*v_sum
   end
 
