@@ -64,7 +64,7 @@
       <a class="shvg_percent invoker" href="#">ШВГ</a>
       <br>
     <% else %>
-      <span class="unv"><%= ts.v_sum if ts.product %></span>
+      <span class="unv"><%= ts.v_sum.round(2) if ts.product %></span>
     <% end %>
     <input type="hidden" class="unit_v" value="<%= ts.unit_v if ts.product %>">
     <input type="hidden" name="table_specification[packing]" class="packing" value="0">
