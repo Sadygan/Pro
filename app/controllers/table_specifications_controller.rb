@@ -21,6 +21,13 @@ class TableSpecificationsController < ApplicationController
     @css_print = @specification.percent_css_width
     @Model = TableSpecification
 
+    @group_lines = GroupLine.where(id: @table_specifications.pluck(:group_line_id).uniq)
+    @no_group_lines = @table_specifications.where(group_line_id: nil)
+    @group_lines_all = @specification.group_lines
+    # @group_lines = GroupLine.where(id: @table_specifications.where(required: true).pluck(:group_line_id).uniq)
+
+    @i = 0
+    @j = 0
 
     respond_to do |format|
       format.json
@@ -45,10 +52,10 @@ class TableSpecificationsController < ApplicationController
     @user = current_user
     authorize! :show, @project
 
-    # @table_specifications = @specification.table_specifications.where(required: true)
+    @table_specifications = @specification.table_specifications.where(required: true)
 
-    @no_group_lines = @specification.table_specifications.where(required: true)
-    @group_lines = []
+    @group_lines = GroupLine.where(id: @table_specifications.where(required: true).pluck(:group_line_id).uniq)
+    @no_group_lines = @table_specifications.where(group_line_id: nil).where(required: true)
 
     @selected = true
     @css_print = @specification.percent_css_width
@@ -470,7 +477,8 @@ class TableSpecificationsController < ApplicationController
           :size_image_base64_form,
           :ts_id,
           :order,
-          :type_of_size_id
+          :type_of_size_id,
+          :group_line_id
           )
       end
     end

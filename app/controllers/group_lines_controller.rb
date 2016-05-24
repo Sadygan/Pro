@@ -1,6 +1,6 @@
 class GroupLinesController < ApplicationController
   # before_action :set_city, only: [:show, :edit, :update, :destroy]
-  before_action :set_specification, only: [:create]
+  before_action :set_specification, only: [:create, :update]
   
   def new
     @group_line = GroupLine.new
@@ -23,6 +23,20 @@ class GroupLinesController < ApplicationController
 
   def destroy
   
+  end
+
+  def update
+     @group_line = GroupLine.find(params[:id])
+     respond_to do |format|
+      if @group_line.update(group_line_params)
+        format.json { head :no_content }
+        format.js
+      else
+        format.json { render json: @factory.errors.full_messages,
+                                   status: :unprocessable_entity }
+        format.js
+      end
+    end
   end
 
   private

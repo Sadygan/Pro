@@ -10,7 +10,6 @@
     <br>
     Гр.
     <br>
-    <% p @group_lines_all %>
     <%= best_in_place pst, :group_line_id, as: :select, collection: @group_lines_all.map{|i|[i.id, i.name]}, include_blank: true %>
   </td>
   <td class="photos"><%= render "tables/general_methods/photo/first_in_table", ts: ts %></td>

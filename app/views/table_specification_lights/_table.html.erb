@@ -40,8 +40,9 @@
 
      <!-- OUTPUT GROUP -->
       <% @group_line_lights.each do |gr| %>
+       <% psg = [@project, @specification, gr] %>
         <tr>
-          <td class="group_label" colspan="15"><%= gr.name %></td>
+          <td class="group_label" colspan="15"><%= best_in_place gr, :name %></td>
         </tr>
         <% gr.tables.each do |ts| %>
          <%= render 'table_each', ts: ts %>

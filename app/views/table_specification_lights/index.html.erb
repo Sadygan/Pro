@@ -8,7 +8,7 @@
 	    <%= label_tag(:print_sum, t('table.print_sum')) %>
 	    <%= check_box("print", @specification.id, {checked: @specification.print_sum}, @specification.id) %>
 	  </div>
-	  <div class="add_group_line"><%= link_to 'Вставить разделитель', new_group_line_path(:specification_id => @specification.id), remote: true %></div>
+	  <div class="add_group_line"><%= link_to 'Вставить разделитель', new_group_line_path(specification_id: @specification.id), remote: true %></div>
 	  
 	  <%= render 'table' %>
 	  <%= link_to t('table.new_row'), new_project_specification_table_specification_light_path, remote: true , class: "table-button btn btn-primary", id: "form_button_light", style: "hidden" %>
