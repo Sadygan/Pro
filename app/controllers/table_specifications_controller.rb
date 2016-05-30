@@ -61,6 +61,7 @@ class TableSpecificationsController < ApplicationController
     @selected = true
     @css_print = @specification.percent_css_width
     @Model = TableSpecification
+    @current_currency = Specification.currency[@specification.currency_id]
 
     respond_to do |format|
       format.pdf do

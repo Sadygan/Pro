@@ -49,6 +49,8 @@ class TableSpecificationLightsController < ApplicationController
     @css_print = @specification.percent_css_width
     @Model = TableSpecificationLight
 
+    @current_currency = Specification.currency[@specification.currency_id]
+    
     respond_to do |format|
         format.pdf do
           render  pdf:        "unit_specification",
