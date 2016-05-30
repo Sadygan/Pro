@@ -21,7 +21,7 @@ class TableSpecificationsController < ApplicationController
     @css_print = @specification.percent_css_width
     @Model = TableSpecification
 
-    @group_lines = GroupLine.where(id: @table_specifications.pluck(:group_line_id).uniq)
+    @group_lines = GroupLine.where(id: @table_specifications.pluck(:group_line_id).uniq).order(numbering: :asc)
     @no_group_lines = @table_specifications.where(group_line_id: nil)
     @group_lines_all = @specification.group_lines
     @current_currency = Specification.currency[@specification.currency_id]
@@ -55,7 +55,7 @@ class TableSpecificationsController < ApplicationController
 
     @table_specifications = @specification.table_specifications.where(required: true)
 
-    @group_lines = GroupLine.where(id: @table_specifications.where(required: true).pluck(:group_line_id).uniq)
+    @group_lines = GroupLine.where(id: @table_specifications.where(required: true).pluck(:group_line_id).uniq).order(numbering: :asc)
     @no_group_lines = @table_specifications.where(group_line_id: nil).where(required: true)
 
     @selected = true

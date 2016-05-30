@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160530092023) do
+ActiveRecord::Schema.define(version: 20160530140840) do
 
   create_table "assets", force: :cascade do |t|
     t.string   "type"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20160530092023) do
     t.integer  "specification_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.integer  "numbering"
   end
 
   add_index "group_lines", ["specification_id"], name: "index_group_lines_on_specification_id"

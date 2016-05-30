@@ -50,7 +50,7 @@ class GroupLinesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def group_line_params
-    params.require(:group_line).permit(:name, :note, :specification_id)
+    params.require(:group_line).permit(:name, :note, :specification_id, :numbering)
   end
 
 end

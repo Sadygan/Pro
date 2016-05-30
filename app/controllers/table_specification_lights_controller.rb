@@ -13,7 +13,7 @@ class TableSpecificationLightsController < ApplicationController
     @table_specification_light = TableSpecificationLight.new
     @css_print = @specification.percent_css_width
     @Model = TableSpecificationLight
-    @group_line_lights = GroupLine.where(id: @table_specification_lights.pluck(:group_line_id).uniq)
+    @group_line_lights = GroupLine.where(id: @table_specification_lights.pluck(:group_line_id).uniq).order(numbering: :asc)
     @no_group_line_lights = @table_specification_lights.where(group_line_id: nil)
     @group_lines_all = @specification.group_lines
     @current_currency = Specification.currency[@specification.currency_id]
@@ -42,7 +42,7 @@ class TableSpecificationLightsController < ApplicationController
     authorize! :show, @project
     @table_specification_lights = @specification.table_specification_lights.where(required: true)
     
-    @group_line_lights = GroupLine.where(id: @table_specification_lights.where(required: true).pluck(:group_line_id).uniq)
+    @group_line_lights = GroupLine.where(id: @table_specification_lights.where(required: true).pluck(:group_line_id).uniq).order(numbering: :asc)
     @no_group_line_lights = @table_specification_lights.where(group_line_id: nil).where(required: true)
 
     @selected = true

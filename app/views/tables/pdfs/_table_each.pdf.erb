@@ -55,14 +55,14 @@
 		<% if @specification.full_sum %>
 			<td ><%= ts.summa.round(2) %></td>
 		<% end %>
-		<% else %>
-			<% if @specification.full_price %>
-				<td ><%= ts.groupDataSum(ts.group, "gp_unit_sum").round(2) %></td>
-			<% end %>
-			<% if @specification.full_sum %>
-				<td ><%= ts.groupDataSum(ts.group, "gp_sum_number").round(2) %></td>
-			<% end %>
+	<% else %>
+		<% if @specification.full_price %>
+			<td ><%= ts.groupDataSum(ts.group, "gp_unit_sum").round(2) %></td>
 		<% end %>
+		<% if @specification.full_sum %>
+			<td ><%= ts.groupDataSum(ts.group, "gp_sum_number").round(2) %></td>
+		<% end %>
+	<% end %>
 	<% if @specification.v %>
 		<td ><%= ts.product.unit_v %></td>
 	<% end %>
