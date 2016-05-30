@@ -16,6 +16,7 @@ class TableSpecificationLightsController < ApplicationController
     @group_line_lights = GroupLine.where(id: @table_specification_lights.pluck(:group_line_id).uniq)
     @no_group_line_lights = @table_specification_lights.where(group_line_id: nil)
     @group_lines_all = @specification.group_lines
+    @current_currency = Specification.currency[@specification.currency_id]
     # @group_lines_all = group_lines_all
     respond_to do |format|
         format.json

@@ -89,7 +89,7 @@ private
   end
 
   def specification_params
-    params.require(:specification).permit(:name, :print_sum, :light, :project_id)
+    params.require(:specification).permit(:name, :print_sum, :light, :project_id, :currency_id)
   end
  
 end

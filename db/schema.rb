@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523111201) do
+ActiveRecord::Schema.define(version: 20160530092023) do
 
   create_table "assets", force: :cascade do |t|
     t.string   "type"
@@ -198,6 +198,7 @@ ActiveRecord::Schema.define(version: 20160523111201) do
     t.boolean  "full_sum"
     t.boolean  "v"
     t.boolean  "architector"
+    t.integer  "currency_id"
   end
 
   add_index "specifications", ["project_id"], name: "index_specifications_on_project_id"

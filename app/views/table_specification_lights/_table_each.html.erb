@@ -48,14 +48,14 @@
   <td><%= best_in_place pst, :number_of %></td>
   <td>
     <p><%= best_in_place pst, :interest_percent %> %</p>
-    <p style="white-space:nowrap;"><span class="interest-e"><%= ts.company_interest.round(2) %></span> €</p>
+    <p style="white-space:nowrap;"><span class="interest-e"><%= ts.company_interest.round(2) %></span><%= @current_currency[0] %></p>
   </td>
   <td><%= ts.unit_price.round(2) %></td>
   <td><%= ts.with_interest.round(2) %></td>
   <td>
     <p style="white-space:nowrap;">Интерес %: <br> <%= best_in_place pst, :arhitec_percent %>
     </p>
-    <p>От заказа %: <span class="arh-order-percent"><%= ts.architector_percent_from_order.round(2) %></span><br>Интерес €: <span class="arh-interest-e"><%= ts.architector_interest.round(2) %></span></p>
+    <p>От заказа %: <span class="arh-order-percent"><%= ts.architector_percent_from_order.round(2) %></span><br>Интерес <%= @current_currency[0] %>: <span class="arh-interest-e"><%= ts.architector_interest.round(2) %></span></p>
     <p>
     <%= link_to 'Удалить запись', pst, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %>
     </p>

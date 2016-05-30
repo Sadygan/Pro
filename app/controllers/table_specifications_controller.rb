@@ -24,6 +24,7 @@ class TableSpecificationsController < ApplicationController
     @group_lines = GroupLine.where(id: @table_specifications.pluck(:group_line_id).uniq)
     @no_group_lines = @table_specifications.where(group_line_id: nil)
     @group_lines_all = @specification.group_lines
+    @current_currency = Specification.currency[@specification.currency_id]
     # @group_lines = GroupLine.where(id: @table_specifications.where(required: true).pluck(:group_line_id).uniq)
 
     @i = 0
@@ -237,6 +238,7 @@ class TableSpecificationsController < ApplicationController
     @brand_models = BrandModel.filter_list
     @type_furnitures = TypeFurniture.all
     @articles = Product.filter_list
+    @current_currency = Specification.currency[@specification.currency_id]
 
   end
 

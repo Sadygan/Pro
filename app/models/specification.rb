@@ -17,6 +17,10 @@ class Specification < ActiveRecord::Base
 
   FULL_PERCENT = 100
 
+	def self.currency
+		{1 => '€ Евро', 2 => '$ Доллар', 3 => '₴ Гривна', 4 => 'Р Рубль' }
+	end
+
 	COLUMN_SIZE = {
 		"photo" 		=> 2.5,
 		"factory" 		=> 0.7,
