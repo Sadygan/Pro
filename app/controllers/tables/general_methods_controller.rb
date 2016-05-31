@@ -154,8 +154,10 @@
         @specification_value = specification.full_sum     = params[:required]                                                                
       when "v" 
         @specification_value = specification.v            = params[:required]                                                                
+      when "note" 
+        @specification_value = specification.note         = params[:required]                                                               
       when "architector" 
-        @specification_value = specification.architector  = params[:required]                                                                
+        @specification_value = specification.architector  = params[:required]
     end
 
     respond_to do |format|

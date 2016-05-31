@@ -22,7 +22,7 @@
       </div>
       <div class="form-group">
         <%= f.label t('deliveries.execution_document'), :class => "control-label" %><br>
-        <%= f.number_field :execution_document, :class => "form-control" %>
+        <%= f.number_field :execution_document, :class => "form-control", disabled: :disabled, value: 0 %>
       </div>
       <div class="form-group">
         <%= f.label t('deliveries.check_factory'), :class => "control-label" %><br>

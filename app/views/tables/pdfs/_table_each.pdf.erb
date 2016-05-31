@@ -63,6 +63,9 @@
 			<td ><%= ts.groupDataSum(ts.group, "gp_sum_number").round(2) %></td>
 		<% end %>
 	<% end %>
+	<% if @specification.note %>
+		<td ><%= ts.note %></td>
+	<% end %>
 	<% if @specification.v %>
 		<td ><%= ts.product.unit_v %></td>
 	<% end %>

@@ -22,20 +22,21 @@ class Specification < ActiveRecord::Base
 	end
 
 	COLUMN_SIZE = {
-		"photo" 			=> 2.5,
+		"photo" 		=> 2.5,
 		"factory" 		=> 0.7,
 		"brand_model"	=> 0.7,
-		"article"			=> 0.7,
+		"article"		=> 0.7,
 		"finishing" 	=> 1.3,
 		"description"	=> 1.0,
-		"size" 				=> 1.4,
-		"upf" 				=> 0.6,
+		"size" 			=> 1.4,
+		"upf" 			=> 0.6,
 		"sum_factory"	=> 0.6,
 		"number_of"		=> 0.1,
 		"interest" 		=> 0.6,
 		"full_price" 	=> 0.6,
 		"full_sum" 		=> 0.6,
-		"v" 					=> 0.1,
+		"v" 			=> 0.1,
+		"note" 			=> 0.8,
 		"photo_px" 		=> 0,
 		"size_px" 		=> 0
 	}

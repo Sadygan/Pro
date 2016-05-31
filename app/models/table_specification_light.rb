@@ -4,7 +4,7 @@ class TableSpecificationLight < Table
   # validates :number_of, presence: true, numericality: {only_integer: true}
   # validates :interest_percent, presence: true, numericality: { only_integer: true }
   # validates :arhitec_percent, presence: true, numericality: { only_integer: true }
-  validates :factor_light, presence: true, length: {maximum: 6}
+  validates :factor_light, presence: true, greater_than_or_equal_to: 0
 
   belongs_to :group_line
   

@@ -16,6 +16,7 @@
         <th><%= check_box("interest", @specification.id, {checked: @specification.interest, column: "interest"}) %></th>
         <th><%= check_box("full_price", @specification.id, {checked: @specification.full_price, column: "full_price"}) %></th>
         <th><%= check_box("full_sum", @specification.id, {checked: @specification.full_sum, column: "full_sum"}) %></th>
+        <th><%= check_box("note", @specification.id, {checked: @specification.note, column: "note"}) %></th>
         <th><%= check_box("architector", @specification.id, {checked: @specification.architector, column: "architector"}) %></th>
       </tr>
       <tr>
@@ -33,6 +34,7 @@
         <th class="interest">Интерес</th>
         <th class="full_price">Цена, <%= @current_currency[0] %> </th>
         <th class="full_sum">Сумма, <%= @current_currency[0] %> </th>
+        <th class="note">Заметки</th>
         <th class="architector">Архитектор</th>
       </tr>
      </thead>
@@ -42,7 +44,7 @@
       <% @group_line_lights.each do |gr| %>
        <% psg = [@project, @specification, gr] %>
           <tr>
-            <td class="group_label" colspan="15"><span style="float: left"><%= best_in_place gr, :numbering %></span><%= best_in_place gr, :name %></td>
+            <td class="group_label" colspan="16"><span style="float: left"><%= best_in_place gr, :numbering %></span><%= best_in_place gr, :name %></td>
           </tr>
           <% gr.tables.each do |ts| %>
          <%= render 'table_each', ts: ts %>
@@ -52,14 +54,18 @@
         <%= render 'table_each', ts: ts %>
       <% end %>
       <tr>
-        <td colspan="13"> Сумма</td>
+        <td colspan="12"> Сумма</td>
         <td><%= TableSpecificationLight::specification_sum_all(@specification, "sum") %></td>
         <td><%= TableSpecificationLight::specification_sum_all(@specification, "architector_interest") %></td>
+        <td></td>
+        <td></td>
       </tr>
       <tr>
-        <td colspan="13"> Сумма выделенных</td>
+        <td colspan="12"> Сумма выделенных</td>
         <td><%= TableSpecificationLight::specification_sum_all(@specification, "sum", "selected") %></td>
         <td><%= TableSpecificationLight::specification_sum_all(@specification, "architector_interest", "selected") %></td>
+        <td></td>
+        <td></td>
       </tr>
      </tbody> 
   </table>

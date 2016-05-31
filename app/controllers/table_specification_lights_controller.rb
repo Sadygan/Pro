@@ -278,7 +278,8 @@ class TableSpecificationLightsController < ApplicationController
         :ts_id,
         :order,
         :factor_light,
-        :group_line_id
+        :group_line_id,
+        :note
         )
     end
   end

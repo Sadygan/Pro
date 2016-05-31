@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160530140840) do
+ActiveRecord::Schema.define(version: 20160531102410) do
 
   create_table "assets", force: :cascade do |t|
     t.string   "type"
@@ -200,6 +200,7 @@ ActiveRecord::Schema.define(version: 20160530140840) do
     t.boolean  "v"
     t.boolean  "architector"
     t.integer  "currency_id"
+    t.boolean  "note"
   end
 
   add_index "specifications", ["project_id"], name: "index_specifications_on_project_id"
@@ -279,6 +280,7 @@ ActiveRecord::Schema.define(version: 20160530140840) do
     t.integer  "type_of_size_id"
     t.float    "factor_light"
     t.integer  "group_line_id"
+    t.string   "note"
   end
 
   add_index "tables", ["delivery_id"], name: "index_tables_on_delivery_id"

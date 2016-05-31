@@ -77,6 +77,9 @@
         <td class="full_sum">0</td>
          <% end %>
       <% end %>
+        <td class="note">
+          <%= f.text_area :note %>
+        </td>
         <td class="architector"><p style="white-space:nowrap;">Интерес %: 
           <%= f.number_field :arhitec_percent, {value: 50, class: "arh-interest"}%>
           </p>

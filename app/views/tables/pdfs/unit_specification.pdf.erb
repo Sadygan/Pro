@@ -47,6 +47,8 @@
 				<th width="<%= @css_print["full_sum"] %>%">Сумма <br> (<%= @current_currency[1..5] %>)</th> <% end %>
 			<% if @specification.v %>						
 				<th width="<%= @css_print["v"] %>%">Объем</th> <% end %>
+			<% if @specification.note %>	
+				<th width="<%= @css_print["architector"] %>%">Заметки</th> <% end %>
 			<% if @specification.architector %>	
 				<th width="<%= @css_print["architector"] %>%">Архитектор</th> <% end %>
 		</tr>

@@ -52,6 +52,7 @@
   </td>
   <td><%= ts.unit_price.round(2) %></td>
   <td><%= ts.with_interest.round(2) %></td>
+  <td><%= best_in_place pst, :note, as: :textarea %></td>
   <td>
     <p style="white-space:nowrap;">Интерес %: <br> <%= best_in_place pst, :arhitec_percent %>
     </p>

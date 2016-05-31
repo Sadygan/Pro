@@ -481,7 +481,8 @@ class TableSpecificationsController < ApplicationController
           :ts_id,
           :order,
           :type_of_size_id,
-          :group_line_id
+          :group_line_id,
+          :note
           )
       end
     end
