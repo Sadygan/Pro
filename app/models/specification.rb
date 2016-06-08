@@ -22,7 +22,7 @@ class Specification < ActiveRecord::Base
 	end
 
 	COLUMN_SIZE = {
-		"photo" 		=> 2.5,
+		"photo" 		=> 2.0,
 		"factory" 		=> 0.7,
 		"brand_model"	=> 0.7,
 		"article"		=> 0.7,
