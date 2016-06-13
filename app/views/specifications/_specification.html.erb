@@ -1,4 +1,6 @@
 <tr id="specification_<%= specification.id %>">
+  <% p specification.id %>
+  <% p specification.light %>
   <% if specification.light %>
   <td><%= link_to specification.name, project_specification_table_specification_lights_path(@project, specification), 'data-no-turbolink' => true %></td>
   <td><%= check_box("print", "#{specification.id}", {checked:  specification.print_sum}, "#{specification.id}") %></td>
