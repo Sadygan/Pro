@@ -46,6 +46,11 @@ class Table < ActiveRecord::Base
 
   def our_interest summ_netto, percent
     p self.id
+    p '----'
+    p summ_netto
+    p '----'
+    p percent
+
     summ_netto*100/(100-percent).round(2)
   end
 
