@@ -67,6 +67,11 @@ class Table < ActiveRecord::Base
   end
 
   def with_interest
+    p "price from nil"
+    p price_from_nil
+
+    p "interest percent"
+    p interest_percent
     our_interest(price_from_nil, interest_percent)
   end
 
