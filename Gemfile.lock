@@ -179,6 +179,7 @@ GEM
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
+    rack-timeout (0.4.2)
     rails (4.2.2)
       actionmailer (= 4.2.2)
       actionpack (= 4.2.2)
@@ -294,6 +295,7 @@ DEPENDENCIES
   prawn-rails
   pry-rails
   puma
+  rack-timeout
   rails (= 4.2.2)
   rails4-autocomplete
   rails_12factor
