@@ -106,3 +106,4 @@ gem 'will_paginate-bootstrap'
 gem 'filterrific'
 gem 'alphabetical_paginate'
 gem "rack-timeout"
+gem 'unicorn'
