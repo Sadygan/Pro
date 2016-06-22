@@ -21,7 +21,7 @@ class Table < ActiveRecord::Base
   end
   
   def self.type_of_size 
-    {1 => 'шт.', 2 => 'м', 3 => 'м²', 4 => 'м³', 5 => 'м.п.', 6 => 'кг.'}
+    {1 => 'шт.', 2 => 'м', 3 => 'м²', 4 => 'м³', 5 => 'м.п.', 6 => 'кг.', 7 => 'уп.', 8 => 'к-т'}
   end
 
   def multiplication a, b
