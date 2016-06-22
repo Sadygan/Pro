@@ -1,13 +1,13 @@
 <tr id="project_<%= project.id %>">
 	<td class="column1"><%= link_to project.object_name, project %></td>
-	<td class="column2"><%= project.client %></td>
+	<td class="column2"><%= project.client.name %></td>
 	<td class="column3"><%= project.created_at %></td>
 	<%# if project.status != @last_status %>
     	<td class="column4"><%# link_to project.status, new_project_status_path(project), remote: true %></td>  
 	<%# else %>
 		<td class="column4"><%# project.status %></td>
-	<%# end %>
-	<td class="column5"><%= project.status_description %></td>
+	<% end %>
+	<td class="column5"><%# project.status_description %></td>
 	<td class="column6"><%= project.deadline %></td>
 	<td class="column7"><%= best_in_place [project], :planned_budget %></td>
 	<td class="column8"></td>
@@ -18,7 +18,7 @@
 	<td class="column1">
 		<div class="accordion-body collapse hidden<%= project.id %>">
 			<div>Город</div>
-			<div><%# project.city.name %></div>
+			<div><%= project.city.name %></div>
 		</div>
 	</td>
 	<td class="column2">
