@@ -1,6 +1,6 @@
 <tr id="project_<%= project.id %>">
 	<td class="column1"><%= link_to project.object_name, project %></td>
-	<td class="column2"><%= project.client.name %></td>
+	<td class="column2"><%= project.client %></td>
 	<td class="column3"><%= project.created_at %></td>
 	<% if project.status != @last_status %>
     	<td class="column4"><%= link_to project.status, new_project_status_path(project), remote: true %></td>  
