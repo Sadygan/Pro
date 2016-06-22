@@ -3,9 +3,9 @@
 	<td class="column2"><%= project.client %></td>
 	<td class="column3"><%= project.created_at %></td>
 	<%# if project.status != @last_status %>
-    	<td class="column4"><%= link_to project.status, new_project_status_path(project), remote: true %></td>  
+    	<td class="column4"><%# link_to project.status, new_project_status_path(project), remote: true %></td>  
 	<%# else %>
-		<td class="column4"><%= project.status %></td>
+		<td class="column4"><%# project.status %></td>
 	<%# end %>
 	<td class="column5"><%= project.status_description %></td>
 	<td class="column6"><%= project.deadline %></td>
