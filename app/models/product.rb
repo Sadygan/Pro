@@ -12,6 +12,9 @@ class Product < ActiveRecord::Base
   # default for will_paginate
   self.per_page = 10
 
+    p "--____)))__"
+    p "--____)))__"
+
   belongs_to :brand_model, -> { includes :factory }
   belongs_to :type_furniture
  

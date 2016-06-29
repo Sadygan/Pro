@@ -1,4 +1,3 @@
-<% product.id %>
 <tr id="product_<%= product.id %>">
   <td>
   	<% if Photo.where(product_id: product.id).first %>  
@@ -6,7 +5,8 @@
   	<% end %>
   </td>
   <% p product.id %>
-  <td><%= product.brand_model.factory.brand %></td>
+  <td><%#= product.brand_model.factory.brand %></td>
+  <td><%= product.id %></td>
   <td><%= product.brand_model.name %></td>
   <td><%= product.article %></td>
   <td><%= product.type_furniture.name %></td>
